@@ -4,11 +4,9 @@
   %head
     %title Adventures with Ruby
     %meta(charset='UTF-8')
-    %script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js')
     %link(href='/stylesheet.css' rel='stylesheet')
     %link(rel='shortcut icon' href='/favicon.png')
     %link(href='/rss.xml' type='application/rss+xml' rel='alternate' title='RSS Feed')
-
   %body
 
     #container
@@ -52,3 +50,17 @@
             %a(href="http://workingwithrails.com/person/12406-iain-hecker" rel="me" title="My profile on Working with Rails" target="_blank") Working with Rails
 
       %footer#footer All contents on this site are &copy; Iain Hecker #{Date.today.year}, unless otherwise stated. All rights reserved.
+
+    :javascript
+      (function() {
+        var outboundLinks = function() {
+          var links = document.getElementsByTagName("a");
+          var domain = new RegExp("#{request.host}", "i");
+          var linkCount = links.length;
+          for (var i = 0; i < linkCount; i++) {
+            var link = links[i];
+            if (link.hostname.search(domain) == -1) link.target = "_blank";
+          }
+        }
+        window.onload = outboundLinks;
+      }).call(this);
