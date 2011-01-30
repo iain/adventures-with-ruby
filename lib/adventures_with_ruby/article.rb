@@ -46,7 +46,11 @@ module AdventuresWithRuby
     end
 
     def read
-      @read ||= File.read(file_name).encode('utf-8')
+      @read ||= open.read
+    end
+
+    def open
+      File.open(file_name, "r:utf-8")
     end
 
     def file_name
