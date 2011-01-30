@@ -46,7 +46,7 @@ module AdventuresWithRuby
     end
 
     def read
-      @read ||= File.read(file_name).encoding('utf-8')
+      @read ||= File.read(file_name).encode('utf-8')
     end
 
     def file_name
