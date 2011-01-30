@@ -5,11 +5,19 @@ module AdventuresWithRuby
       remove_images contents_before_first_header
     end
 
+    def short
+      remove_images first_two_paragraphs
+    end
+
     def html
       RDiscount.new(contents).to_html
     end
 
     private
+
+    def first_two_paragraphs
+      contents_before_first_header.split(/<p/, 3)[0,2].join('<p')
+    end
 
     def contents_before_first_header
       html.split(/<h\d/, 2).first

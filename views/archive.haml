@@ -1,0 +1,16 @@
+%h1 Archives
+
+- @archive.each do |article|
+
+  %article.summary
+
+    %h2
+      %a{href: article.url}= article.title
+
+    - @article = article
+    = haml :_time
+
+    = article.contents.short
+
+    %p.read_more
+      %a{href: article.url, rel: 'nofollow'} &rarr; read more

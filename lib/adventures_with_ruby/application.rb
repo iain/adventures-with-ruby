@@ -22,6 +22,11 @@ module AdventuresWithRuby
       builder :rss
     end
 
+    get '/archive' do
+      @archive = Archive.new
+      haml :archive
+    end
+
     get '/:article' do
       @article = Archive.find(params[:article])
       pass unless @article.found?
