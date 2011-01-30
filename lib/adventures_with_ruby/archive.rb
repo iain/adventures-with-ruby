@@ -1,3 +1,4 @@
+# encoding: UTF-8
 module AdventuresWithRuby
   class Archive < Array
 

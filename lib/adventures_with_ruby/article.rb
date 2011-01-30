@@ -1,3 +1,4 @@
+# encoding: UTF-8
 module AdventuresWithRuby
   class Article < Struct.new(:file)
     include Comparable
