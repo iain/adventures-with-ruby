@@ -2,6 +2,7 @@ GEM
   remote: http://rubygems.org/
   specs:
     activesupport (3.0.3)
+    builder (3.0.0)
     compass (0.10.6)
       haml (>= 3.0.4)
     haml (3.0.25)
@@ -20,6 +21,7 @@ PLATFORMS
 
 DEPENDENCIES
   activesupport
+  builder
   compass
   haml
   i18n

@@ -31,6 +31,10 @@ module AdventuresWithRuby
       "/#{file}"
     end
 
+    def introduction_without_html
+      introduction.gsub(%r!</?\w+((\s+\w+(\s*=\s*(?:".*?"|'.*?'|[^'">\s]+))?)+\s*|\s*)/?>!, '')
+    end
+
     private
 
     def remove_images(html)

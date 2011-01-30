@@ -1,4 +1,6 @@
 # encoding: UTF-8
+require 'cgi'
+
 module AdventuresWithRuby
   class Application < Sinatra::Base
 
@@ -9,6 +11,16 @@ module AdventuresWithRuby
     get '/' do
       @archive = Archive.new
       haml :index
+    end
+
+    get '/atom.xml' do
+      @archive = Archive.new
+      builder :atom
+    end
+
+    get '/rss.xml' do
+      @archive = Archive.new
+      builder :rss
     end
 
     get '/:article' do
