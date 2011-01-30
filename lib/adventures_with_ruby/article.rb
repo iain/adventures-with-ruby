@@ -11,6 +11,10 @@ module AdventuresWithRuby
       metadata['publish']
     end
 
+    def disqus_id
+      metadata['wp'] ? "#{metadata['wp']} http://iain.nl/?p=#{metadata['wp']}" : id
+    end
+
     def title
       metadata['title']
     end

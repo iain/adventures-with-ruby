@@ -4,6 +4,7 @@ cucumber-vs-steak:
 easier-metricfu-with-metrical:
   title: Easier MetricFu with Metrical
   publish: 2010-11-27
+  wp: 922
 rspec-array-matcher:
   title: RSpec Array Matcher
   publish: 2010-10-30

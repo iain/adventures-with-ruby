@@ -324,7 +324,12 @@ em {
   line-height: 30px;
 }
 
-/* line 185, ../views/stylesheet.sass */
+/* line 183, ../views/stylesheet.sass */
+#comments {
+  padding-top: 20px;
+}
+
+/* line 188, ../views/stylesheet.sass */
 .ir_black, pre {
   border: 3px solid white;
   -moz-box-shadow: #503e2b 0px 2px 5px 0;
@@ -341,13 +346,13 @@ em {
   color: #f6f3e8;
 }
 
-/* line 201, ../views/stylesheet.sass */
+/* line 204, ../views/stylesheet.sass */
 .alignright {
   float: right;
   margin-right: 20px;
 }
 
-/* line 205, ../views/stylesheet.sass */
+/* line 208, ../views/stylesheet.sass */
 .ir_white {
   border: 3px solid white;
   -moz-box-shadow: #503e2b 0px 2px 5px 0;
@@ -363,64 +368,64 @@ em {
   color: #503e2b;
 }
 
-/* line 220, ../views/stylesheet.sass */
+/* line 223, ../views/stylesheet.sass */
 .ir_black:hover, .ir_white:hover {
   position: relative;
   width: auto;
   z-index: 10000;
 }
 
-/* line 225, ../views/stylesheet.sass */
+/* line 228, ../views/stylesheet.sass */
 pre, pre.ir_black {
   margin-left: -33px;
   width: 600px;
   min-width: 600px;
 }
-/* line 229, ../views/stylesheet.sass */
+/* line 232, ../views/stylesheet.sass */
 pre .Comment, pre.ir_black .Comment {
   color: #7c7c7c;
 }
-/* line 231, ../views/stylesheet.sass */
+/* line 234, ../views/stylesheet.sass */
 pre .Conditional, pre.ir_black .Conditional {
   color: #6699cc;
 }
-/* line 233, ../views/stylesheet.sass */
+/* line 236, ../views/stylesheet.sass */
 pre .Constant, pre.ir_black .Constant {
   color: #99cc99;
 }
-/* line 235, ../views/stylesheet.sass */
+/* line 238, ../views/stylesheet.sass */
 pre .Delimiter, pre.ir_black .Delimiter {
   color: #00a0a0;
 }
-/* line 237, ../views/stylesheet.sass */
+/* line 240, ../views/stylesheet.sass */
 pre .Function, pre.ir_black .Function {
   color: #ffd2a7;
 }
-/* line 239, ../views/stylesheet.sass */
+/* line 242, ../views/stylesheet.sass */
 pre .Number, pre.ir_black .Number {
   color: #ff73fd;
 }
-/* line 241, ../views/stylesheet.sass */
+/* line 244, ../views/stylesheet.sass */
 pre .PreProc, pre.ir_black .PreProc {
   color: #96cbfe;
 }
-/* line 243, ../views/stylesheet.sass */
+/* line 246, ../views/stylesheet.sass */
 pre .Special, pre.ir_black .Special {
   color: #e18964;
 }
-/* line 245, ../views/stylesheet.sass */
+/* line 248, ../views/stylesheet.sass */
 pre .String, pre.ir_black .String {
   color: #a8ff60;
 }
-/* line 247, ../views/stylesheet.sass */
+/* line 250, ../views/stylesheet.sass */
 pre .Type, pre.ir_black .Type {
   color: #ffffb6;
 }
-/* line 249, ../views/stylesheet.sass */
+/* line 252, ../views/stylesheet.sass */
 pre .rubyControl, pre.ir_black .rubyControl {
   color: #6699cc;
 }
-/* line 251, ../views/stylesheet.sass */
+/* line 254, ../views/stylesheet.sass */
 pre .rubyStringDelimiter, pre.ir_black .rubyStringDelimiter {
   color: #336633;
 }
