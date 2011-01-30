@@ -11,7 +11,7 @@ xml.rss version: "2.0", "xmlns:dc" => "http://purl.org/dc/elements/1.1/" do
         xml.link    "#{request.scheme}://#{request.host}#{article.url}"
         xml.pubDate CGI.rfc1123_date(article.published_at.to_time)
         xml.description do
-          xml.cdata! article.html
+          xml.cdata! article.contents.html
         end
         xml.guid    "#{request.scheme}://#{request.host}#{article.url}"
         xml.author  "iain@iain.nl (iain hecker)"

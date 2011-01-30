@@ -1,4 +1,17 @@
-- @archive[0,5].each do |article|
+- @article = @archive.first
+%article.summary
+
+  %h2
+    %a{href: @article.url}= @article.title
+
+  = haml :_time
+
+  = @article.contents.introduction
+
+  %p.read_more
+    %a{href: @article.url, rel: 'nofollow'} &rarr; read more
+
+- @archive[1,5].each do |article|
 
   %article.summary
 
@@ -8,7 +21,13 @@
     - @article = article
     = haml :_time
 
-    = article.contents.introduction
+    = article.contents.short
 
     %p.read_more
       %a{href: article.url, rel: 'nofollow'} &rarr; read more
+
+%h2 Want more?
+
+%p
+  %a(href='/archive')> Visit the archive
+  \.

@@ -30,10 +30,7 @@ body
   font-size: 13px
 
 h1
-  font-size: 30px
-  a
-    color: #c00
-    text-decoration: none
+  font-size: 25px
 
 h2
   font-size: 18px
@@ -96,6 +93,11 @@ em
   padding: 10px $layout-padding
   border: 2px solid white
   border-bottom: $content-border
+  h1
+    font-size: 30px
+    a
+      color: $red
+      text-decoration: none
 
 #sidebar
   float: left
@@ -133,25 +135,35 @@ em
   padding: 5px
 
 #content
-  padding-bottom: $content-margin
-  h1, h2, h3
-    margin: 0 $layout-padding $content-margin 0
-    padding: $layout-padding 0 $content-margin $layout-padding
+  padding: $layout-padding
 
-article
-  h2, h3, h4, h5, h6
-    margin: 0 $layout-padding $content-margin 0
-    padding: $layout-padding 0 $content-margin $layout-padding
-    border-bottom: $content-border
   p
-    margin: 0 $layout-padding $content-margin $layout-padding
     color: $cool-gray
     text-align: justify
     &.read_more
       text-align: right
 
-  aside
-    margin: -7px 0 0 ((30px + 26px) * -1) - $default-box-shadow-blur
+  h1, h2, h3, h4, h5, h6
+    margin: $layout-padding 0 $content-margin 0
+    padding: 0 0 $content-margin 0
+    border-bottom: $sidebar-border
+
+  ul
+    list-style: disc outside
+    margin: $content-margin
+    margin-left: $layout-padding
+  li
+    color: $cool-gray
+    line-height: 18px
+
+  article
+    h2
+      margin: $layout-padding 0 $content-margin ($layout-padding * -1) + 1
+      padding: 0 0 $content-margin $layout-padding
+      border-bottom: $sidebar-border
+
+  aside.post_date
+    margin: -7px 0 0 ((30px + (2 * $layout-padding)) * -1) - $default-box-shadow-blur
     float: left
     width: 30px
     border-top: $sidebar-border
@@ -207,11 +219,13 @@ article
 
 .ir_black:hover, .ir_white:hover
   position: relative
+  width: auto
   z-index:  10000
 
 pre, pre.ir_black
-  margin-left: -13px
+  margin-left: -13px - $layout-padding
   width: $content-width
+  min-width: $content-width
   .Comment
     color: #7c7c7c
   .Conditional
