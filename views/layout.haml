@@ -15,11 +15,12 @@
           %h1
             %a(href='/') Adventures with Ruby
 
+        %section#content
+          = yield
+
         %a#github(href="https://github.com/iain")
           %img(src="forkme.png" alt="Fork me on GitHub")
 
-        %section#content
-          = yield
 
       %aside#sidebar
         %h3 About
