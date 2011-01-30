@@ -8,6 +8,10 @@ module AdventuresWithRuby
 
     set :haml, :format => :html5, ugly: true
 
+    before do
+      redirect "#{request.scheme}://#{$1}", 301 if request.url =~ %r|^#{request.scheme}://www\.(.*)$|
+    end
+
     get '/' do
       @archive = Archive.new
       haml :index
