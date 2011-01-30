@@ -3,7 +3,7 @@ module AdventuresWithRuby
 
     set :public, File.expand_path('../../../public', __FILE__)
 
-    set :haml, :format => :html5
+    set :haml, :format => :html5, ugly: true
 
     get '/' do
       @archive = Archive.new

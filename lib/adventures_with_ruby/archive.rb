@@ -2,7 +2,7 @@ module AdventuresWithRuby
   class Archive < Array
 
     def initialize
-      replace articles
+      replace articles.sort
     end
 
     def articles
@@ -16,7 +16,7 @@ module AdventuresWithRuby
     end
 
     def self.dir
-      File.expand_path("../../../posts", __FILE__)
+      File.expand_path("../../../articles", __FILE__)
     end
 
   end

@@ -1,6 +1,17 @@
-%h1 dooi
+- @archive[0,5].each do |article|
 
-- @archive.each do |article|
+  %article.summary
 
-  %a{href: article.url}= article.name
+    %h2
+      %a{href: article.url}= article.title
 
+    %aside
+      %time{datetime: article.published_at.strftime("%Y-%m-%dT%l:%M:%S%z"), pubdate: true}
+        %span.month= article.published_at.strftime("%b").downcase
+        %span.day= article.published_at.day
+        %span.year= article.published_at.year
+
+    = article.introduction
+
+    %p.read_more
+      %a{href: article.url, rel: 'nofollow'} &rarr; read more

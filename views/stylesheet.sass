@@ -1,0 +1,235 @@
+@import compass/reset
+@import compass
++reset-html5
+
+$black:       #503e2b
+$warm-gray:   #9e948a
+$cool-gray:   #808094
+$red:         #cc0000
+$blue:        #004477
+
+$content-border: 1px dotted #e3e3e3
+$sidebar-border: 1px dotted #cccccc
+
+$layout-padding:  20px
+$content-width:   600px
+$sidebar-width:   200px
+$container-width: $content-width + (2 * $sidebar-width)
+
+$content-margin: 6px
+
+$default-box-shadow-color:    $black
+$default-box-shadow-h-offset: 0px
+$default-box-shadow-v-offset: 2px
+$defualt-box-shadow-blur:     4px
+$default-box-shadow-spread:   0
+
+body
+  background-color: #eeeeef
+  font-family: "Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, sans-serif
+  font-size: 13px
+
+h1
+  font-size: 30px
+  a
+    color: #c00
+    text-decoration: none
+
+h2
+  font-size: 18px
+  line-height: 20px
+  margin: 0 0 $content-margin 0
+  a
+    +link-colors($black, $red)
+
+h3
+  font-size: 16px
+  line-height: 20px
+  margin: 0 0 $content-margin 0
+  a
+    +link-colors($black, $red)
+
+h1, h2, h3, h4, h5, h6
+  color: $black
+
+p
+  color: $black
+  line-height: 18px
+  margin: 0 0 $content-margin 0
+
+a
+  +link-colors($blue, $red)
+  +hover-link
+
+strong
+  font-weight: bold
+  color: $black
+
+em
+  font-style: italic
+
+
+#container
+  width: $container-width
+  overflow: auto
+  margin: auto
+  padding: ($layout-padding * 2) 0
+
+#main
+  width: $content-width
+  float: left
+  +box-shadow
+  +border-radius(5px)
+  margin: 0 0 0 $sidebar-width
+  background-color: white
+  position: relative
+
+#github
+  position: absolute
+  top: -11px
+  right: -12px
+
+#header
+  +border-top-radius(7px)
+  +linear-gradient(color-stops(#e9e9e9, #fff 50%, #fff), top)
+  line-height: 50px
+  padding: 10px $layout-padding
+  border: 2px solid white
+  border-bottom: $content-border
+
+#sidebar
+  float: left
+  width: $sidebar-width - ($layout-padding)
+  padding: 0 0 0 ($layout-padding - $default-box-shadow-blur)
+  margin: 70px 0 0 $default-box-shadow-blur
+  border-top: $sidebar-border
+
+  h3
+    padding-top: $layout-padding
+
+  p
+    color: $warm-gray
+    font-size: 12px
+    a
+      color: $black
+
+  ul, ol
+    li a
+      +link-colors($warm-gray, $red)
+  ul li
+    font-size: 12px
+    line-height: 20px
+
+  ol li
+    font-size: 10px
+    line-height: 15px
+
+#footer
+  clear: both
+  color: $warm-gray
+  text-align: center
+  font-size: 11px
+  line-height: 18px
+  padding: 5px
+
+#content
+  padding-bottom: $content-margin
+
+article
+  h2, h3, h4, h5, h6
+    margin: 0 $layout-padding $content-margin 0
+    padding: $layout-padding 0 $content-margin $layout-padding
+    border-bottom: $content-border
+  p
+    margin: 0 $layout-padding $content-margin $layout-padding
+    color: $cool-gray
+    text-align: justify
+    &.read_more
+      text-align: right
+
+  aside
+    margin: -7px 0 0 ((30px + 26px) * -1) - $default-box-shadow-blur
+    float: left
+    width: 30px
+    border-top: $sidebar-border
+    padding: $content-margin 13px
+    text-align: center
+    font-size: 12px
+    color: $warm-gray
+    time
+      display: block
+    span
+      display: block
+    span.day
+      color: $black
+      font-size: 20px
+      line-height: 30px
+
+
+
+.ir_black, pre
+
+  border: 3px solid #fff
+
+  +box-shadow
+
+  padding:          10px
+  background-color: black
+  margin:           5px 0 15px 10px
+  display:          inline-block
+
+  font-family:      Monaco, monospace
+  font-size:        12px
+  line-height:      15px
+  color:            #f6f3e8
+
+.alignright
+  float: right
+  margin-right: $layout-padding
+
+.ir_white
+
+  border: 3px solid #fff
+
+  +box-shadow
+
+  padding:          10px
+  background-color: white
+  margin:           5px 0 15px 10px
+  display:          inline-block
+
+  font-family:      Monaco, monospace
+  font-size:        12px
+  color:            $black
+
+.ir_black:hover, .ir_white:hover
+  position: relative
+  z-index:  10000
+
+pre, pre.ir_black
+  margin-left: -13px
+  width: $content-width
+  .Comment
+    color: #7c7c7c
+  .Conditional
+    color: #6699cc
+  .Constant
+    color: #99cc99
+  .Delimiter
+    color: #00a0a0
+  .Function
+    color: #ffd2a7
+  .Number
+    color: #ff73fd
+  .PreProc
+    color: #96cbfe
+  .Special
+    color: #e18964
+  .String
+    color: #a8ff60
+  .Type
+    color: #ffffb6
+  .rubyControl
+    color: #6699cc
+  .rubyStringDelimiter
+    color: #336633
