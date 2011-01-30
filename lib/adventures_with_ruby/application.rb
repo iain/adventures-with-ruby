@@ -25,7 +25,7 @@ module AdventuresWithRuby
     get '/:article' do
       @article = Archive.find(params[:article])
       pass unless @article.found?
-      haml :post
+      haml :article
     end
 
     not_found do
