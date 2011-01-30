@@ -13,11 +13,6 @@ module AdventuresWithRuby
       haml :index
     end
 
-    get '/atom.xml' do
-      @archive = Archive.new
-      builder :atom
-    end
-
     get '/rss.xml' do
       @archive = Archive.new
       builder :rss

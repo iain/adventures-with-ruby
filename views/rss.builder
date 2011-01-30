@@ -5,7 +5,7 @@ xml.rss version: "2.0", "xmlns:dc" => "http://purl.org/dc/elements/1.1/" do
     xml.description "Article feed of Adventures with Ruby"
     xml.link "http://adventures-with-ruby.com"
     xml.pubDate CGI.rfc1123_date(@archive.first.published_at.to_time)
-    xml.tag! "atom:link", href: "http://adventures-with-ruby.com/rss.xml", rel: 'self', type: 'application/rss+xml'
+    # xml.tag! "atom:link", href: "http://adventures-with-ruby.com/rss.xml", rel: 'self', type: 'application/rss+xml'
     @archive.each do |article|
       xml.item do
         xml.title   article.title
