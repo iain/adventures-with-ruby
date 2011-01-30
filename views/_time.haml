@@ -1,0 +1,5 @@
+%aside
+  %time{datetime: @article.published_at.strftime("%Y-%m-%dT%l:%M:%S%z"), pubdate: true}
+    %span.month= @article.published_at.strftime("%b").downcase
+    %span.day= @article.published_at.day
+    %span.year= @article.published_at.year
