@@ -11,7 +11,7 @@
         %span.day= article.published_at.day
         %span.year= article.published_at.year
 
-    = article.introduction
+    = article.contents.introduction
 
     %p.read_more
       %a{href: article.url, rel: 'nofollow'} &rarr; read more

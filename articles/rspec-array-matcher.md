@@ -1,8 +1,3 @@
-title: RSpec Array Matcher
-publish: 2010-10-30
-
----
-
 If you're testing arrays a lot, like ActiveRecord's (named) scopes, you should know the following RSpec matcher: <strong><tt>=~</tt></strong>. It doesn't care about sorting and it gives you all the output you need when the spec fails. Here is an example:
 
 <pre class="ir_black">

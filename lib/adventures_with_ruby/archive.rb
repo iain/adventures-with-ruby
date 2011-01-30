@@ -3,17 +3,23 @@ module AdventuresWithRuby
   class Archive < Array
 
     def initialize
-      replace articles.sort
+      replace self.class.articles.sort
     end
 
-    def articles
-      Dir.glob(File.join(self.class.dir, '*.md')).map do |file|
-        Article.new(File.basename(file, '.md'))
+    def self.articles
+      articles = []
+      metadata.each do |id, metadata|
+        articles << Article.new(id, metadata)
       end
+      articles
     end
 
-    def self.find(name)
-      Article.new(name)
+    def self.metadata
+      @metadata ||= YAML.load(File.open(File.join(dir, 'index.yml'), 'r:utf-8').read)
+    end
+
+    def self.find(id)
+      Article.new(id, metadata[id])
     end
 
     def self.dir

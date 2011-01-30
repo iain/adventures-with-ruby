@@ -1,8 +1,3 @@
-title: Easier MetricFu with Metrical
-publish: 2010-11-27
-
----
-
 **TL;DR:** I've just released **[metrical](http://github.com/iain/metrical)**. It is a tiny wrapper around metric_fu.
 
 
