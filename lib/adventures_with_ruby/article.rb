@@ -19,6 +19,14 @@ module AdventuresWithRuby
       metadata['title']
     end
 
+    def etag
+      updated_at.to_time.to_i
+    end
+
+    def updated_at
+      metadata['update'] || metadata['publish']
+    end
+
     def contents
       @contents ||= Contents.new(id)
     end
