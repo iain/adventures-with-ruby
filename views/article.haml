@@ -10,10 +10,9 @@
 
   <div id="disqus_thread"></div>
   :javascript
-    var disqus_shortname  = 'iain'; // required: replace example with your forum shortname
+    var disqus_shortname  = 'iain';
     var disqus_identifier = '#{@article.disqus_id}';
     var disqus_url        = 'http://#{request.host}/#{@article.url}';
-    var disqus_title      = "#{CGI.escapeHTML(@article.title)}";
 
     /* * * DON'T EDIT BELOW THIS LINE * * */
     (function() {
