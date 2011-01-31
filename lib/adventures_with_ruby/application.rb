@@ -13,12 +13,12 @@ module AdventuresWithRuby
       redirect "#{request.scheme}://#{$1}", 301 if request.url =~ %r|^#{request.scheme}://www\.(.*)$|
       # no /1945/5/the-war-has-ended posts
       redirect "#{request.scheme}://#{request.host}/#{$1}", 301 if request.url =~ %r|/20\d\d/\d{1,2}/(.*)$|
+      response['Cache-Control'] = 'public, max-age=36000'
+      etag request.path
     end
 
     get '/' do
       @archive = Archive.new
-      response['Cache-Control'] = 'public, max-age=3600'
-      etag 'index'
       haml :index
     end
 
@@ -35,8 +35,6 @@ module AdventuresWithRuby
     get '/:article' do
       @article = Archive.find(params[:article])
       pass unless @article.found?
-      response['Cache-Control'] = 'public, max-age=36000'
-      etag params[:article]
       haml :article
     end
 
