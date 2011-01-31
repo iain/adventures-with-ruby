@@ -23,12 +23,13 @@ module AdventuresWithRuby
       haml :index
     end
 
-    get '/rss.xml' do
+    get '/articles.xml' do
       @archive = Archive.new
       builder :rss
     end
 
-    get '/archive' do
+    get '/articles' do
+      @title   = "All articles on Adventures with Ruby"
       @archive = Archive.new
       haml :archive
     end
@@ -36,6 +37,7 @@ module AdventuresWithRuby
     get '/:article' do
       @article = Archive.find(params[:article])
       pass unless @article.found?
+      @title = "#{@article.title} - Adventures with Ruby"
       haml :article
     end
 
