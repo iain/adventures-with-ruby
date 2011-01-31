@@ -13,8 +13,9 @@ module AdventuresWithRuby
       redirect "#{request.scheme}://#{$1}", 301 if request.url =~ %r|^#{request.scheme}://www\.(.*)$|
       # no /1945/5/the-war-has-ended posts
       redirect "#{request.scheme}://#{request.host}/#{$1}", 301 if request.url =~ %r|/20\d\d/\d{1,2}/(.*)$|
+      # every page is chachable
       response['Cache-Control'] = 'public, max-age=3600'
-      etag request.path
+      etag request.path.bytes.to_a.join
     end
 
     get '/' do
