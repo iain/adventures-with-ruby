@@ -18,7 +18,7 @@ module AdventuresWithRuby
     get '/' do
       @archive = Archive.new
       response['Cache-Control'] = 'public, max-age=3600'
-      etag @archive.first.etag
+      etag 'index'
       haml :index
     end
 
@@ -35,8 +35,8 @@ module AdventuresWithRuby
     get '/:article' do
       @article = Archive.find(params[:article])
       pass unless @article.found?
-      response['Cache-Control'] = 'public, max-age=3600'
-      etag @article.etag
+      response['Cache-Control'] = 'public, max-age=36000'
+      etag params[:article]
       haml :article
     end
 
