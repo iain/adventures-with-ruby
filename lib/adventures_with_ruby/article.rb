@@ -24,7 +24,7 @@ module AdventuresWithRuby
     end
 
     def found?
-      not metadata.nil?
+      metadata
     end
 
     def url
