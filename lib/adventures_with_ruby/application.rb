@@ -19,16 +19,19 @@ module AdventuresWithRuby
     end
 
     get '/' do
+      puts "Accessed index page at #{Time.now}"
       @archive = Archive.new
       haml :index
     end
 
     get '/articles.xml' do
+      puts "Accessed rss page at #{Time.now}"
       @archive = Archive.new
       builder :rss
     end
 
     get '/articles' do
+      puts "Accessed all articles page at #{Time.now}"
       @title   = "All articles on Adventures with Ruby"
       @archive = Archive.new
       haml :archive
@@ -37,6 +40,7 @@ module AdventuresWithRuby
     get '/:article' do
       @article = Archive.find(params[:article])
       pass unless @article.found?
+      puts "Accessed #{@article.url} page at #{Time.now}"
       @title = "#{@article.title} - Adventures with Ruby"
       haml :article
     end
