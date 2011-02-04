@@ -1,0 +1,1 @@
+Sven Fuchs put his presentation of <a href="http://www.artweb-design.de/2008/9/6/the-future-of-i18n-in-ruby-on-rails-railsconf-europe-2008">i18n in Ruby on Rails online</a>. A fine presentation! A must read for every Rails developer!

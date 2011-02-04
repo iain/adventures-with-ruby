@@ -27,23 +27,23 @@ domain-driven-design-building-blocks-in-ruby:
   publish: 2010-07-25
   wp: 816
 customizing-irb-2010-edition:
-  title: "Customizing IRB, 2010 edition"
+  title: Customizing IRB, 2010 edition
   publish: 2010-07-24
   wp: 736
 using-sass-with-jquery-ui:
-  title: "Using SASS with JQuery UI"
+  title: Using Sass with jQuery UI
   publish: 2010-07-11
   wp: 726
 about-structs:
-  title: "About structs"
+  title: About structs
   publish: 2010-06-28
   wp: 723
 cheating-performance-with-a-little-javascript:
-  title: "Cheating Performance With A Little Javascript"
+  title: Cheating Performance With A Little Javascript
   publish: 2010-05-20
   wp: 717
 helpers-are-code-too:
-  title: "Helpers are code too!"
+  title: Helpers Are Code Too!
   publish: 2010-05-15
   wp: 703
 conways-game-of-life-or-writing-perl-in-ruby:
@@ -51,11 +51,11 @@ conways-game-of-life-or-writing-perl-in-ruby:
   publish: 2010-04-30
   wp: 690
 viewtranslator-a-dynamic-dispatcher:
-  title: "ViewTranslator, a dynamic dispatcher"
+  title: ViewTranslator, a dynamic dispatcher
   publish: 2010-04-24
   wp: 684
 quest-ce-que-cest-rubyesque:
-  title: "Qu'est-ce que c'est Rubyesque?"
+  title: Qu'est-ce que c'est Rubyesque?
   publish: 2010-04-12
   wp: 669
 monkey-patch-of-the-month-attr_initializer:
@@ -63,7 +63,7 @@ monkey-patch-of-the-month-attr_initializer:
   publish: 2010-04-12
   wp: 660
 odd-ruby-methods:
-  title: "Odd Ruby Methods"
+  title: Odd Ruby Methods
   publish: 2010-03-30
   wp: 652
 monkey-patch-of-the-month-group_by:
@@ -71,14 +71,206 @@ monkey-patch-of-the-month-group_by:
   publish: 2010-03-19
   wp: 639
 going-crazy-with-to_proc:
-  title: "Going crazy with to_proc"
+  title: Going crazy with to_proc
   publish: 2010-02-05
   wp: 621
 3-times-activesupport-3:
-  title: "3 times ActiveSupport 3"
+  title: 3 times ActiveSupport 3
   publish: 2010-02-03
   wp: 613
 http_accept_language-released-as-a-gem:
-  title: "http_accept_language released as a gem"
+  title: http_accept_language released as a gem
   publish: 2010-01-05
   wp: 606
+basic_named_scopes:
+  title: Basic Named Scopes
+  publish: 2009-12-22
+  wp: 581
+cucumber-0-5-and-my-little-commit:
+  title: Cucumber 0.5 and my little commit
+  publish: 2009-12-18
+  wp: 570
+prawn-and-controller-tests:
+  title: Prawn and controller tests
+  publish: 2009-11-18
+  wp: 560
+configuring-autotest:
+  title: Configuring Autotest
+  publish: 2009-10-09
+  wp: 521
+root-table:
+  title: "Plugin release: Root table"
+  publish: 2009-07-19
+  wp: 466
+silencing-passenger:
+  title: Silencing Passenger
+  publish: 2009-06-19
+  wp: 460
+filtering-with-named-scopes-encore:
+  title: Filtering with named scopes (encore)
+  publish: 2009-06-17
+  wp: 446
+filtering-with-named-scopes:
+  title: Filtering with named scopes
+  publish: 2009-06-12
+  wp: 435
+writing-yaml-files:
+  title: Writing YAML files
+  publish: 2009-05-15
+  wp: 429
+nested-forms:
+  title: Nested Forms
+  publish: 2009-05-02
+  wp: 421
+gem-cleanup:
+  title: Gem cleanup
+  publish: 2009-04-26
+  wp: 417
+rspec-shoulda-and-custom-matchers:
+  title: RSpec, Shoulda, and custom matchers
+  publish: 2009-04-11
+  wp: 403
+im-slacking-and-im-sorry:
+  title: I'm slacking and I'm sorry
+  publish: 2009-03-13
+  wp: 398
+holidaysnothappyfalse:
+  title: Chainable.not.gem
+  publish: 2008-12-24
+  wp: 378
+no_value_helper-plugin:
+  title: no_value_helper plugin
+  publish: 2008-12-10
+  wp: 351
+authlogic-is-awesome:
+  title: AuthLogic is awesome!
+  publish: 2008-11-13
+  wp: 334
+asset-paths:
+  title: Asset paths
+  publish: 2008-11-03
+  wp: 329
+pluralization-rails-22-style:
+  title: Pluralization Rails 2.2 style
+  publish: 2008-10-20
+  wp: 322
+localizing-dates-and-times-in-rails-22:
+  title: Localizing Dates and Times in Rails 2.2
+  publish: 2008-10-08
+  wp: 302
+resources:
+  title: Resources
+  publish: 2008-09-29
+  wp: 292
+acts_as_translatable_model-plugin:
+  title: acts_as_translatable_model plugin
+  publish: 2008-09-22
+  wp: 280
+form-labels-in-rails-22:
+  title: Form Labels in Rails 2.2
+  publish: 2008-09-12
+  wp: 269
+plugin-translatable_columns:
+  title: "Plugin: translatable_columns"
+  publish: 2008-09-06
+  wp: 198
+the-future-of-i18n-in-ruby-on-rails-railsconf:
+  title: The Future of I18n in Ruby on Rails @ RailsConf
+  publish: 2008-09-06
+  wp: 192
+rss-feeds-url-changed:
+  title: RSS feeds url changed
+  publish: 2008-09-06
+  wp: 187
+my-5-minutes-of-fame-railsconf:
+  title: My 5 minutes of fame @ RailsConf
+  publish: 2008-09-04
+  wp: 183
+translating-columns:
+  title: Translating Columns
+  publish: 2008-09-03
+  wp: 167
+translating-activerecord:
+  title: Translating ActiveRecord
+  publish: 2008-09-01
+  wp: 146
+i18n-and-l10n-on-r9r-2-2:
+  title: i18n and l10n on r9r 2.2
+  publish: 2008-08-16
+  wp: 137
+finally-rails-goes-i18n:
+  title: Finally! Rails goes i18n!
+  publish: 2008-08-08
+  wp: 52
+bringing-objects-to-views:
+  title: Bringing Objects To Views
+  publish: 2008-04-26
+  wp: 34
+surrounding-something-with-a-div-conditionally:
+  title: Surrounding something with a div, conditionally.
+  publish: 2008-03-20
+  wp: 27
+leef-je-doel-live:
+  title: Leef je doel live!
+  publish: 2008-03-10
+  wp: 26
+second-haml-evaluation:
+  title: Second Haml evaluation
+  publish: 2008-03-10
+  wp: 25
+first-haml-evaluation:
+  title: First Haml evaluation
+  publish: 2008-02-15
+  wp: 24
+the-knights-templater-part-ii-priory-of-haml:
+  title: "The Knights Templater part II: Priory of Haml"
+  publish: 2008-02-01
+  wp: 23
+hardware-upgrade-mythfrontend-htpc:
+  title: Hardware upgrade MythFrontend HTPC
+  publish: 2008-02-01
+  wp: 22
+pluralize-for-gettext-released:
+  title: Pluralize for GetText released
+  publish: 2008-01-20
+  wp: 21
+cover-art:
+  title: Cover art
+  publish: 2008-01-16
+  wp: 20
+plain-text-stories-and-vim:
+  title: Plain Text Stories and Vim
+  publish: 2007-12-18
+  wp: 19
+selenium-clicking-a-label:
+  title: Selenium clicking a label
+  publish: 2007-12-18
+  wp: 18
+the-agile-grail-and-the-knights-templater:
+  title: The Agile Grail and the Knights Templater
+  publish: 2007-12-14
+  wp: 17
+rcov-all-the-way:
+  title: Rcov all the way
+  publish: 2007-12-10
+  wp: 16
+many-to-many-relationships-with-extra-data-part-i:
+  title: Many to Many Relationships with Extra Data, Part I
+  publish: 2007-11-28
+  wp: 15
+fancy-named-routes-part-ii:
+  title: Fancy Named Routes - Part II
+  publish: 2007-11-21
+  wp: 14
+asus-a8v-vm-fix-sound-in-ubuntu:
+  title: Asus A8V-VM fix sound in Ubuntu
+  publish: 2007-11-16
+  wp: 12
+mythbuntu-710:
+  title: MythBuntu 7.10
+  publish: 2007-11-16
+  wp: 11
+fancy-named-routes:
+  title: Fancy Named Routes - Part I
+  publish: 2007-11-15
+  wp: 10
