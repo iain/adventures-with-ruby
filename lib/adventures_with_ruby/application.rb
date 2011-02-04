@@ -42,6 +42,7 @@ module AdventuresWithRuby
       pass unless @article.found?
       puts "Accessed #{@article.url} page at #{Time.now}"
       @title = "#{@article.title} - Adventures with Ruby"
+      @description = @article.summary
       haml :article
     end
 
