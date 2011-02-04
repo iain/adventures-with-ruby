@@ -2,275 +2,310 @@ cucumber-vs-steak:
   title: Cucumber vs. Steak
   publish: 2011-01-29
   wp: 946
+  summary: Arguing for the *real* value of Cucumber and giving tips on how to write good stories that focus on the problem domain.
+  subjects: [ TDD, BDD, Cucumber, Steak, Stories ]
 easier-metricfu-with-metrical:
   title: Easier MetricFu with Metrical
   publish: 2010-11-27
   wp: 922
+  summary: Introducing a new gem I released called *metrical*. It executes MetricFu separate from your project's dependencies.
 rspec-array-matcher:
   title: RSpec Array Matcher
   publish: 2010-10-30
   wp: 910
+  summary: Did you know about this sweat little trick to test arrays in RSpec?
 your-argument-doesnt-cut-wood:
   title: Your argument doesn't cut wood
   publish: 2010-09-11
   wp: 901
+  summary: "Some musings about how a common metaphor can lead you away from the right tool: the tool that you enjoy using."
 gemfile-vim-syntax-file:
   title: Gemfile vim syntax file
   publish: 2010-09-05
   wp: 892
+  summary: "I made a Vim syntax file for Bundler's `Gemfile`."
 building-blocks-of-ddd-services:
   title: "Building Blocks of DDD: Services"
   publish: 2010-08-23
   wp: 858
+  summary: "Giving some examples of how to implement services, as known from Domain Driven Design, in Ruby."
 domain-driven-design-building-blocks-in-ruby:
   title: "Domain Driven Design: Building Blocks in Ruby"
   publish: 2010-07-25
   wp: 816
+  summary: "Giving some examples of how to implement the basic building blocks from Domain Driven Design in Rails."
 customizing-irb-2010-edition:
   title: Customizing IRB, 2010 edition
   publish: 2010-07-24
   wp: 736
+  summary: "I've customized my IRB quite a bit and shared it for you!"
 using-sass-with-jquery-ui:
   title: Using Sass with jQuery UI
   publish: 2010-07-11
   wp: 726
+  summary: "Giving a use case for Sass' new feature: `@extend`."
 about-structs:
   title: About structs
   publish: 2010-06-28
   wp: 723
+  summary: "Structs in Ruby are underused. Here are some examples."
 cheating-performance-with-a-little-javascript:
   title: Cheating Performance With A Little Javascript
   publish: 2010-05-20
   wp: 717
+  summary: "A neat little trick to speed up perceived performance by giving the user feedback of his action a bit earlier."
 helpers-are-code-too:
   title: Helpers Are Code Too!
   publish: 2010-05-15
   wp: 703
+  summary: "On using classes inside helpers, to organize your otherwise messy helper code"
 conways-game-of-life-or-writing-perl-in-ruby:
   title: "Conway's Game of Life; or: Writing Perl in Ruby"
   publish: 2010-04-30
   wp: 690
+  summary: "I wrote Conway's Game of Life in 1 line of Ruby!"
 viewtranslator-a-dynamic-dispatcher:
   title: ViewTranslator, a dynamic dispatcher
   publish: 2010-04-24
   wp: 684
+  summary: "An example of method missing, with caching."
 quest-ce-que-cest-rubyesque:
   title: Qu'est-ce que c'est Rubyesque?
   publish: 2010-04-12
   wp: 669
+  summary: "A summary of a presentation I gave about what Ruby programmers value in their code."
 monkey-patch-of-the-month-attr_initializer:
   title: "Monkey Patch of the Month: attr_initializer"
   publish: 2010-04-12
   wp: 660
+  summary: "Save keystrokes with generated initializers!"
 odd-ruby-methods:
   title: Odd Ruby Methods
   publish: 2010-03-30
   wp: 652
+  summary: "There are a lot funky hook methods in Ruby. Here are three of them you don't normally see."
 monkey-patch-of-the-month-group_by:
   title: "Monkey Patch of the Month: group_by"
   publish: 2010-03-19
   wp: 639
+  summary: "Although it's already in Ruby itself, this is how `Enumerable#group_by` works."
 going-crazy-with-to_proc:
   title: Going crazy with to_proc
   publish: 2010-02-05
   wp: 621
+  summary: "Doing funky stuff with the `to_proc` hook method."
 3-times-activesupport-3:
   title: 3 times ActiveSupport 3
   publish: 2010-02-03
   wp: 613
+  summary: "Some interesting changes in ActiveSupport 3"
 http_accept_language-released-as-a-gem:
   title: http_accept_language released as a gem
   publish: 2010-01-05
   wp: 606
+  summary: "It detects the language of the user."
 basic_named_scopes:
   title: Basic Named Scopes
   publish: 2009-12-22
   wp: 581
+  summary: "A gem I made to get the sweet ActiveRecord DSL in Rails 2.x"
 cucumber-0-5-and-my-little-commit:
   title: Cucumber 0.5 and my little commit
   publish: 2009-12-18
   wp: 570
+  summary: "I am amazed by how observant Aslak is"
 prawn-and-controller-tests:
   title: Prawn and controller tests
   publish: 2009-11-18
   wp: 560
+  summary: "A quick workaround for testing controller actions that render a PDF with Prawn"
 configuring-autotest:
   title: Configuring Autotest
   publish: 2009-10-09
   wp: 521
+  summary: "Some tips for configuring autotest"
 root-table:
   title: "Plugin release: Root table"
   publish: 2009-07-19
   wp: 466
+  summary: "An (now abandoned) plugin for making seed data. Use `rake db:seed` now."
 silencing-passenger:
   title: Silencing Passenger
   publish: 2009-06-19
   wp: 460
+  summary: "Get passenger out of your backtraces!"
 filtering-with-named-scopes-encore:
   title: Filtering with named scopes (encore)
   publish: 2009-06-17
   wp: 446
+  summary: "Doing some more hacking around named scopes."
 filtering-with-named-scopes:
   title: Filtering with named scopes
   publish: 2009-06-12
   wp: 435
+  summary: "Doing some hacking around named scopes."
 writing-yaml-files:
   title: Writing YAML files
   publish: 2009-05-15
   wp: 429
+  summary: "Writing YAML files in Ruby 1.8 can be a hassle when supporting UTF-8. Here's how I do it."
 nested-forms:
   title: Nested Forms
   publish: 2009-05-02
   wp: 421
+  summary: "Nested forms are a bitch. Here are some tips to get it working with Javascript"
 gem-cleanup:
   title: Gem cleanup
   publish: 2009-04-26
   wp: 417
+  summary: "Uninstall old versions of gems that you didn't know about."
 rspec-shoulda-and-custom-matchers:
   title: RSpec, Shoulda, and custom matchers
   publish: 2009-04-11
   wp: 403
-im-slacking-and-im-sorry:
-  title: I'm slacking and I'm sorry
-  publish: 2009-03-13
-  wp: 398
+  summary: "On making custom matchers in RSpec 1."
 holidaysnothappyfalse:
   title: Chainable.not.gem
   publish: 2008-12-24
   wp: 378
+  summary: "Some fun: gem install not"
 no_value_helper-plugin:
   title: no_value_helper plugin
   publish: 2008-12-10
   wp: 351
+  summary: "An old plugin for handling blank values"
 authlogic-is-awesome:
   title: AuthLogic is awesome!
   publish: 2008-11-13
   wp: 334
+  summary: "A review of authlogic."
 asset-paths:
   title: Asset paths
   publish: 2008-11-03
   wp: 329
+  summary: "How to disable timestamps in Rails"
 pluralization-rails-22-style:
   title: Pluralization Rails 2.2 style
   publish: 2008-10-20
   wp: 322
+  summary: "How to use pluralization in with I18n"
 localizing-dates-and-times-in-rails-22:
   title: Localizing Dates and Times in Rails 2.2
   publish: 2008-10-08
   wp: 302
+  summary: "Parsing dates in I18n"
 resources:
   title: Resources
   publish: 2008-09-29
   wp: 292
+  summary: "Separating RESTful controllers per role"
 acts_as_translatable_model-plugin:
   title: acts_as_translatable_model plugin
   publish: 2008-09-22
   wp: 280
+  summary: "A plugin that mimics ActiveRecord 2.2 I18n behavior"
 form-labels-in-rails-22:
   title: Form Labels in Rails 2.2
   publish: 2008-09-12
   wp: 269
+  summary: "Rails 2.2 doesn't use I18n for form labels. This plugin corrects that"
 plugin-translatable_columns:
   title: "Plugin: translatable_columns"
   publish: 2008-09-06
   wp: 198
+  summary: "A small plugin for translating just a few attributes per record"
 the-future-of-i18n-in-ruby-on-rails-railsconf:
   title: The Future of I18n in Ruby on Rails @ RailsConf
   publish: 2008-09-06
   wp: 192
-rss-feeds-url-changed:
-  title: RSS feeds url changed
-  publish: 2008-09-06
-  wp: 187
+  summary: "Sven Fuchs presented I18n at RailsConf Europe 2008"
 my-5-minutes-of-fame-railsconf:
   title: My 5 minutes of fame @ RailsConf
   publish: 2008-09-04
   wp: 183
+  summary: "Yay!"
 translating-columns:
   title: Translating Columns
   publish: 2008-09-03
   wp: 167
+  summary: "Translating just a few attributes per record"
 translating-activerecord:
   title: Translating ActiveRecord
   publish: 2008-09-01
   wp: 146
+  summary: "This is how ActiveRecord's I18n integration works in Rails 2.2"
 i18n-and-l10n-on-r9r-2-2:
   title: i18n and l10n on r9r 2.2
   publish: 2008-08-16
   wp: 137
+  summary: "Introducing I18n in Rails 2.2"
 finally-rails-goes-i18n:
   title: Finally! Rails goes i18n!
   publish: 2008-08-08
   wp: 52
+  summary: "Announcing I18n in Rails 2.2"
 bringing-objects-to-views:
   title: Bringing Objects To Views
   publish: 2008-04-26
   wp: 34
+  summary: "Using data objects in views can clean them up."
 surrounding-something-with-a-div-conditionally:
   title: Surrounding something with a div, conditionally.
   publish: 2008-03-20
   wp: 27
-leef-je-doel-live:
-  title: Leef je doel live!
-  publish: 2008-03-10
-  wp: 26
+  summary: "Tips on doing view work"
 second-haml-evaluation:
   title: Second Haml evaluation
   publish: 2008-03-10
   wp: 25
+  summary: "After trying Haml for a month, I still think it's the best thing since sliced bread"
 first-haml-evaluation:
   title: First Haml evaluation
   publish: 2008-02-15
   wp: 24
+  summary: "I've started using Haml. I like it!"
 the-knights-templater-part-ii-priory-of-haml:
   title: "The Knights Templater part II: Priory of Haml"
   publish: 2008-02-01
   wp: 23
-hardware-upgrade-mythfrontend-htpc:
-  title: Hardware upgrade MythFrontend HTPC
-  publish: 2008-02-01
-  wp: 22
+  summary: "This Haml thing looks great!"
 pluralize-for-gettext-released:
   title: Pluralize for GetText released
   publish: 2008-01-20
   wp: 21
-cover-art:
-  title: Cover art
-  publish: 2008-01-16
-  wp: 20
+  summary: "My first plugin for Rails!"
 plain-text-stories-and-vim:
   title: Plain Text Stories and Vim
   publish: 2007-12-18
   wp: 19
+  summary: "I made a Vim syntax file for RSpec Story Runner (now known as Cucumber)"
 selenium-clicking-a-label:
   title: Selenium clicking a label
   publish: 2007-12-18
   wp: 18
+  summary: "Helping you do some stuff in selenium in the RSpec Story Runner."
 the-agile-grail-and-the-knights-templater:
   title: The Agile Grail and the Knights Templater
   publish: 2007-12-14
   wp: 17
+  summary: "How working with designers isn't always smooth sailing."
 rcov-all-the-way:
   title: Rcov all the way
   publish: 2007-12-10
   wp: 16
+  summary: "Aggregating RCov reports over all tests"
 many-to-many-relationships-with-extra-data-part-i:
   title: Many to Many Relationships with Extra Data, Part I
   publish: 2007-11-28
   wp: 15
+  summary: "How `has_many :through` works"
 fancy-named-routes-part-ii:
   title: Fancy Named Routes - Part II
   publish: 2007-11-21
   wp: 14
-asus-a8v-vm-fix-sound-in-ubuntu:
-  title: Asus A8V-VM fix sound in Ubuntu
-  publish: 2007-11-16
-  wp: 12
-mythbuntu-710:
-  title: MythBuntu 7.10
-  publish: 2007-11-16
-  wp: 11
+  summary: "More on how to customize your routes in Rails 1."
 fancy-named-routes:
   title: Fancy Named Routes - Part I
   publish: 2007-11-15
   wp: 10
+  summary: "How to customize your routes in Rails 1."

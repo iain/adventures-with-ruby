@@ -19,6 +19,10 @@ module AdventuresWithRuby
       metadata['title']
     end
 
+    def summary
+      RDiscount.new(metadata['summary'].to_s).to_html
+    end
+
     def contents
       @contents ||= Contents.new(id)
     end

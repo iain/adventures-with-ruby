@@ -1,5 +1,0 @@
-<a rel="lightbox[screens]" href="http://infx.nl/wp-content/uploads/2007/11/asusa8vvm.jpg" title="Asus A8V-VM"><img src="http://infx.nl/wp-content/uploads/2007/11/asusa8vvm.thumbnail.jpg" alt="Asus A8V-VM" style="float: left;" /></a>I use a micro ATX motherboard, called a  Asus A8V-VM. It fits nicely in the Asus Fusion, but there is one downside to this motherboard. The sound doesn't work properly in Ubuntu. In feisty it only shows sounds on one side, in gutsy it has a high pitch sound whenever the sounds gets a bit louder. It's annoying as hell, so here is the solution.
-<pre lang="bash">sudo echo 'options snd-hda-intel position_fix=1 model=3stack' >> /etc/modprobe.d/alsa-base</pre>
-Although this might not be so incredibly useful toyou guys (it's an old piece of hardware, and not so widely used), I decided to post it here anyway, mainly because I keep losing that one command, and it's incredibly hard to google for it.
-
-<strong>Update:</strong> It will probably  work on any motherboard with a <em>ADI AD1986A</em> SoundMax 6-channel HD Audio chipset.

@@ -12,7 +12,7 @@
     - @article = article
     = haml :_time
 
-    = article.contents.short
+    = article.summary
 
     %p.read_more
       %a{href: article.url, rel: 'nofollow'} &rarr; read more
