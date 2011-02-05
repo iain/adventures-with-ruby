@@ -4,10 +4,7 @@
   %head
     %title= @title || "Adventures with Ruby"
     %meta(charset='UTF-8')
-    - if @description
-      %meta(name='description' content=@description)
-    - else
-      %meta(name='description' content="Adventures with Ruby is a blog about developing with Ruby and Ruby on Rails, written by Iain Hecker.")
+    %meta{name: 'description', content: (@description || "Adventures with Ruby is a blog about developing with Ruby and Ruby on Rails, written by Iain Hecker.")}
     %link(href='/stylesheet.css' rel='stylesheet')
     %link(rel='shortcut icon' href='/favicon.png')
     %link(href='/articles.xml' type='application/rss+xml' rel='alternate' title='RSS Feed')
