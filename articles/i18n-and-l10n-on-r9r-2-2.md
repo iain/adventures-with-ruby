@@ -4,7 +4,7 @@ Ruby on Rails (r9r ;) ) v2.2 ships with builtin internationalization (i18n). It 
 
 There are two kinds of problems here. If you live in a country other than the US, preferably one where they don't speak English, and want to make a website, you're immediately fucked. If you are from any English speaking country, or just don't care yet, the problem will arise a bit later when you're expanding beyond the borders.
 
-Making your site in just 1 language is relatively easy. Before Rails 2.2 we had to rely on a lot of [monkeypatching](http://agilewebdevelopment.com/plugins/dutchify), overriding some key parts of the framework. But not anymore. In Rails 2.2, only two lines will fix the problem.<!--more-->
+Making your site in just 1 language is relatively easy. Before Rails 2.2 we had to rely on a lot of [monkeypatching](http://agilewebdevelopment.com/plugins/dutchify), overriding some key parts of the framework. But not anymore. In Rails 2.2, only two lines will fix the problem.
 
 <pre lang="rails">
 I18n.locale = 'nl-NL'

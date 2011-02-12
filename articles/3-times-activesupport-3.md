@@ -2,7 +2,7 @@ Rails 3 is coming. All the big changes are spoken of elsewhere, so I'm going to 
 
 ### presence
 
-First up is <tt>Object#presence</tt> which is a shortcut for <tt>Object#present? && Object</tt>. It is a bit of a sanitizer. Empty strings and other blank values will return <tt>nil</tt> and any other value will return itself. Use this one and your code might be a tad cleaner.
+First up is `Object#presence` which is a shortcut for `Object#present? && Object`. It is a bit of a sanitizer. Empty strings and other blank values will return `nil` and any other value will return itself. Use this one and your code might be a tad cleaner.
 
 <pre style="background: #000000; color: #f6f3e8; font-family: Monaco, monospace" class="ir_black"><font color="#336633">&quot;&quot;</font>.presence <font color="#7c7c7c"># =&gt; nil</font>
 <font color="#336633">&quot;</font><font color="#a8ff60">foo</font><font color="#336633">&quot;</font>.presence <font color="#7c7c7c">#=&gt; &quot;foo&quot;</font>
@@ -28,7 +28,7 @@ I like this way of cleaning up you're code. I guess it's Rubyesque to feel the n
 
 ### uniq_by
 
-Another funny one is <tt>Array.uniq_by</tt> (and it sister-with-a-bang-method). It works as select, but returns only the first element from the array that complies with the block you gave it. Here are some examples to illustrate that:
+Another funny one is `Array.uniq_by` (and it sister-with-a-bang-method). It works as select, but returns only the first element from the array that complies with the block you gave it. Here are some examples to illustrate that:
 
 <pre style="background: #000000; color: #f6f3e8; font-family: Monaco, monospace" class="ir_black">[&nbsp;<font color="#ff73fd">1</font>, <font color="#ff73fd">2</font>, <font color="#ff73fd">3</font>, <font color="#ff73fd">4</font>&nbsp;].uniq_by(&amp;<font color="#99cc99">:odd?</font>) <font color="#7c7c7c"># =&gt; [ 1, 2 ]</font>
 
@@ -42,7 +42,7 @@ some_array.uniq_by(&amp;<font color="#99cc99">:object_id</font>) <font color="#7
 
 ### exclude?
 
-And the final one for today is <tt>exclude?</tt> which is the opposite of <tt>include?</tt>. Nobody likes the exclamation mark before predicate methods.
+And the final one for today is `exclude?` which is the opposite of `include?`. Nobody likes the exclamation mark before predicate methods.
 
 <pre style="background: #000000; color: #f6f3e8; font-family: Monaco, monospace" class="ir_black"><font color="#7c7c7c"># yuck:</font>
 !some_array.include?(some_value)

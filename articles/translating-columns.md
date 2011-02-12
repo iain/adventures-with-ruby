@@ -6,7 +6,6 @@ Dmitry [asked in the comments](/translating-activerecord/#comment-96) of my last
 
 And although I don't think this is the way to go, I can of course demonstrate an easy way to do this, using I18n.
 
-<!--more-->
 Here's the table definition:
 
 <pre lang="rails">

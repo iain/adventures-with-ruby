@@ -1,6 +1,6 @@
 After using [Haml](http://haml.hamptoncatlin.com/) for [over a month](/first-haml-evaluation/) now, I can now really evaluate how Haml is to work with from day to day basis.
 
-Haml actually is a blessing.  Doing minor adjustments is very easy, your code remains looking nice, the output keeps looking nice. Just be sure to know how to shift blocks of code to the left or right in your favorite editor.<!--more-->
+Haml actually is a blessing.  Doing minor adjustments is very easy, your code remains looking nice, the output keeps looking nice. Just be sure to know how to shift blocks of code to the left or right in your favorite editor.
 
 OK, there are some downsides. You have very little control over how you HTML turns out. It is usually spot on, but sometimes you do have to use ERB. Making your own autocomplete boxes for instance. Here I needed to use ERB, because the indentation would end up in the textfield, which would break the functionality in IE6. You still have to use ERB in emails too, since you cannot afford to go to a new line with every variable.
 

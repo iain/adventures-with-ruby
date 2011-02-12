@@ -1,4 +1,4 @@
-A problem I keep running in to, especially with Haml, is how to render Ajax requests. Say you have a partial on your page which is something dynamic, like a feedback form. Here you might want to replace this partial with an updated version of that same partial. When making an ajax request, you specify the id of the element you wish to update. But when the element is created inside the partial, it gets rendered double.<!--more-->
+A problem I keep running in to, especially with Haml, is how to render Ajax requests. Say you have a partial on your page which is something dynamic, like a feedback form. Here you might want to replace this partial with an updated version of that same partial. When making an ajax request, you specify the id of the element you wish to update. But when the element is created inside the partial, it gets rendered double.
 
     #feedback
       = remote_form_for(@feedback ||= Feedback.new, :url => @feedback, :update => 'feedback') do |f|

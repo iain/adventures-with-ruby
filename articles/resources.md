@@ -1,4 +1,4 @@
-Just a simple little advice for all [RESTful](http://apidock.com/rails/ActionController/Resources/resources) programmers out there. It's really simple, and cleans up your code quite a bit. A lot of Rails applications have two roles: an admin and non admin. Your code can get pretty ugly when implementing extra features for the admin.<!--more--> I'm guessing everybody does this from time to time:
+Just a simple little advice for all [RESTful](http://apidock.com/rails/ActionController/Resources/resources) programmers out there. It's really simple, and cleans up your code quite a bit. A lot of Rails applications have two roles: an admin and non admin. Your code can get pretty ugly when implementing extra features for the admin. I'm guessing everybody does this from time to time:
 
 <pre lang="rails">- if current_user.admin?
   %p= link_to(@project, :method => :delete)

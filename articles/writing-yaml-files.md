@@ -14,7 +14,6 @@ Well, to get the prettiest results, I do something like this:
 &nbsp;&nbsp;string.gsub(<font color="#336633">&quot;</font><font color="#a8ff60">!ruby/symbol </font><font color="#336633">&quot;</font>, <font color="#336633">&quot;</font><font color="#a8ff60">:</font><font color="#336633">&quot;</font>).sub(<font color="#336633">&quot;</font><font color="#a8ff60">---</font><font color="#336633">&quot;</font>,<font color="#336633">&quot;&quot;</font>).split(<font color="#336633">&quot;</font><font color="#e18964">\n</font><font color="#336633">&quot;</font>).map(&amp;<font color="#99cc99">:rstrip</font>).join(<font color="#336633">&quot;</font><font color="#e18964">\n</font><font color="#336633">&quot;</font>).strip
 <font color="#96cbfe">end</font></pre>
 
-<!--more-->
 I use the gem [ya2yaml](http://rubyforge.org/projects/ya2yaml/) to create YAML, because the default Hash#to_yaml doesn't work well with UTF-8. If you have it installed and loaded, it uses that.
 
 Then I turn all keys into strings with the method `deep_stringify_keys`, so the keys don't get formatted like the symbols they are. I remove some random junk and strip whitespace.

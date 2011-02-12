@@ -1,7 +1,5 @@
 Here is the next installment of a series of guides I'm writing for internationalizing a Rails 2.2 application. Please read the first part, [Translating ActiveRecord](/translating-activerecord/), if you haven't already. This time I'm going to talk about how to localize dates and times to a specific language.
 
-<!--more-->
-
 First a small recap in how to load locales. Add this to a new initializer:
 
 <pre style="background: #000000; color: #f6f3e8; font-family: Monaco, monospace" class="ir_black"><font color="#ffffb6">I18n</font>.load_path += <font color="#ffffb6">Dir</font>.glob(<font color="#336633">&quot;</font><font color="#00a0a0">#{</font><font color="#ffffb6">RAILS_ROOT</font><font color="#00a0a0">}</font><font color="#a8ff60">/app/locales/**/*.yml</font><font color="#336633">&quot;</font>)</pre>

@@ -8,7 +8,7 @@ As I [promised](/the-knights-templater-part-ii-priory-of-haml), here is the eval
 * No more forgetting to close a div and spending hours to find out which one.
 * Faster refactoring because of less code and easier to read.
 
-There are some downsides however. I'd rather not talk about the hours I tried to fix some idiot problem with partials and the locals option. Just use locals as less as possible, preferably not at all. <!--more-->Some cons:
+There are some downsides however. I'd rather not talk about the hours I tried to fix some idiot problem with partials and the locals option. Just use locals as less as possible, preferably not at all. Some cons:
 
 * Yet another syntax to be learned.
 * Errors with Haml syntax are a bit harder to locate, but you'll make less after you encountered a few.

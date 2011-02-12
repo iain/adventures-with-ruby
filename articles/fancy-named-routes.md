@@ -2,7 +2,7 @@ I know <a href="http://tweakers.net" title="tweakers.net" target="_blank">tweake
 
 First you get the id, than you get a nice version of the title ending with .html. This is a nice way of making links, scoring high for a googlebot and is incredibly easy to read.
 
-I first tried to use only the title as an identifier. Now normally there would be a problem with having titles in your uri. First of all you might want to have special characters in your title. Rails automatically converts them back into the characters they are when evaluating the routes, so it would result in this problem: */news/my%2Ftitle.html* would evaluate to */news/my/title.html*, which the Rails Router doesn't understand.<!--more-->
+I first tried to use only the title as an identifier. Now normally there would be a problem with having titles in your uri. First of all you might want to have special characters in your title. Rails automatically converts them back into the characters they are when evaluating the routes, so it would result in this problem: */news/my%2Ftitle.html* would evaluate to */news/my/title.html*, which the Rails Router doesn't understand.
 
 Besides, it doesn't look good. But when changing the title to *my-title.html*, just for output, there is no good way of getting it back to the original title. Even more problematic is *my/title* and *my-title* would lead to the same page. I concluded that you'll definitely need an id in your uri. But how would I have the title in it then?
 

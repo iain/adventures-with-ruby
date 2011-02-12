@@ -10,7 +10,7 @@ After a long day in the train today, I extracted the I18n functionality from Act
       attr_accessor :name, :password
     end
 
-Now you can do [familiar things](/translating-activerecord/) with the class, just as you would do with normal ActiveRecord models. <!--more-->Supply a translation:
+Now you can do [familiar things](/translating-activerecord/) with the class, just as you would do with normal ActiveRecord models. Supply a translation:
 
     nl-NL:
       activerecord:

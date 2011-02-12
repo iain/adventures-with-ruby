@@ -8,7 +8,7 @@ Although I created this plugin for gettext, it can be used whenever you like. If
 
 I've opened a [google-code spot](http://code.google.com/p/pluralize-for-gettext/), so you can have a peak there, although I haven't gotten round to filling out every page there.
 
-Learn how to install gettext in [this excellent guide](http://manuals.rubyonrails.com/read/chapter/105). Use this tip to get it [working with Rails 2.0](http://zargony.com/2007/07/29/using-ruby-gettext-with-edge-rails/).<!--more-->
+Learn how to install gettext in [this excellent guide](http://manuals.rubyonrails.com/read/chapter/105). Use this tip to get it [working with Rails 2.0](http://zargony.com/2007/07/29/using-ruby-gettext-with-edge-rails/).
 ### Installation
 
 <pre lang="bash">
