@@ -1,6 +1,6 @@
 cucumber-vs-steak:
   title: Cucumber vs. Steak
-  publish: 2011-01-29
+  publish: 2011-01-31
   wp: 946
   summary: Arguing for the *real* value of Cucumber and giving tips on how to write good stories that focus on the problem domain.
   subjects: [ TDD, BDD, Cucumber, Steak, Stories ]
