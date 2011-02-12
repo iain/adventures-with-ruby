@@ -16,7 +16,7 @@ Time for an example. Suppose you have an admin interface which allows the user t
 
 There are many ways of making a filter service. I've made something similar to this recently. I'll start by making a basic filter, with nothing specific.
 
-<pre style="background: #000000; color: #f6f3e8; font-family: Monaco, monospace" class="ir_black"><font color="#96cbfe">module</font>&nbsp;<font color="#ffffb6">Filter</font>
+<pre class="ir_black"><font color="#96cbfe">module</font>&nbsp;<font color="#ffffb6">Filter</font>
 &nbsp;&nbsp;<font color="#96cbfe">class</font>&nbsp;<font color="#ffffb6">Base</font>
 
 &nbsp;&nbsp;&nbsp;&nbsp;class_inheritable_array <font color="#99cc99">:filters</font>
@@ -81,7 +81,7 @@ There are many ways of making a filter service. I've made something similar to t
 
 Now, you can make filters for every model. This means creating a class that inherits from this base class and implementing the simple contract we put in place. I'll use the (t)rusty Post model as an example implementation.
 
-<pre style="background: #000000; color: #f6f3e8; font-family: Monaco, monospace" class="ir_black"><font color="#96cbfe">module</font>&nbsp;<font color="#ffffb6">Filter</font>
+<pre class="ir_black"><font color="#96cbfe">module</font>&nbsp;<font color="#ffffb6">Filter</font>
 &nbsp;&nbsp;<font color="#96cbfe">class</font>&nbsp;<font color="#ffffb6">Posts</font>&nbsp;&lt; <font color="#ffffb6">Base</font>
 
 &nbsp;&nbsp;&nbsp;&nbsp;<font color="#7c7c7c"># Here I define the filter methods that will be used for posts.</font>
@@ -116,7 +116,7 @@ Now, you can make filters for every model. This means creating a class that inhe
 
 To use this filter, call it from the controller:
 
-<pre style="background: #000000; color: #f6f3e8; font-family: Monaco, monospace" class="ir_black"><font color="#96cbfe">class</font>&nbsp;<font color="#ffffb6">Backend</font>::<font color="#ffffb6">PostsController</font>&nbsp;&lt; <font color="#ffffb6">ApplicationController</font>
+<pre class="ir_black"><font color="#96cbfe">class</font>&nbsp;<font color="#ffffb6">Backend</font>::<font color="#ffffb6">PostsController</font>&nbsp;&lt; <font color="#ffffb6">ApplicationController</font>
 
 &nbsp;&nbsp;respond_to <font color="#99cc99">:html</font>, <font color="#99cc99">:json</font>, <font color="#99cc99">:xml</font>
 
@@ -137,7 +137,7 @@ Don't forget to run [reek](http://wiki.github.com/kevinrutherford/reek/) on your
 
 If you wish to simplify the interface even further, you can create a class method on the service to make it even easier (that's a service to create a service, so to speak).
 
-<pre style="background: #000000; color: #f6f3e8; font-family: Monaco, monospace" class="ir_black"><font color="#96cbfe">module</font>&nbsp;<font color="#ffffb6">Filter</font>
+<pre class="ir_black"><font color="#96cbfe">module</font>&nbsp;<font color="#ffffb6">Filter</font>
 &nbsp;&nbsp;<font color="#96cbfe">class</font>&nbsp;<font color="#ffffb6">Base</font>
 
 &nbsp;&nbsp;&nbsp;&nbsp;<font color="#96cbfe">def</font>&nbsp;<font color="#99cc99">self</font>.<font color="#ffd2a7">all</font>(*args)
@@ -154,7 +154,7 @@ This reduces the connascence needed to use the service. Not really needed here, 
 You might ask where do I put this into my Rails application. I make a folder `app/services` and (because I use RSpec) a folder named `spec/services`. If you use autotest, you need to tell it to pick up changes in these directories. You'll need to add the file `.autotest` to your application root folder, containing this bit of code to do the mapping:
 
 
-<pre style="background: #000000; color: #f6f3e8; font-family: Monaco, monospace" class="ir_black"><font color="#ffffb6">Autotest</font>.add_hook <font color="#99cc99">:initialize</font>&nbsp;<font color="#6699cc">do</font>&nbsp;|<font color="#c6c5fe">at</font>|
+<pre class="ir_black"><font color="#ffffb6">Autotest</font>.add_hook <font color="#99cc99">:initialize</font>&nbsp;<font color="#6699cc">do</font>&nbsp;|<font color="#c6c5fe">at</font>|
 &nbsp;&nbsp;at.add_mapping(<font color="#ff8000">%r%</font><font color="#e18964">^</font><font color="#b18a3d">spec/</font><font color="#e18964">(</font><font color="#e18964">.</font><font color="#e18964">*</font><font color="#e18964">)</font><font color="#b18a3d">_spec</font><font color="#e18964">\.</font><font color="#b18a3d">rb</font><font color="#e18964">$</font><font color="#ff8000">%</font>) { |<font color="#c6c5fe">filename</font>, <font color="#c6c5fe">_</font>|&nbsp;filename }
 &nbsp;&nbsp;at.add_mapping(<font color="#ff8000">%r%</font><font color="#e18964">^</font><font color="#b18a3d">app/</font><font color="#e18964">(</font><font color="#e18964">.</font><font color="#e18964">*</font><font color="#e18964">)</font><font color="#e18964">\.</font><font color="#b18a3d">rb</font><font color="#e18964">$</font><font color="#ff8000">%</font>) { |<font color="#c6c5fe">_</font>, <font color="#c6c5fe">m</font>|&nbsp;[<font color="#336633">&quot;</font><font color="#a8ff60">spec/</font><font color="#00a0a0">#{</font>m[<font color="#ff73fd">1</font>]<font color="#00a0a0">}</font><font color="#a8ff60">_spec.rb</font><font color="#336633">&quot;</font>]&nbsp;}
 <font color="#6699cc">end</font></pre>

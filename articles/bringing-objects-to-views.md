@@ -1,12 +1,10 @@
 Ruby on Rails is a fine framework. It uses Ruby which is beautiful programming language. Everything is an object in Ruby, and the [block structure](http://poignantguide.net/ruby/chapter-4.html#section4) allows you to do marvelous stuff with it. The Rails team is well aware of this and uses it, making Rails a great partner in crime. I still remember the first time I viewed the migration for creating a new database table:
 
-<pre lang="rails">
-create_table "users" do |t|
-  t.column :name, :string, :limit => 40
-  t.column :email, :string
-  # etc
-end
-</pre>
+    create_table "users" do |t|
+      t.column :name, :string, :limit => 40
+      t.column :email, :string
+      # etc
+    end
 
 I almost didn't recognize it at first. I didn't know Ruby back then, I just did what was necessary to make it work without looking at what it does. But take a good look at what it really does. It creates a table and gives you an object for you to play with. Within the block you can edit the properties of the thing you're creating in small readable lines. Ruby itself is full of these functions. Iterators are probably the best examples. What would any Ruby programmer do without <tt>[each](http://www.ruby-doc.org/core/classes/Hash.html#M002889)</tt>, <tt>[select](http://www.ruby-doc.org/core/classes/Hash.html#M002900)</tt> and <tt>[sort](http://www.ruby-doc.org/core/classes/Hash.html#M002893)</tt>? These blocks are arguably one of the nicest features in Ruby.
 
@@ -49,31 +47,29 @@ But why stop here? Forms are not the only part which involves a lot of HTML and 
 
 This might not be your solution. Your website might be too small to make such a difference. But it's worth thinking about it when you're building something. If you're making a helper-method, and you find yourself in need of a lot (say, more than 2) arguments, consider making a small object with some accessors to making this easy. Here is something to help you on your way:
 
-<pre lang="rails">
-# in your view, traditional way (which can get very long, depending on the number of arguments):
-<%= small_menu(:title => 'Monkey', :foo => 'bar') %>
+    # in your view, traditional way (which can get very long, depending on the number of arguments):
+    <%= small_menu(:title => 'Monkey', :foo => 'bar') %>
 
-# with a small helper class and a block structure it may become:
-<%= small_menu do |sm|
-  sm.title = 'Monkey'
-  sm.foo = 'bar'
-end %>
+    # with a small helper class and a block structure it may become:
+    <%= small_menu do |sm|
+      sm.title = 'Monkey'
+      sm.foo = 'bar'
+    end %>
 
-# you'll need this in your helper for that:
-module SomeHelper
+    # you'll need this in your helper for that:
+    module SomeHelper
 
-  def small_menu
-    sm = SmallMenu.new
-    yield sm
-    # construct your html here, using parameters from the sm-object
-  end
+      def small_menu
+        sm = SmallMenu.new
+        yield sm
+        # construct your html here, using parameters from the sm-object
+      end
 
-end
+    end
 
-# in the same helper (only if it's short) or in another file (helper or lib)
-class SmallMenu
-  attr_accessor :title, :link, :partial, :foo
-end
-</pre>
+    # in the same helper (only if it's short) or in another file (helper or lib)
+    class SmallMenu
+      attr_accessor :title, :link, :partial, :foo
+    end
 
 By the way, if you haven't seen it yet, you should watch [Railscast episode 101](http://railscasts.com/episodes/101) for another nice way to incorporate classes into your helpers.

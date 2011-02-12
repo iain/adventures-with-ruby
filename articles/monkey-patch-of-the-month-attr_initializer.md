@@ -2,7 +2,7 @@ So, about one month ago, I [promised](/monkey-patch-of-the-month-group_by/) to s
 
 I often find myself writing code like this:
 
-<pre style="background: #000000; color: #f6f3e8; font-family: Monaco, monospace" class="ir_black"><font color="#96cbfe">class</font>&nbsp;<font color="#ffffb6">Foo</font>
+<pre class="ir_black"><font color="#96cbfe">class</font>&nbsp;<font color="#ffffb6">Foo</font>
 &nbsp;&nbsp;<font color="#6699cc">attr_reader</font>&nbsp;<font color="#99cc99">:bar</font>, <font color="#99cc99">:baz</font>
 &nbsp;&nbsp;<font color="#96cbfe">def</font>&nbsp;<font color="#ffd2a7">initialize</font>(bar, baz)
 &nbsp;&nbsp;&nbsp;&nbsp;<font color="#c6c5fe">@bar</font>, <font color="#c6c5fe">@baz</font>&nbsp;= bar, baz
@@ -13,13 +13,13 @@ This can be very annoying to maintain. The variable names are repeated four time
 
 Ideally, I'd want to write something like this:
 
-<pre style="background: #000000; color: #f6f3e8; font-family: Monaco, monospace" class="ir_black"><font color="#96cbfe">class</font>&nbsp;<font color="#ffffb6">Foo</font>
+<pre class="ir_black"><font color="#96cbfe">class</font>&nbsp;<font color="#ffffb6">Foo</font>
 &nbsp;&nbsp;attr_initializer <font color="#99cc99">:bar</font>, <font color="#99cc99">:baz</font>
 <font color="#96cbfe">end</font></pre>
 
 Much better, if you ask me. Here is one example of how to do this.
 
-<pre style="background: #000000; color: #f6f3e8; font-family: Monaco, monospace" class="ir_black"><font color="#96cbfe">class</font>&nbsp;<font color="#ffffb6">Class</font>
+<pre class="ir_black"><font color="#96cbfe">class</font>&nbsp;<font color="#ffffb6">Class</font>
 &nbsp;&nbsp;<font color="#96cbfe">def</font>&nbsp;<font color="#ffd2a7">attr_initializer</font>(*attributes)
 &nbsp;&nbsp;&nbsp;&nbsp;<font color="#6699cc">attr_reader</font>&nbsp;*attributes
 &nbsp;&nbsp;&nbsp;&nbsp;<font color="#6699cc">class_eval</font>&nbsp;&lt;&lt;-<font color="#336633">RUBY</font>
@@ -32,7 +32,7 @@ Much better, if you ask me. Here is one example of how to do this.
 
 No piece of code is complete without tests, so this is it:
 
-<pre style="background: #000000; color: #f6f3e8; font-family: Monaco, monospace" class="ir_black"><font color="#96cbfe">class</font>&nbsp;<font color="#ffffb6">AttrInitializerTests</font>&nbsp;&lt; <font color="#ffffb6">Test</font>::<font color="#ffffb6">Unit</font>::<font color="#ffffb6">TestCase</font>
+<pre class="ir_black"><font color="#96cbfe">class</font>&nbsp;<font color="#ffffb6">AttrInitializerTests</font>&nbsp;&lt; <font color="#ffffb6">Test</font>::<font color="#ffffb6">Unit</font>::<font color="#ffffb6">TestCase</font>
 
 &nbsp;&nbsp;<font color="#96cbfe">def</font>&nbsp;<font color="#ffd2a7">test_attr_initializer</font>
 &nbsp;&nbsp;&nbsp;&nbsp;klass = <font color="#ffffb6">Class</font>.new <font color="#6699cc">do</font>

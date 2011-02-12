@@ -4,18 +4,18 @@ In views you can automatically scope translations to the view you're working in.
 
 So this HAML code (in the `users#index` view):
 
-<pre style="background: #000000; color: #f6f3e8; font-family: Monaco, monospace" class="ir_black"><font color="#e18964">=</font>&nbsp;t(<font color="#336633">'</font><font color="#a8ff60">.foo</font><font color="#336633">'</font>)
+<pre class="ir_black"><font color="#e18964">=</font>&nbsp;t(<font color="#336633">'</font><font color="#a8ff60">.foo</font><font color="#336633">'</font>)
 </pre>
 
 It's the same as:
 
-<pre style="background: #000000; color: #f6f3e8; font-family: Monaco, monospace" class="ir_black"><font color="#e18964">=</font>&nbsp;t(<font color="#99cc99">:foo</font>, <font color="#99cc99">:scope</font>&nbsp;=&gt; [<font color="#99cc99">:users</font>, <font color="#99cc99">:index</font>])</pre>
+<pre class="ir_black"><font color="#e18964">=</font>&nbsp;t(<font color="#99cc99">:foo</font>, <font color="#99cc99">:scope</font>&nbsp;=&gt; [<font color="#99cc99">:users</font>, <font color="#99cc99">:index</font>])</pre>
 
 I use this technique a lot.
 
 Anyway, we could clean up it even more, by making a dynamic dispatcher. It would look something like this:
 
-<pre style="background: #000000; color: #f6f3e8; font-family: Monaco, monospace" class="ir_black"><font color="#96cbfe">module</font>&nbsp;<font color="#ffffb6">ViewTranslatorHelper</font>
+<pre class="ir_black"><font color="#96cbfe">module</font>&nbsp;<font color="#ffffb6">ViewTranslatorHelper</font>
 
 &nbsp;&nbsp;<font color="#96cbfe">def</font>&nbsp;<font color="#ffd2a7">vt</font>
 &nbsp;&nbsp;&nbsp;&nbsp;<font color="#c6c5fe">@view_translator</font>&nbsp;||= <font color="#ffffb6">ViewTranslator</font>.new(<font color="#99cc99">self</font>)
@@ -42,7 +42,7 @@ Anyway, we could clean up it even more, by making a dynamic dispatcher. It would
 
 And now you can write:
 
-<pre style="background: #000000; color: #f6f3e8; font-family: Monaco, monospace" class="ir_black"><font color="#e18964">=</font>&nbsp;vt.foo</pre>
+<pre class="ir_black"><font color="#e18964">=</font>&nbsp;vt.foo</pre>
 
 ### How does this work?
 
@@ -50,7 +50,7 @@ The `vt` method returns `ViewTranslator` instance. It is cached inside an instan
 
 When we define `method_missing` every single method we call on it will be passed to there. We could call `@template.t` directly from here, but we don't. To know why, we must know how `method_missing` works. When you call a method on an object, it looks to see if the object knows the method. When it doesn't know it, it looks to it's superclass and tries again. This happens all the way until it reaches the top of the chain. In Ruby 1.8 that is `Object`, because every object inherits from `Object`. Ruby 1.9 goes one step further and goes to `BasicObject`. If a method is not found anywhere, it will go to the original object you called the method on and it calls `method_missing`. Since that usually isn't there, it goes up the superclass chain until it comes to (`Basic`)`Object`. There it exists. It will raise the exception we all know and hate: `NoMethodError`. You can do this yourself too:
 
-<pre style="background: #000000; color: #f6f3e8; font-family: Monaco, monospace" class="ir_black">> "any object".method_missing(:to_s)
+<pre class="ir_black">> "any object".method_missing(:to_s)
 NoMethodError: undefined method `to_s' for "any object":String
 </pre>
 

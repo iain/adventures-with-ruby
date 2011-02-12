@@ -3,7 +3,7 @@ A while back, I talked about [new additions to ActiveSupport](/3-times-activesup
 I got a few of them lying around, so I am going to post one every month. I also welcome your favorite monkey patch, which you can [email me](mailto:monkey@iain.nl).
 
 So, the first one: **group_by**. This method groups arrays of objects by the result of the block provided and puts the result into a hash.
-<pre style="background: #000000; color: #f6f3e8; font-family: Monaco, monospace" class="ir_black"><font color="#96cbfe">class</font>&nbsp;<font color="#ffffb6">Array</font>
+<pre class="ir_black"><font color="#96cbfe">class</font>&nbsp;<font color="#ffffb6">Array</font>
 &nbsp;&nbsp;<font color="#7c7c7c"># Turns an array into a hash, using the results of the block as keys for the</font>
 &nbsp;&nbsp;<font color="#7c7c7c"># hash.</font>
 &nbsp;&nbsp;<font color="#7c7c7c">#</font>
@@ -21,7 +21,7 @@ So, the first one: **group_by**. This method groups arrays of objects by the res
 
 No piece of code is complete without tests, so this is it:
 
-<pre style="background: #000000; color: #f6f3e8; font-family: Monaco, monospace" class="ir_black"><font color="#96cbfe">class</font>&nbsp;<font color="#ffffb6">ArrayExtGroupingTests</font>&nbsp;&lt; <font color="#ffffb6">Test</font>::<font color="#ffffb6">Unit</font>::<font color="#ffffb6">TestCase</font>
+<pre class="ir_black"><font color="#96cbfe">class</font>&nbsp;<font color="#ffffb6">ArrayExtGroupingTests</font>&nbsp;&lt; <font color="#ffffb6">Test</font>::<font color="#ffffb6">Unit</font>::<font color="#ffffb6">TestCase</font>
 
 &nbsp;&nbsp;<font color="#96cbfe">def</font>&nbsp;<font color="#ffd2a7">test_group_by</font>
 &nbsp;&nbsp;&nbsp;&nbsp;assert_equal {<font color="#99cc99">true</font>=&gt;[<font color="#ff73fd">1</font>, <font color="#ff73fd">3</font>], <font color="#99cc99">false</font>=&gt;[<font color="#ff73fd">2</font>, <font color="#ff73fd">4</font>]}, [<font color="#ff73fd">1</font>, <font color="#ff73fd">2</font>, <font color="#ff73fd">3</font>, <font color="#ff73fd">4</font>].group_by(&amp;<font color="#99cc99">:odd?</font>)

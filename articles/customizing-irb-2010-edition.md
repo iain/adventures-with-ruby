@@ -6,7 +6,7 @@ There are several tools to improve your IRB, and some of them have been around f
 
 This means that you cannot be sure that extensions like Wirble are available in your new and shiny Rails console. There is only one way around that: add them to your Gemfile. This is what I usually add:
 
-<pre class="ir_black" style="background: #000000; color: #f6f3e8;"><!-- you're looking at ir_black colorscheme exported by macvim, I don't write my HTML like this AT ALL, seriously!  But, why in FSM's name are you reading my source? --><font face="Monaco, Courier new, monospace"><font color="#96cbfe">group</font>&nbsp;<font color="#99cc99">:development</font>&nbsp;<font color="#6699cc">do</font>
+<pre class="ir_black"><!-- you're looking at ir_black colorscheme exported by macvim, I don't write my HTML like this AT ALL, seriously!  But, why in FSM's name are you reading my source? --><font face="Monaco, Courier new, monospace"><font color="#96cbfe">group</font>&nbsp;<font color="#99cc99">:development</font>&nbsp;<font color="#6699cc">do</font>
 &nbsp;&nbsp;<font color="#96cbfe">gem</font>&nbsp;<font color="#336633">&quot;</font><font color="#a8ff60">wirble</font><font color="#336633">&quot;</font>
 &nbsp;&nbsp;<font color="#96cbfe">gem</font>&nbsp;<font color="#336633">&quot;</font><font color="#a8ff60">hirb</font><font color="#336633">&quot;</font>
 &nbsp;&nbsp;<font color="#96cbfe">gem</font>&nbsp;<font color="#336633">&quot;</font><font color="#a8ff60">awesome_print</font><font color="#336633">&quot;</font>, <font color="#99cc99">:require</font>&nbsp;=&gt; <font color="#336633">&quot;</font><font color="#a8ff60">ap</font><font color="#336633">&quot;</font>

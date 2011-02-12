@@ -9,15 +9,15 @@ One thing that especially  enjoys me is that you cannot go to the next line unpu
 But those are just tiny problems. After a while of using Haml, I can't imagine going back to ERB for an entire website. It is too tiresome using ERB, compared to Haml. And a good programmer is a lazy programmer, although admittedly not the other way round. ;)
 
 One more tip: use helpers to render partials or partial-layouts to output HTML. That way you can have this kind of code:
-<pre lang="rails">
-# in your view:
-= in_special_block do
-  %li.username=  h(@user.name)
-  %li.edit_link= link_to( 'edit', edit_user_url(@user) )
 
-# in your helper:
-def in_special_block
-  # do stuff
-  render(:layout => 'shared/block_layout') { yield }
-  # other stuff
-end</pre>
+    # in your view:
+    = in_special_block do
+      %li.username=  h(@user.name)
+      %li.edit_link= link_to( 'edit', edit_user_url(@user) )
+
+    # in your helper:
+    def in_special_block
+      # do stuff
+      render(:layout => 'shared/block_layout') { yield }
+      # other stuff
+    end

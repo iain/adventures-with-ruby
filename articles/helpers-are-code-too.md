@@ -12,7 +12,7 @@ There are a couple of ways to keep it clean. Sometimes they are called "Presente
 
 Here's an example of a typical helper:
 
-<pre style="background: #000000; color: #f6f3e8; font-family: Monaco, monospace" class="ir_black"><font color="#96cbfe">module</font>&nbsp;<font color="#ffffb6">PostsHelper</font>
+<pre class="ir_black"><font color="#96cbfe">module</font>&nbsp;<font color="#ffffb6">PostsHelper</font>
 
 &nbsp;&nbsp;<font color="#96cbfe">def</font>&nbsp;<font color="#ffd2a7">post_title</font>(post)
 &nbsp;&nbsp;&nbsp;&nbsp;header_class = post.published? ? <font color="#336633">&quot;</font><font color="#a8ff60">published</font><font color="#336633">&quot;</font>&nbsp;: <font color="#336633">&quot;</font><font color="#a8ff60">normal</font><font color="#336633">&quot;</font>
@@ -42,7 +42,7 @@ And what if you need to extend it? What if you need approve and reject links as 
 
 This is an example of how I would do it:
 
-<pre style="background: #000000; color: #f6f3e8; font-family: Monaco, monospace" class="ir_black"><font color="#96cbfe">module</font>&nbsp;<font color="#ffffb6">PostsHelper</font>
+<pre class="ir_black"><font color="#96cbfe">module</font>&nbsp;<font color="#ffffb6">PostsHelper</font>
 
 &nbsp;&nbsp;<font color="#96cbfe">def</font>&nbsp;<font color="#ffd2a7">post_title</font>(post)
 &nbsp;&nbsp;&nbsp;&nbsp;<font color="#ffffb6">PostTitle</font>.new(<font color="#99cc99">self</font>, post).to_html

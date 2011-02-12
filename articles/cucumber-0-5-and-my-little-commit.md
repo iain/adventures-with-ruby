@@ -14,7 +14,7 @@ By the way, you can still use "*Gegeven*", as it is just an alias.
 
 I am constantly wrestling with the best way write cucumber features down. Does anyone have Dutch features? Do you write them down with your customers or are they for developers only? Can you share some of them? Here are some of mine:
 
-<pre style="background: #000000; color: #f6f3e8; font-family: Monaco, monospace" class="ir_black">
+<pre class="ir_black">
 <font color="#96cbfe">Scenario:</font>&nbsp;Inloggen
 &nbsp;&nbsp;<font color="#6699cc">Stel</font>&nbsp;ik ben uitgelogd
 &nbsp;&nbsp;<font color="#6699cc">En</font>&nbsp;ik heb een account voor &quot;gebruiker@test.com&quot; met het wachtwoord &quot;geheim&quot;

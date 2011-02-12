@@ -8,12 +8,10 @@ Sometimes you don't want this behavior. It can get in the way of `wget`, which s
 
 The easiest way I found was to override a helper method:
 
-<pre lang="rails">
-module ApplicationHelper
-  def rewrite_asset_path(source)
-    source
-  end
-end
-</pre>
+    module ApplicationHelper
+      def rewrite_asset_path(source)
+        source
+      end
+    end
 
 Please correct me if there is a simpler way!

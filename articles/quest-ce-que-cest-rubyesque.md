@@ -39,7 +39,7 @@ The *flow* in Ruby is not to perform any check of the objects. If you're explici
 
 In Ruby, nothing is final. This allows for the ability to add and change anything in any object, including core classes. This is called Monkey Patching or [duck punching](http://en.wikipedia.org/wiki/Duck_punching). This results in even nicer and more readable code, like:
 
-<pre style="background: #000000; color: #f6f3e8; font-family: Monaco, monospace" class="ir_black"><font color="#ff73fd">15</font>.minutes.ago</pre>
+<pre class="ir_black"><font color="#ff73fd">15</font>.minutes.ago</pre>
 
 
 Nobody needs to explain this. Nobody needs to look up any documents to understand what is going on here. Monkey patching can improve the readability of the code immensely.
@@ -54,13 +54,13 @@ Some of Ruby's punctuation is optional. Ruby programmers love to leave them out.
 
 Rubyists rather write this:
 
-<pre style="background: #000000; color: #f6f3e8; font-family: Monaco, monospace" class="ir_black"><font color="#96cbfe">class</font>&nbsp;<font color="#ffffb6">Post</font>
+<pre class="ir_black"><font color="#96cbfe">class</font>&nbsp;<font color="#ffffb6">Post</font>
 &nbsp;&nbsp;belongs_to <font color="#99cc99">:author</font>, <font color="#99cc99">:dependent</font>&nbsp;=&gt; <font color="#99cc99">:destroy</font>
 <font color="#96cbfe">end</font></pre>
 
 Than the same code with all punctuation visible:
 
-<pre style="background: #000000; color: #f6f3e8; font-family: Monaco, monospace" class="ir_black"><font color="#96cbfe">class</font>&nbsp;<font color="#ffffb6">Post</font>
+<pre class="ir_black"><font color="#96cbfe">class</font>&nbsp;<font color="#ffffb6">Post</font>
 &nbsp;&nbsp;belongs_to(<font color="#99cc99">:author</font>, {<font color="#99cc99">:dependent</font>&nbsp;=&gt; <font color="#99cc99">:destroy</font>})
 <font color="#96cbfe">end</font></pre>
 
@@ -75,13 +75,13 @@ There are only a few genuine language constructs. There are just three elements 
 
 The rest of the keywords you see are just shortcuts, you can type to perform common tasks. Like defining a class:
 
-<pre style="background: #000000; color: #f6f3e8; font-family: Monaco, monospace" class="ir_black"><font color="#96cbfe">class</font>&nbsp;<font color="#ffffb6">Car</font>&nbsp;&lt; <font color="#ffffb6">Vehicle</font>
+<pre class="ir_black"><font color="#96cbfe">class</font>&nbsp;<font color="#ffffb6">Car</font>&nbsp;&lt; <font color="#ffffb6">Vehicle</font>
 &nbsp;&nbsp;<font color="#7c7c7c"># ...</font>
 <font color="#96cbfe">end</font></pre>
 
 The Ruby interpreter reads this as:
 
-<pre style="background: #000000; color: #f6f3e8; font-family: Monaco, monospace" class="ir_black"><font color="#ffffb6">Car</font>&nbsp;= <font color="#ffffb6">Class</font>.new(<font color="#ffffb6">Vehicle</font>) <font color="#6699cc">do</font>
+<pre class="ir_black"><font color="#ffffb6">Car</font>&nbsp;= <font color="#ffffb6">Class</font>.new(<font color="#ffffb6">Vehicle</font>) <font color="#6699cc">do</font>
 &nbsp;&nbsp;<font color="#7c7c7c"># ...</font>
 <font color="#6699cc">end</font></pre>
 
@@ -89,14 +89,14 @@ Defining a class is actually just a method called on an object. The first argume
 
 Some other examples:
 
-<pre style="background: #000000; color: #f6f3e8; font-family: Monaco, monospace" class="ir_black">counter += <font color="#ff73fd">1</font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font color="#7c7c7c"># this is a shortcut</font>
+<pre class="ir_black">counter += <font color="#ff73fd">1</font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font color="#7c7c7c"># this is a shortcut</font>
 counter = counter + <font color="#ff73fd">1</font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#7c7c7c"># without the shortcut, but also without punctuation</font>
 counter = counter.+(<font color="#ff73fd">1</font>)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font color="#7c7c7c"># without the shortcut and with all punctuation (yes, + is just a method)</font></pre>
 
-<pre style="background: #000000; color: #f6f3e8; font-family: Monaco, monospace" class="ir_black"><font color="#c6c5fe">@user</font>&nbsp;||= <font color="#ffffb6">User</font>.new&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font color="#7c7c7c"># this is called a 'teapot'-operator or 'or-or-equals'</font>
+<pre class="ir_black"><font color="#c6c5fe">@user</font>&nbsp;||= <font color="#ffffb6">User</font>.new&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font color="#7c7c7c"># this is called a 'teapot'-operator or 'or-or-equals'</font>
 <font color="#c6c5fe">@user</font>&nbsp;= <font color="#c6c5fe">@user</font>&nbsp;|| <font color="#ffffb6">User</font>.new&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#7c7c7c"># assign @user to @user if it exists, otherwise create a new user</font></pre>
 
-<pre style="background: #000000; color: #f6f3e8; font-family: Monaco, monospace" class="ir_black"><font color="#6699cc">exit</font>&nbsp;<font color="#6699cc">unless</font>&nbsp;busy <font color="#6699cc">or</font>&nbsp;cancelled&nbsp;&nbsp;<font color="#7c7c7c"># 'unless' is a shortcut for 'if !()'</font>
+<pre class="ir_black"><font color="#6699cc">exit</font>&nbsp;<font color="#6699cc">unless</font>&nbsp;busy <font color="#6699cc">or</font>&nbsp;cancelled&nbsp;&nbsp;<font color="#7c7c7c"># 'unless' is a shortcut for 'if !()'</font>
 <font color="#6699cc">exit</font>&nbsp;<font color="#6699cc">if</font>&nbsp;!(busy <font color="#6699cc">or</font>&nbsp;cancelled)&nbsp;&nbsp; <font color="#7c7c7c"># 'if' at the end of a sentence is also a shortcut</font>
 <font color="#6699cc">if</font>&nbsp;!(busy <font color="#6699cc">or</font>&nbsp;cancelled)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#7c7c7c"># for a regular if</font>
 &nbsp;&nbsp;<font color="#6699cc">exit</font>
@@ -114,7 +114,7 @@ The naming of variables and methods is extremely important. The meaning of the c
 
 A fantastic example is [Rspec](http://rspec.info), my favorite test framework.
 
-<pre style="background: #000000; color: #f6f3e8; font-family: Monaco, monospace" class="ir_black">describe <font color="#ffffb6">Post</font>&nbsp;<font color="#6699cc">do</font>
+<pre class="ir_black">describe <font color="#ffffb6">Post</font>&nbsp;<font color="#6699cc">do</font>
 
 &nbsp;&nbsp;context <font color="#336633">&quot;</font><font color="#a8ff60">when it's not approved</font><font color="#336633">&quot;</font>&nbsp;<font color="#6699cc">do</font>
 &nbsp;&nbsp;&nbsp;&nbsp;subject { <font color="#ffffb6">Post</font>.new(<font color="#99cc99">:approved</font>&nbsp;=&gt; <font color="#99cc99">false</font>) }

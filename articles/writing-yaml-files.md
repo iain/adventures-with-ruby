@@ -2,7 +2,7 @@ A short one for today: How do I write [YAML](http://en.wikipedia.org/wiki/YAML) 
 
 Well, to get the prettiest results, I do something like this:
 
-<pre style="background: #000000; color: #f6f3e8; font-family: Monaco, monospace" class="ir_black"><font color="#96cbfe">def</font>&nbsp;<font color="#ffd2a7">write</font>(filename, hash)
+<pre class="ir_black"><font color="#96cbfe">def</font>&nbsp;<font color="#ffd2a7">write</font>(filename, hash)
 &nbsp;&nbsp;<font color="#ffffb6">File</font>.open(filename, <font color="#336633">&quot;</font><font color="#a8ff60">w</font><font color="#336633">&quot;</font>) <font color="#6699cc">do</font>&nbsp;|<font color="#c6c5fe">f</font>|
 &nbsp;&nbsp;&nbsp;&nbsp;f.write(yaml(hash))
 &nbsp;&nbsp;<font color="#6699cc">end</font>
@@ -20,7 +20,7 @@ Then I turn all keys into strings with the method `deep_stringify_keys`, so the 
 
 To add the `deep_stringify_keys`, open the Hash class:
 
-<pre style="background: #000000; color: #f6f3e8; font-family: Monaco, monospace" class="ir_black">
+<pre class="ir_black">
 <font color="#96cbfe">class</font>&nbsp;<font color="#ffffb6">Hash</font>
 &nbsp;&nbsp;<font color="#96cbfe">def</font>&nbsp;<font color="#ffd2a7">deep_stringify_keys</font>
 &nbsp;&nbsp;&nbsp;&nbsp;new_hash = {}
@@ -32,7 +32,7 @@ To add the `deep_stringify_keys`, open the Hash class:
 
 Here are the specs for this:
 
-<pre style="background: #000000; color: #f6f3e8; font-family: Monaco, monospace" class="ir_black">
+<pre class="ir_black">
 describe <font color="#336633">&quot;</font><font color="#a8ff60">Writing YAML files</font><font color="#336633">&quot;</font>&nbsp;<font color="#6699cc">do</font>
 
 &nbsp;&nbsp;before <font color="#99cc99">:all</font>&nbsp;<font color="#6699cc">do</font>

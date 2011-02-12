@@ -2,7 +2,7 @@ I've updated my Gemfile syntax file, adding a dash of color and making sure it s
 
 This is how it looks with the [ir_black](http://github.com/iain/osx_settings/blob/master/.vim/colors/ir_black.vim) colorscheme:
 
-<pre style="background: #000000; color: #f6f3e8; font-family: Monaco, monospace" class="ir_black"><font color="#96cbfe">source</font>&nbsp;<font color="#99cc99">:rubygems</font>
+<pre class="ir_black"><font color="#96cbfe">source</font>&nbsp;<font color="#99cc99">:rubygems</font>
 <font color="#ffd2a7">gem</font>&nbsp;<font color="#336633">'</font><font color="#a8ff60">rails</font><font color="#336633">'</font>
 <font color="#ffd2a7">gem</font>&nbsp;<font color="#336633">'</font><font color="#a8ff60">hoptoad_notifier</font><font color="#336633">'</font>
 <font color="#ffd2a7">gem</font>&nbsp;<font color="#336633">'</font><font color="#a8ff60">newrelic_rpm</font><font color="#336633">'</font>, <font color="#99cc99">:require</font>&nbsp;=&gt; <font color="#99cc99">false</font>

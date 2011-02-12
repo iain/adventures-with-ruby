@@ -4,7 +4,7 @@ Programmers humor dictates me that from time to time I say things like "In Ruby,
 
 So here it is. It looks more like Perl than Ruby. But it works!
 
-<pre style="background: #000000; color: #f6f3e8; font-family: Monaco, monospace" class="ir_black"><font color="#ffffb6">String</font>.class_eval{define_method(<font color="#99cc99">:to_grid</font>){(<font color="#99cc99">self</font>&nbsp;=~ <font color="#ff8000">/</font><font color="#e18964">\A</font><font color="#e18964">(</font><font color="#e18964">\d</font><font color="#e18964">+</font><font color="#e18964">)</font><font color="#b18a3d">x</font><font color="#e18964">(</font><font color="#e18964">\d</font><font color="#e18964">+</font><font color="#e18964">)</font><font color="#e18964">\z</font><font color="#ff8000">/</font>&nbsp;?
+<pre class="ir_black"><font color="#ffffb6">String</font>.class_eval{define_method(<font color="#99cc99">:to_grid</font>){(<font color="#99cc99">self</font>&nbsp;=~ <font color="#ff8000">/</font><font color="#e18964">\A</font><font color="#e18964">(</font><font color="#e18964">\d</font><font color="#e18964">+</font><font color="#e18964">)</font><font color="#b18a3d">x</font><font color="#e18964">(</font><font color="#e18964">\d</font><font color="#e18964">+</font><font color="#e18964">)</font><font color="#e18964">\z</font><font color="#ff8000">/</font>&nbsp;?
 (<font color="#ff73fd">0</font>...split(<font color="#336633">'</font><font color="#a8ff60">x</font><font color="#336633">'</font>).last.to_i).map{|<font color="#c6c5fe">_</font>|&nbsp;(<font color="#ff73fd">0</font>...split(<font color="#336633">'</font><font color="#a8ff60">x</font><font color="#336633">'</font>).first.to_i).map{|<font color="#c6c5fe">_</font>|&nbsp;rand &gt; <font color="#ff73fd">0.5</font>&nbsp;} } :
 split(<font color="#336633">&quot;</font><font color="#e18964">\n</font><font color="#336633">&quot;</font>).map{|<font color="#c6c5fe">row</font>|&nbsp;row.split(<font color="#ff8000">//</font>).map{|<font color="#c6c5fe">cell_string</font>|&nbsp;cell_string == <font color="#336633">&quot;</font><font color="#a8ff60">o</font><font color="#336633">&quot;</font>&nbsp;} }
 ).tap{|<font color="#c6c5fe">grid</font>|&nbsp;grid.class.class_eval{define_method(<font color="#99cc99">:next</font>){each{|<font color="#c6c5fe">row</font>|&nbsp;
@@ -23,7 +23,7 @@ I didn't cheat! No semicolons where harmed during the making of the spaghetti co
 
 You can use it like this:
 
-<pre style="background: #000000; color: #f6f3e8; font-family: Monaco, monospace" class="ir_black"><font color="#7c7c7c"># generate a random grid</font>
+<pre class="ir_black"><font color="#7c7c7c"># generate a random grid</font>
 grid = <font color="#336633">&quot;</font><font color="#a8ff60">100x30</font><font color="#336633">&quot;</font>.to_grid
 <font color="#7c7c7c"># show the grid:</font>
 puts grid.to_s

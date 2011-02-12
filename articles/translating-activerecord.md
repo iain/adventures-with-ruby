@@ -7,7 +7,7 @@ With Rails 2.2 releasing any day now, I want to show you how to translate Active
 
 Suppose we're building a forum. A forum has several types (e.g. admin) of users and suppose we want to make the most important users into separate models using Single Table Inheritance (sti). This gives us the most complete scenario in showing off all translations:
 
-<pre style="background: #000000; color: #f6f3e8; font-family: Monaco, monospace" class="ir_black"><font color="#96cbfe">class</font>&nbsp;<font color="#ffffb6">User</font>&nbsp;&lt; <font color="#ffffb6">ActiveRecord</font>::<font color="#ffffb6">Base</font>
+<pre class="ir_black"><font color="#96cbfe">class</font>&nbsp;<font color="#ffffb6">User</font>&nbsp;&lt; <font color="#ffffb6">ActiveRecord</font>::<font color="#ffffb6">Base</font>
 &nbsp;&nbsp;validates_presence_of <font color="#99cc99">:name</font>, <font color="#99cc99">:email</font>, <font color="#99cc99">:encrypted_password</font>, <font color="#99cc99">:salt</font>
 &nbsp;&nbsp;validates_uniqueness_of <font color="#99cc99">:email</font>, <font color="#99cc99">:message</font>&nbsp;=&gt; <font color="#99cc99">:already_registered</font>
 <font color="#96cbfe">end</font>
@@ -26,11 +26,11 @@ Make sure you're running Rails 2.2 or Rails edge (`rake rails:freeze:edge`)
 
 Now let's translate all this into [LOLCAT](http://icanhascheezburger.com), just for fun. We need a directory to place the locale files:
 
-<pre style="background: #000000; color: #f6f3e8; font-family: Monaco, monospace" class="ir_black">mkdir app/locales</pre>
+<pre class="ir_black">mkdir app/locales</pre>
 
 And we need to load all files as soon as the application starts. So we make an initializer:
 
-<pre style="background: #000000; color: #f6f3e8; font-family: Monaco, monospace" class="ir_black"><font color="#7c7c7c"># config/initializers/load_translations.rb</font>
+<pre class="ir_black"><font color="#7c7c7c"># config/initializers/load_translations.rb</font>
 <font color="#336633">%w{</font><font color="#a8ff60">yml rb</font><font color="#336633">}</font>.each <font color="#6699cc">do</font>&nbsp;|<font color="#c6c5fe">type</font>|
 &nbsp;&nbsp;<font color="#ffffb6">I18n</font>.load_path += <font color="#ffffb6">Dir</font>.glob(<font color="#336633">&quot;</font><font color="#00a0a0">#{</font><font color="#ffffb6">RAILS_ROOT</font><font color="#00a0a0">}</font><font color="#a8ff60">/app/locales/**/*.</font><font color="#00a0a0">#{</font>type<font color="#00a0a0">}</font><font color="#336633">&quot;</font>)
 <font color="#6699cc">end</font>
@@ -42,7 +42,7 @@ This approach is recommended, because loading files is not something you want to
 
 Next, we're going to make some simple translation files. All ActiveRecord translations need to be in the activerecord scope. So when starting your locale file, it starts with the locale name, followed by the scope.
 
-<pre style="background: #000000; color: #f6f3e8; font-family: Monaco, monospace" class="ir_black"><font color="#c6c5fe">LOL</font><font color="#00a0a0">:</font>
+<pre class="ir_black"><font color="#c6c5fe">LOL</font><font color="#00a0a0">:</font>
 &nbsp;&nbsp;<font color="#c6c5fe">activerecord</font><font color="#00a0a0">:</font>
 &nbsp;&nbsp;&nbsp;&nbsp;<font color="#c6c5fe">models</font><font color="#00a0a0">:</font>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#c6c5fe">user</font><font color="#00a0a0">:</font>&nbsp;kitteh
@@ -50,7 +50,7 @@ Next, we're going to make some simple translation files. All ActiveRecord transl
 
 Let's try this out in `script/console`
 
-<pre style="background: #000000; color: #f6f3e8; font-family: Monaco, monospace" class="ir_black">
+<pre class="ir_black">
 >> User.human_name
 => "kitteh"
 >> Admin.human_name
@@ -65,7 +65,7 @@ If you didn't specify the translation of admin, it would have used the translati
 
 We could append to the same file, but I choose to make a new file, because it keeps this post clean and it's a bit easier to see how the scoping works.
 
-<pre style="background: #000000; color: #f6f3e8; font-family: Monaco, monospace" class="ir_black"><font color="#c6c5fe">LOL</font><font color="#00a0a0">:</font>
+<pre class="ir_black"><font color="#c6c5fe">LOL</font><font color="#00a0a0">:</font>
 &nbsp;&nbsp;<font color="#c6c5fe">activerecord</font><font color="#00a0a0">:</font>
 &nbsp;&nbsp;&nbsp;&nbsp;<font color="#c6c5fe">attributes</font><font color="#00a0a0">:</font>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#c6c5fe">user</font><font color="#00a0a0">:</font>
@@ -74,7 +74,7 @@ We could append to the same file, but I choose to make a new file, because it ke
 
 And let's try this again:
 
-<pre style="background: #000000; color: #f6f3e8; font-family: Monaco, monospace" class="ir_black">
+<pre class="ir_black">
 >> User.human_attribute_name("name")
 => "naem"
 >> Admin.human_attribute_name("email")
@@ -89,7 +89,7 @@ Both human_name and human_attribute cannot really fail, because if no translatio
 
 Let's translate a few default messages:
 
-<pre style="background: #000000; color: #f6f3e8; font-family: Monaco, monospace" class="ir_black"><font color="#c6c5fe">LOL</font><font color="#00a0a0">:</font>
+<pre class="ir_black"><font color="#c6c5fe">LOL</font><font color="#00a0a0">:</font>
 &nbsp;&nbsp;<font color="#c6c5fe">activerecord</font><font color="#00a0a0">:</font>
 &nbsp;&nbsp;&nbsp;&nbsp;<font color="#c6c5fe">errors</font><font color="#00a0a0">:</font>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#c6c5fe">messages</font><font color="#00a0a0">:</font>
@@ -97,7 +97,7 @@ Let's translate a few default messages:
 </pre>
 
 
-<pre style="background: #000000; color: #f6f3e8; font-family: Monaco, monospace" class="ir_black">
+<pre class="ir_black">
 >> u = User.new
 => #<User id: nil, etc>
 >> u.valid?
@@ -110,14 +110,14 @@ Let's translate a few default messages:
 
 You have more freedom in your validation messages now. With every message you can interpolate the translated name of the model, the attribute and the value. The variable 'count' is also available where applicable (e.g. `validates_length_of`)
 
-<pre style="background: #000000; color: #f6f3e8; font-family: Monaco, monospace" class="ir_black"><font color="#c6c5fe">LOL</font><font color="#00a0a0">:</font>
+<pre class="ir_black"><font color="#c6c5fe">LOL</font><font color="#00a0a0">:</font>
 &nbsp;&nbsp;<font color="#c6c5fe">activerecord</font><font color="#00a0a0">:</font>
 &nbsp;&nbsp;&nbsp;&nbsp;<font color="#c6c5fe">errors</font><font color="#00a0a0">:</font>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#c6c5fe">messages</font><font color="#00a0a0">:</font>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#c6c5fe">already_registered</font><font color="#00a0a0">:</font>&nbsp;<font color="#a8ff60">&quot;u already is {{model}}&quot;</font>
 </pre>
 
-<pre style="background: #000000; color: #f6f3e8; font-family: Monaco, monospace" class="ir_black">
+<pre class="ir_black">
 >> u.errors.on(:email)
 => "u already is kitteh"
 </pre>
@@ -128,7 +128,7 @@ Remember to put quotes around the translation key in yaml, because it'll fail wi
 
 A message specified in the activerecord.errors.models scope overrides the translation of this kind of message for the entire model.
 
-<pre style="background: #000000; color: #f6f3e8; font-family: Monaco, monospace" class="ir_black"><font color="#c6c5fe">LOL</font><font color="#00a0a0">:</font>
+<pre class="ir_black"><font color="#c6c5fe">LOL</font><font color="#00a0a0">:</font>
 &nbsp;&nbsp;<font color="#c6c5fe">activerecord</font><font color="#00a0a0">:</font>
 &nbsp;&nbsp;&nbsp;&nbsp;<font color="#c6c5fe">errors</font><font color="#00a0a0">:</font>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#c6c5fe">messages</font><font color="#00a0a0">:</font>
@@ -137,7 +137,7 @@ A message specified in the activerecord.errors.models scope overrides the transl
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#c6c5fe">admin</font><font color="#00a0a0">:</font>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#c6c5fe">blank</font><font color="#00a0a0">:</font>&nbsp;<font color="#a8ff60">&quot;want!&quot;</font></pre>
 
-<pre style="background: #000000; color: #f6f3e8; font-family: Monaco, monospace" class="ir_black">
+<pre class="ir_black">
 >> u.errors.on(:name)
 => "can has nottin"
 >> a = Admin.new
@@ -153,7 +153,7 @@ A message specified in the activerecord.errors.models scope overrides the transl
 
 Any translation in the activerecord.errors.models.model_name.attributes scope overrides model specific attribute- and default messages.
 
-<pre style="background: #000000; color: #f6f3e8; font-family: Monaco, monospace" class="ir_black"><font color="#c6c5fe">LOL</font><font color="#00a0a0">:</font>
+<pre class="ir_black"><font color="#c6c5fe">LOL</font><font color="#00a0a0">:</font>
 &nbsp;&nbsp;<font color="#c6c5fe">activerecord</font><font color="#00a0a0">:</font>
 &nbsp;&nbsp;&nbsp;&nbsp;<font color="#c6c5fe">errors</font><font color="#00a0a0">:</font>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#c6c5fe">models</font><font color="#00a0a0">:</font>
@@ -163,7 +163,7 @@ Any translation in the activerecord.errors.models.model_name.attributes scope ov
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#c6c5fe">salt</font><font color="#00a0a0">:</font>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#c6c5fe">blank</font><font color="#00a0a0">:</font>&nbsp;<font color="#a8ff60">&quot;is needed for cheezburger&quot;</font></pre>
 
-<pre style="background: #000000; color: #f6f3e8; font-family: Monaco, monospace" class="ir_black">
+<pre class="ir_black">
 >> a.errors.on(:name)
 => "want!"
 >> a.errors.on(:salt)
@@ -176,7 +176,7 @@ When you specify a symbol as the default option, it will be translated like a no
 
 When you specify a string as default value, it'll use this when no translations have otherwise been found.
 
-<pre style="background: #000000; color: #f6f3e8; font-family: Monaco, monospace" class="ir_black">
+<pre class="ir_black">
 >> a.gender = 'f'
 => "f"
 >> a.valid?
@@ -189,7 +189,7 @@ When you specify a string as default value, it'll use this when no translations 
 
 When you want to display the error messages in a model in a view, most people will user error_messages_for. These messages are also translated. The message has a header and a single line, saying how many errors there are. Here are the default English translations of these messages. I will leave it up to you to translate it to LOLCAT. Win a lifetime supply of cheezburgerz* with this mini-competition ;)
 
-<pre style="background: #000000; color: #f6f3e8; font-family: Monaco, monospace" class="ir_black">en<font color="#ffffff">-</font><font color="#c6c5fe">US</font><font color="#00a0a0">:</font>
+<pre class="ir_black">en<font color="#ffffff">-</font><font color="#c6c5fe">US</font><font color="#00a0a0">:</font>
 &nbsp;&nbsp;<font color="#c6c5fe">activerecord</font><font color="#00a0a0">:</font>
 &nbsp;&nbsp;&nbsp;&nbsp;<font color="#c6c5fe">errors</font><font color="#00a0a0">:</font>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#c6c5fe">template</font><font color="#00a0a0">:</font>

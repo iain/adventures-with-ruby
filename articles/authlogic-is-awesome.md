@@ -8,7 +8,7 @@ You're free to make multiple sessions per user to be able to log in on multiple 
 
 There are no specs provided with AuthLogic, so here are some helpers to spec controllers. Add them to spec_helper.rb or in another file which gets loaded by RSpec.
 
-<pre style="background: #000000; color: #f6f3e8; font-family: Monaco, monospace" class="ir_black"><font color="#96cbfe">def</font>&nbsp;<font color="#ffd2a7">current_user</font>(stubs = {})
+<pre class="ir_black"><font color="#96cbfe">def</font>&nbsp;<font color="#ffd2a7">current_user</font>(stubs = {})
 &nbsp;&nbsp;<font color="#c6c5fe">@current_user</font>&nbsp;||= mock_model(<font color="#ffffb6">User</font>, stubs)
 <font color="#96cbfe">end</font>
 
@@ -26,7 +26,7 @@ There are no specs provided with AuthLogic, so here are some helpers to spec con
 
 So you can write specs like this:
 
-<pre style="background: #000000; color: #f6f3e8; font-family: Monaco, monospace" class="ir_black">describe <font color="#ffffb6">SecretsController</font>&nbsp;<font color="#6699cc">do</font>
+<pre class="ir_black">describe <font color="#ffffb6">SecretsController</font>&nbsp;<font color="#6699cc">do</font>
 &nbsp;&nbsp;before { login }
 &nbsp;&nbsp;it <font color="#336633">&quot;</font><font color="#a8ff60">should be very very secret!</font><font color="#336633">&quot;</font>
 <font color="#6699cc">end</font></pre>

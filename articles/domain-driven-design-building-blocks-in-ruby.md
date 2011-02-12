@@ -18,7 +18,7 @@ Addresses are a good example. The value of the address (e.g. street, house numbe
 
 A pure Ruby way to do this with Structs, which I have mentioned before on this blog. If you're using a document based database, like MongoDB, these would obviously be embedded documents. With ActiveRecord you can use the <a href="http://apidock.com/rails/ActiveRecord/Aggregations/ClassMethods/composed_of">`composed_of`-method</a>. Allow me to demonstrate that:
 
-<pre style="background: #000000; color: #f6f3e8; font-family: Monaco, monospace" class="ir_black"><font color="#7c7c7c"># Attributes of Person include:</font>
+<pre class="ir_black"><font color="#7c7c7c"># Attributes of Person include:</font>
 <font color="#7c7c7c"># </font>
 <font color="#7c7c7c"># * first_name&nbsp;&nbsp;string</font>
 <font color="#7c7c7c"># * name_infix&nbsp;&nbsp;string</font>
@@ -30,7 +30,7 @@ A pure Ruby way to do this with Structs, which I have mentioned before on this b
 &nbsp;&nbsp;composed_of <font color="#99cc99">:gender</font>, <font color="#99cc99">:mapping</font>&nbsp;=&gt; <font color="#ffffb6">Gender</font>.members
 <font color="#96cbfe">end</font></pre>
 
-<pre style="background: #000000; color: #f6f3e8; font-family: Monaco, monospace" class="ir_black"><font color="#96cbfe">class</font>&nbsp;<font color="#ffffb6">Name</font>&nbsp;&lt; <font color="#ffffb6">Struct</font>.new(<font color="#99cc99">:first_name</font>, <font color="#99cc99">:name_infix</font>, <font color="#99cc99">:last_name</font>, <font color="#99cc99">:gender</font>)
+<pre class="ir_black"><font color="#96cbfe">class</font>&nbsp;<font color="#ffffb6">Name</font>&nbsp;&lt; <font color="#ffffb6">Struct</font>.new(<font color="#99cc99">:first_name</font>, <font color="#99cc99">:name_infix</font>, <font color="#99cc99">:last_name</font>, <font color="#99cc99">:gender</font>)
 
 &nbsp;&nbsp;<font color="#96cbfe">def</font>&nbsp;<font color="#ffd2a7">to_s</font>
 &nbsp;&nbsp;&nbsp;&nbsp;[&nbsp;first_name, name_infix, last_name ].select(&amp;<font color="#99cc99">:present?</font>).join(<font color="#336633">'</font><font color="#a8ff60">&nbsp;</font><font color="#336633">'</font>)
@@ -46,7 +46,7 @@ A pure Ruby way to do this with Structs, which I have mentioned before on this b
 
 <font color="#96cbfe">end</font></pre>
 
-<pre style="background: #000000; color: #f6f3e8; font-family: Monaco, monospace" class="ir_black"><font color="#96cbfe">class</font>&nbsp;<font color="#ffffb6">Gender</font>&nbsp;&lt; <font color="#ffffb6">Struct</font>.new(<font color="#99cc99">:male</font>)
+<pre class="ir_black"><font color="#96cbfe">class</font>&nbsp;<font color="#ffffb6">Gender</font>&nbsp;&lt; <font color="#ffffb6">Struct</font>.new(<font color="#99cc99">:male</font>)
 
 &nbsp;&nbsp;<font color="#96cbfe">def</font>&nbsp;<font color="#ffd2a7">to_s</font>
 &nbsp;&nbsp;&nbsp;&nbsp;<font color="#ffffb6">I18n</font>.t(key, <font color="#99cc99">:scope</font>&nbsp;=&gt; <font color="#99cc99">:genders</font>)
@@ -60,7 +60,7 @@ A pure Ruby way to do this with Structs, which I have mentioned before on this b
 
 By defining `to_s` on these structs you can output their gender or name in views without doing anything special:
 
-<pre style="background: #000000; color: #f6f3e8; font-family: Monaco, monospace" class="ir_black"><font color="#e18964">%</font><font color="#6699cc">dl</font><font color="#00a0a0">[</font><font color="#c6c5fe">@person</font><font color="#00a0a0">]</font>
+<pre class="ir_black"><font color="#e18964">%</font><font color="#6699cc">dl</font><font color="#00a0a0">[</font><font color="#c6c5fe">@person</font><font color="#00a0a0">]</font>
 &nbsp;&nbsp;<font color="#e18964">%</font><font color="#6699cc">dt</font><font color="#e18964">=</font>&nbsp;<font color="#ffffb6">Person</font>.human_attribute_name(<font color="#99cc99">:name</font>)
 &nbsp;&nbsp;<font color="#e18964">%</font><font color="#6699cc">dd</font><font color="#e18964">=</font>&nbsp;<font color="#c6c5fe">@person</font>.name
 &nbsp;&nbsp;

@@ -2,13 +2,13 @@ Here is the next installment of a series of guides I'm writing for international
 
 First a small recap in how to load locales. Add this to a new initializer:
 
-<pre style="background: #000000; color: #f6f3e8; font-family: Monaco, monospace" class="ir_black"><font color="#ffffb6">I18n</font>.load_path += <font color="#ffffb6">Dir</font>.glob(<font color="#336633">&quot;</font><font color="#00a0a0">#{</font><font color="#ffffb6">RAILS_ROOT</font><font color="#00a0a0">}</font><font color="#a8ff60">/app/locales/**/*.yml</font><font color="#336633">&quot;</font>)</pre>
+<pre class="ir_black"><font color="#ffffb6">I18n</font>.load_path += <font color="#ffffb6">Dir</font>.glob(<font color="#336633">&quot;</font><font color="#00a0a0">#{</font><font color="#ffffb6">RAILS_ROOT</font><font color="#00a0a0">}</font><font color="#a8ff60">/app/locales/**/*.yml</font><font color="#336633">&quot;</font>)</pre>
 
 This has been changed at a very late moment. `I18n.store_translations` and `I18n.load_translations` have been removed.
 
 After that, you need to create a place to store your locales. Make the directory `app/locales/nl-NL/` and place your yaml files in there. Here is the English version of the locale-file:
 
-<pre style="background: #000000; color: #f6f3e8; font-family: Monaco, monospace" class="ir_black"><font color="#c6c5fe">en-US</font><font color="#00a0a0">:</font>
+<pre class="ir_black"><font color="#c6c5fe">en-US</font><font color="#00a0a0">:</font>
 &nbsp;&nbsp;<font color="#c6c5fe">date</font><font color="#00a0a0">:</font>
 &nbsp;&nbsp;&nbsp;&nbsp;<font color="#c6c5fe">formats</font><font color="#00a0a0">:</font>
 &nbsp;&nbsp;&nbsp;&nbsp; <font color="#7c7c7c">&nbsp;# Use the strftime parameters for formats.</font>
@@ -39,11 +39,11 @@ All you need to do is replace the English terms with the translated versions. Re
 
 After this is done, translate dates and times like this:
 
-<pre style="background: #000000; color: #f6f3e8; font-family: Monaco, monospace" class="ir_black"><font color="#ffffb6">I18n</font>.localize(<font color="#ffffb6">Date</font>.today)</pre>
+<pre class="ir_black"><font color="#ffffb6">I18n</font>.localize(<font color="#ffffb6">Date</font>.today)</pre>
 
 If you want to use any of the other formats, specify this in the options hash:
 
-<pre style="background: #000000; color: #f6f3e8; font-family: Monaco, monospace" class="ir_black"><font color="#ffffb6">I18n</font>.localize(<font color="#ffffb6">Date</font>.today, <font color="#99cc99">:format</font>&nbsp;=&gt; <font color="#99cc99">:short</font>)</pre>
+<pre class="ir_black"><font color="#ffffb6">I18n</font>.localize(<font color="#ffffb6">Date</font>.today, <font color="#99cc99">:format</font>&nbsp;=&gt; <font color="#99cc99">:short</font>)</pre>
 
 One more tip: you can add as many formats as you like, but remember that formats like `:db` are reserved for obvious reasons. Here is an overview of the [strftime syntax in Ruby](http://www.ruby-doc.org/core/classes/Time.html#M000297).
 
