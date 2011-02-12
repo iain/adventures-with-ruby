@@ -1,4 +1,4 @@
-After using <a href="http://haml.hamptoncatlin.com/" title="Haml Homepage" target="_blank">Haml</a> for <a href="http://infx.nl/2008/02/15/first-haml-evaluation/" title="First Haml evaluation">over a month</a> now, I can now really evaluate how Haml is to work with from day to day basis.
+After using <a href="http://haml.hamptoncatlin.com/" title="Haml Homepage" target="_blank">Haml</a> for <a href="/first-haml-evaluation/" title="First Haml evaluation">over a month</a> now, I can now really evaluate how Haml is to work with from day to day basis.
 
 Haml actually is a blessing.  Doing minor adjustments is very easy, your code remains looking nice, the output keeps looking nice. Just be sure to know how to shift blocks of code to the left or right in your favorite editor.<!--more-->
 

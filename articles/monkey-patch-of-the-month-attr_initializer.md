@@ -1,4 +1,4 @@
-So, about one month ago, I <a href="http://iain.nl/2010/03/monkey-patch-of-the-month-group_by/">promised</a> to share some useful monkey patches every month. Here is the second one. Your own monkey patches are still more than welcome!
+So, about one month ago, I <a href="/monkey-patch-of-the-month-group_by/">promised</a> to share some useful monkey patches every month. Here is the second one. Your own monkey patches are still more than welcome!
 
 I often find myself writing code like this:
 

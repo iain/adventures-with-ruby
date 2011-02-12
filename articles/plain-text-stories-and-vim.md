@@ -1,11 +1,11 @@
 <h3><font color="#ff6600"><strong>Update:</strong> Updated the syntax file, redownload it if you got it before December 19th 2007.</font></h3>
 More news about my adventures with Selenium. It's hot and juicy, so lot's of exciting new things to do. I made a syntax highlighter for plain text stories in vim. Here's how it looks:
 
-To make it look like this, I adjusted the slate colorscheme and added my own story syntax file. Click <a href="http://infx.nl/2007/12/18/plain-text-stories-and-vim/#more-31" title="Continue Reading">Continue Reading</a> to download the files and read how to install it.
+To make it look like this, I adjusted the slate colorscheme and added my own story syntax file. Click <a href="/plain-text-stories-and-vim/#more-31" title="Continue Reading">Continue Reading</a> to download the files and read how to install it.
 <!--more--><h3>Here is what you need to do:</h3>
 <ol>
-  <li>Put the <a href="http://infx.nl/wp-content/uploads/2007/12/black-slate.vim" title="My custom vim color scheme">black-slate colorscheme file</a> in /usr/share/vim/vim71/colors directory</li>
-  <li>Put the <a href="http://infx.nl/wp-content/uploads/2007/12/story.vim" title="story syntax file">story syntax file</a> in /usr/share/vim/vim71/syntax directory</li>
+  <li>Put the <a href="/black-slate.vim" title="My custom vim color scheme">black-slate colorscheme file</a> in /usr/share/vim/vim71/colors directory</li>
+  <li>Put the <a href="/story.vim" title="story syntax file">story syntax file</a> in /usr/share/vim/vim71/syntax directory</li>
   <li>Append these lines to the end of /usr/share/vim/vim71/scripts.vim:
 <pre>if did_filetype()
   finish

@@ -5,17 +5,17 @@ With Rails 2.2 releasing any day now, I want to show you how to translate Active
 <strong>Contents:</strong>
 
 <ol>
-  <li><a href="http://iain.nl/2008/09/translating-activerecord/#scenario">Scenario</a></li>
-  <li><a href="http://iain.nl/2008/09/translating-activerecord/#setting-up">Setting up</a></li>
-  <li><a href="http://iain.nl/2008/09/translating-activerecord/#models">Translating models</a></li>
-  <li><a href="http://iain.nl/2008/09/translating-activerecord/#attributes">Translating attributes</a></li>
-  <li><a href="http://iain.nl/2008/09/translating-activerecord/#default-validations">Translating default validations</a></li>
-  <li><a href="http://iain.nl/2008/09/translating-activerecord/#interpolation">Interpolation in validations</a></li>
-  <li><a href="http://iain.nl/2008/09/translating-activerecord/#model-specific">Model specific messages</a></li>
-  <li><a href="http://iain.nl/2008/09/translating-activerecord/#attribute-specific">Attribute specific messages</a></li>
-  <li><a href="http://iain.nl/2008/09/translating-activerecord/#defaults">Defaults</a></li>
-  <li><a href="http://iain.nl/2008/09/translating-activerecord/#error_messages_for">Using error_messages_for</a></li>
-  <li><a href="http://iain.nl/2008/09/translating-activerecord/#conclusion">Conclusion</a></li>
+  <li><a href="#scenario">Scenario</a></li>
+  <li><a href="#setting-up">Setting up</a></li>
+  <li><a href="#models">Translating models</a></li>
+  <li><a href="#attributes">Translating attributes</a></li>
+  <li><a href="#default-validations">Translating default validations</a></li>
+  <li><a href="#interpolation">Interpolation in validations</a></li>
+  <li><a href="#model-specific">Model specific messages</a></li>
+  <li><a href="#attribute-specific">Attribute specific messages</a></li>
+  <li><a href="#defaults">Defaults</a></li>
+  <li><a href="#error_messages_for">Using error_messages_for</a></li>
+  <li><a href="#conclusion">Conclusion</a></li>
 </ol>
 
 <!--more-->
@@ -221,7 +221,7 @@ There is one slight problem with the messages it displays. <tt>error_messages_fo
 
 I hope you'll agree with me that these translation options for ActiveRecord are really nice! This is what we have been waiting for. Too bad I was a bit too late with my adjustments, so form labels don't translate by default. I did build it, but Rails was already feature frozen by then. I will probably post a plugin that adds this functionality. Same goes for a i18n version of scaffold.
 
-Please keep coming back to my site, or add the <a href="http://iain.nl/feed/" target="_blank">RSS feed</a> to your favorite reader.
+Please keep coming back to my site, or add the RSS feed to your favorite reader.
 
 Of course, stay in touch with the <a href="http://groups.google.com/group/rails-i18n" target="_blank">i18n mailinglist</a>. A lot of people are putting a lot of effort into the project. New plugins and gems solving problems problems rapidly. I18n is one of the more difficult things to do, so if you have a special insight in a language, please contribute!
 

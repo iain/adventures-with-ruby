@@ -1,4 +1,4 @@
-A while back, I talked about <a href="http://iain.nl/2010/02/3-times-activesupport-3/">new additions to ActiveSupport</a>. And now, I have a confession to make: I like monkey patches! At least, as long as they're short and self-explanatory.
+A while back, I talked about <a href="/3-times-activesupport-3/">new additions to ActiveSupport</a>. And now, I have a confession to make: I like monkey patches! At least, as long as they're short and self-explanatory.
 
 I got a few of them lying around, so I am going to post one every month. I also welcome your favorite monkey patch, which you can <a href="mailto:monkey@iain.nl">email me</a>.
 

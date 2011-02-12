@@ -1,4 +1,4 @@
-I think <a href="http://iain.nl/2008/04/bringing-objects-to-views/">I've talked about this</a> before, and there has been a <a href="http://railscasts.com/episodes/101-refactoring-out-helper-object">Railscasts episode</a> about it too, but I want to touch on it again. I know we're supposed to keep views simple, but that doesn't mean that helpers can only contain methods.
+I think <a href="/bringing-objects-to-views/">I've talked about this</a> before, and there has been a <a href="http://railscasts.com/episodes/101-refactoring-out-helper-object">Railscasts episode</a> about it too, but I want to touch on it again. I know we're supposed to keep views simple, but that doesn't mean that helpers can only contain methods.
 
 Rails gives you a helper module for every controller. The problem with modules is that they don't contain state and are usually used to just put a lot of methods in. But this can grow quickly out of hand when the stuff that you're building is a little more complex.
 
@@ -85,7 +85,7 @@ This is an example of how I would do it:
 
 Nice! Small testable methods! Readable code! Less repetition. <em>Run Reek on that!</em>
 
-If you're wondering what the <tt>attr_initializer</tt> is, it's a monkey patch, that I've <a href="http://iain.nl/2010/04/monkey-patch-of-the-month-attr_initializer/">described here</a>. The <a href="http://apidock.com/rails/Module/delegate">delegate-method</a> is something ActiveSupport offers you. Use it, it's super effective!
+If you're wondering what the <tt>attr_initializer</tt> is, it's a monkey patch, that I've <a href="/monkey-patch-of-the-month-attr_initializer/">described here</a>. The <a href="http://apidock.com/rails/Module/delegate">delegate-method</a> is something ActiveSupport offers you. Use it, it's super effective!
 
 Wait a minute. Did I say "testable"? Yes, I most certainly did! As with any code, this needs to be tested. But it's not that hard anymore! If you're using <a href="http://rspec.info">Rspec</a>, you can use the <a href="http://rspec.info/rails/writing/helpers.html">helper specs</a> it provides. But you don't need to!
 

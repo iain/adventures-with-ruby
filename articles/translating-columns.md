@@ -1,6 +1,6 @@
-<strong>I made this into a plugin: <a href="http://iain.nl/2008/09/plugin-translatable_columns/">translatable_columns</a>.</strong>
+<strong>I made this into a plugin: <a href="/plugin-translatable_columns/">translatable_columns</a>.</strong>
 
-Dmitry <a href="http://iain.nl/2008/09/translating-activerecord/#comment-96">asked in the comments</a> of my last post <a href="http://iain.nl/2008/09/translating-activerecord">about translating ActiveRecord</a>:
+Dmitry <a href="/translating-activerecord/#comment-96">asked in the comments</a> of my last post <a href="/translating-activerecord">about translating ActiveRecord</a>:
 
 <blockquote>Can you write about how to use translated columns of database in rails? For example we have table named ‘blog’, and I want to translate it on several languages: fr, en, ru. How to do that?</blockquote>
 

@@ -1,4 +1,4 @@
-<p class="notice"> <strong>Important!</strong> I18n.store_translations isn't available anymore and all scopes have changed. Please <strong>DON'T</strong> use this anymore as a literal guide, because a lot has changed since I wrote this. Don't use the i18n_yaml plugin, because most of it's functionality has been merged into Rails. Please look for one of my more recent posts <a href="http://iain.nl/tag/i18n/">here</a>.</p>
+<p class="notice"> <strong>Important!</strong> I18n.store_translations isn't available anymore and all scopes have changed. Please <strong>DON'T</strong> use this anymore as a literal guide, because a lot has changed since I wrote this. Don't use the i18n_yaml plugin, because most of it's functionality has been merged into Rails. Please look for one of my more recent posts.</p>
 
 
 It has been some time, I know. It was a busy time. Since my last post I started working at <a href="http://finalist.com/">Finalist IT Group</a>, an exciting company doing exciting projects. Right now I'm doing a very demanding project for Eindhoven city council, which is quite far away from my home (well, in Holland it is anyway).
@@ -46,7 +46,7 @@ ActiveRecord column names and error messages are easily translated too! You just
 
 In this example, I have a model called Post and it has an attribute named 'title'.
 
-<strong style="color: red;">Update!</strong> The proper way to translate ActiveRecord is described <a href="http://iain.nl/2008/09/translating-activerecord/">here!</a>
+<strong style="color: red;">Update!</strong> The proper way to translate ActiveRecord is described <a href="/translating-activerecord/">here!</a>
 
 <pre lang="rails">
 I18n.store_translations( 'en-US', {

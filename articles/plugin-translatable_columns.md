@@ -1,4 +1,4 @@
-It was just three days ago when I discussed how to <a href="http://iain.nl/2008/09/translating-columns/">translate columns</a>. At the moment I was writing it, I was already thinking: "this should be a plugin". So today, I took the liberty and created it.
+It was just three days ago when I discussed how to <a href="/translating-columns/">translate columns</a>. At the moment I was writing it, I was already thinking: "this should be a plugin". So today, I took the liberty and created it.
 
 <h3>Contents</h3>
 

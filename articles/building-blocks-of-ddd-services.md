@@ -1,4 +1,4 @@
-As <a href="http://iain.nl/2010/07/domain-driven-design-building-blocks-in-ruby/">promised</a>, here is an example of how to use the idea of services from Domain Driven Design to help you design your code better. Let's start with some theoretical stuff, before we dive into some example code.
+As <a href="/domain-driven-design-building-blocks-in-ruby/">promised</a>, here is an example of how to use the idea of services from Domain Driven Design to help you design your code better. Let's start with some theoretical stuff, before we dive into some example code.
 
 <h3>In Theory</h3>
 

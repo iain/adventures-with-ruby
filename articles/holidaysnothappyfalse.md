@@ -20,7 +20,7 @@ or as a Rails plugin:
 
     ./script/plugin install git://github.com/iain/not.git
 
-I hope you'll like it! <a href="http://iain.nl/xmas/"><strong>Happy holidays!</strong></a>
+I hope you'll like it! <strong>Happy holidays!</strong>
 
 <h2>Update</h2>
 I moved the gem to <a href="http://gemcutter.org">gemcutter</a>. If you haven't tumbled yet, please do so, before installing my gem:

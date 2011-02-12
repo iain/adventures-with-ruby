@@ -1,4 +1,4 @@
-Here are some improvements for <a href="http://infx.nl/2007/11/15/fancy-named-routes/">Fancy Named Routes - Part I</a>. In this part we will be adding a more thorough solution for the html escaping in everywhere.  I noticed this was absolutely important, when I tried to view an escaped url in a production environment with Apache with mod_proxy and mongrel_cluster. Apache doesn't like '%2F' in the title, and doesn't forward the request to mongrel, so it returns a nice 404.
+Here are some improvements for <a href="/fancy-named-routes">Fancy Named Routes - Part I</a>. In this part we will be adding a more thorough solution for the html escaping in everywhere.  I noticed this was absolutely important, when I tried to view an escaped url in a production environment with Apache with mod_proxy and mongrel_cluster. Apache doesn't like '%2F' in the title, and doesn't forward the request to mongrel, so it returns a nice 404.
 
 To rid yourself of the problem once and for all, add this to your ApplicationController:
 

@@ -31,4 +31,4 @@ So you can write specs like this:
 &nbsp;&nbsp;it <font color="#336633">&quot;</font><font color="#a8ff60">should be very very secret!</font><font color="#336633">&quot;</font>
 <font color="#6699cc">end</font></pre>
 
-And as a litte bonus, it works nice with my plugin: <a href="http://iain.nl/2008/09/acts_as_translatable_model-plugin/">acts_as_translatable_model</a>. Making your login forms is easier than ever! So please take a look at it! I'm betting you'll love it!
+And as a litte bonus, it works nice with my plugin: <a href="/acts_as_translatable_model-plugin/">acts_as_translatable_model</a>. Making your login forms is easier than ever! So please take a look at it! I'm betting you'll love it!

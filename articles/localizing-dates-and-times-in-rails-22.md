@@ -1,4 +1,4 @@
-Here is the next installment of a series of guides I'm writing for internationalizing a Rails 2.2 application. Please read the first part, <a href="http://iain.nl/2008/09/translating-activerecord/">Translating ActiveRecord</a>, if you haven't already. This time I'm going to talk about how to localize dates and times to a specific language.
+Here is the next installment of a series of guides I'm writing for internationalizing a Rails 2.2 application. Please read the first part, <a href="/translating-activerecord/">Translating ActiveRecord</a>, if you haven't already. This time I'm going to talk about how to localize dates and times to a specific language.
 
 <!--more-->
 
