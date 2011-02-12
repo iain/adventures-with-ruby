@@ -15,7 +15,7 @@ module AdventuresWithRuby
     end
 
     def self.metadata
-      @metadata ||= YAML.load(File.open(File.join(dir, 'index.yml'), 'r:utf-8').read)
+      @metadata ||= YAML.load(File.open(File.expand_path('../index.yml', __FILE__), 'r:utf-8').read)
     end
 
     def self.find(id)
