@@ -8,7 +8,11 @@ module AdventuresWithRuby
     end
 
     def old?
-      published_at < (Date.today - 400)
+      !deprecated? && published_at < (Date.today - 500)
+    end
+
+    def deprecated?
+      metadata['deprecated']
     end
 
     def published_at

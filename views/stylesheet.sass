@@ -284,11 +284,7 @@ pre, .ir_black
   overflow: auto
   z-index:  10000
 
-
-
-.notice
-  background: mix(#ffcc00, #fff, 10%)
-  border: 1px solid mix(#ffcc00, #fff, 40%)
+.flash
   color: $black
   padding: 10px
   font-size: 11px
@@ -296,3 +292,13 @@ pre, .ir_black
   +border-bottom-left-radius(15px)
   em
     text-decoration: underline
+
+.notice
+  @extend .flash
+  background: mix(#ffcc00, #fff, 10%)
+  border: 1px solid mix(#ffcc00, #fff, 40%)
+
+.alert
+  @extend .flash
+  background: mix(#cc0000, #fff, 10%)
+  border: 1px solid mix(#cc0000, #fff, 40%)

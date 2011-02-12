@@ -468,10 +468,8 @@ pre .rubyStringDelimiter, .ir_black .rubyStringDelimiter {
   z-index: 10000;
 }
 
-/* line 289, ../views/stylesheet.sass */
-.notice {
-  background: #fff9e5;
-  border: 1px solid #ffea99;
+/* line 287, ../views/stylesheet.sass */
+.flash, .notice, .alert {
   color: #503e2b;
   padding: 10px;
   font-size: 11px;
@@ -488,7 +486,19 @@ pre .rubyStringDelimiter, .ir_black .rubyStringDelimiter {
   -khtml-border-bottom-left-radius: 15px;
   border-bottom-left-radius: 15px;
 }
-/* line 297, ../views/stylesheet.sass */
-.notice em {
+/* line 293, ../views/stylesheet.sass */
+.flash em, .notice em, .alert em {
   text-decoration: underline;
+}
+
+/* line 296, ../views/stylesheet.sass */
+.notice {
+  background: #fff9e5;
+  border: 1px solid #ffea99;
+}
+
+/* line 301, ../views/stylesheet.sass */
+.alert {
+  background: #f9e5e5;
+  border: 1px solid #ea9999;
 }

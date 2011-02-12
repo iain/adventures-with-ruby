@@ -59,6 +59,7 @@ helpers-are-code-too:
   publish: 2010-05-15
   wp: 703
   summary: "On using classes inside helpers, to organize your otherwise messy helper code"
+  deprecated: true
 conways-game-of-life-or-writing-perl-in-ruby:
   title: "Conway's Game of Life; or: Writing Perl in Ruby"
   publish: 2010-04-30
@@ -109,6 +110,7 @@ basic_named_scopes:
   publish: 2009-12-22
   wp: 581
   summary: "A gem I made to get the sweet ActiveRecord DSL in Rails 2.x"
+  deprecated: true
 cucumber-0-5-and-my-little-commit:
   title: Cucumber 0.5 and my little commit
   publish: 2009-12-18
@@ -119,6 +121,7 @@ prawn-and-controller-tests:
   publish: 2009-11-18
   wp: 560
   summary: "A quick workaround for testing controller actions that render a PDF with Prawn"
+  deprecated: true
 configuring-autotest:
   title: Configuring Autotest
   publish: 2009-10-09
@@ -129,6 +132,7 @@ root-table:
   publish: 2009-07-19
   wp: 466
   summary: "An (now abandoned) plugin for making seed data. Use `rake db:seed` now."
+  deprecated: true
 silencing-passenger:
   title: Silencing Passenger
   publish: 2009-06-19
@@ -139,11 +143,13 @@ filtering-with-named-scopes-encore:
   publish: 2009-06-17
   wp: 446
   summary: "Doing some more hacking around named scopes."
+  deprecated: true
 filtering-with-named-scopes:
   title: Filtering with named scopes
   publish: 2009-06-12
   wp: 435
   summary: "Doing some hacking around named scopes."
+  deprecated: true
 writing-yaml-files:
   title: Writing YAML files
   publish: 2009-05-15
@@ -154,6 +160,7 @@ nested-forms:
   publish: 2009-05-02
   wp: 421
   summary: "Nested forms are a bitch. Here are some tips to get it working with Javascript"
+  deprecated: true
 gem-cleanup:
   title: Gem cleanup
   publish: 2009-04-26
@@ -164,6 +171,7 @@ rspec-shoulda-and-custom-matchers:
   publish: 2009-04-11
   wp: 403
   summary: "On making custom matchers in RSpec 1."
+  deprecated: true
 holidaysnothappyfalse:
   title: Chainable.not.gem
   publish: 2008-12-24
@@ -174,11 +182,13 @@ no_value_helper-plugin:
   publish: 2008-12-10
   wp: 351
   summary: "An old plugin for handling blank values"
+  deprecated: true
 authlogic-is-awesome:
   title: AuthLogic is awesome!
   publish: 2008-11-13
   wp: 334
   summary: "A review of authlogic."
+  deprecated: true
 asset-paths:
   title: Asset paths
   publish: 2008-11-03
@@ -199,21 +209,25 @@ resources:
   publish: 2008-09-29
   wp: 292
   summary: "Separating RESTful controllers per role"
+  deprecated: true
 acts_as_translatable_model-plugin:
   title: acts_as_translatable_model plugin
   publish: 2008-09-22
   wp: 280
   summary: "A plugin that mimics ActiveRecord 2.2 I18n behavior"
+  deprecated: true
 form-labels-in-rails-22:
   title: Form Labels in Rails 2.2
   publish: 2008-09-12
   wp: 269
   summary: "Rails 2.2 doesn't use I18n for form labels. This plugin corrects that"
+  deprecated: true
 plugin-translatable_columns:
   title: "Plugin: translatable_columns"
   publish: 2008-09-06
   wp: 198
   summary: "A small plugin for translating just a few attributes per record"
+  deprecated: true
 the-future-of-i18n-in-ruby-on-rails-railsconf:
   title: The Future of I18n in Ruby on Rails @ RailsConf
   publish: 2008-09-06
@@ -229,31 +243,37 @@ translating-columns:
   publish: 2008-09-03
   wp: 167
   summary: "Translating just a few attributes per record"
+  deprecated: true
 translating-activerecord:
   title: Translating ActiveRecord
   publish: 2008-09-01
   wp: 146
   summary: "This is how ActiveRecord's I18n integration works in Rails 2.2"
+  deprecated: true
 i18n-and-l10n-on-r9r-2-2:
   title: i18n and l10n on r9r 2.2
   publish: 2008-08-16
   wp: 137
   summary: "Introducing I18n in Rails 2.2"
+  deprecated: true
 finally-rails-goes-i18n:
   title: Finally! Rails goes i18n!
   publish: 2008-08-08
   wp: 52
   summary: "Announcing I18n in Rails 2.2"
+  deprecated: true
 bringing-objects-to-views:
   title: Bringing Objects To Views
   publish: 2008-04-26
   wp: 34
   summary: "Using data objects in views can clean them up."
+  deprecated: true
 surrounding-something-with-a-div-conditionally:
   title: Surrounding something with a div, conditionally.
   publish: 2008-03-20
   wp: 27
   summary: "Tips on doing view work"
+  deprecated: true
 second-haml-evaluation:
   title: Second Haml evaluation
   publish: 2008-03-10
@@ -274,11 +294,13 @@ pluralize-for-gettext-released:
   publish: 2008-01-20
   wp: 21
   summary: "My first plugin for Rails!"
+  deprecated: true
 plain-text-stories-and-vim:
   title: Plain Text Stories and Vim
   publish: 2007-12-18
   wp: 19
   summary: "I made a Vim syntax file for RSpec Story Runner (now known as Cucumber)"
+  deprecated: true
 selenium-clicking-a-label:
   title: Selenium clicking a label
   publish: 2007-12-18
@@ -294,18 +316,22 @@ rcov-all-the-way:
   publish: 2007-12-10
   wp: 16
   summary: "Aggregating RCov reports over all tests"
+  deprecated: true
 many-to-many-relationships-with-extra-data-part-i:
   title: Many to Many Relationships with Extra Data, Part I
   publish: 2007-11-28
   wp: 15
   summary: "How `has_many :through` works"
+  deprecated: true
 fancy-named-routes-part-ii:
   title: Fancy Named Routes - Part II
   publish: 2007-11-21
   wp: 14
   summary: "More on how to customize your routes in Rails 1."
+  deprecated: true
 fancy-named-routes:
   title: Fancy Named Routes - Part I
   publish: 2007-11-15
   wp: 10
   summary: "How to customize your routes in Rails 1."
+  deprecated: true
