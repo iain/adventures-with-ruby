@@ -55,6 +55,7 @@ module AdventuresWithRuby
     end
 
     not_found do
+      @intro = :not_found_intro
       haml :not_found
     end
 

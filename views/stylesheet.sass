@@ -82,6 +82,7 @@ a
   margin: 0 0 0 $sidebar-width
   background-color: white
   position: relative
+  min-height: 650px
 
 #github
   position: absolute
@@ -112,6 +113,9 @@ a
     display: table-cell
     vertical-align: bottom
     +embossed
+    strong
+      color: $black
+      font-weight: bold
 
 #sidebar
   float: left
@@ -309,6 +313,10 @@ a
       color: #6699cc
     .rubyStringDelimiter
       color: #336633
+    .Identifier
+      color: #c6c5fe
+    .Statement
+      color: #6699cc
 
 
   #twitter
