@@ -311,43 +311,49 @@ a:hover {
   color: #808094;
   line-height: 18px;
 }
-/* line 185, ../views/stylesheet.sass */
+/* line 184, ../views/stylesheet.sass */
+#content li pre {
+  display: block;
+  width: auto !important;
+  min-width: auto;
+}
+/* line 189, ../views/stylesheet.sass */
 #content strong {
   font-weight: bold;
   color: #503e2b;
 }
-/* line 189, ../views/stylesheet.sass */
+/* line 193, ../views/stylesheet.sass */
 #content em {
   font-style: italic;
 }
-/* line 192, ../views/stylesheet.sass */
+/* line 196, ../views/stylesheet.sass */
 #content hr {
   border: 0 none;
   border-bottom: 1px dotted #cccccc;
 }
-/* line 196, ../views/stylesheet.sass */
+/* line 200, ../views/stylesheet.sass */
 #content tt, #content code {
   font-family: Monaco, monospace;
   color: #503e2b;
   font-size: 12px;
 }
-/* line 201, ../views/stylesheet.sass */
+/* line 205, ../views/stylesheet.sass */
 #content blockquote {
   margin: 20px;
   line-height: 18px;
   color: #9e948a;
 }
-/* line 205, ../views/stylesheet.sass */
+/* line 209, ../views/stylesheet.sass */
 #content blockquote p {
   color: #9e948a;
 }
-/* line 210, ../views/stylesheet.sass */
+/* line 214, ../views/stylesheet.sass */
 #content article h2 {
   margin: 20px 0 6px -19px;
   padding: 0 0 6px 20px;
   border-bottom: 1px dotted #cccccc;
 }
-/* line 215, ../views/stylesheet.sass */
+/* line 219, ../views/stylesheet.sass */
 #content aside {
   text-shadow: white 0px 1px 0px;
   float: left;
@@ -356,28 +362,28 @@ a:hover {
   color: #9e948a;
   font-size: 12px;
 }
-/* line 223, ../views/stylesheet.sass */
+/* line 227, ../views/stylesheet.sass */
 #content aside.post_date {
   width: 30px;
   margin-left: -76px;
   margin-top: -7px;
   text-align: center;
 }
-/* line 228, ../views/stylesheet.sass */
+/* line 232, ../views/stylesheet.sass */
 #content aside.post_date time {
   display: block;
 }
-/* line 230, ../views/stylesheet.sass */
+/* line 234, ../views/stylesheet.sass */
 #content aside.post_date span {
   display: block;
 }
-/* line 232, ../views/stylesheet.sass */
+/* line 236, ../views/stylesheet.sass */
 #content aside.post_date span.day {
   color: #503e2b;
   font-size: 20px;
   line-height: 30px;
 }
-/* line 237, ../views/stylesheet.sass */
+/* line 241, ../views/stylesheet.sass */
 #content aside.toc {
   width: 150px;
   margin-left: -196px;
@@ -385,24 +391,24 @@ a:hover {
   text-align: right;
   border-bottom: 1px dotted #cccccc;
 }
-/* line 243, ../views/stylesheet.sass */
+/* line 247, ../views/stylesheet.sass */
 #content aside.toc ul {
   margin: 0;
   list-style-type: none;
 }
-/* line 246, ../views/stylesheet.sass */
+/* line 250, ../views/stylesheet.sass */
 #content aside.toc a {
   color: #9e948a;
   display: block;
   padding: 6px 0;
 }
-/* line 250, ../views/stylesheet.sass */
+/* line 254, ../views/stylesheet.sass */
 #content aside.toc h3 {
   border-bottom: 0 none;
   font-size: 14px;
   margin: 6px 0;
 }
-/* line 255, ../views/stylesheet.sass */
+/* line 259, ../views/stylesheet.sass */
 #content .ir_black, #content pre {
   border: 3px solid white;
   -moz-box-shadow: #503e2b 0px 2px 5px 0;
@@ -421,11 +427,11 @@ a:hover {
   color: #f6f3e8;
   overflow: hidden;
 }
-/* line 274, ../views/stylesheet.sass */
+/* line 278, ../views/stylesheet.sass */
 #content .ir_black code, #content pre code {
   color: #f6f3e8;
 }
-/* line 277, ../views/stylesheet.sass */
+/* line 281, ../views/stylesheet.sass */
 #content .ir_black:hover, #content pre:hover {
   display: inline-block;
   position: relative;
@@ -433,55 +439,55 @@ a:hover {
   overflow: auto;
   z-index: 10000;
 }
-/* line 284, ../views/stylesheet.sass */
+/* line 288, ../views/stylesheet.sass */
 #content .ir_black .Comment, #content pre .Comment {
   color: #7c7c7c;
 }
-/* line 286, ../views/stylesheet.sass */
+/* line 290, ../views/stylesheet.sass */
 #content .ir_black .Conditional, #content pre .Conditional {
   color: #6699cc;
 }
-/* line 288, ../views/stylesheet.sass */
+/* line 292, ../views/stylesheet.sass */
 #content .ir_black .Constant, #content pre .Constant {
   color: #99cc99;
 }
-/* line 290, ../views/stylesheet.sass */
+/* line 294, ../views/stylesheet.sass */
 #content .ir_black .Delimiter, #content pre .Delimiter {
   color: #00a0a0;
 }
-/* line 292, ../views/stylesheet.sass */
+/* line 296, ../views/stylesheet.sass */
 #content .ir_black .Function, #content pre .Function {
   color: #ffd2a7;
 }
-/* line 294, ../views/stylesheet.sass */
+/* line 298, ../views/stylesheet.sass */
 #content .ir_black .Number, #content pre .Number {
   color: #ff73fd;
 }
-/* line 296, ../views/stylesheet.sass */
+/* line 300, ../views/stylesheet.sass */
 #content .ir_black .PreProc, #content pre .PreProc {
   color: #96cbfe;
 }
-/* line 298, ../views/stylesheet.sass */
+/* line 302, ../views/stylesheet.sass */
 #content .ir_black .Special, #content pre .Special {
   color: #e18964;
 }
-/* line 300, ../views/stylesheet.sass */
+/* line 304, ../views/stylesheet.sass */
 #content .ir_black .String, #content pre .String {
   color: #a8ff60;
 }
-/* line 302, ../views/stylesheet.sass */
+/* line 306, ../views/stylesheet.sass */
 #content .ir_black .Type, #content pre .Type {
   color: #ffffb6;
 }
-/* line 304, ../views/stylesheet.sass */
+/* line 308, ../views/stylesheet.sass */
 #content .ir_black .rubyControl, #content pre .rubyControl {
   color: #6699cc;
 }
-/* line 306, ../views/stylesheet.sass */
+/* line 310, ../views/stylesheet.sass */
 #content .ir_black .rubyStringDelimiter, #content pre .rubyStringDelimiter {
   color: #336633;
 }
-/* line 310, ../views/stylesheet.sass */
+/* line 314, ../views/stylesheet.sass */
 #content #twitter {
   margin-top: -1px;
   float: left;
@@ -491,14 +497,14 @@ a:hover {
   padding: 12px 13px;
 }
 
-/* line 318, ../views/stylesheet.sass */
+/* line 322, ../views/stylesheet.sass */
 #comments {
   margin: 20px -20px 0 -19px;
   padding: 0 20px 0 20px;
   border-top: 1px dotted #cccccc;
 }
 
-/* line 324, ../views/stylesheet.sass */
+/* line 328, ../views/stylesheet.sass */
 .flash, .notice, .alert {
   color: #503e2b;
   margin-top: 20px;
@@ -517,18 +523,18 @@ a:hover {
   -khtml-border-bottom-left-radius: 15px;
   border-bottom-left-radius: 15px;
 }
-/* line 331, ../views/stylesheet.sass */
+/* line 335, ../views/stylesheet.sass */
 .flash em, .notice em, .alert em {
   text-decoration: underline;
 }
 
-/* line 334, ../views/stylesheet.sass */
+/* line 338, ../views/stylesheet.sass */
 .notice {
   background: #fff9e5;
   border: 1px solid #ffea99;
 }
 
-/* line 339, ../views/stylesheet.sass */
+/* line 343, ../views/stylesheet.sass */
 .alert {
   background: #f9e5e5;
   border: 1px solid #ea9999;

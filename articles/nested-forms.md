@@ -113,9 +113,9 @@ Here's the javascript, you'll need to add:
 
 Ehm, what did I just do there? Well, the most important thing is that some parts of the partial get replaced. There are three problems which need to be addressed:
 
-<ul><li>A new object always has the same generated id for input fields. Adding two stages would mean that their ids would be the same and that would mean that the labels wouldn't be clickable (and it wouldn't be valid html).</li>
-<li>Rails wants "stages_attributes" to be included, when providing a new object, it would be named simple "stage".</li>
-<li>Rails expects a hash as stages_attributes. We'll need to add some arbitrary key, so it'll turn into a hash.</li></ul>
+* A new object always has the same generated id for input fields. Adding two stages would mean that their ids would be the same and that would mean that the labels wouldn't be clickable (and it wouldn't be valid html).
+* Rails wants "stages_attributes" to be included, when providing a new object, it would be named simple "stage".
+* Rails expects a hash as stages_attributes. We'll need to add some arbitrary key, so it'll turn into a hash.
 
 I generate a new id by using the timestamp and replace the values in my html. When the window loads I find any add_nested_partial class button and eval the value of the hidden field I added earlier, so the scripts gets executed.
 
@@ -136,5 +136,6 @@ Finally, the `remove_partial` method, which I haven't cleaned up yet:
 I hope this helps. I found a lot of my initial optimism after hearing about `accepts_nested_attributes_for` have gone now. It cleans up a lot of code in the model though. I'll keep this post updated when I have some improvements.
 
 Sources:
-<ul><li>[Ryan's Scraps](http://ryandaigle.com/articles/2009/2/1/what-s-new-in-edge-rails-nested-attributes)</li>
-<li>[Eloy Duran's complex form examples](http://github.com/alloy/complex-form-examples/tree/master)</li></ul>
+
+* [Ryan's Scraps](http://ryandaigle.com/articles/2009/2/1/what-s-new-in-edge-rails-nested-attributes)
+* [Eloy Duran's complex form examples](http://github.com/alloy/complex-form-examples/tree/master)

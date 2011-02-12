@@ -6,72 +6,64 @@ Rails 2.2 ships with it's language elements already indexed and a simple backend
 
 Using the SimpleBackend, translating your database is dead easy. Amongst it's features are (in no particular order):
 
-<ul>
-  <li>Scoping, for sorting your keys and thus avoiding name clashes</li>
-  <li>Bulk look up of multiple translations</li>
-  <li>Default translations for when the translation hasn't been found</li>
-  <li>Interpolation, inserting values in the middle of translations</li>
-  <li>Pluralization, handling multiple translations depending on a value being plural or singular</li>
-  <li>Having multiple default translation, for using another keys as default</li>
-  <li>Localization of dates and times</li>
-</ul>
+* Scoping, for sorting your keys and thus avoiding name clashes
+* Bulk look up of multiple translations
+* Default translations for when the translation hasn't been found
+* Interpolation, inserting values in the middle of translations
+* Pluralization, handling multiple translations depending on a value being plural or singular
+* Having multiple default translation, for using another keys as default
+* Localization of dates and times
 
 I can't go into each features into one post, so I'll be posting more in a while. First, let us take a look at the basics:
 
-<pre lang="rails">
-I18n.store_translations( 'en-US', { :hello => 'hello' } )
-I18n.store_translations( 'nl-NL', { :hello => 'hallo' } )
-I18n.translate( :hello ) # => "hello" (en-US is the default locale)
-I18n.locale = 'nl-NL'
-I18n.translate( :hello ) # => "hallo"
-</pre>
+    I18n.store_translations( 'en-US', { :hello => 'hello' } )
+    I18n.store_translations( 'nl-NL', { :hello => 'hallo' } )
+    I18n.translate( :hello ) # => "hello" (en-US is the default locale)
+    I18n.locale = 'nl-NL'
+    I18n.translate( :hello ) # => "hallo"
 
 The big advantage is that I18n is now baked into Rails, so all you're favorite "railties" will automagically be translated (en-US translations are of course default and provided for, so you don't have to use I18n if you don't want to). Amongst others, cool stuff like date-formats, number and currency formatting and default ActiveRecord error messages are indexed. Here is an example:
 
-<pre lang="rails">
-I18n.store_translations( 'nl-NL', { :support => { :array => { :sentence_connector => 'en' } } } )
-%w{a b c}.to_sentence # => "a, b, en c" (look mama, no I18n.translate call!)
-</pre>
+    I18n.store_translations( 'nl-NL', { :support => { :array => { :sentence_connector => 'en' } } } )
+    %w{a b c}.to_sentence # => "a, b, en c" (look mama, no I18n.translate call!)
 
 In date(and -time) objects you need to call the method localize to translate. You can define your own preferred formats too, so no more need for those ugly strftime method calls in your code.
 
-<pre lang="rails">
-I18n.localize( Time.now, :format => :long ) # "vrijdag, 8 augustus 2008, 20:51:15"
-</pre>
+    I18n.localize( Time.now, :format => :long ) # "vrijdag, 8 augustus 2008, 20:51:15"
 
 ActiveRecord column names and error messages are easily translated too! You just have to know the proper scope. What you need to do is store translations in these scopes and Rails will automatically use it for you. In my opinion it is a bit of mess. Hopefully it'll be changed to something less scattered soon.
 
 In this example, I have a model called Post and it has an attribute named 'title'.
 
-<strong style="color: red;">Update!</strong> The proper way to translate ActiveRecord is described [here!](/translating-activerecord/)
+### Update 1
 
-<pre lang="rails">
-I18n.store_translations( 'en-US', {
-  :active_record => {
-    :error => {
-      :header_message => "default message for error_messages_for",
-      :post => "When the model name is not what you like"
-    },
-    :error_messages => {
-      :blank => "your default 'cannot be blank' message",
-      :custom => {
-        :post => {
-          :title => {
-            :blank => "error message for @post.title only"
+The proper way to translate ActiveRecord is described [here!](/translating-activerecord/)
+
+    I18n.store_translations( 'en-US', {
+      :active_record => {
+        :error => {
+          :header_message => "default message for error_messages_for",
+          :post => "When the model name is not what you like"
+        },
+        :error_messages => {
+          :blank => "your default 'cannot be blank' message",
+          :custom => {
+            :post => {
+              :title => {
+                :blank => "error message for @post.title only"
+              }
+            }
+          }
+        },
+        :human_attribute_names => {
+          :post => {
+            :title => "Translation of the column name"
           }
         }
       }
-    },
-    :human_attribute_names => {
-      :post => {
-        :title => "Translation of the column name"
-      }
-    }
-  }
-} )
-I18n.translate :'active_record.human_attribute_names.post.title'
-# => "Translation of the column name"
-</pre>
+    } )
+    I18n.translate :'active_record.human_attribute_names.post.title'
+    # => "Translation of the column name"
 
 Unfortunately there isn't a good list of which translations are available. I will try to make one soon.
 
@@ -83,6 +75,6 @@ Would you like to contribute to i18n? Join the [mailinglist](http://groups.googl
 
 This concludes the first part of the Rails i18n introduction. I'll be posting some more insights into i18n soon, so stay tuned!
 
-<h3>Update:</h3>
+### Update 2
 
 Locate the locale.yml files in Rails to find all possible translations. Here is [a pastie](http://pastie.org/306532) with everything translated to Dutch.

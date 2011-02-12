@@ -2,14 +2,17 @@ It was just three days ago when I discussed how to [translate columns](/translat
 
 ### Installing
 
-<ol>
-  <li>First make sure you're running Rails 2.2 or edge:<br />&nbsp;<br />
-`rake rails:freeze:edge`<br />&nbsp;</li>
-  <li>Install the plugin: <br />&nbsp;<br />
-`./script/plugin install git://github.com/iain/translatable_columns.git`<br />&nbsp;</li>
-  <li>Create or modify a model to have multiple columns for one attribute: <br />&nbsp;<br />
-`./script/generate model Topic title_en:string title_nl:string title_de:string title_fr:string`<br />&nbsp;</li>
-</ol>
+First make sure you're running Rails 2.2 or edge:
+
+    rake rails:freeze:edge
+
+Install the plugin:
+
+    ./script/plugin install git://github.com/iain/translatable_columns.git
+
+Create or modify a model to have multiple columns for one attribute:
+
+    ./script/generate model Topic title_en:string title_nl:string title_de:string title_fr:string
 
 ### Usage
 
