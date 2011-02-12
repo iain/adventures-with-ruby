@@ -23,16 +23,8 @@ module AdventuresWithRuby
       @markdown ||= RDiscount.new(contents, *extensions)
     end
 
-    def first_two_paragraphs
-      contents_before_first_header.split(/<p/, 3)[0,2].join('<p')
-    end
-
     def contents_before_first_header
       markdown.to_html.split(/<h\d/, 2).first
-    end
-
-    def remove_all_but_links(html)
-      html.gsub(%r!</?[^a]+((\s+\w+(\s*=\s*(?:".*?"|'.*?'|[^'">\s]+))?)+\s*|\s*)/?>!, '')
     end
 
     def remove_images(html)
