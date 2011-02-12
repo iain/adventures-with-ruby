@@ -28,7 +28,7 @@ module AdventuresWithRuby
     end
 
     def summary
-      RDiscount.new(metadata['summary'].to_s).to_html
+      metadata['summary']
     end
 
     def contents

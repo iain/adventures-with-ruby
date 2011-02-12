@@ -4,7 +4,7 @@
   %head
     %title= @title || "Adventures with Ruby"
     %meta(charset='UTF-8')
-    %meta{name: 'description', content: (@description || "Adventures with Ruby is a blog about developing with Ruby and Ruby on Rails, written by Iain Hecker.")}
+    %meta(name='description' content=@description)
     %link(href='/stylesheet.css' rel='stylesheet')
     %link(rel='shortcut icon' href='/favicon.png')
     %link(href='/articles.xml' type='application/rss+xml' rel='alternate' title='RSS Feed')
@@ -17,6 +17,7 @@
         %header#header
           %h1
             %a(href='/') Adventures with Ruby
+          = haml @intro if @intro
 
         %section#content
           = yield
@@ -26,14 +27,11 @@
 
 
       %aside#sidebar
-        %h3 About
+        %h3 About me
         %p
-          Welcome to "Adventures with Ruby", my personal blog on doing Ruby development.
           I am an open source enthusiast from Rotterdam with a passion for the Ruby language and everything involved with writing good software.
         %p
-          This blog features my nerdy adventures in the world of computers and programming. I hope you enjoy reading my stories and please leave a comment if you like it.
-        %p
-          I also organize the <a href="http://rotterdam-rb.org">Rotterdam Ruby Group</a> meetings and I am a regular visitor of <a href="http://amsterdam-rb.org">Amsterdam.rb</a>. If you're in the neighbourhood please feel free to drop by!
+          I also organize the <a href="http://rotterdam-rb.org">Rotterdam.rb</a> meetings and I am a regular visitor of <a href="http://amsterdam-rb.org">Amsterdam.rb</a>. If you're in the neighbourhood please feel free to drop by!
         %p(style="text-align: right;")
           %strong Iain Hecker
 

@@ -1,7 +1,3 @@
-%h1 All articles
-
-%p Here you'll find all articles I've written so far. Enjoy!
-
 - @archive.each do |article|
 
   %article.summary
@@ -12,7 +8,7 @@
     - @article = article
     = haml :_time
 
-    = article.summary
+    %p= article.summary
 
     %p.read_more
       %a{href: article.url, rel: 'nofollow'} &rarr; read more

@@ -2,13 +2,13 @@ cucumber-vs-steak:
   title: Cucumber vs. Steak
   publish: 2011-01-31
   wp: 946
-  summary: Arguing for the *real* value of Cucumber and giving tips on how to write good stories that focus on the problem domain.
+  summary: Arguing for the real value of Cucumber and giving tips on how to write good stories that focus on the problem domain.
   subjects: [ TDD, BDD, Cucumber, Steak, Stories ]
 easier-metricfu-with-metrical:
   title: Easier MetricFu with Metrical
   publish: 2010-11-27
   wp: 922
-  summary: Introducing a new gem I released called *metrical*. It executes MetricFu separate from your project's dependencies.
+  summary: Introducing a new gem I released called metrical. It executes MetricFu separate from your project's dependencies.
 rspec-array-matcher:
   title: RSpec Array Matcher
   publish: 2010-10-30
@@ -23,7 +23,7 @@ gemfile-vim-syntax-file:
   title: Gemfile vim syntax file
   publish: 2010-09-05
   wp: 892
-  summary: "I made a Vim syntax file for Bundler's `Gemfile`."
+  summary: "I made a Vim syntax file for Bundler's Gemfile."
 building-blocks-of-ddd-services:
   title: "Building Blocks of DDD: Services"
   publish: 2010-08-23

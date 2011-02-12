@@ -13,6 +13,10 @@ module AdventuresWithRuby
       redirect "#{request.scheme}://#{$1}", 301 if request.url =~ %r|^#{request.scheme}://www\.(.*)$|
       # no /1945/5/the-war-has-ended posts
       redirect "#{request.scheme}://#{request.host}/#{$1}", 301 if request.url =~ %r|/20\d\d/\d{1,2}/(.*)$|
+
+
+      @description = "Adventures with Ruby is a blog about developing with Ruby and Ruby on Rails, written by Iain Hecker."
+
       # every page is chachable
       unless ENV['TEST']
         response['Cache-Control'] = 'public, max-age=3600'
@@ -22,6 +26,7 @@ module AdventuresWithRuby
 
     get '/' do
       puts "Accessed index page at #{Time.now}"
+      @intro = :index_intro
       @archive = Archive.new
       haml :index
     end
@@ -35,6 +40,7 @@ module AdventuresWithRuby
     get '/articles' do
       puts "Accessed all articles page at #{Time.now}"
       @title   = "All articles on Adventures with Ruby"
+      @intro = :archive_intro
       @archive = Archive.new
       haml :archive
     end
@@ -45,6 +51,7 @@ module AdventuresWithRuby
       puts "Accessed #{@article.url} page at #{Time.now}"
       @title = "#{@article.title} - Adventures with Ruby"
       @description = @article.summary
+      @intro = :article_intro
       haml :article
     end
 
