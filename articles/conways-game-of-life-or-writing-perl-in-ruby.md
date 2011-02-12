@@ -37,6 +37,6 @@ If you want to know how it works, or make an animation of it, <a href="http://gi
 
 This is what it looks like:
 
-<img src="http://iain.nl/wp-content/uploads/2010/04/Screen-shot-2010-04-30-at-16.42.51.png" alt="Conway&#039;s Game of Life" title="Conway&#039;s Game of Life" width="754" height="497" class="alignnone size-full wp-image-698 ir_black" />
+<figure class="ir_black"><img src="/game-of-life.png" alt="Conway&#039;s Game of Life" title="Conway&#039;s Game of Life" width="754" height="497"></figure>
 
 It was a fun exercise, but I don't think I'll be writing all my code like this in the future :)

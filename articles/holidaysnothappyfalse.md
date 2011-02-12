@@ -6,28 +6,24 @@ It is a gem called <a href="http://iain.github.com/not" target="_blank"><strong>
 
 An example:
 
-[sourcecode language='ruby']
-# for core Ruby methods:
-@foo.not.nil?
-# or any custom method:
-@user.not.active?
-@user.not.save!
-[/sourcecode]
+    # for core Ruby methods:
+    @foo.not.nil?
+    # or any custom method:
+    @user.not.active?
+    @user.not.save!
 
 If you want it, you can install it as a gem:
 
-[sourcecode language='bash']sudo gem install not[/sourcecode]
+    sudo gem install not
 
 or as a Rails plugin:
 
-[sourcecode language='bash']./script/plugin install git://github.com/iain/not.git[/sourcecode]
+    ./script/plugin install git://github.com/iain/not.git
 
 I hope you'll like it! <a href="http://iain.nl/xmas/"><strong>Happy holidays!</strong></a>
 
 <h2>Update</h2>
 I moved the gem to <a href="http://gemcutter.org">gemcutter</a>. If you haven't tumbled yet, please do so, before installing my gem:
 
-[sourcecode language='bash']
-gem install gemcutter
-gem tumble
-[/sourcecode] 
+    gem install gemcutter
+    gem tumble

@@ -17,7 +17,7 @@ This means that you cannot be sure that extensions like Wirble are available in 
 
 To load the IRB extensions without blowing up in your face when they're not available, I gently try to load them, and configure them only when that is successful. <a href="http://github.com/iain/osx_settings/blob/master/.irbrc">You can download my <tt>.irbrc</tt> on github</a>. Here is what it looks like:
 
-<img src="http://iain.nl/wp-content/uploads/2010/07/irb.png" alt="" title="irb" width="737" height="188" class="alignnone size-full wp-image-756 ir_black" />
+<figure class="ir_black"><img src="/irb.png" alt="" title="irb" width="737" height="188"></figure>
 
 When you start IRB, it shows a line with the extensions loaded. If it's gray, it's not appropriate (like rails2 in this example), loaded extensions are green and extensions that are not available are in red.
 
@@ -39,13 +39,13 @@ The first IRB extension anyone uses. <a href="http://pablotron.org/software/wirb
 
 While Wirble colorizes the output to improve readability, it can get cluttered really fast, especially when you're dealing with nested hashes and arrays. <a href="http://github.com/michaeldv/awesome_print">AwesomePrint</a> helps to untangle your object mess:
 
-<img src="http://iain.nl/wp-content/uploads/2010/07/awesomeprint.png" alt="" title="awesomeprint" width="278" height="150" class="alignnone size-full wp-image-763 ir_black" />
+<figure class="ir_black"><img src="/awesomeprint.png" alt="" title="awesomeprint" width="278" height="150"></figure>
 
 <h3>Print Methods</h3>
 
 The '<tt>pm</tt>'-extension I found <a href="http://snippets.dzone.com/posts/show/2916">on the intertubes</a> some time ago, lists the methods and what arguments they take on any given object. You can filter it, by providing a regex. This is what it looks like:
 
-<img src="http://iain.nl/wp-content/uploads/2010/07/pm.png" alt="" title="pm" width="324" height="138" class="alignnone size-full wp-image-754 ir_black" />
+<figure class="ir_black"><img src="/pm.png" alt="" title="pm" width="324" height="138"></figure>
 
 It's not a gem, but a snippet pasted directly into my irbrc, so it's always available.
 

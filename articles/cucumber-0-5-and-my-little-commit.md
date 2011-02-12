@@ -35,4 +35,4 @@ I am constantly wrestling with the best way write cucumber features down. Does a
 &nbsp;&nbsp;<font color="#ffd2a7">En</font>&nbsp;ik op &quot;Inloggen&quot; druk
 &nbsp;&nbsp;<font color="#ffd2a7">Dan</font>&nbsp;zie ik de foutmelding &quot;Ongeldig e-mailadres of wachtwoord&quot;</pre>
 
-<img src="http://iain.nl/wp-content/uploads/2009/12/achbd-150x150.jpg" alt="The RSpec Book" title="The RSpec Book" width="150" height="150" class="alignright size-thumbnail wp-image-575" />By the way, don't forget to order the <a href="http://pragprog.com/titles/achbd/the-rspec-book">RSpec and Friends book</a>. It'll be released this februari and is a really good read if you want to learn BDD, RSpec or Cucumber.
+By the way, don't forget to order the <a href="http://pragprog.com/titles/achbd/the-rspec-book">RSpec and Friends book</a>. It'll be released this februari and is a really good read if you want to learn BDD, RSpec or Cucumber.

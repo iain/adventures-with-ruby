@@ -1,4 +1,10 @@
 %article
+  - if @article.old?
+    %p#old.notice
+      %em This article is quite old.
+      The Ruby community moves really fast.
+      This article might not be applicable today, either because the libraries has changed, or because what is considered best practice has changed.
+      Please take that into account when reading this article.
   %h2
     %a{href: @article.url}= @article.title
 

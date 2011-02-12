@@ -14,38 +14,34 @@ It's good to know that Rails incorporates this feature. Although I find it lacki
 
 Then there are forms. Forms form the center of any web application, certainly Rails-made applications. In the views at least. Rails gives us the <tt><a href="http://api.rubyonrails.com/classes/ActionView/Helpers/FormHelper.html#M000920">form_for</a></tt> and <tt><a href="http://api.rubyonrails.com/classes/ActionView/Helpers/FormTagHelper.html#M001036">form_tag</a></tt> methods. These work in rather the same way as the migrations, giving you an form-object to play with. With this form object you can create all kinds of fields. Consider this simple form:
 
-<pre lang="rails">
-<% form_for(@user) do |form| %>
-  <p>
-    <%= form.label(:name, 'your name:') %>
-    <%= form.text_field(:name) %>
-  </p>
-  <p>
-    <%= form.label(:password, 'your password:') %>
-    <%= form.password_field(:password) %>
-  </p>
-<% end %>
-</pre>
+    <% form_for(@user) do |form| %>
+      <p>
+        <%= form.label(:name, 'your name:') %>
+        <%= form.text_field(:name) %>
+      </p>
+      <p>
+        <%= form.label(:password, 'your password:') %>
+        <%= form.password_field(:password) %>
+      </p>
+    <% end %>
 
 You might think: "That's rather neat!" and it is! But it is still lacking a lot. For once it's not DRY. You can correct that by making your own form builder, moving stuff to partials and a lot of other great examples float around the web waiting to be implemented. But something strikes me here. If the form is an object, why aren't fields? Why don't we apply the same principle here? Fields can have a lot of properties that would make the block-with-object method a nice solution. A field may have label, but also a description, some javascript validation, it can be a required field. A field my have multiple fields in it, like multiple checkboxes or radiobuttons. A block-with-object method for your fields might look like this:
 
-<pre lang="rails">
-<%= form.create_field(:name) do |field|
-  field.type = :text_field
-  field.label = 'Name'
-  field.required!
-  field.description = 'Please enter your name here. It may only contain alphanumeric characters and underscores'
-end %>
+  <%= form.create_field(:name) do |field|
+    field.type = :text_field
+    field.label = 'Name'
+    field.required!
+    field.description = 'Please enter your name here. It may only contain alphanumeric characters and underscores'
+  end %>
 
-<%= form.create_field(:category_ids) do |field|
-  field.label = 'Select some categories'
-  field.type = :checkboxes
-  field.add_options do |opt|
-    opt.add 1, 'foo'
-    opt.add 2, 'bar'
-  end
-end %>
-</pre>
+  <%= form.create_field(:category_ids) do |field|
+    field.label = 'Select some categories'
+    field.type = :checkboxes
+    field.add_options do |opt|
+      opt.add 1, 'foo'
+      opt.add 2, 'bar'
+    end
+  end %>
 
 I hope you agree with me that this is much more readable and editable. It trades of long lines for more shorter lines which is a good trade-off. If you're using Haml for your views it's even more important to have short lines than in ERB. In Haml you can't easily break up lines so short lines of code is vital to the readability of your views. Views naturally have the tendency to become hard to follow and ugly, so it is recommended that important and complex parts of it (mainly views) stay easy and readable. Readability helps your maintainability. I am currently making this kind of form builder, so if you have any suggestions, please do!
 

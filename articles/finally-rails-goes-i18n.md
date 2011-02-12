@@ -1,9 +1,4 @@
-<div style="background: #fffbcc; border: 1px solid #E6DB55; padding: 4px;">
-
-<strong>Important!</strong>
-
-
-I18n.store_translations isn't available anymore and all scopes have changed. Please <strong>DON'T</strong> use this anymore as a literal guide, because a lot has changed since I wrote this. Don't use the i18n_yaml plugin, because most of it's functionality has been merged into Rails. Please look for one of my more recent posts <a href="http://iain.nl/tag/i18n/">here</a>.</div>
+<p class="notice"> <strong>Important!</strong> I18n.store_translations isn't available anymore and all scopes have changed. Please <strong>DON'T</strong> use this anymore as a literal guide, because a lot has changed since I wrote this. Don't use the i18n_yaml plugin, because most of it's functionality has been merged into Rails. Please look for one of my more recent posts <a href="http://iain.nl/tag/i18n/">here</a>.</p>
 
 
 It has been some time, I know. It was a busy time. Since my last post I started working at <a href="http://finalist.com/">Finalist IT Group</a>, an exciting company doing exciting projects. Right now I'm doing a very demanding project for Eindhoven city council, which is quite far away from my home (well, in Holland it is anyway).

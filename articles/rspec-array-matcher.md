@@ -14,6 +14,6 @@ describe <span class="rubyStringDelimiter">&quot;</span><span class="String">arr
 <span class="rubyControl">end</span>
 </pre>
 
-<img src="http://iain.nl/wp-content/uploads/2010/10/rspec-array-matcher-result.png" alt="" title="rspec array matcher result" width="392" height="229" class="ir_black" />
+<figure class="ir_black"><img src="/rspec-array-matcher-result.png" alt="" title="rspec array matcher result" width="392" height="229"></figure>
 
 Note: There is no inverse (should_not) version of this matcher.

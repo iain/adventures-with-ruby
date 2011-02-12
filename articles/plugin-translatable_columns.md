@@ -3,11 +3,11 @@ It was just three days ago when I discussed how to <a href="http://iain.nl/2008/
 <h3>Contents</h3>
 
 <ol>
-  <li><a href="http://iain.nl/2008/09/plugin-translatable_columnsplugin-translatable_columns/#installing">Installing</a></li>
-  <li><a href="http://iain.nl/2008/09/plugin-translatable_columnsplugin-translatable_columns/#usage">Usage</a></li>
-  <li><a href="http://iain.nl/2008/09/plugin-translatable_columnsplugin-translatable_columns/#validating">Validating</a></li>
-  <li><a href="http://iain.nl/2008/09/plugin-translatable_columnsplugin-translatable_columns/#customizing">Customizing</a></li>
-  <li><a href="http://iain.nl/2008/09/plugin-translatable_columnsplugin-translatable_columns/#extras">Some extras</a></li>
+  <li><a href="#installing">Installing</a></li>
+  <li><a href="#usage">Usage</a></li>
+  <li><a href="#validating">Validating</a></li>
+  <li><a href="#customizing">Customizing</a></li>
+  <li><a href="#extras">Some extras</a></li>
 </ol>
 
 <!--more-->
@@ -27,21 +27,17 @@ It was just three days ago when I discussed how to <a href="http://iain.nl/2008/
 
 Identify the columns you want to translate:
 
-[sourcecode language="ruby"]
-class Topic < ActiveRecord::Base
-  translatable_columns :title
-end
-[/sourcecode]
+    class Topic < ActiveRecord::Base
+      translatable_columns :title
+    end
 
 And you're done!
 
 Create a form like this:
 
-[sourcecode language="ruby"]
-<% form_for(@topic) do |f| %>
-  <%= f.text_field :title %>
-<% end %>
-[/sourcecode]
+    <% form_for(@topic) do |f| %>
+      <%= f.text_field :title %>
+    <% end %>
 
 And it will save to whatever locale is set in I18n. No hard feelings, nothing to worry about.
 
@@ -49,12 +45,10 @@ And it will save to whatever locale is set in I18n. No hard feelings, nothing to
 
 Validation is of course built in. If you want to validate the presence of at least one of the translations, just call <tt>validates_translation_of</tt>:
 
-[sourcecode language="ruby"]
-class Topic < ActiveRecord::Base
-  translatable_columns :title
-  validates_translation_of :title
-end
-[/sourcecode]
+    class Topic < ActiveRecord::Base
+      translatable_columns :title
+      validates_translation_of :title
+    end
 
 This will make your record invalid when none of the translated columns exist. It works exactly as <tt>validates_presence_of</tt>, including <strong>all</strong> its options!
 
@@ -64,11 +58,9 @@ You can change the settings of translatable_columns on both a global level and a
 
 Set the global configuration in your environment file:
 
-[sourcecode language="ruby"]
-# These are the defaults of translatable_columns:
-ActiveRecord::Base.translatable_columns_config.full_locale = false
-ActiveRecord::Base.translatable_columns_config.use_default = true
-[/sourcecode]
+    # These are the defaults of translatable_columns:
+    ActiveRecord::Base.translatable_columns_config.full_locale = false
+    ActiveRecord::Base.translatable_columns_config.use_default = true
 
 <h4>full_locale</h4>
 
@@ -82,11 +74,9 @@ With this option you can specify which value will be returned automatically if n
 
 You can set this option per attribute if you'd like, to override the global config.
 
-[sourcecode language="ruby"]
-class Topic < ActiveRecord::Base
-  translatable_columns :title, :use_default => false
-end
-[/sourcecode]
+    class Topic < ActiveRecord::Base
+      translatable_columns :title, :use_default => false
+    end
 
 <h3 id="extras">Some extras</h3>
 
@@ -94,12 +84,10 @@ What if the user has selected a locale which you don't have in the database? In 
 
 You might want to provide multiple languages for a user to fill in at once. This is one way to do it:
 
-[sourcecode language="ruby"]
-<% form_for(@topic) do |f| %>
-  <% Topic.available_translatable_columns_of(:title).each do |attribute| %>
-    <%= f.text_field attribute %>
-  <% end %>
-<% end %>
-[/sourcecode]
+    <% form_for(@topic) do |f| %>
+      <% Topic.available_translatable_columns_of(:title).each do |attribute| %>
+        <%= f.text_field attribute %>
+      <% end %>
+    <% end %>
 
 Happy devving!

@@ -1,7 +1,5 @@
 So, about one month ago, I <a href="http://iain.nl/2010/03/monkey-patch-of-the-month-group_by/">promised</a> to share some useful monkey patches every month. Here is the second one. Your own monkey patches are still more than welcome!
 
-[caption id="attachment_676" align="alignright" width="300" caption="Common Squirrel Monkey (from Wikipedia)"]<a href="http://en.wikipedia.org/wiki/Common_Squirrel_Monkey"><img src="http://iain.nl/wp-content/uploads/2010/04/800px-Saimiri_sciureus-1_Luc_Viatour-300x222.jpg" alt="" title="800px-Saimiri_sciureus-1_Luc_Viatour" width="300" height="222" class="size-medium wp-image-676" /></a>[/caption]
-
 I often find myself writing code like this:
 
 <pre style="background: #000000; color: #f6f3e8; font-family: Monaco, monospace" class="ir_black"><font color="#96cbfe">class</font>&nbsp;<font color="#ffffb6">Foo</font>

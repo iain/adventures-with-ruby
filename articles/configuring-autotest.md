@@ -8,26 +8,22 @@ The autotest-growl gem clears the terminal. I don't like that, because I like to
 
 Here's my <tt>~/.autotest</tt> file:
 
-[sourcecode language='ruby']
-# Use file system hooks on OS X
-require 'autotest/fsevent'
+    # Use file system hooks on OS X
+    require 'autotest/fsevent'
 
-# Don't run entire test suite when going from red to green
-class Autotest
-  def tainted
-    false
-  end
-end
+    # Don't run entire test suite when going from red to green
+    class Autotest
+      def tainted
+        false
+      end
+    end
 
-# Use Growl support
-require 'autotest/growl'
+    # Use Growl support
+    require 'autotest/growl'
 
-# Don't clear the terminal, when using Growl
-module Autotest::Growl
-  @@clear_terminal = false
-end
-[/sourcecode]
+    # Don't clear the terminal, when using Growl
+    module Autotest::Growl
+      @@clear_terminal = false
+    end
 
 While browsing through the code of Autotest I also found that it also looks for a <tt>.autotest</tt> file in the current working directory. So if you want to apply these changes to one project only, you can define this file locally for the project. I didn't know that!
-
-[caption id="attachment_523" align="alignnone" width="500" caption="Red -> Green -> Eat... eh... Refactor"]<img src="http://iain.nl/wp-content/uploads/2009/10/red_green_apples.jpg" alt="Red -> Green -> Eat... eh... Refactor" title="red_green_apples" width="500" height="206" class="size-full wp-image-523" />[/caption] 

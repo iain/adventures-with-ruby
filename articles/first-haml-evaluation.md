@@ -1,4 +1,4 @@
-As I <a title="my original announcement" href="http://infx.nl/2008/02/01/the-knights-templater-part-ii-priory-of-haml/">promised</a>, here is the evaluation of redoing a site from ERB to <a title="Haml homepage" href="http://haml.hamptoncatlin.com/" target="_blank">Haml</a>. To immediately cut to the chase: Haml IS worth it!
+As I <a title="my original announcement" href="/the-knights-templater-part-ii-priory-of-haml">promised</a>, here is the evaluation of redoing a site from ERB to <a title="Haml homepage" href="http://haml.hamptoncatlin.com/" target="_blank">Haml</a>. To immediately cut to the chase: Haml IS worth it!
 <ol>
   <li>It's so definitely faster and easier to write than ERB.</li>
   <li>Your HTML output is nicer.</li>
@@ -17,7 +17,3 @@ There are some downsides however. I'd rather not talk about the hours I tried to
   <li>Rails helpers screw up the nice HTML Haml creates for you. The form_tag helpers for example.</li>
 </ol>
 So if you are starting a new project, or redoing the entire HTML of you're application: try Haml! Chances are you'll like it!
-
-Sneak preview:
-
-The old design: <a title="The old design" href="http://infx.nl/wp-content/uploads/2008/02/olddesign.png"><img src="http://infx.nl/wp-content/uploads/2008/02/olddesign.thumbnail.png" alt="The old design" /></a> and the new design: <a title="The new design" href="http://infx.nl/wp-content/uploads/2008/02/newdesign.png"><img src="http://infx.nl/wp-content/uploads/2008/02/newdesign.thumbnail.png" alt="The new design" /></a>

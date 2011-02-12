@@ -24,6 +24,9 @@ $default-box-shadow-v-offset: 2px
 $defualt-box-shadow-blur:     4px
 $default-box-shadow-spread:   0
 
+=code-font
+  font-family:      Monaco, monospace
+
 body
   background-color: #eeeeef
   font-family: "Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, sans-serif
@@ -65,6 +68,22 @@ strong
 em
   font-style: italic
 
+hr
+  border: 0 none
+  border-bottom: $sidebar-border
+
+tt
+  +code-font
+  color: $black
+
+blockquote
+  margin: $layout-padding
+  line-height: 18px
+  color: $warm-gray
+
+ol
+  list-style: decimal outside
+  margin: $layout-padding
 
 #container
   width: $container-width
@@ -205,7 +224,7 @@ em
   margin:           5px 0 15px 10px
   display:          inline-block
 
-  font-family:      Monaco, monospace
+  +code-font
   font-size:        12px
   line-height:      15px
   color:            #f6f3e8
@@ -225,19 +244,15 @@ em
   margin:           5px 0 15px 10px
   display:          inline-block
 
-  font-family:      Monaco, monospace
+  +code-font
   font-size:        12px
   color:            $black
 
-.ir_black:hover, .ir_white:hover
-  position: relative
-  width: auto
-  z-index:  10000
-
-pre, pre.ir_black
+pre, .ir_black
   margin-left: -13px - $layout-padding
   width: $content-width
   min-width: $content-width
+  overflow: hidden
   .Comment
     color: #7c7c7c
   .Conditional
@@ -262,3 +277,22 @@ pre, pre.ir_black
     color: #6699cc
   .rubyStringDelimiter
     color: #336633
+
+.ir_black:hover, .ir_white:hover, pre:hover
+  position: relative
+  width: auto
+  overflow: auto
+  z-index:  10000
+
+
+
+.notice
+  background: mix(#ffcc00, #fff, 10%)
+  border: 1px solid mix(#ffcc00, #fff, 40%)
+  color: $black
+  padding: 10px
+  font-size: 11px
+  +border-top-right-radius(15px)
+  +border-bottom-left-radius(15px)
+  em
+    text-decoration: underline

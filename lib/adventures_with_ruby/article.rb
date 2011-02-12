@@ -7,6 +7,10 @@ module AdventuresWithRuby
       other.published_at <=> published_at
     end
 
+    def old?
+      published_at < (Date.today - 400)
+    end
+
     def published_at
       metadata['publish']
     end
