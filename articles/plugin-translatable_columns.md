@@ -1,18 +1,6 @@
 It was just three days ago when I discussed how to <a href="/translating-columns/">translate columns</a>. At the moment I was writing it, I was already thinking: "this should be a plugin". So today, I took the liberty and created it.
 
-<h3>Contents</h3>
-
-<ol>
-  <li><a href="#installing">Installing</a></li>
-  <li><a href="#usage">Usage</a></li>
-  <li><a href="#validating">Validating</a></li>
-  <li><a href="#customizing">Customizing</a></li>
-  <li><a href="#extras">Some extras</a></li>
-</ol>
-
-<!--more-->
-
-<h3 id="installing">Installing</h3>
+### Installing
 
 <ol>
   <li>First make sure you're running Rails 2.2 or edge:<br />&nbsp;<br />
@@ -23,7 +11,7 @@ It was just three days ago when I discussed how to <a href="/translating-columns
 <tt>./script/generate model Topic title_en:string title_nl:string title_de:string title_fr:string</tt><br />&nbsp;</li>
 </ol>
 
-<h3 id="usage">Usage</h3>
+### Usage
 
 Identify the columns you want to translate:
 
@@ -41,7 +29,7 @@ Create a form like this:
 
 And it will save to whatever locale is set in I18n. No hard feelings, nothing to worry about.
 
-<h3 id="validating">Validating</h3>
+### Validating
 
 Validation is of course built in. If you want to validate the presence of at least one of the translations, just call <tt>validates_translation_of</tt>:
 
@@ -52,7 +40,7 @@ Validation is of course built in. If you want to validate the presence of at lea
 
 This will make your record invalid when none of the translated columns exist. It works exactly as <tt>validates_presence_of</tt>, including <strong>all</strong> its options!
 
-<h3 id="customizing">Customizing</h3>
+### Customizing
 
 You can change the settings of translatable_columns on both a global level and at individual attribute level. There are two configuration options at the moment, called <tt>full_locale</tt> and <tt>use_default</tt>.
 
@@ -78,7 +66,7 @@ You can set this option per attribute if you'd like, to override the global conf
       translatable_columns :title, :use_default => false
     end
 
-<h3 id="extras">Some extras</h3>
+### Some extras
 
 What if the user has selected a locale which you don't have in the database? In this case it'll get the column belonging to the I18n.default_locale. Make sure you have a column for this locale, because you'll be serving a nasty error if even this one isn't present!
 

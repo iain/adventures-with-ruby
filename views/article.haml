@@ -14,10 +14,20 @@
       That's why I've put this warning on old posts.
       The article might still be valid, though.
   %h2
-    %a{href: @article.url}= @article.title
+    %a{href: @article.url, id: @article.id, rel: 'bookmark'}= @article.title
 
   = haml :_time
 
+  - if @article.contents.toc?
+    %aside.toc
+      %nav
+        %ul
+          %li
+            %a{href: "##{@article.id}"} Introduction
+          - @article.contents.toc.each do |item|
+            %li= item
+          %li
+            %a{href: "#comments"} Discussion
 
   = @article.contents.html
 

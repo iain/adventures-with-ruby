@@ -1,6 +1,6 @@
 I recently encountered some methods I didn't know about.
 
-<h2>~</h2>
+### ~
 
 The tilde method (<tt>~</tt>) is used by <a href="http://sequel.rubyforge.org/">Sequel</a> and you can use it like this:
 
@@ -20,7 +20,7 @@ In Sequel it is used to perform NOT queries, by defining the tilde on Symbol:
 <pre style="background: #000000; color: #f6f3e8; font-family: Monaco, monospace" class="ir_black"><font color="#ffffb6">Post</font>.where(~<font color="#99cc99">:deleted_at</font>&nbsp;=&gt; <font color="#99cc99">nil</font>)
 <font color="#7c7c7c"># =&gt; SELECT * FROM posts WHERE deleted_at IS NOT NULL</font></pre>
 
-<h2>-@</h2>
+### -@
 
 The minus-at (<tt>-@</tt>) method works just about the same as the tilde method. It is the method called when a minus-sign is placed <strong>before</strong> the object. In effect, this means that Fixnum is implemented somewhere along the lines of this:
 
@@ -48,6 +48,6 @@ NoMethodError: undefined method `-@' for "5":String
 
 This also applies to the tilde method.
 
-<h2>So?</h2>
+### So?
 
 I don't know. Enrich your DSLs and APIs, if it makes any sense to do it.

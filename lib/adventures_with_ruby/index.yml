@@ -249,7 +249,6 @@ translating-activerecord:
   publish: 2008-09-01
   wp: 146
   summary: "This is how ActiveRecord's I18n integration works in Rails 2.2"
-  deprecated: true
 i18n-and-l10n-on-r9r-2-2:
   title: i18n and l10n on r9r 2.2
   publish: 2008-08-16
@@ -273,7 +272,6 @@ surrounding-something-with-a-div-conditionally:
   publish: 2008-03-20
   wp: 27
   summary: "Tips on doing view work"
-  deprecated: true
 second-haml-evaluation:
   title: Second Haml evaluation
   publish: 2008-03-10

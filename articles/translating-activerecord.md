@@ -2,25 +2,8 @@
 
 With Rails 2.2 releasing any day now, I want to show you how to translate ActiveRecord related stuff. It is quite easy, once you know where to keep your translations. Here is a complete guide to using all built in translation methods!
 
-<strong>Contents:</strong>
 
-<ol>
-  <li><a href="#scenario">Scenario</a></li>
-  <li><a href="#setting-up">Setting up</a></li>
-  <li><a href="#models">Translating models</a></li>
-  <li><a href="#attributes">Translating attributes</a></li>
-  <li><a href="#default-validations">Translating default validations</a></li>
-  <li><a href="#interpolation">Interpolation in validations</a></li>
-  <li><a href="#model-specific">Model specific messages</a></li>
-  <li><a href="#attribute-specific">Attribute specific messages</a></li>
-  <li><a href="#defaults">Defaults</a></li>
-  <li><a href="#error_messages_for">Using error_messages_for</a></li>
-  <li><a href="#conclusion">Conclusion</a></li>
-</ol>
-
-<!--more-->
-
-<h3 id="scenario">Scenario</h3>
+### Scenario
 
 Suppose we're building a forum. A forum has several types (e.g. admin) of users and suppose we want to make the most important users into separate models using Single Table Inheritance (sti). This gives us the most complete scenario in showing off all translations:
 
@@ -37,7 +20,7 @@ Suppose we're building a forum. A forum has several types (e.g. admin) of users 
 &nbsp;&nbsp;<font color="#96cbfe">end</font>
 <font color="#96cbfe">end</font></pre>
 
-<h3 id="setting-up">Setting up</h3>
+### Setting up
 
 Make sure you're running Rails 2.2 or Rails edge (<tt>rake rails:freeze:edge</tt>)
 
@@ -55,7 +38,7 @@ And we need to load all files as soon as the application starts. So we make an i
 
 This approach is recommended, because loading files is not something you want to do during the request, when it should already be available. Setting you're locale like this is probably not recommended, but it's easy, if you're just using one language.
 
-<h3 id="models">Translating models</h3>
+### Translating models
 
 Next, we're going to make some simple translation files. All ActiveRecord translations need to be in the activerecord scope. So when starting your locale file, it starts with the locale name, followed by the scope.
 
@@ -78,7 +61,7 @@ It's nice to know that the method <tt>human_name</tt> is used by error messages 
 
 If you didn't specify the translation of admin, it would have used the translation of user, because it inherited it.
 
-<h3 id="attributes">Translating attributes</h3>
+### Translating attributes
 
 We could append to the same file, but I choose to make a new file, because it keeps this post clean and it's a bit easier to see how the scoping works.
 
@@ -102,7 +85,7 @@ Once again, you can see that single table inheritance helps us with this.
 
 Both human_name and human_attribute cannot really fail, because if no translation has been specified, it would return the normal humanized version. So if you're making an English site, you don't really need to translate models and attributes.
 
-<h3 id="default-validations">Translating default validations</h3>
+### Translating default validations
 
 Let's translate a few default messages:
 
@@ -123,7 +106,7 @@ Let's translate a few default messages:
 => "can not has nottin"
 </pre>
 
-<h3 id="interpolation">Interpolation in validations</h3>
+### Interpolation in validations
 
 You have more freedom in your validation messages now. With every message you can interpolate the translated name of the model, the attribute and the value. The variable 'count' is also available where applicable (e.g. <tt>validates_length_of</tt>)
 
@@ -141,7 +124,7 @@ You have more freedom in your validation messages now. With every message you ca
 
 Remember to put quotes around the translation key in yaml, because it'll fail without it, when using the interpolation brackets.
 
-<h3 id="model-specific">Model specific messages</h3>
+### Model specific messages
 
 A message specified in the activerecord.errors.models scope overrides the translation of this kind of message for the entire model.
 
@@ -166,7 +149,7 @@ A message specified in the activerecord.errors.models scope overrides the transl
 </pre>
 
 
-<h3 id="attribute-specific">Attribute specific messages</h3>
+### Attribute specific messages
 
 Any translation in the activerecord.errors.models.model_name.attributes scope overrides model specific attribute- and default messages.
 
@@ -187,7 +170,7 @@ Any translation in the activerecord.errors.models.model_name.attributes scope ov
 => "is needed for cheezburger"
 </pre>
 
-<h3 id="defaults">Defaults</h3>
+### Defaults
 
 When you specify a symbol as the default option, it will be translated like a normal error message, just like you've seen with <tt>:already_registered</tt>. When default hasn't been found, it'll try looking up the normal key you have given. With <tt>:already_registered</tt>, that key has already been set by Rails, because we're using <tt>validates_uniqueness_of</tt>.
 
@@ -202,7 +185,7 @@ When you specify a string as default value, it'll use this when no translations 
 => "This is a chauvinistic error message"
 </pre>
 
-<h3 id="error_messages_for">Using error_messages_for</h3>
+### Using error_messages_for
 
 When you want to display the error messages in a model in a view, most people will user error_messages_for. These messages are also translated. The message has a header and a single line, saying how many errors there are. Here are the default English translations of these messages. I will leave it up to you to translate it to LOLCAT. Win a lifetime supply of cheezburgerz* with this mini-competition ;)
 
@@ -217,7 +200,7 @@ When you want to display the error messages in a model in a view, most people wi
 
 There is one slight problem with the messages it displays. <tt>error_messages_for</tt> uses the <tt>errors.full_messages</tt> in it's list. This means that the attribute names will be put before it. Of course these will be translated with <tt>human_attribute_name</tt>, but it might not always be desirable. In other languages than English it's sometimes hard to formulate a nice error message with the attribute name at the beginning. This will have to be fixed in later Rails versions.
 
-<h3 id="conclusion">Conclusion</h3>
+### Conclusion
 
 I hope you'll agree with me that these translation options for ActiveRecord are really nice! This is what we have been waiting for. Too bad I was a bit too late with my adjustments, so form labels don't translate by default. I did build it, but Rails was already feature frozen by then. I will probably post a plugin that adds this functionality. Same goes for a i18n version of scaffold.
 
@@ -232,7 +215,7 @@ PS. Damn! I wish I was in <a href="http://en.oreilly.com/railseurope2008/public/
 
 <p style="font-size: 40%">* invisible cheezburgerz only</p>
 
-<h3>Update</h3>
+### Update
 
 This post is old. Still, after 2 years, it still accounts for 10% of my daily traffic. How cool is that?
 Seriously though, read the <a href="http://guides.rubyonrails.org/i18n.html">official Rails guide</a> on this subject, for up to date information!

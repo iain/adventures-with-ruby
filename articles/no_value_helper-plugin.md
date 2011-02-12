@@ -2,7 +2,7 @@ It took some late night coding, but I finished another plugin. It's a little hel
 
 It changes:
 
-<pre lang="rails"><%= @user.name.blank? ? 'no value' : h(@user.name) %></pre>
+    <%= @user.name.blank? ? 'no value' : h(@user.name) %>
 
 Into:
 
@@ -10,7 +10,7 @@ Into:
 
 But wait! There is more! This method can accept blocks too and rescue you from those pesky nils! Keep on reading!
 
-<!--more--><h2>The problem I wanted to solve</h2>
+### The problem I wanted to solve
 
 This Ruby on Rails plugin tries to solve a common pattern when showing
 values from the database. If you want to show a nice message like 'no value'
@@ -23,7 +23,7 @@ It gets even worse when it's about an optional relation, with some extra methods
 
 <pre lang="rails"><%= @user.daddy ? link_to(@user.daddy.name, @user.daddy) : 'no daddy' %></pre>
 
-<h2>The solution: no_value_helper</h2>
+### The solution: no_value_helper
 
 So this plugin tries to shorten this:
 
@@ -38,7 +38,7 @@ in this case.
 
 For the exact usage, read the <a href="http://github.com/iain/no_value_helper/tree/master/spec/no_value_helper_spec.rb" target="_blank">specs</a>.
 
-<h2>Configuration</h2>
+### Configuration
 
 To translate the message, you can simply add the "no_value" key (no scope) to
 your translation files.
@@ -71,7 +71,7 @@ module NoValueHelper
 end
 </pre>
 
-<h2>Some more examples</h2>
+### Some more examples
 
 Here are some more examples to inspire you:
 

@@ -4,13 +4,13 @@ It was a long talk, so I couldn't cover all the topics I wanted to cover. I talk
 
 When you talk about <a href="http://www.amazon.com/Domain-Driven-Design-Tackling-Complexity-Software/dp/0321125215">Domain Driven Design</a>, you hardly cannot do that without mentioning the three types of objects that Eric Evans discusses in his book. It's Entity objects, Value objects and Service objects. Still I managed to do just that. Time to fix it; here is what I failed to mention.
 
-<h3>Entities</h3>
+### Entities
 
 Entity objects are objects that represent something in the real world and can be referenced as such. Translated into Rails terms these would be instances of (most of) your models. You can reference a post instance by getting it via its id from the database.
 
 These objects are prime candidates for using plugins like <a href="http://norman.github.com/friendly_id/">friendly_id</a>, making the fact that these objects have a real identity in real life clearer. This is because you can now reference them by name, instead of some database id. To use friendly_id with Rails 3, point your gemfile to the <a href="http://github.com/norman/friendly_id/tree/edge">'edge' branch on github</a>.
 
-<h3>Value Objects</h3>
+### Value Objects
 
 Objects that don't have any real identity are called "Value objects". Any object that is a value object has no real identity, nor is it important to know its identity.
 
@@ -69,7 +69,7 @@ By defining <tt>to_s</tt> on these structs you can output their gender or name i
 
 In this example, <tt>Person</tt> is actually an aggregate of the entity <tt>Person</tt> and two value objects, called <tt>Name</tt> and <tt>Gender</tt>. Although all attributes are flattened out in your persistence layer (in this case, your database table); they do have a deeper <strong>struct</strong>ure in your code. And it's easier to test too!
 
-<h3>Services</h3>
+### Services
 
 Things that aren't really a 'thing' in the domain you're designing are usually services. They are not really part of any entity or value object, but do something with them.
 
@@ -79,7 +79,7 @@ Every Rails developer knows the pattern "Fat Model, Skinny Controller". This is 
 
 Pagination and searching are good candidates for a service. But this blog post is on the long side, so I'll save an example implementation of that for another time. No post is complete without a promise to a follow-up that never comes, right?
 
-<h3>Conclusion</h3>
+### Conclusion
 
 It's the same as I said during my talk: Rails helps you by keeping accidental complexity at a minimum. You can use the techniques described in Domain Driven Design to organize essential complexity and make your application more maintainable. Just be careful not to over-engineer it, that would defeat the purpose. Always be critical of your own code and continue to ask yourself the same question: <em>"Does this make my code better?"</em>
 

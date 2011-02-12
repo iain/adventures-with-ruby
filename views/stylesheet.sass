@@ -26,8 +26,13 @@ $default-box-shadow-spread:   0
 
 =code-font
   font-family:      Monaco, monospace
+
 =embossed
   +text-shadow(#ffffff, 0px, 1px, 0px)
+
+=aside-left($width)
+  margin-left: (($width + (2 * $big-gap)) * -1) - $default-box-shadow-blur - 1
+
 
 body
   background-color: #eeeeef
@@ -77,6 +82,7 @@ hr
 tt, code
   +code-font
   color: $black
+  font-size: 12px
 
 blockquote
   margin: $big-gap
@@ -204,16 +210,19 @@ ol
       padding: 0 0 $small-gap $big-gap
       border-bottom: $sidebar-border
 
-  aside.post_date
+  aside
     +embossed
-    margin: -7px 0 0 ((30px + (2 * $big-gap)) * -1) - $default-box-shadow-blur
     float: left
-    width: 30px
     border-top: $sidebar-border
     padding: $small-gap 13px
-    text-align: center
-    font-size: 12px
     color: $warm-gray
+    font-size: 12px
+
+  aside.post_date
+    width: 30px
+    +aside-left(30px)
+    margin-top: -7px
+    text-align: center
     time
       display: block
     span
@@ -223,16 +232,36 @@ ol
       font-size: 20px
       line-height: 30px
 
-#twitter
-  margin: -1px 0 0 ((60px + (2 * $big-gap)) * -1) - $default-box-shadow-blur
-  float: left
-  width: 60px
-  border-top: $sidebar-border
-  padding: 2 * $small-gap 13px
+  aside.toc
+    width: 150px
+    +aside-left(150px)
+    margin-top: 100px
+    text-align: right
+    border-bottom: $sidebar-border
+    ul
+      margin: 0
+      list-style-type: none
+    a
+      color: $warm-gray
+      display: block
+      padding: $small-gap 0
+    h3
+      border-bottom: 0 none
+      font-size: 14px
+      margin: $small-gap 0
+
+
+  #twitter
+    margin-top: -1px
+    float: left
+    width: 60px
+    +aside-left(60px)
+    border-top: $sidebar-border
+    padding: 2 * $small-gap 13px
 
 #comments
-  margin: $big-gap 0 0 ($big-gap * -1) + 1
-  padding: 0 0 0 $big-gap
+  margin: $big-gap ($big-gap * -1) 0 ($big-gap * -1) + 1
+  padding: 0 $big-gap 0 $big-gap
   border-top: $sidebar-border
 
 
@@ -245,8 +274,10 @@ ol
 
   padding:          10px
   background-color: black
-  margin:           5px 0 15px 10px
-  display:          inline-block
+  margin: $big-gap 0
+  display: inline-block
+  width: 532px
+  min-width: 532px
 
   +code-font
   font-size:        12px
@@ -256,29 +287,6 @@ ol
   code
     color:            #f6f3e8
 
-.alignright
-  float: right
-  margin-right: $big-gap
-
-.ir_white
-
-  border: 3px solid #fff
-
-  +box-shadow
-
-  padding:          10px
-  background-color: white
-  margin:           5px 0 15px 10px
-  display:          inline-block
-
-  +code-font
-  font-size:        12px
-  color:            $black
-
-pre, .ir_black
-  margin-left: -13px - $big-gap
-  width: $content-width
-  min-width: $content-width
   overflow: hidden
   .Comment
     color: #7c7c7c
@@ -306,6 +314,7 @@ pre, .ir_black
     color: #336633
 
 .ir_black:hover, .ir_white:hover, pre:hover
+  display: inline-block
   position: relative
   width: auto
   overflow: auto

@@ -1,6 +1,6 @@
 Rails 3 is coming. All the big changes are spoken of elsewhere, so I'm going to mention some small changes. Here are 3 random new methods added to ActiveSupport:
 
-<h4>presence</h4>
+### presence
 
 First up is <tt>Object#presence</tt> which is a shortcut for <tt>Object#present? && Object</tt>. It is a bit of a sanitizer. Empty strings and other blank values will return <tt>nil</tt> and any other value will return itself. Use this one and your code might be a tad cleaner.
 
@@ -26,7 +26,7 @@ region = params[<font color="#99cc99">:state</font>].presence || params[<font co
 
 I like this way of cleaning up you're code. I guess it's Rubyesque to feel the need to tidy and shorten your code like this.
 
-<h4>uniq_by</h4>
+### uniq_by
 
 Another funny one is <tt>Array.uniq_by</tt> (and it sister-with-a-bang-method). It works as select, but returns only the first element from the array that complies with the block you gave it. Here are some examples to illustrate that:
 
@@ -40,7 +40,7 @@ posts.uniq_by(&amp;<font color="#99cc99">:title</font>)
 
 some_array.uniq_by(&amp;<font color="#99cc99">:object_id</font>) <font color="#7c7c7c"># same as some_array.uniq</font></pre>
 
-<h4>exclude?</h4>
+### exclude?
 
 And the final one for today is <tt>exclude?</tt> which is the opposite of <tt>include?</tt>. Nobody likes the exclamation mark before predicate methods.
 

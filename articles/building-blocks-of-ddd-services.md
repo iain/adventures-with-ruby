@@ -1,6 +1,6 @@
 As <a href="/domain-driven-design-building-blocks-in-ruby/">promised</a>, here is an example of how to use the idea of services from Domain Driven Design to help you design your code better. Let's start with some theoretical stuff, before we dive into some example code.
 
-<h3>In Theory</h3>
+### In Theory
 
 Services are best defined by what they're not. They're not entities or value objects.  To recap: entities are identifiable objects, that have real meaning in your domain. This might be a user or a post (if you're making a blog). Value objects are objects that are not defined by their identity, but by their value. An address of a person is usually a good example. It doesn't matter which address object it really is, as long as it contains the data it is supposed to have. Services are none of these. Services do something with the entities in your domain.
 
@@ -10,7 +10,7 @@ What's the advantage of thinking of classes as being services? Well, in my opini
 
 It also answers the question: where should this behavior go? If it's not obvious, it's probably a service. The 'fat model, skinny controller'-principle has gotten some news lately. This principle was invented because developers (me included) were putting too much logic into the controllers. It made the controllers skinny and readable; but it had the side affect that everybody jammed the behavior into their models (entities), making them big and unwieldy. Services will help you create small and manageable classes.
 
-<h3>In Practice</h3>
+### In Practice
 
 Time for an example. Suppose you have an admin interface which allows the user to find their entities in many different ways, filtering on attributes and ordering them around until he finds the entities he wants. It might be part of a advanced search box. This filtering business is an excellent candidate for a service.
 
@@ -133,7 +133,7 @@ These services are incredibly easy to make. Just think about the objects it's tr
 
 Don't forget to run <a href="http://wiki.github.com/kevinrutherford/reek/">reek</a> on your code to see if you have any Low Cohesion or Feature Envy warnings. If you get any, than that method probably doesn't belong here, or you've got you're initial parameters wrong.
 
-<h3>Some bonus material</h3>
+### Some bonus material
 
 If you wish to simplify the interface even further, you can create a class method on the service to make it even easier (that's a service to create a service, so to speak).
 
