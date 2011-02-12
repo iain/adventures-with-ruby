@@ -1,4 +1,4 @@
-If you're testing arrays a lot, like ActiveRecord's (named) scopes, you should know the following RSpec matcher: <strong><tt>=~</tt></strong>. It doesn't care about sorting and it gives you all the output you need when the spec fails. Here is an example:
+If you're testing arrays a lot, like ActiveRecord's (named) scopes, you should know the following RSpec matcher: `=~`. It doesn't care about sorting and it gives you all the output you need when the spec fails. Here is an example:
 
 <pre class="ir_black">
 describe <span class="rubyStringDelimiter">&quot;</span><span class="String">array matching</span><span class="rubyStringDelimiter">&quot;</span> <span class="rubyControl">do</span>

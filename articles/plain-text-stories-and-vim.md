@@ -1,11 +1,11 @@
-<h3><font color="#ff6600"><strong>Update:</strong> Updated the syntax file, redownload it if you got it before December 19th 2007.</font></h3>
+### <font color="#ff6600">**Update:** Updated the syntax file, redownload it if you got it before December 19th 2007.</font>
 More news about my adventures with Selenium. It's hot and juicy, so lot's of exciting new things to do. I made a syntax highlighter for plain text stories in vim. Here's how it looks:
 
-To make it look like this, I adjusted the slate colorscheme and added my own story syntax file. Click <a href="/plain-text-stories-and-vim/#more-31" title="Continue Reading">Continue Reading</a> to download the files and read how to install it.
-<!--more--><h3>Here is what you need to do:</h3>
+To make it look like this, I adjusted the slate colorscheme and added my own story syntax file. Click [Continue Reading](/plain-text-stories-and-vim/#more-31) to download the files and read how to install it.
+<!--more-->### Here is what you need to do:
 <ol>
-  <li>Put the <a href="/black-slate.vim" title="My custom vim color scheme">black-slate colorscheme file</a> in /usr/share/vim/vim71/colors directory</li>
-  <li>Put the <a href="/story.vim" title="story syntax file">story syntax file</a> in /usr/share/vim/vim71/syntax directory</li>
+  <li>Put the [black-slate colorscheme file](/black-slate.vim) in /usr/share/vim/vim71/colors directory</li>
+  <li>Put the [story syntax file](/story.vim) in /usr/share/vim/vim71/syntax directory</li>
   <li>Append these lines to the end of /usr/share/vim/vim71/scripts.vim:
 <pre>if did_filetype()
   finish
@@ -27,6 +27,6 @@ colorscheme black-slate</pre></li>
   <li>Type your plain text stories, make sure every story file starts with 'Story:'
 It won't recognize it's a plain text story right away, so first type 'Story:', save it and reopen it to get nice colours.</li>
 </ol>
-By the way, Arie has made a syntax highlighter for the google javascript syntax highlighter. Keep a look out on <a href="http://ariekanarie.nl/" title="Arie's Blog" target="_blank">his blog</a> too!
+By the way, Arie has made a syntax highlighter for the google javascript syntax highlighter. Keep a look out on [his blog](http://ariekanarie.nl/) too!
 
 Caution: Wordpress changes the quotes. In step 3 you'll need normal quotes, not backticks.

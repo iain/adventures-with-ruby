@@ -1,10 +1,10 @@
-I know <a href="http://tweakers.net" title="tweakers.net" target="_blank">tweakers.net</a> has it, I liked it, and I wanted it for myself. The uris of news items are like this: <tt>http://core.tweakers.net/nieuws/50373/intel-stoot-ontwikkeling-netwerkprocessors-af.html</tt>
+I know <a href="http://tweakers.net" title="tweakers.net" target="_blank">tweakers.net</a> has it, I liked it, and I wanted it for myself. The uris of news items are like this: `http://core.tweakers.net/nieuws/50373/intel-stoot-ontwikkeling-netwerkprocessors-af.html`
 
 First you get the id, than you get a nice version of the title ending with .html. This is a nice way of making links, scoring high for a googlebot and is incredibly easy to read.
 
-I first tried to use only the title as an identifier. Now normally there would be a problem with having titles in your uri. First of all you might want to have special characters in your title. Rails automatically converts them back into the characters they are when evaluating the routes, so it would result in this problem: <em>/news/my%2Ftitle.html</em> would evaluate to <em>/news/my/title.html</em>, which the Rails Router doesn't understand.<!--more-->
+I first tried to use only the title as an identifier. Now normally there would be a problem with having titles in your uri. First of all you might want to have special characters in your title. Rails automatically converts them back into the characters they are when evaluating the routes, so it would result in this problem: */news/my%2Ftitle.html* would evaluate to */news/my/title.html*, which the Rails Router doesn't understand.<!--more-->
 
-Besides, it doesn't look good. But when changing the title to <em>my-title.html</em>, just for output, there is no good way of getting it back to the original title. Even more problematic is <em>my/title</em> and <em>my-title</em> would lead to the same page. I concluded that you'll definitely need an id in your uri. But how would I have the title in it then?
+Besides, it doesn't look good. But when changing the title to *my-title.html*, just for output, there is no good way of getting it back to the original title. Even more problematic is *my/title* and *my-title* would lead to the same page. I concluded that you'll definitely need an id in your uri. But how would I have the title in it then?
 
 The solution is a nice named route, like this one:
 
@@ -45,11 +45,11 @@ Now every time you use news_url(@news) it adds the title nicely formatted. One d
         return link
       end
 
-It looks if your route has the parameter <em>*nice_url</em> and in that case it replaces <em>%2F</em> with genuine forward slashes. You might want to do this for <em>link_to_remote</em> and <em>redirect_to</em> as well.
+It looks if your route has the parameter **nice_url* and in that case it replaces *%2F* with genuine forward slashes. You might want to do this for *link_to_remote* and *redirect_to* as well.
 
-<strong>Update:</strong> In routes.rb, don't forget to add a named route called index, pointing to '', as a default route. This script needs that. Furthermore, you need to make the default of the parameter nice_url nil. This is the final version of routes.rb:
+**Update:** In routes.rb, don't forget to add a named route called index, pointing to '', as a default route. This script needs that. Furthermore, you need to make the default of the parameter nice_url nil. This is the final version of routes.rb:
 
     map.index '', :controller => 'news', :action=>'index'
     map.news 'news/:id/*nice_url', :controller => 'news', :action => 'show', :nice_url => nil
 
-<strong>Update 2:</strong> I will be following up on this item, to properly implement this. Come back again later!
+**Update 2:** I will be following up on this item, to properly implement this. Come back again later!

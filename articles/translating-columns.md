@@ -1,6 +1,6 @@
-<strong>I made this into a plugin: <a href="/plugin-translatable_columns/">translatable_columns</a>.</strong>
+**I made this into a plugin: [translatable_columns](/plugin-translatable_columns/).**
 
-Dmitry <a href="/translating-activerecord/#comment-96">asked in the comments</a> of my last post <a href="/translating-activerecord">about translating ActiveRecord</a>:
+Dmitry [asked in the comments](/translating-activerecord/#comment-96) of my last post [about translating ActiveRecord](/translating-activerecord):
 
 <blockquote>Can you write about how to use translated columns of database in rails? For example we have table named ‘blog’, and I want to translate it on several languages: fr, en, ru. How to do that?</blockquote>
 
@@ -46,7 +46,7 @@ So for instance you can do this in your edit view:
 
 But when you have multiple columns that needs to be translated, even scattered through multiple models, it tends to be a boring and repeating business to add all those virtual attributes. So let's do some meta-programming, and clean up models!
 
-First, make a file in the <tt>RAILS_ROOT/lib</tt> directory, called <tt>load_translations.rb</tt> and put in this Ruby meta-programming goodness/madness:
+First, make a file in the `RAILS_ROOT/lib` directory, called `load_translations.rb` and put in this Ruby meta-programming goodness/madness:
 
 <pre lang="rails">
 module TranslatableColumns
@@ -104,6 +104,6 @@ end
 
 Let's meta-program this one as well!
 
-Get the proper posts, just call <tt>Post.localized</tt> or <tt>Post.localized.find(params[:id])</tt>. Note that I'm not using any translatable columns now. Just use normal columns and create multiple posts if you want more than one language for a post (e.g. create a Dutch one and a French one).
+Get the proper posts, just call `Post.localized` or `Post.localized.find(params[:id])`. Note that I'm not using any translatable columns now. Just use normal columns and create multiple posts if you want more than one language for a post (e.g. create a Dutch one and a French one).
 
 As you can see, I'm not using the translating functionality of I18n here. I just use I18n to know which locale to choose.

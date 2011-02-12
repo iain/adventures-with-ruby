@@ -1,11 +1,8 @@
-<p class="notice"> <strong>Important!</strong> I18n.store_translations isn't available anymore and all scopes have changed. Please <strong>DON'T</strong> use this anymore as a literal guide, because a lot has changed since I wrote this. Don't use the i18n_yaml plugin, because most of it's functionality has been merged into Rails. Please look for one of my more recent posts.</p>
-
-
-It has been some time, I know. It was a busy time. Since my last post I started working at <a href="http://finalist.com/">Finalist IT Group</a>, an exciting company doing exciting projects. Right now I'm doing a very demanding project for Eindhoven city council, which is quite far away from my home (well, in Holland it is anyway).
+It has been some time, I know. It was a busy time. Since my last post I started working at [Finalist IT Group](http://finalist.com/), an exciting company doing exciting projects. Right now I'm doing a very demanding project for Eindhoven city council, which is quite far away from my home (well, in Holland it is anyway).
 
 But time hasn't stopped. Ruby on Rails is busy advancing to version 2.2. One new feature in the upcoming Rails version has caught my eye and my undivided love and attention. It's the I18n-module built into Rails! It is already available if you're running edge.
 
-<!--more-->Rails 2.2 ships with it's language elements already indexed and a simple backend (called SimpleBackend) for handling translations. The whole idea is to keep it as simple as possible so any developer can implement their own way of doing the i18n-dance. The SimpleBackend keeps it translations in memory. Soon a new version of Globalize will arrive for storing translation in a database and no doubt a gettext based backend will appear soon too.
+Rails 2.2 ships with it's language elements already indexed and a simple backend (called SimpleBackend) for handling translations. The whole idea is to keep it as simple as possible so any developer can implement their own way of doing the i18n-dance. The SimpleBackend keeps it translations in memory. Soon a new version of Globalize will arrive for storing translation in a database and no doubt a gettext based backend will appear soon too.
 
 Using the SimpleBackend, translating your database is dead easy. Amongst it's features are (in no particular order):
 
@@ -46,7 +43,7 @@ ActiveRecord column names and error messages are easily translated too! You just
 
 In this example, I have a model called Post and it has an attribute named 'title'.
 
-<strong style="color: red;">Update!</strong> The proper way to translate ActiveRecord is described <a href="/translating-activerecord/">here!</a>
+<strong style="color: red;">Update!</strong> The proper way to translate ActiveRecord is described [here!](/translating-activerecord/)
 
 <pre lang="rails">
 I18n.store_translations( 'en-US', {
@@ -80,12 +77,12 @@ Unfortunately there isn't a good list of which translations are available. I wil
 
 There are some limitations to the default I18n implementation. How you want to incorporate it in your site is completely up to you. Also, how and where you keep your translations has not been implemented. So you have to load a bunch of files yourself in which you keep translations.
 
-But it gets easier. I made a plugin, called <a href="http://github.com/iain/i18n_yaml/">i18n_yaml</a>, which handles all of this for you. It is not a different backend, but rather an extension to SimpleBackend. It stores its translation files in yaml-files found in app/locales. It also provides a before_filter to find the appropriate locale. In other words: everything you need to make SimpleBackend useful! Like Rails 2.2, it is not finished yet, but you can have a go at it of course.
+But it gets easier. I made a plugin, called [i18n_yaml](http://github.com/iain/i18n_yaml/), which handles all of this for you. It is not a different backend, but rather an extension to SimpleBackend. It stores its translation files in yaml-files found in app/locales. It also provides a before_filter to find the appropriate locale. In other words: everything you need to make SimpleBackend useful! Like Rails 2.2, it is not finished yet, but you can have a go at it of course.
 
-Would you like to contribute to i18n? Join the <a href="http://groups.google.com/group/rails-i18n">mailinglist</a>. Rails i18n also launched it's own website: <a href="http://rails-i18n.org/">rails-i18n.org</a>. There are a number of tutorials and articles already available, listed <a href="http://rails-i18n.org/wiki">here</a>.
+Would you like to contribute to i18n? Join the [mailinglist](http://groups.google.com/group/rails-i18n). Rails i18n also launched it's own website: [rails-i18n.org](http://rails-i18n.org/). There are a number of tutorials and articles already available, listed [here](http://rails-i18n.org/wiki).
 
 This concludes the first part of the Rails i18n introduction. I'll be posting some more insights into i18n soon, so stay tuned!
 
 <h3>Update:</h3>
 
-Locate the locale.yml files in Rails to find all possible translations. Here is <a href="http://pastie.org/306532" target="_blank">a pastie</a> with everything translated to Dutch.
+Locate the locale.yml files in Rails to find all possible translations. Here is [a pastie](http://pastie.org/306532) with everything translated to Dutch.

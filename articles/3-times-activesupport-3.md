@@ -56,4 +56,4 @@ And it also works on strings:
 <font color="#7c7c7c"># better:</font>
 <font color="#336633">&quot;</font><font color="#a8ff60">The quick fox</font><font color="#336633">&quot;</font>.exclude?(<font color="#336633">&quot;</font><font color="#a8ff60">quick</font><font color="#336633">&quot;</font>) <font color="#7c7c7c"># =&gt; false</font></pre>
 
-The full release notes of Rails 3 can be <a href="http://guides.rails.info/3_0_release_notes.html">read here</a>.
+The full release notes of Rails 3 can be [read here](http://guides.rails.info/3_0_release_notes.html).

@@ -1,12 +1,12 @@
-I think <a href="/bringing-objects-to-views/">I've talked about this</a> before, and there has been a <a href="http://railscasts.com/episodes/101-refactoring-out-helper-object">Railscasts episode</a> about it too, but I want to touch on it again. I know we're supposed to keep views simple, but that doesn't mean that helpers can only contain methods.
+I think [I've talked about this](/bringing-objects-to-views/) before, and there has been a [Railscasts episode](http://railscasts.com/episodes/101-refactoring-out-helper-object) about it too, but I want to touch on it again. I know we're supposed to keep views simple, but that doesn't mean that helpers can only contain methods.
 
 Rails gives you a helper module for every controller. The problem with modules is that they don't contain state and are usually used to just put a lot of methods in. But this can grow quickly out of hand when the stuff that you're building is a little more complex.
 
-Never forget to run tools like <a href="http://wiki.github.com/kevinrutherford/reek/">Reek</a> on your helpers as well. What do they say? Are your methods too long? Do your methods require too many arguments? Is the complexity too high? Do your methods have <em>feature envy</em>?
+Never forget to run tools like [Reek](http://wiki.github.com/kevinrutherford/reek/) on your helpers as well. What do they say? Are your methods too long? Do your methods require too many arguments? Is the complexity too high? Do your methods have *feature envy*?
 
 I've seen quite a lot of Rails projects and helpers are almost always the forgotten parts of the application. Every Rails developer knows about the "Skinny Controller, Fat Model"-principle. Better teams also make skinny models, by using modules and creating macro's. But helpers are usually ugly. And they shouldn't!
 
-<strong>Helpers are code too! They want your love and dedication!</strong>
+**Helpers are code too! They want your love and dedication!**
 
 There are a couple of ways to keep it clean. Sometimes they are called "Presenter Objects" or something similar. It doesn't matter how you call them, and you don't have to use any complicated gems or libraries. Regular classes suffice.
 
@@ -36,7 +36,7 @@ Here's an example of a typical helper:
 
 <font color="#96cbfe">end</font></pre>
 
-You might choose a different route, like putting the <tt>if</tt>-statement in the view. But that's beside the point. The point is that this is what usually happens when you don't use objects as they are supposed to be used. Look at the post argument for example. It's on every frickin' method! That's not <abbr title="Don't Repeat Yourself">DRY</abbr>!
+You might choose a different route, like putting the `if`-statement in the view. But that's beside the point. The point is that this is what usually happens when you don't use objects as they are supposed to be used. Look at the post argument for example. It's on every frickin' method! That's not <abbr title="Don't Repeat Yourself">DRY</abbr>!
 
 And what if you need to extend it? What if you need approve and reject links as well? What if the destroy link needs to only show when the post has been approved? It's becoming more and more messy. Time to refactor!
 
@@ -83,16 +83,16 @@ This is an example of how I would do it:
 
 <font color="#96cbfe">end</font></pre>
 
-Nice! Small testable methods! Readable code! Less repetition. <em>Run Reek on that!</em>
+Nice! Small testable methods! Readable code! Less repetition. *Run Reek on that!*
 
-If you're wondering what the <tt>attr_initializer</tt> is, it's a monkey patch, that I've <a href="/monkey-patch-of-the-month-attr_initializer/">described here</a>. The <a href="http://apidock.com/rails/Module/delegate">delegate-method</a> is something ActiveSupport offers you. Use it, it's super effective!
+If you're wondering what the `attr_initializer` is, it's a monkey patch, that I've [described here](/monkey-patch-of-the-month-attr_initializer/). The [delegate-method](http://apidock.com/rails/Module/delegate) is something ActiveSupport offers you. Use it, it's super effective!
 
-Wait a minute. Did I say "testable"? Yes, I most certainly did! As with any code, this needs to be tested. But it's not that hard anymore! If you're using <a href="http://rspec.info">Rspec</a>, you can use the <a href="http://rspec.info/rails/writing/helpers.html">helper specs</a> it provides. But you don't need to!
+Wait a minute. Did I say "testable"? Yes, I most certainly did! As with any code, this needs to be tested. But it's not that hard anymore! If you're using [Rspec](http://rspec.info), you can use the [helper specs](http://rspec.info/rails/writing/helpers.html) it provides. But you don't need to!
 
-The <tt>PostTitle</tt>-class is a regular Ruby class, and so every test framework can test with it without much effort. You might want to use stubs and mocks for the other helper methods you call. Or subclass <tt>PostTitle</tt>, define the used helper methods and use this to subclass in your tests. The <tt>delegate</tt> specifies which other helper methods are used.
+The `PostTitle`-class is a regular Ruby class, and so every test framework can test with it without much effort. You might want to use stubs and mocks for the other helper methods you call. Or subclass `PostTitle`, define the used helper methods and use this to subclass in your tests. The `delegate` specifies which other helper methods are used.
 
-Remember that what you program is entirely up to you. You, and only you, have to decide when a simple method is enough, or whether you need to add a class, or something similar. You can also consider using <a href="http://builder.rubyforge.org/">Builder</a> for some parts, if the HTML generation becomes too hard.
+Remember that what you program is entirely up to you. You, and only you, have to decide when a simple method is enough, or whether you need to add a class, or something similar. You can also consider using [Builder](http://builder.rubyforge.org/) for some parts, if the HTML generation becomes too hard.
 
-The main point is that any part of your application needs to receive the same attention to detail. Don't hide your dead bodies (of code) in helpers, or anywhere! Be critical everywhere and all the time! Run Reek regularly. It's a depressing tool and you don't need to fix every message every time. Use it wisely and pay attention. There is <strong>no</strong> excuse for ugly code!
+The main point is that any part of your application needs to receive the same attention to detail. Don't hide your dead bodies (of code) in helpers, or anywhere! Be critical everywhere and all the time! Run Reek regularly. It's a depressing tool and you don't need to fix every message every time. Use it wisely and pay attention. There is **no** excuse for ugly code!
 
 In this example, I would use a partial, but when the view logic increases, you should be thinking about extracting it.

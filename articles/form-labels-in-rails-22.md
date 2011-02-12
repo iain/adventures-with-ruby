@@ -34,4 +34,4 @@ The result is:
 &lt;label for="topic_name">A nice name&lt;/label>
 </pre>
 
-For more information about where to put your translations, read my post about <a href="/translating-activerecord/">translating ActiveRecord</a>.
+For more information about where to put your translations, read my post about [translating ActiveRecord](/translating-activerecord/).

@@ -1,4 +1,4 @@
-<strong>Updated October 10th, 2008 to be up to date with Rails 2.2 RC1 release.</strong>
+**Updated October 10th, 2008 to be up to date with Rails 2.2 RC1 release.**
 
 With Rails 2.2 releasing any day now, I want to show you how to translate ActiveRecord related stuff. It is quite easy, once you know where to keep your translations. Here is a complete guide to using all built in translation methods!
 
@@ -22,9 +22,9 @@ Suppose we're building a forum. A forum has several types (e.g. admin) of users 
 
 ### Setting up
 
-Make sure you're running Rails 2.2 or Rails edge (<tt>rake rails:freeze:edge</tt>)
+Make sure you're running Rails 2.2 or Rails edge (`rake rails:freeze:edge`)
 
-Now let's translate all this into <a href="http://icanhascheezburger.com" target="_blank">LOLCAT</a>, just for fun. We need a directory to place the locale files:
+Now let's translate all this into [LOLCAT](http://icanhascheezburger.com), just for fun. We need a directory to place the locale files:
 
 <pre style="background: #000000; color: #f6f3e8; font-family: Monaco, monospace" class="ir_black">mkdir app/locales</pre>
 
@@ -48,7 +48,7 @@ Next, we're going to make some simple translation files. All ActiveRecord transl
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#c6c5fe">user</font><font color="#00a0a0">:</font>&nbsp;kitteh
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#c6c5fe">admin</font><font color="#00a0a0">:</font>&nbsp;Ceiling cat</pre>
 
-Let's try this out in <tt>script/console</tt>
+Let's try this out in `script/console`
 
 <pre style="background: #000000; color: #f6f3e8; font-family: Monaco, monospace" class="ir_black">
 >> User.human_name
@@ -57,7 +57,7 @@ Let's try this out in <tt>script/console</tt>
 => "Ceiling cat"
 </pre>
 
-It's nice to know that the method <tt>human_name</tt> is used by error messages in validations too. But we'll come to that in just a second.
+It's nice to know that the method `human_name` is used by error messages in validations too. But we'll come to that in just a second.
 
 If you didn't specify the translation of admin, it would have used the translation of user, because it inherited it.
 
@@ -108,7 +108,7 @@ Let's translate a few default messages:
 
 ### Interpolation in validations
 
-You have more freedom in your validation messages now. With every message you can interpolate the translated name of the model, the attribute and the value. The variable 'count' is also available where applicable (e.g. <tt>validates_length_of</tt>)
+You have more freedom in your validation messages now. With every message you can interpolate the translated name of the model, the attribute and the value. The variable 'count' is also available where applicable (e.g. `validates_length_of`)
 
 <pre style="background: #000000; color: #f6f3e8; font-family: Monaco, monospace" class="ir_black"><font color="#c6c5fe">LOL</font><font color="#00a0a0">:</font>
 &nbsp;&nbsp;<font color="#c6c5fe">activerecord</font><font color="#00a0a0">:</font>
@@ -172,7 +172,7 @@ Any translation in the activerecord.errors.models.model_name.attributes scope ov
 
 ### Defaults
 
-When you specify a symbol as the default option, it will be translated like a normal error message, just like you've seen with <tt>:already_registered</tt>. When default hasn't been found, it'll try looking up the normal key you have given. With <tt>:already_registered</tt>, that key has already been set by Rails, because we're using <tt>validates_uniqueness_of</tt>.
+When you specify a symbol as the default option, it will be translated like a normal error message, just like you've seen with `:already_registered`. When default hasn't been found, it'll try looking up the normal key you have given. With `:already_registered`, that key has already been set by Rails, because we're using `validates_uniqueness_of`.
 
 When you specify a string as default value, it'll use this when no translations have otherwise been found.
 
@@ -198,7 +198,7 @@ When you want to display the error messages in a model in a view, most people wi
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#c6c5fe">other</font><font color="#00a0a0">:</font>&nbsp;<font color="#a8ff60">&quot;{{count}} errors prohibited this {{model}} from being saved&quot;</font>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#c6c5fe">body</font><font color="#00a0a0">:</font>&nbsp;<font color="#a8ff60">&quot;There were problems with the following fields:&quot;</font></pre>
 
-There is one slight problem with the messages it displays. <tt>error_messages_for</tt> uses the <tt>errors.full_messages</tt> in it's list. This means that the attribute names will be put before it. Of course these will be translated with <tt>human_attribute_name</tt>, but it might not always be desirable. In other languages than English it's sometimes hard to formulate a nice error message with the attribute name at the beginning. This will have to be fixed in later Rails versions.
+There is one slight problem with the messages it displays. `error_messages_for` uses the `errors.full_messages` in it's list. This means that the attribute names will be put before it. Of course these will be translated with `human_attribute_name`, but it might not always be desirable. In other languages than English it's sometimes hard to formulate a nice error message with the attribute name at the beginning. This will have to be fixed in later Rails versions.
 
 ### Conclusion
 
@@ -206,11 +206,11 @@ I hope you'll agree with me that these translation options for ActiveRecord are 
 
 Please keep coming back to my site, or add the RSS feed to your favorite reader.
 
-Of course, stay in touch with the <a href="http://groups.google.com/group/rails-i18n" target="_blank">i18n mailinglist</a>. A lot of people are putting a lot of effort into the project. New plugins and gems solving problems problems rapidly. I18n is one of the more difficult things to do, so if you have a special insight in a language, please contribute!
+Of course, stay in touch with the [i18n mailinglist](http://groups.google.com/group/rails-i18n). A lot of people are putting a lot of effort into the project. New plugins and gems solving problems problems rapidly. I18n is one of the more difficult things to do, so if you have a special insight in a language, please contribute!
 
-<strong>Happy devving!</strong>
+**Happy devving!**
 
-PS. Damn! I wish I was in <a href="http://en.oreilly.com/railseurope2008/public/content/home" target="_blank">Berlin</a> right now!
+PS. Damn! I wish I was in [Berlin](http://en.oreilly.com/railseurope2008/public/content/home) right now!
 
 
 <p style="font-size: 40%">* invisible cheezburgerz only</p>
@@ -218,4 +218,4 @@ PS. Damn! I wish I was in <a href="http://en.oreilly.com/railseurope2008/public/
 ### Update
 
 This post is old. Still, after 2 years, it still accounts for 10% of my daily traffic. How cool is that?
-Seriously though, read the <a href="http://guides.rubyonrails.org/i18n.html">official Rails guide</a> on this subject, for up to date information!
+Seriously though, read the [official Rails guide](http://guides.rubyonrails.org/i18n.html) on this subject, for up to date information!

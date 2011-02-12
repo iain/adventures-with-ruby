@@ -1,4 +1,4 @@
-You all know <tt>Symbol#to_proc</tt>, right? It allows you to write this:
+You all know `Symbol#to_proc`, right? It allows you to write this:
 
 <pre style="background: #000000; color: #f6f3e8; font-family: Monaco, monospace" class="ir_black"><font color="#7c7c7c"># Without Symbol#to_proc</font>
 [<font color="#ff73fd">1</font>, <font color="#ff73fd">2</font>, <font color="#ff73fd">3</font>].map { |<font color="#c6c5fe">it</font>|&nbsp;it.to_s }
@@ -18,7 +18,7 @@ It is actually quite simple, and you can implement it yourself:
 &nbsp;&nbsp;<font color="#96cbfe">end</font>
 <font color="#96cbfe">end</font></pre>
 
-It works because when you prepend an ampersand (&amp;) to any Ruby object, it calls <tt>#to_proc</tt> to get a proc to use as block for the method.
+It works because when you prepend an ampersand (&amp;) to any Ruby object, it calls `#to_proc` to get a proc to use as block for the method.
 
 What I always regretted though was not being to pass any arguments, so I hacked and monkeypatched a bit, and got:
 
@@ -49,7 +49,7 @@ After this I remembered something similar that annoyed me before. It's that Rail
 
 <pre style="background: #000000; color: #f6f3e8; font-family: Monaco, monospace" class="ir_black"><font color="#00a0a0">&lt;%=</font>&nbsp;<font color="#c6c5fe">@prices</font>.map { |<font color="#c6c5fe">price</font>|&nbsp;number_to_currency(price) }.to_sentence <font color="#00a0a0">%&gt;</font></pre>
 
-What if I could apply some <tt>to_proc</tt>-love to that too? All these helper methods cannot be added to strings, fixnums, and the likes; that would clutter <em>way</em> to much. Rather, it might by a nice idea to use procs that understands helper methods. Here is what I created:
+What if I could apply some `to_proc`-love to that too? All these helper methods cannot be added to strings, fixnums, and the likes; that would clutter *way* to much. Rather, it might by a nice idea to use procs that understands helper methods. Here is what I created:
 
 <pre style="background: #000000; color: #f6f3e8; font-family: Monaco, monospace" class="ir_black"><font color="#96cbfe">module</font>&nbsp;<font color="#ffffb6">ProcProxyHelper</font>
 
@@ -79,12 +79,12 @@ What if I could apply some <tt>to_proc</tt>-love to that too? All these helper m
 
 <font color="#96cbfe">end</font></pre>
 
-I used a clean blank class (in Ruby 1.9, you'd want to inherit it from <tt>BasicObject</tt>), in which I will provide the proper <tt>proc</tt>-object. I play around with the argument list a bit, handling multiple arguments and blocks too. You can now use this syntax:
+I used a clean blank class (in Ruby 1.9, you'd want to inherit it from `BasicObject`), in which I will provide the proper `proc`-object. I play around with the argument list a bit, handling multiple arguments and blocks too. You can now use this syntax:
 
 <pre style="background: #000000; color: #f6f3e8; font-family: Monaco, monospace" class="ir_black"><font color="#00a0a0">&lt;%=</font>&nbsp;<font color="#c6c5fe">@prices</font>.map(&amp;it.number_to_currency).to_sentence <font color="#00a0a0">%&gt;</font></pre>
 
 
-That is a lot sexier if you as me. And you can use it in any object, not just inside views. And lets add some extra arguments and some <tt>Enumerator</tt>-love too:
+That is a lot sexier if you as me. And you can use it in any object, not just inside views. And lets add some extra arguments and some `Enumerator`-love too:
 
 <pre style="background: #000000; color: #f6f3e8; font-family: Monaco, monospace" class="ir_black"><font color="#96cbfe">class</font>&nbsp;<font color="#ffffb6">SomeClass</font>
 &nbsp;&nbsp;<font color="#96cbfe">include</font>&nbsp;<font color="#ffffb6">ProcProxyHelper</font>
@@ -108,4 +108,4 @@ In case you are wondering, the position you can specify is to tell where the arg
 
 <pre style="background: #000000; color: #f6f3e8; font-family: Monaco, monospace" class="ir_black"><font color="#00a0a0">&lt;%=</font>&nbsp;some_texts.map(&amp;it(<font color="#ff73fd">2</font>).content_tag(<font color="#99cc99">:span</font>, <font color="#99cc99">:class</font>&nbsp;=&gt; <font color="#336633">&quot;</font><font color="#a8ff60">foo</font><font color="#336633">&quot;</font>)).to_sentence <font color="#00a0a0">%&gt;</font></pre>
 
-So there you have it. I'm probably solving a problem that doesn't exist. It is however a nice example of the awesome power of Ruby. I hope you've enjoyed this little demonstration of the possible uses of <tt>to_proc</tt>.
+So there you have it. I'm probably solving a problem that doesn't exist. It is however a nice example of the awesome power of Ruby. I hope you've enjoyed this little demonstration of the possible uses of `to_proc`.

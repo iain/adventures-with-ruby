@@ -1,4 +1,4 @@
-The old subject of nested forms comes back again to hunt me. Rails 2.3 has the new and shiny <tt>accepts_nested_attributes_for</tt> feature. I like it, but there are some things to take into consideration. Adding a child object through javascript remains a bitch to tackle. So I sat down and wrote some javascript. Here is what I came up with. Not sure if I'm going to release this a plugin though.
+The old subject of nested forms comes back again to hunt me. Rails 2.3 has the new and shiny `accepts_nested_attributes_for` feature. I like it, but there are some things to take into consideration. Adding a child object through javascript remains a bitch to tackle. So I sat down and wrote some javascript. Here is what I came up with. Not sure if I'm going to release this a plugin though.
 
 First of, build the models. I have a project with many stages:
 
@@ -36,7 +36,7 @@ Ok, so nothing to scary there. Nice clean views. Those two helper methods might 
 
 Notice that the square brackets used at the first line of the stage partial either adds a class "new_stage" or "stage_X" (where X is the id of an existing stage object).
 
-Let's see what's inside the <tt>partial_button</tt> method!
+Let's see what's inside the `partial_button` method!
 
     def partial_button(form, attribute, link_name)
       returning "" do |out|
@@ -53,9 +53,9 @@ Let's see what's inside the <tt>partial_button</tt> method!
       end
     end
 
-Ok, this looks scary. But it isn't that scary. This method returns a string called <tt>out</tt>. First of I build some variables, which will be needed as options for the javascript, since javascript doesn't have those cool inflections ActiveSupport has.
+Ok, this looks scary. But it isn't that scary. This method returns a string called `out`. First of I build some variables, which will be needed as options for the javascript, since javascript doesn't have those cool inflections ActiveSupport has.
 
-Second, I am going to make a fields_for block, which you'll already know what it does. I render the partial and assign it to the <tt>html</tt> variable. Then I generate some javascript which initiates a new <tt>NestedFormPartial</tt> object. Finally, I build a hidden field, which contains this javascript as value and a button.
+Second, I am going to make a fields_for block, which you'll already know what it does. I render the partial and assign it to the `html` variable. Then I generate some javascript which initiates a new `NestedFormPartial` object. Finally, I build a hidden field, which contains this javascript as value and a button.
 
 Here's the javascript, you'll need to add:
 
@@ -121,7 +121,7 @@ I generate a new id by using the timestamp and replace the values in my html. Wh
 
 As you can see, I did my best to make this as unobtrusive as possible, but going any further made my head hurt.
 
-Finally, the <tt>remove_partial</tt> method, which I haven't cleaned up yet:
+Finally, the `remove_partial` method, which I haven't cleaned up yet:
 
     def remove_partial(form, link_name)
       attribute = form.object.class.name.underscore
@@ -133,8 +133,8 @@ Finally, the <tt>remove_partial</tt> method, which I haven't cleaned up yet:
       end
     end
 
-I hope this helps. I found a lot of my initial optimism after hearing about <tt>accepts_nested_attributes_for</tt> have gone now. It cleans up a lot of code in the model though. I'll keep this post updated when I have some improvements.
+I hope this helps. I found a lot of my initial optimism after hearing about `accepts_nested_attributes_for` have gone now. It cleans up a lot of code in the model though. I'll keep this post updated when I have some improvements.
 
 Sources:
-<ul><li><a href="http://ryandaigle.com/articles/2009/2/1/what-s-new-in-edge-rails-nested-attributes" target="_blank">Ryan's Scraps</a></li>
-<li><a href="http://github.com/alloy/complex-form-examples/tree/master" target="_blank">Eloy Duran's complex form examples</a></li></ul>
+<ul><li>[Ryan's Scraps](http://ryandaigle.com/articles/2009/2/1/what-s-new-in-edge-rails-nested-attributes)</li>
+<li>[Eloy Duran's complex form examples](http://github.com/alloy/complex-form-examples/tree/master)</li></ul>

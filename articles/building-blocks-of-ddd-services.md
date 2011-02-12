@@ -1,4 +1,4 @@
-As <a href="/domain-driven-design-building-blocks-in-ruby/">promised</a>, here is an example of how to use the idea of services from Domain Driven Design to help you design your code better. Let's start with some theoretical stuff, before we dive into some example code.
+As [promised](/domain-driven-design-building-blocks-in-ruby/), here is an example of how to use the idea of services from Domain Driven Design to help you design your code better. Let's start with some theoretical stuff, before we dive into some example code.
 
 ### In Theory
 
@@ -131,7 +131,7 @@ As you can see, this places the logic of filtering in its proper place. It's not
 
 These services are incredibly easy to make. Just think about the objects it's trying to handle. These are probably the arguments of your initializer. Store those methods with an instance variable. All methods you create do something with either these objects or call methods that do so.
 
-Don't forget to run <a href="http://wiki.github.com/kevinrutherford/reek/">reek</a> on your code to see if you have any Low Cohesion or Feature Envy warnings. If you get any, than that method probably doesn't belong here, or you've got you're initial parameters wrong.
+Don't forget to run [reek](http://wiki.github.com/kevinrutherford/reek/) on your code to see if you have any Low Cohesion or Feature Envy warnings. If you get any, than that method probably doesn't belong here, or you've got you're initial parameters wrong.
 
 ### Some bonus material
 
@@ -151,7 +151,7 @@ If you wish to simplify the interface even further, you can create a class metho
 
 This reduces the connascence needed to use the service. Not really needed here, but it's a nice way of cleaning up your interface.
 
-You might ask where do I put this into my Rails application. I make a folder <tt>app/services</tt> and (because I use RSpec) a folder named <tt>spec/services</tt>. If you use autotest, you need to tell it to pick up changes in these directories. You'll need to add the file <tt>.autotest</tt> to your application root folder, containing this bit of code to do the mapping:
+You might ask where do I put this into my Rails application. I make a folder `app/services` and (because I use RSpec) a folder named `spec/services`. If you use autotest, you need to tell it to pick up changes in these directories. You'll need to add the file `.autotest` to your application root folder, containing this bit of code to do the mapping:
 
 
 <pre style="background: #000000; color: #f6f3e8; font-family: Monaco, monospace" class="ir_black"><font color="#ffffb6">Autotest</font>.add_hook <font color="#99cc99">:initialize</font>&nbsp;<font color="#6699cc">do</font>&nbsp;|<font color="#c6c5fe">at</font>|

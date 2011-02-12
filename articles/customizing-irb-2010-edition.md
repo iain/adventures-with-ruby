@@ -1,8 +1,8 @@
-<strong>TL;DR</strong>: Check out my new <a href="http://github.com/iain/osx_settings/blob/master/.irbrc"><tt>.irbrc</tt>-file</a>!
+**TL;DR**: Check out my new [`.irbrc`-file](http://github.com/iain/osx_settings/blob/master/.irbrc)!
 
 Customizing my work environment is a nerdish hobby of mine. I spend far to much time tweaking my terminal. While I'll save my terminal customizations for another time, I'll show you my IRB tweaks in this post.
 
-There are several tools to improve your IRB, and some of them have been around for ages. But the arrival of <a href="http://gembundler.com/">Bundler</a> makes it difficult to use them. Bundler creates a bubble in which you have to specify your dependencies explicitly. Furthermore, with project specific gemsets, provided by the ever so awesome <a href="http://rvm.beginrescueend.com/">RVM</a>, we need to install these IRB extensions for every project.
+There are several tools to improve your IRB, and some of them have been around for ages. But the arrival of [Bundler](http://gembundler.com/) makes it difficult to use them. Bundler creates a bubble in which you have to specify your dependencies explicitly. Furthermore, with project specific gemsets, provided by the ever so awesome [RVM](http://rvm.beginrescueend.com/), we need to install these IRB extensions for every project.
 
 This means that you cannot be sure that extensions like Wirble are available in your new and shiny Rails console. There is only one way around that: add them to your Gemfile. This is what I usually add:
 
@@ -15,7 +15,7 @@ This means that you cannot be sure that extensions like Wirble are available in 
 
 ### Extension Loading
 
-To load the IRB extensions without blowing up in your face when they're not available, I gently try to load them, and configure them only when that is successful. <a href="http://github.com/iain/osx_settings/blob/master/.irbrc">You can download my <tt>.irbrc</tt> on github</a>. Here is what it looks like:
+To load the IRB extensions without blowing up in your face when they're not available, I gently try to load them, and configure them only when that is successful. [You can download my `.irbrc` on github](http://github.com/iain/osx_settings/blob/master/.irbrc). Here is what it looks like:
 
 <figure class="ir_black"><img src="/irb.png" alt="" title="irb" width="737" height="188"></figure>
 
@@ -23,27 +23,27 @@ When you start IRB, it shows a line with the extensions loaded. If it's gray, it
 
 ### Showing Queries in ActiveRecord 3
 
-As you can see, the queries done by ActiveRecord are displayed in the same way as they are displayed in your log files. In Rails 2, you would've done this by redirecting the log output to <tt>STDOUT</tt>. In Rails 3 you need to subscribe to the '<tt>sql.active_record</tt>'-notifications.
+As you can see, the queries done by ActiveRecord are displayed in the same way as they are displayed in your log files. In Rails 2, you would've done this by redirecting the log output to `STDOUT`. In Rails 3 you need to subscribe to the '`sql.active_record`'-notifications.
 
 This could in theory also be done for other Rails 3 compatible ORMs like Mongoid, but I haven't looked into that yet.
 
 ### Hirb
 
-<a href="http://tagaholic.me/hirb/">Hirb</a> formats objects into pretty tables, as you can see in the picture above. It also provides some scrolling possibilities like the command line tools less and more. Very handy!
+[Hirb](http://tagaholic.me/hirb/) formats objects into pretty tables, as you can see in the picture above. It also provides some scrolling possibilities like the command line tools less and more. Very handy!
 
 ### Wirble
 
-The first IRB extension anyone uses. <a href="http://pablotron.org/software/wirble/">Wirble</a> provides you with history and syntax highlighting.
+The first IRB extension anyone uses. [Wirble](http://pablotron.org/software/wirble/) provides you with history and syntax highlighting.
 
 ### Awesome Print
 
-While Wirble colorizes the output to improve readability, it can get cluttered really fast, especially when you're dealing with nested hashes and arrays. <a href="http://github.com/michaeldv/awesome_print">AwesomePrint</a> helps to untangle your object mess:
+While Wirble colorizes the output to improve readability, it can get cluttered really fast, especially when you're dealing with nested hashes and arrays. [AwesomePrint](http://github.com/michaeldv/awesome_print) helps to untangle your object mess:
 
 <figure class="ir_black"><img src="/awesomeprint.png" alt="" title="awesomeprint" width="278" height="150"></figure>
 
 ### Print Methods
 
-The '<tt>pm</tt>'-extension I found <a href="http://snippets.dzone.com/posts/show/2916">on the intertubes</a> some time ago, lists the methods and what arguments they take on any given object. You can filter it, by providing a regex. This is what it looks like:
+The '`pm`'-extension I found [on the intertubes](http://snippets.dzone.com/posts/show/2916) some time ago, lists the methods and what arguments they take on any given object. You can filter it, by providing a regex. This is what it looks like:
 
 <figure class="ir_black"><img src="/pm.png" alt="" title="pm" width="324" height="138"></figure>
 
@@ -51,12 +51,12 @@ It's not a gem, but a snippet pasted directly into my irbrc, so it's always avai
 
 ### Interactive Editor
 
-Open vim (or any other editor) from IRB, edit your code, save it, close your editor and the code gets executed. Open vim again and your code is visible and editable again. Very awesome! <a href="http://github.com/jberkel/interactive_editor">Check it out</a>!
+Open vim (or any other editor) from IRB, edit your code, save it, close your editor and the code gets executed. Open vim again and your code is visible and editable again. Very awesome! [Check it out](http://github.com/jberkel/interactive_editor)!
 
 ### More
 
-Yeah, there more. There's <a href="http://tagaholic.me/2009/07/16/bond-from-irb-with-completion-love.html">bond</a>, which makes autocompletion better, and <a href="http://utilitybelt.rubyforge.org/">utility belt</a>, and more. I can't remember to use them all, so I haven't included them into my irbrc. They certainly are cool enough for you to check out! Also, a lot of great tips are <a href="http://stackoverflow.com/questions/123494/whats-your-favourite-irb-trick">here on Stack Overflow</a>.
+Yeah, there more. There's [bond](http://tagaholic.me/2009/07/16/bond-from-irb-with-completion-love.html), which makes autocompletion better, and [utility belt](http://utilitybelt.rubyforge.org/), and more. I can't remember to use them all, so I haven't included them into my irbrc. They certainly are cool enough for you to check out! Also, a lot of great tips are [here on Stack Overflow](http://stackoverflow.com/questions/123494/whats-your-favourite-irb-trick).
 
-If you have any good tips, please share them! Oh, and the other OSX tweaks I use are on <a href="http://github.com/iain/osx_settings">github</a>.
+If you have any good tips, please share them! Oh, and the other OSX tweaks I use are on [github](http://github.com/iain/osx_settings).
 
-PS. For those that don't know how to load this: put the <tt>.irbrc</tt> file in your home directory and it will load automatically.
+PS. For those that don't know how to load this: put the `.irbrc` file in your home directory and it will load automatically.

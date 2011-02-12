@@ -1,4 +1,4 @@
-We had a programming exercise this week at work. We were set out to write <a href="http://en.wikipedia.org/wiki/Conway%27s_Game_of_Life">Conway's Game of Life</a>, using pair programming and TDD. It was a fun and educational evening. I even did some Scala.
+We had a programming exercise this week at work. We were set out to write [Conway's Game of Life](http://en.wikipedia.org/wiki/Conway%27s_Game_of_Life), using pair programming and TDD. It was a fun and educational evening. I even did some Scala.
 
 Programmers humor dictates me that from time to time I say things like "In Ruby, that's only one line!" or "In Ruby, that would cost me just one minute!". Putting money where my mouth is, I wrote the entire application in just one line of Ruby.
 
@@ -33,7 +33,7 @@ new_grid = grid.next
 new_grid.to_s.to_grid == new_grid <font color="#7c7c7c"># returns true</font>
 </pre>
 
-If you want to know how it works, or make an animation of it, <a href="http://gist.github.com/384487">it's all here</a>.
+If you want to know how it works, or make an animation of it, [it's all here](http://gist.github.com/384487).
 
 This is what it looks like:
 

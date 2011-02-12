@@ -10,7 +10,7 @@ After a long day in the train today, I extracted the I18n functionality from Act
       attr_accessor :name, :password
     end
 
-Now you can do <a href="/translating-activerecord/">familiar things</a> with the class, just as you would do with normal ActiveRecord models. <!--more-->Supply a translation:
+Now you can do [familiar things](/translating-activerecord/) with the class, just as you would do with normal ActiveRecord models. <!--more-->Supply a translation:
 
     nl-NL:
       activerecord:
@@ -30,7 +30,7 @@ Now you can do <a href="/translating-activerecord/">familiar things</a> with the
 
 Of course, you can use inheritance, just as you would use Single Table Inheritance (STI).
 
-It also works nicely together with <a href="/form-labels-in-rails-22/">i18n_label</a>. A simple example:
+It also works nicely together with [i18n_label](/form-labels-in-rails-22/). A simple example:
 
     %h1= translate :please_login
     - form_for(User.new) do |f|

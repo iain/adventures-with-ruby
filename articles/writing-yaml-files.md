@@ -1,4 +1,4 @@
-A short one for today: How do I write <a href="http://en.wikipedia.org/wiki/YAML" target="_blank">YAML</a> files?
+A short one for today: How do I write [YAML](http://en.wikipedia.org/wiki/YAML) files?
 
 Well, to get the prettiest results, I do something like this:
 
@@ -15,11 +15,11 @@ Well, to get the prettiest results, I do something like this:
 <font color="#96cbfe">end</font></pre>
 
 <!--more-->
-I use the gem <a href="http://rubyforge.org/projects/ya2yaml/" target="_blank">ya2yaml</a> to create YAML, because the default Hash#to_yaml doesn't work well with UTF-8. If you have it installed and loaded, it uses that.
+I use the gem [ya2yaml](http://rubyforge.org/projects/ya2yaml/) to create YAML, because the default Hash#to_yaml doesn't work well with UTF-8. If you have it installed and loaded, it uses that.
 
-Then I turn all keys into strings with the method <tt>deep_stringify_keys</tt>, so the keys don't get formatted like the symbols they are. I remove some random junk and strip whitespace.
+Then I turn all keys into strings with the method `deep_stringify_keys`, so the keys don't get formatted like the symbols they are. I remove some random junk and strip whitespace.
 
-To add the <tt>deep_stringify_keys</tt>, open the Hash class:
+To add the `deep_stringify_keys`, open the Hash class:
 
 <pre style="background: #000000; color: #f6f3e8; font-family: Monaco, monospace" class="ir_black">
 <font color="#96cbfe">class</font>&nbsp;<font color="#ffffb6">Hash</font>

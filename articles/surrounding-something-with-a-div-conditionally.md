@@ -15,7 +15,7 @@ will result after the button is pressed:
 
 One solution is to create the div outside of the partial, but that would make the partial less self sufficient. Since I am a big fan of self sufficient partials, I'd want to just render the partial, and never to care about any div's around it.
 
-An <strong>ugly</strong> solution, especially when using Haml, is to dynamically create the open and close tags:
+An **ugly** solution, especially when using Haml, is to dynamically create the open and close tags:
 
     = '<div id="feedback">' unless request.xhr?
     - remote_form_for(etc)

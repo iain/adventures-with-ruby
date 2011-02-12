@@ -1,8 +1,8 @@
-A while back, I talked about <a href="/3-times-activesupport-3/">new additions to ActiveSupport</a>. And now, I have a confession to make: I like monkey patches! At least, as long as they're short and self-explanatory.
+A while back, I talked about [new additions to ActiveSupport](/3-times-activesupport-3/). And now, I have a confession to make: I like monkey patches! At least, as long as they're short and self-explanatory.
 
-I got a few of them lying around, so I am going to post one every month. I also welcome your favorite monkey patch, which you can <a href="mailto:monkey@iain.nl">email me</a>.
+I got a few of them lying around, so I am going to post one every month. I also welcome your favorite monkey patch, which you can [email me](mailto:monkey@iain.nl).
 
-So, the first one: <strong>group_by</strong>. This method groups arrays of objects by the result of the block provided and puts the result into a hash.
+So, the first one: **group_by**. This method groups arrays of objects by the result of the block provided and puts the result into a hash.
 <pre style="background: #000000; color: #f6f3e8; font-family: Monaco, monospace" class="ir_black"><font color="#96cbfe">class</font>&nbsp;<font color="#ffffb6">Array</font>
 &nbsp;&nbsp;<font color="#7c7c7c"># Turns an array into a hash, using the results of the block as keys for the</font>
 &nbsp;&nbsp;<font color="#7c7c7c"># hash.</font>
@@ -30,6 +30,6 @@ No piece of code is complete without tests, so this is it:
 
 <font color="#96cbfe">end</font></pre>
 
-<h3>Update</h3>
+### Update
 
-Silly me, this one is <a href="http://apidock.com/ruby/Enumerable/group_by">already in Ruby itself</a>. Anyway, this is how it works under the cover...
+Silly me, this one is [already in Ruby itself](http://apidock.com/ruby/Enumerable/group_by). Anyway, this is how it works under the cover...

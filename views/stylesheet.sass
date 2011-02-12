@@ -68,31 +68,6 @@ a
   +link-colors($blue, $red)
   +hover-link
 
-strong
-  font-weight: bold
-  color: $black
-
-em
-  font-style: italic
-
-hr
-  border: 0 none
-  border-bottom: $sidebar-border
-
-tt, code
-  +code-font
-  color: $black
-  font-size: 12px
-
-blockquote
-  margin: $big-gap
-  line-height: 18px
-  color: $warm-gray
-
-ol
-  list-style: decimal outside
-  margin: $big-gap
-
 #container
   width: $container-width
   overflow: auto
@@ -200,9 +175,36 @@ ol
     list-style: disc outside
     margin: $small-gap
     margin-left: $big-gap
+  ol
+    list-style: decimal outside
+    margin: $big-gap
   li
     color: $cool-gray
     line-height: 18px
+
+  strong
+    font-weight: bold
+    color: $black
+
+  em
+    font-style: italic
+
+  hr
+    border: 0 none
+    border-bottom: $sidebar-border
+
+  tt, code
+    +code-font
+    color: $black
+    font-size: 12px
+
+  blockquote
+    margin: $big-gap
+    line-height: 18px
+    color: $warm-gray
+    p
+      color: $warm-gray
+
 
   article
     h2
@@ -250,6 +252,60 @@ ol
       font-size: 14px
       margin: $small-gap 0
 
+  .ir_black, pre
+
+    border: 3px solid #fff
+
+    +box-shadow
+
+    padding:          10px
+    background-color: black
+    margin: $big-gap 0
+    display: inline-block
+    width: 532px
+    min-width: 532px
+
+    +code-font
+    font-size: 12px
+    line-height: 15px
+    color: #f6f3e8
+    overflow: hidden
+
+    code
+      color: #f6f3e8
+
+    &:hover
+      display: inline-block
+      position: relative
+      width: auto
+      overflow: auto
+      z-index:  10000
+
+    .Comment
+      color: #7c7c7c
+    .Conditional
+      color: #6699cc
+    .Constant
+      color: #99cc99
+    .Delimiter
+      color: #00a0a0
+    .Function
+      color: #ffd2a7
+    .Number
+      color: #ff73fd
+    .PreProc
+      color: #96cbfe
+    .Special
+      color: #e18964
+    .String
+      color: #a8ff60
+    .Type
+      color: #ffffb6
+    .rubyControl
+      color: #6699cc
+    .rubyStringDelimiter
+      color: #336633
+
 
   #twitter
     margin-top: -1px
@@ -264,61 +320,6 @@ ol
   padding: 0 $big-gap 0 $big-gap
   border-top: $sidebar-border
 
-
-
-.ir_black, pre
-
-  border: 3px solid #fff
-
-  +box-shadow
-
-  padding:          10px
-  background-color: black
-  margin: $big-gap 0
-  display: inline-block
-  width: 532px
-  min-width: 532px
-
-  +code-font
-  font-size:        12px
-  line-height:      15px
-  color:            #f6f3e8
-
-  code
-    color:            #f6f3e8
-
-  overflow: hidden
-  .Comment
-    color: #7c7c7c
-  .Conditional
-    color: #6699cc
-  .Constant
-    color: #99cc99
-  .Delimiter
-    color: #00a0a0
-  .Function
-    color: #ffd2a7
-  .Number
-    color: #ff73fd
-  .PreProc
-    color: #96cbfe
-  .Special
-    color: #e18964
-  .String
-    color: #a8ff60
-  .Type
-    color: #ffffb6
-  .rubyControl
-    color: #6699cc
-  .rubyStringDelimiter
-    color: #336633
-
-.ir_black:hover, .ir_white:hover, pre:hover
-  display: inline-block
-  position: relative
-  width: auto
-  overflow: auto
-  z-index:  10000
 
 .flash
   color: $black

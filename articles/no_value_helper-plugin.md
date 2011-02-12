@@ -1,4 +1,4 @@
-It took some late night coding, but I finished another plugin. It's a little helper that goes by the name of <a href="http://github.com/iain/no_value_helper">no_value_helper</a>. To install it, type: <tt>./script/plugin install git://github.com/iain/no_value_helper.git</tt>. It's not that big, but fully <a href="http://github.com/iain/no_value_helper/tree/master/spec/no_value_helper_spec.rb" target="_blank">tested</a>, which may save you some time.
+It took some late night coding, but I finished another plugin. It's a little helper that goes by the name of [no_value_helper](http://github.com/iain/no_value_helper). To install it, type: `./script/plugin install git://github.com/iain/no_value_helper.git`. It's not that big, but fully [tested](http://github.com/iain/no_value_helper/tree/master/spec/no_value_helper_spec.rb), which may save you some time.
 
 It changes:
 
@@ -36,7 +36,7 @@ Or the second example:
 Don't worry, NoMethodErrors will be caught for you. That is why we use a block
 in this case.
 
-For the exact usage, read the <a href="http://github.com/iain/no_value_helper/tree/master/spec/no_value_helper_spec.rb" target="_blank">specs</a>.
+For the exact usage, read the [specs](http://github.com/iain/no_value_helper/tree/master/spec/no_value_helper_spec.rb).
 
 ### Configuration
 
@@ -49,9 +49,9 @@ nl-NL:
 </pre>
 
 By default the message is encapsulated by an em-tag with the class 'no_value'.
-To change this, set the class variable <tt>@@no_value_text</tt> with a lambda. This is
+To change this, set the class variable `@@no_value_text` with a lambda. This is
 done so I18n.translate will work. Make an initializer
-(in <tt>config/initializers/no_value_helper.rb</tt>), containing this:
+(in `config/initializers/no_value_helper.rb`), containing this:
 
 <pre lang="rails">
 module NoValueHelper
@@ -60,9 +60,9 @@ end
 </pre>
 
 You can also change how this plugin checks for empty values. By default this is
-done with the method <a href="http://apidock.com/rails/Object/blank%3F" target="_blank">blank?</a>
+done with the method [blank?](http://apidock.com/rails/Object/blank%3F)
 This means that empty strings are also treated as 'no value'. To change this,
-set the class variable <tt>@@no_value_check_method</tt> to a lambda that does what you
+set the class variable `@@no_value_check_method` to a lambda that does what you
 want. Your initializer will look something like this:
 
 <pre lang="rails">

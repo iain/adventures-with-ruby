@@ -1,4 +1,4 @@
-As I <a title="my original announcement" href="/the-knights-templater-part-ii-priory-of-haml">promised</a>, here is the evaluation of redoing a site from ERB to <a title="Haml homepage" href="http://haml.hamptoncatlin.com/" target="_blank">Haml</a>. To immediately cut to the chase: Haml IS worth it!
+As I [promised](/the-knights-templater-part-ii-priory-of-haml), here is the evaluation of redoing a site from ERB to [Haml](http://haml.hamptoncatlin.com). To immediately cut to the chase: Haml IS worth it!
 <ol>
   <li>It's so definitely faster and easier to write than ERB.</li>
   <li>Your HTML output is nicer.</li>

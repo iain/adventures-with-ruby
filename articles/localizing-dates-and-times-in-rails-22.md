@@ -1,4 +1,4 @@
-Here is the next installment of a series of guides I'm writing for internationalizing a Rails 2.2 application. Please read the first part, <a href="/translating-activerecord/">Translating ActiveRecord</a>, if you haven't already. This time I'm going to talk about how to localize dates and times to a specific language.
+Here is the next installment of a series of guides I'm writing for internationalizing a Rails 2.2 application. Please read the first part, [Translating ActiveRecord](/translating-activerecord/), if you haven't already. This time I'm going to talk about how to localize dates and times to a specific language.
 
 <!--more-->
 
@@ -6,9 +6,9 @@ First a small recap in how to load locales. Add this to a new initializer:
 
 <pre style="background: #000000; color: #f6f3e8; font-family: Monaco, monospace" class="ir_black"><font color="#ffffb6">I18n</font>.load_path += <font color="#ffffb6">Dir</font>.glob(<font color="#336633">&quot;</font><font color="#00a0a0">#{</font><font color="#ffffb6">RAILS_ROOT</font><font color="#00a0a0">}</font><font color="#a8ff60">/app/locales/**/*.yml</font><font color="#336633">&quot;</font>)</pre>
 
-This has been changed at a very late moment. <tt>I18n.store_translations</tt> and <tt>I18n.load_translations</tt> have been removed.
+This has been changed at a very late moment. `I18n.store_translations` and `I18n.load_translations` have been removed.
 
-After that, you need to create a place to store your locales. Make the directory <tt>app/locales/nl-NL/</tt> and place your yaml files in there. Here is the English version of the locale-file:
+After that, you need to create a place to store your locales. Make the directory `app/locales/nl-NL/` and place your yaml files in there. Here is the English version of the locale-file:
 
 <pre style="background: #000000; color: #f6f3e8; font-family: Monaco, monospace" class="ir_black"><font color="#c6c5fe">en-US</font><font color="#00a0a0">:</font>
 &nbsp;&nbsp;<font color="#c6c5fe">date</font><font color="#00a0a0">:</font>
@@ -47,6 +47,6 @@ If you want to use any of the other formats, specify this in the options hash:
 
 <pre style="background: #000000; color: #f6f3e8; font-family: Monaco, monospace" class="ir_black"><font color="#ffffb6">I18n</font>.localize(<font color="#ffffb6">Date</font>.today, <font color="#99cc99">:format</font>&nbsp;=&gt; <font color="#99cc99">:short</font>)</pre>
 
-One more tip: you can add as many formats as you like, but remember that formats like <tt>:db</tt> are reserved for obvious reasons. Here is an overview of the <a href="http://www.ruby-doc.org/core/classes/Time.html#M000297" target="_blank">strftime syntax in Ruby</a>.
+One more tip: you can add as many formats as you like, but remember that formats like `:db` are reserved for obvious reasons. Here is an overview of the [strftime syntax in Ruby](http://www.ruby-doc.org/core/classes/Time.html#M000297).
 
-<strong>PS.</strong> Rails 2.2 RC1 is really really close now!
+**PS.** Rails 2.2 RC1 is really really close now!

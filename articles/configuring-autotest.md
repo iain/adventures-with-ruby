@@ -6,7 +6,7 @@ So, after going through Autotest's code, I've decided to stub out this behavior.
 
 The autotest-growl gem clears the terminal. I don't like that, because I like to see a bit of history. That's why I changed that behavior too.
 
-Here's my <tt>~/.autotest</tt> file:
+Here's my `~/.autotest` file:
 
     # Use file system hooks on OS X
     require 'autotest/fsevent'
@@ -26,4 +26,4 @@ Here's my <tt>~/.autotest</tt> file:
       @@clear_terminal = false
     end
 
-While browsing through the code of Autotest I also found that it also looks for a <tt>.autotest</tt> file in the current working directory. So if you want to apply these changes to one project only, you can define this file locally for the project. I didn't know that!
+While browsing through the code of Autotest I also found that it also looks for a `.autotest` file in the current working directory. So if you want to apply these changes to one project only, you can define this file locally for the project. I didn't know that!

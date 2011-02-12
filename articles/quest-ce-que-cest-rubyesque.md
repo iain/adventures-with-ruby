@@ -1,4 +1,4 @@
-This is a translation of <a href="http://blog.finalist.com/2010/04/12/quest-ce-que-cest-rubyesque/">the post I originally wrote down in Dutch</a> for my company.
+This is a translation of [the post I originally wrote down in Dutch](http://blog.finalist.com/2010/04/12/quest-ce-que-cest-rubyesque/) for my company.
 
 I recently gave a presentation at my company Finalist IT Group about the philosophy behind Ruby. Code written with this philosophy in mind is called 'Rubyesque'. It's not hard science, so we had plenty ingredients for a discussion.
 
@@ -10,7 +10,7 @@ The Rubyesque mindset is all about opinions. Opinions tend to vary from person t
 
 Programming is usually compared with other professions to give an idea what it's like to do it. Ruby programmers tend to compare programming with craftsmanship. I even go one step further. I think programming Ruby is a form of art of playing an instrument. Programming is a creative process. You're programming to express meaning and intent. The only way to achieve this, is if you know your instrument so intensely that it's not compromising you're ability to express yourself.
 
-Every programming language has its own style. You can call it its 'flow'. It's wise to go with the flow. It's easier to use the language as it's intended to be used than to go against it. For example, don't try to force <a href="http://en.wikipedia.org/wiki/Class-based_programming">inheritance</a> in a language that is intended to be <a href="http://en.wikipedia.org/wiki/Prototype-based_programming">prototype based</a>. Program according to the flow and other programmers can understand and maintain your code better.
+Every programming language has its own style. You can call it its 'flow'. It's wise to go with the flow. It's easier to use the language as it's intended to be used than to go against it. For example, don't try to force [inheritance](http://en.wikipedia.org/wiki/Class-based_programming) in a language that is intended to be [prototype based](http://en.wikipedia.org/wiki/Prototype-based_programming). Program according to the flow and other programmers can understand and maintain your code better.
 
 ### About Ruby
 
@@ -20,26 +20,24 @@ It's the machine that is supposed to do the heavy lifting, not the programmer. T
 
 Ruby has a couple of traits that make it a joy to work with:
 
-<ul>
-  <li>Dynamic and open to bend it to your liking</li>
-  <li>Few rules, so easy to learn</li>
-  <li>There are 'shortcuts' for common tasks</li>
-  <li>Many ways to reuse code, such as mixins</li>
-  <li>Optional punctuation to improve readability</li>
-  <li>Methods like <tt><a href="http://www.rubyist.net/~slagell/ruby/accessors.html">attr_accessor</a></tt> to become more <a href="http://en.wikipedia.org/wiki/DRY">DRY</a></li>
-</ul>
+* Dynamic and open to bend it to your liking
+* Few rules, so easy to learn
+* There are 'shortcuts' for common tasks
+* Many ways to reuse code, such as mixins
+* Optional punctuation to improve readability
+* Methods like [attr_accessor](http://www.rubyist.net/~slagell/ruby/accessors.html) to become more [DRY](http://en.wikipedia.org/wiki/DRY)
 
 ### Dynamic
 
-In a dynamic language it's not important to know which type of object you're dealing with, but it's more important to know what it can do for you. This is called <a href="http://en.wikipedia.org/wiki/Duck_typing">duck typing</a>. This isn't only handy in making mock object, but also means that you don't have to abuse inheritance to comply to some method you'd like to call.
+In a dynamic language it's not important to know which type of object you're dealing with, but it's more important to know what it can do for you. This is called [duck typing](http://en.wikipedia.org/wiki/Duck_typing). This isn't only handy in making mock object, but also means that you don't have to abuse inheritance to comply to some method you'd like to call.
 
-A nice example is the Rack specification. The header object you're supposed to return needs to have the method <tt>each</tt>. It doesn't say that it needs to be a hash. You could use a hash, but if it makes more in your sense to have some other object, it's fine. You don't have to inherit from hash, just to implement the <tt>each</tt> method.
+A nice example is the Rack specification. The header object you're supposed to return needs to have the method `each`. It doesn't say that it needs to be a hash. You could use a hash, but if it makes more in your sense to have some other object, it's fine. You don't have to inherit from hash, just to implement the `each` method.
 
-The <em>flow</em> in Ruby is not to perform any check of the objects. If you're explicitly want an integer, just call <tt>to_i</tt> inside the method. Any code that checks the type is usually considered to be distracting from the real meaning of the code. It's the programmer that uses the gem/library responsibility to use the right objects, and not the responsibility of the gem-maker. The naming of methods and variables need to be obvious enough, so that it shouldn't be a guessing game.
+The *flow* in Ruby is not to perform any check of the objects. If you're explicitly want an integer, just call `to_i` inside the method. Any code that checks the type is usually considered to be distracting from the real meaning of the code. It's the programmer that uses the gem/library responsibility to use the right objects, and not the responsibility of the gem-maker. The naming of methods and variables need to be obvious enough, so that it shouldn't be a guessing game.
 
 ### Open
 
-In Ruby, nothing is final. This allows for the ability to add and change anything in any object, including core classes. This is called Monkey Patching or <a href="http://en.wikipedia.org/wiki/Duck_punching">duck punching</a>. This results in even nicer and more readable code, like:
+In Ruby, nothing is final. This allows for the ability to add and change anything in any object, including core classes. This is called Monkey Patching or [duck punching](http://en.wikipedia.org/wiki/Duck_punching). This results in even nicer and more readable code, like:
 
 <pre style="background: #000000; color: #f6f3e8; font-family: Monaco, monospace" class="ir_black"><font color="#ff73fd">15</font>.minutes.ago</pre>
 
@@ -66,14 +64,14 @@ Than the same code with all punctuation visible:
 &nbsp;&nbsp;belongs_to(<font color="#99cc99">:author</font>, {<font color="#99cc99">:dependent</font>&nbsp;=&gt; <font color="#99cc99">:destroy</font>})
 <font color="#96cbfe">end</font></pre>
 
-It's not important that <tt>{:dependent => :destroy}</tt> is a hash. Nor is it important that <tt>belong_to</tt> is a method, and that it takes two arguments. It's much more important that the post belongs to an author and that the post will be destroyed when the author is being destroyed.
+It's not important that <tt>{:dependent => :destroy}</tt> is a hash. Nor is it important that `belong_to` is a method, and that it takes two arguments. It's much more important that the post belongs to an author and that the post will be destroyed when the author is being destroyed.
 
-By not using all the possible punctuation, it becomes easier for our brains to focus on <em>what</em> is actually written, rather that <em>which objects</em> might be used to express it.
+By not using all the possible punctuation, it becomes easier for our brains to focus on *what* is actually written, rather that *which objects* might be used to express it.
 
 
 ### Few rules, many shortcuts
 
-There are only a few genuine language constructs. There are just three elements in the language that have any real meaning. Those are objects, methods and blocks/closures. The only way in which classes and modules are special is by their implementation, but they are still regular objects. There are just a few other constructs, most notably <tt>if</tt>, <tt>while</tt> and the logic operators like <tt>&&</tt> and <tt>||</tt>.
+There are only a few genuine language constructs. There are just three elements in the language that have any real meaning. Those are objects, methods and blocks/closures. The only way in which classes and modules are special is by their implementation, but they are still regular objects. There are just a few other constructs, most notably `if`, `while` and the logic operators like `&&` and `||`.
 
 The rest of the keywords you see are just shortcuts, you can type to perform common tasks. Like defining a class:
 
@@ -114,7 +112,7 @@ Code needs to expose its intent. Ruby code is Rubyesque if it uses the above men
 
 The naming of variables and methods is extremely important. The meaning of the code must be clear the first time you read it.
 
-A fantastic example is <a href="http://rspec.info">Rspec</a>, my favorite test framework.
+A fantastic example is [Rspec](http://rspec.info), my favorite test framework.
 
 <pre style="background: #000000; color: #f6f3e8; font-family: Monaco, monospace" class="ir_black">describe <font color="#ffffb6">Post</font>&nbsp;<font color="#6699cc">do</font>
 
@@ -134,12 +132,12 @@ The entire Ruby bag of tricks is being used to make it as natural as possible to
 
 This is very Rubyesque. There is almost no distraction from the meaning of the code. I can plainly read if my code still does what my customer wants and I can run the specs to see if my code does what I specified it to do. And even nicer: it's incredibly easy! Rspec makes Test Driven Development very easy.
 
-If you're interested in the code to implement this example, take a look at <a href="http://gist.github.com/362030">this gist</a>.
+If you're interested in the code to implement this example, take a look at [this gist](http://gist.github.com/362030).
 </p>
 
 ### Succinct and Concise
 
-Rubyesque code is succinct. That doesn't just mean short lines (I try to limit myself to about 80 or 100 characters per line), but also about short methods. The code smell detector <a href="http://wiki.github.com/kevinrutherford/reek/">Reek</a> will raise a warning if your method is longer than 6 lines. Does this means you are not allowed to write longer methods? Of course not. Is it a good idea? No.
+Rubyesque code is succinct. That doesn't just mean short lines (I try to limit myself to about 80 or 100 characters per line), but also about short methods. The code smell detector [Reek](http://wiki.github.com/kevinrutherford/reek/) will raise a warning if your method is longer than 6 lines. Does this means you are not allowed to write longer methods? Of course not. Is it a good idea? No.
 
 People are better at understanding short sentences. And it's the people that need to understand the code and maintain. And we're back to the philosophy behind Ruby. It's meant to be understandable for people. It's less important if the computer needs to do some extra work.
 

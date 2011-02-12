@@ -2,7 +2,7 @@ I'm a sucker for syntax. So once again, here's a small experiment. It might not 
 
 In views you can automatically scope translations to the view you're working in.
 
-So this HAML code (in the <tt>users#index</tt> view):
+So this HAML code (in the `users#index` view):
 
 <pre style="background: #000000; color: #f6f3e8; font-family: Monaco, monospace" class="ir_black"><font color="#e18964">=</font>&nbsp;t(<font color="#336633">'</font><font color="#a8ff60">.foo</font><font color="#336633">'</font>)
 </pre>
@@ -44,18 +44,18 @@ And now you can write:
 
 <pre style="background: #000000; color: #f6f3e8; font-family: Monaco, monospace" class="ir_black"><font color="#e18964">=</font>&nbsp;vt.foo</pre>
 
-<h2>How does this work?</h2>
+### How does this work?
 
-The <tt>vt</tt> method returns <tt>ViewTranslator</tt> instance. It is cached inside an instance variable. The <tt>ViewTranslator</tt> object inherits from <tt>BasicObject</tt> (<tt>ActiveSupport</tt>'s <tt>BasicObject</tt> uses Ruby 1.9 if it is on Ruby 1.9, and constructs it's own when on a lower Ruby version). <tt>BasicObject</tt> is an object that knows no methods, except methods like <tt>__id__</tt> and <tt>__send__</tt>. This makes it ideal for using dynamic dispatchers.
+The `vt` method returns `ViewTranslator` instance. It is cached inside an instance variable. The `ViewTranslator` object inherits from `BasicObject` (`ActiveSupport`'s `BasicObject` uses Ruby 1.9 if it is on Ruby 1.9, and constructs it's own when on a lower Ruby version). `BasicObject` is an object that knows no methods, except methods like `__id__` and `__send__`. This makes it ideal for using dynamic dispatchers.
 
-When we define <tt>method_missing</tt> every single method we call on it will be passed to there. We could call <tt>@template.t</tt> directly from here, but we don't. To know why, we must know how <tt>method_missing</tt> works. When you call a method on an object, it looks to see if the object knows the method. When it doesn't know it, it looks to it's superclass and tries again. This happens all the way until it reaches the top of the chain. In Ruby 1.8 that is <tt>Object</tt>, because every object inherits from <tt>Object</tt>. Ruby 1.9 goes one step further and goes to <tt>BasicObject</tt>. If a method is not found anywhere, it will go to the original object you called the method on and it calls <tt>method_missing</tt>. Since that usually isn't there, it goes up the superclass chain until it comes to (<tt>Basic</tt>)<tt>Object</tt>. There it exists. It will raise the exception we all know and hate: <tt>NoMethodError</tt>. You can do this yourself too:
+When we define `method_missing` every single method we call on it will be passed to there. We could call `@template.t` directly from here, but we don't. To know why, we must know how `method_missing` works. When you call a method on an object, it looks to see if the object knows the method. When it doesn't know it, it looks to it's superclass and tries again. This happens all the way until it reaches the top of the chain. In Ruby 1.8 that is `Object`, because every object inherits from `Object`. Ruby 1.9 goes one step further and goes to `BasicObject`. If a method is not found anywhere, it will go to the original object you called the method on and it calls `method_missing`. Since that usually isn't there, it goes up the superclass chain until it comes to (`Basic`)`Object`. There it exists. It will raise the exception we all know and hate: `NoMethodError`. You can do this yourself too:
 
 <pre style="background: #000000; color: #f6f3e8; font-family: Monaco, monospace" class="ir_black">> "any object".method_missing(:to_s)
 NoMethodError: undefined method `to_s' for "any object":String
 </pre>
 
-You see, even though the method <tt>to_s</tt> does exist on the string, we stepped halfway in the process of a method call. The error message is a bit confusing, but the we just called a method on the superclass of <tt>String</tt>. Anyway, by defining <tt>method_missing</tt> on our own object, it cuts this chain short. To cut it even shorter, I define the method itself, so it doesn't need to go through this process at all. After it's defined I call the freshly created method.
+You see, even though the method `to_s` does exist on the string, we stepped halfway in the process of a method call. The error message is a bit confusing, but the we just called a method on the superclass of `String`. Anyway, by defining `method_missing` on our own object, it cuts this chain short. To cut it even shorter, I define the method itself, so it doesn't need to go through this process at all. After it's defined I call the freshly created method.
 
-Now, to be honest. This is not at all that expensive to use method_missing in this case. The chain is only classes long, so it's hardly putting a dent in your performance. There are cases were this is <em>very</em> important though. One such case is <tt>ActiveRecord</tt>. When you call a method on a new <tt>ActiveRecord</tt>-object for the first time, you reach <tt>method_missing</tt>. It needs to look at the database to find out if it is an attribute. Looking inside the database is very expensive, so <tt>method_missing</tt> creates methods for all attributes. If the attribute exists, it will be called, and it'll be a normal method call from then on.
+Now, to be honest. This is not at all that expensive to use method_missing in this case. The chain is only classes long, so it's hardly putting a dent in your performance. There are cases were this is *very* important though. One such case is `ActiveRecord`. When you call a method on a new `ActiveRecord`-object for the first time, you reach `method_missing`. It needs to look at the database to find out if it is an attribute. Looking inside the database is very expensive, so `method_missing` creates methods for all attributes. If the attribute exists, it will be called, and it'll be a normal method call from then on.
 
 Thanks for reading. If you found it informative: I love feedback ;)

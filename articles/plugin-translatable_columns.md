@@ -1,14 +1,14 @@
-It was just three days ago when I discussed how to <a href="/translating-columns/">translate columns</a>. At the moment I was writing it, I was already thinking: "this should be a plugin". So today, I took the liberty and created it.
+It was just three days ago when I discussed how to [translate columns](/translating-columns/). At the moment I was writing it, I was already thinking: "this should be a plugin". So today, I took the liberty and created it.
 
 ### Installing
 
 <ol>
   <li>First make sure you're running Rails 2.2 or edge:<br />&nbsp;<br />
-<tt>rake rails:freeze:edge</tt><br />&nbsp;</li>
+`rake rails:freeze:edge`<br />&nbsp;</li>
   <li>Install the plugin: <br />&nbsp;<br />
-<tt>./script/plugin install git://github.com/iain/translatable_columns.git</tt><br />&nbsp;</li>
+`./script/plugin install git://github.com/iain/translatable_columns.git`<br />&nbsp;</li>
   <li>Create or modify a model to have multiple columns for one attribute: <br />&nbsp;<br />
-<tt>./script/generate model Topic title_en:string title_nl:string title_de:string title_fr:string</tt><br />&nbsp;</li>
+`./script/generate model Topic title_en:string title_nl:string title_de:string title_fr:string`<br />&nbsp;</li>
 </ol>
 
 ### Usage
@@ -31,18 +31,18 @@ And it will save to whatever locale is set in I18n. No hard feelings, nothing to
 
 ### Validating
 
-Validation is of course built in. If you want to validate the presence of at least one of the translations, just call <tt>validates_translation_of</tt>:
+Validation is of course built in. If you want to validate the presence of at least one of the translations, just call `validates_translation_of`:
 
     class Topic < ActiveRecord::Base
       translatable_columns :title
       validates_translation_of :title
     end
 
-This will make your record invalid when none of the translated columns exist. It works exactly as <tt>validates_presence_of</tt>, including <strong>all</strong> its options!
+This will make your record invalid when none of the translated columns exist. It works exactly as `validates_presence_of`, including **all** its options!
 
 ### Customizing
 
-You can change the settings of translatable_columns on both a global level and at individual attribute level. There are two configuration options at the moment, called <tt>full_locale</tt> and <tt>use_default</tt>.
+You can change the settings of translatable_columns on both a global level and at individual attribute level. There are two configuration options at the moment, called `full_locale` and `use_default`.
 
 Set the global configuration in your environment file:
 
@@ -52,7 +52,7 @@ Set the global configuration in your environment file:
 
 <h4>full_locale</h4>
 
-With this option you can change which part of the locale is used in the columns. Default is <u>false</u>, so only the first part of the locale is expected in the column. So a title for en-US is called title_en and a title for en-GB is also called title_en. When you set <tt>full_locale</tt> to <u>true</u>, it uses the entire locale, substituting the hyphen with an underscore. This way a title for en-US is called title_en_us and a title for en-GB is called title_en_gb.
+With this option you can change which part of the locale is used in the columns. Default is <u>false</u>, so only the first part of the locale is expected in the column. So a title for en-US is called title_en and a title for en-GB is also called title_en. When you set `full_locale` to <u>true</u>, it uses the entire locale, substituting the hyphen with an underscore. This way a title for en-US is called title_en_us and a title for en-GB is called title_en_gb.
 
 full_locale cannot be set per attribute just now.
 

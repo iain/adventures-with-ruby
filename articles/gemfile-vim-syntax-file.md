@@ -1,6 +1,6 @@
-I've updated my Gemfile syntax file, adding a dash of color and making sure it supports all elements of the <a href="http://gembundler.com">Bundler</a> DSL. You can get it <a href="http://github.com/iain/osx_settings/blob/master/.vim/syntax/Gemfile.vim">here</a>. You'll also need to tell vim to automatically use it when opening a Gemfile by adding <a href="http://github.com/iain/osx_settings/blob/master/.vim/ftdetect/Gemfile.vim">this file</a>.
+I've updated my Gemfile syntax file, adding a dash of color and making sure it supports all elements of the [Bundler](http://gembundler.com) DSL. You can get it [here](http://github.com/iain/osx_settings/blob/master/.vim/syntax/Gemfile.vim). You'll also need to tell vim to automatically use it when opening a Gemfile by adding [this file](http://github.com/iain/osx_settings/blob/master/.vim/ftdetect/Gemfile.vim).
 
-This is how it looks with the <a href="http://github.com/iain/osx_settings/blob/master/.vim/colors/ir_black.vim">ir_black</a> colorscheme:
+This is how it looks with the [ir_black](http://github.com/iain/osx_settings/blob/master/.vim/colors/ir_black.vim) colorscheme:
 
 <pre style="background: #000000; color: #f6f3e8; font-family: Monaco, monospace" class="ir_black"><font color="#96cbfe">source</font>&nbsp;<font color="#99cc99">:rubygems</font>
 <font color="#ffd2a7">gem</font>&nbsp;<font color="#336633">'</font><font color="#a8ff60">rails</font><font color="#336633">'</font>

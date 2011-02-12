@@ -2,7 +2,7 @@ I recently encountered some methods I didn't know about.
 
 ### ~
 
-The tilde method (<tt>~</tt>) is used by <a href="http://sequel.rubyforge.org/">Sequel</a> and you can use it like this:
+The tilde method (`~`) is used by [Sequel](http://sequel.rubyforge.org/) and you can use it like this:
 
 <pre style="background: #000000; color: #f6f3e8; font-family: Monaco, monospace" class="ir_black"><font color="#96cbfe">class</font>&nbsp;<font color="#ffffb6">Post</font>
 &nbsp;&nbsp;<font color="#96cbfe">def</font>&nbsp;<font color="#ffd2a7">~</font>
@@ -22,7 +22,7 @@ In Sequel it is used to perform NOT queries, by defining the tilde on Symbol:
 
 ### -@
 
-The minus-at (<tt>-@</tt>) method works just about the same as the tilde method. It is the method called when a minus-sign is placed <strong>before</strong> the object. In effect, this means that Fixnum is implemented somewhere along the lines of this:
+The minus-at (`-@`) method works just about the same as the tilde method. It is the method called when a minus-sign is placed <strong>before</strong> the object. In effect, this means that Fixnum is implemented somewhere along the lines of this:
 
 <pre style="background: #000000; color: #f6f3e8; font-family: Monaco, monospace" class="ir_black"><font color="#96cbfe">class</font>&nbsp;<font color="#ffffb6">Fixnum</font>
 &nbsp;&nbsp;<font color="#96cbfe">def</font>&nbsp;<font color="#ffd2a7">-@</font>
@@ -33,7 +33,7 @@ The minus-at (<tt>-@</tt>) method works just about the same as the tilde method.
 num = <font color="#ff73fd">10</font>
 negative = -num <font color="#7c7c7c"># =&gt; -10</font></pre>
 
-I found this one browsing through the source of the <tt><a href="http://github.com/rails/rails/blob/master/activesupport/lib/active_support/duration.rb#L34-36">ActiveSupport::Duration</a></tt> class (you know, the one you get when you do <tt>1.day</tt>). I guess it makes sense.
+I found this one browsing through the source of the `[ActiveSupport::Duration](http://github.com/rails/rails/blob/master/activesupport/lib/active_support/duration.rb#L34-36)` class (you know, the one you get when you do `1.day`). I guess it makes sense.
 
 Be careful with chaining methods though:
 

@@ -1,6 +1,6 @@
 I released an old Rails plugin as gem today. Slowly but surely, all my plugins will be converted to gems.
 
-This time it's an old one: <a href="http://github.com/iain/http_accept_language">http_accept_language</a>
+This time it's an old one: [http_accept_language](http://github.com/iain/http_accept_language)
 
 <ul>
 <li>Splits the http-header into languages specified by the user</li>
