@@ -1,5 +1,4 @@
 # encoding: UTF-8
-require 'cgi'
 
 module AdventuresWithRuby
   class Application < Sinatra::Base
