@@ -9,6 +9,8 @@ FileUtils.mkdir_p 'tmp'
 
 set :environment, :test
 
+IGNORED_HOSTS = %w|twitter.com workingwithrails.com|
+DISALLOWED_HOSTS = %w|iain.nl infx.nl adventures-with-ruby.com|
 
 class SpiderTest < Test::Unit::TestCase
   include Rack::Test::Methods
@@ -76,9 +78,6 @@ class SpiderTest < Test::Unit::TestCase
       end
     end
   end
-
-  IGNORED_HOSTS = %w|twitter.com workingwithrails.com|
-  DISALLOWED_HOSTS = %w|iain.nl infx.nl adventures-with-ruby.com|
 
   def assert_external_link(link, page)
     unless history.include?(link)
