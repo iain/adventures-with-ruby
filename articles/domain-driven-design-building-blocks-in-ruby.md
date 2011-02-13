@@ -16,7 +16,7 @@ Objects that don't have any real identity are called "Value objects". Any object
 
 Addresses are a good example. The value of the address (e.g. street, house number, city, country) is important. But it's less obvious to store this in a database and reference it by an id. This id would be purely superficial and have no meaning in the domain you are designing.
 
-A pure Ruby way to do this with Structs, which I have mentioned before on this blog. If you're using a document based database, like MongoDB, these would obviously be embedded documents. With ActiveRecord you can use the <a href="http://apidock.com/rails/ActiveRecord/Aggregations/ClassMethods/composed_of">`composed_of`-method</a>. Allow me to demonstrate that:
+A pure Ruby way to do this with Structs, which I have mentioned before on this blog. If you're using a document based database, like MongoDB, these would obviously be embedded documents. With ActiveRecord you can use the [`composed_of`-method](http://apidock.com/rails/ActiveRecord/Aggregations/ClassMethods/composed_of). Allow me to demonstrate that:
 
 <pre class="ir_black"><font color="#7c7c7c"># Attributes of Person include:</font>
 <font color="#7c7c7c"># </font>

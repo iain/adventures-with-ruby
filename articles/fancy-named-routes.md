@@ -1,4 +1,4 @@
-I know <a href="http://tweakers.net" title="tweakers.net" target="_blank">tweakers.net</a> has it, I liked it, and I wanted it for myself. The uris of news items are like this: `http://core.tweakers.net/nieuws/50373/intel-stoot-ontwikkeling-netwerkprocessors-af.html`
+I know [tweakers.net](http://tweakers.net) has it, I liked it, and I wanted it for myself. The uris of news items are like this: `http://core.tweakers.net/nieuws/50373/intel-stoot-ontwikkeling-netwerkprocessors-af.html`
 
 First you get the id, than you get a nice version of the title ending with .html. This is a nice way of making links, scoring high for a googlebot and is incredibly easy to read.
 

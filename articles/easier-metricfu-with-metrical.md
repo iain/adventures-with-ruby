@@ -11,6 +11,6 @@ Metrical is a wrapper around MetricFu, that allows it to be run as an executable
     gem install metrical
     metrical
 
-If you want to configure MetricFu, you can add a file called <tt>.metrics</tt>, in which you can add your regular configuration. For all configuration options, you can visit the <a href="http://metric-fu.rubyforge.org">MetricFu homepage</a>. All I've done is add a small tweak to the rcov options, so it'll run RSpec without problems.
+If you want to configure MetricFu, you can add a file called <tt>.metrics</tt>, in which you can add your regular configuration. For all configuration options, you can visit the [MetricFu homepage](http://metric-fu.rubyforge.org). All I've done is add a small tweak to the rcov options, so it'll run RSpec without problems.
 
 So, give it a spin and tell me what you think of it!
