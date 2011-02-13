@@ -32,7 +32,7 @@ module AdventuresWithRuby
     end
 
     def contents
-      File.open(File.join(Archive.dir, "#{id}.md"), "r:utf-8").read
+      @contents ||= File.open(File.join(ROOT, "articles/#{id}.md"), "r:utf-8").read
     end
 
   end

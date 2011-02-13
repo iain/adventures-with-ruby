@@ -4,6 +4,7 @@ require 'rdiscount'
 require 'builder'
 require 'yaml'
 require 'cgi'
+require 'singleton'
 
 ROOT = File.expand_path('..', __FILE__)
 

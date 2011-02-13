@@ -16,7 +16,7 @@
   %h2
     %a{href: @article.url, id: @article.id, rel: 'bookmark'}= @article.title
 
-  = haml :_time
+  = partial :time, article: @article
 
   - if @article.contents.toc?
     %aside.toc
@@ -31,23 +31,4 @@
 
   = @article.contents.html
 
-%section#comments
-
-  %aside#twitter
-    %a{href: "http://twitter.com/share", class: "twitter-share-button", data: { count: "vertical", via: "iain_nl", text: @article.title, url: "#{request.scheme}://#{request.host}#{@article.url}"}} Tweet
-    %script(type="text/javascript" src="http://platform.twitter.com/widgets.js")
-
-  #disqus_thread
-  :javascript
-    var disqus_shortname  = 'iain';
-    var disqus_identifier = '#{@article.disqus_id}';
-    var disqus_url        = 'http://#{request.host}/#{@article.url}';
-
-    /* * * DON'T EDIT BELOW THIS LINE * * */
-    (function() {
-        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
-        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    })();
-  <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-  <a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+= partial :comments, article: @article

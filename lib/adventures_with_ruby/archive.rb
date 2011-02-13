@@ -1,29 +1,27 @@
 # encoding: UTF-8
 module AdventuresWithRuby
   class Archive < Array
+    include Singleton
 
     def initialize
-      replace self.class.articles.sort
+      replace articles.sort
     end
 
-    def self.articles
-      articles = []
+    def articles
+      return @articles if @articles
+      @articles = []
       metadata.each do |id, metadata|
-        articles << Article.new(id, metadata)
+        @articles << Article.new(id, metadata)
       end
-      articles
+      @articles
     end
 
-    def self.metadata
-      @metadata ||= YAML.load(File.open(File.expand_path('../index.yml', __FILE__), 'r:utf-8').read)
+    def metadata
+      @metadata ||= YAML.load(File.open(File.join(ROOT, 'index.yml'), 'r:utf-8').read)
     end
 
     def self.find(id)
-      Article.new(id, metadata[id])
-    end
-
-    def self.dir
-      File.expand_path("../../../articles", __FILE__)
+      Article.new(id, instance.metadata[id])
     end
 
   end
