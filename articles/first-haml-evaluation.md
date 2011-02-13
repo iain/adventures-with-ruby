@@ -1,4 +1,4 @@
-As I [promised](/the-knights-templater-part-ii-priory-of-haml), here is the evaluation of redoing a site from ERB to [Haml](http://haml.hamptoncatlin.com). To immediately cut to the chase: Haml IS worth it!
+As I [promised](/the-knights-templater-part-ii-priory-of-haml), here is the evaluation of redoing a site from ERB to [Haml](http://haml-lang.com). To immediately cut to the chase: Haml IS worth it!
 
 * It's so definitely faster and easier to write than ERB.
 * Your HTML output is nicer.

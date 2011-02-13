@@ -1,4 +1,4 @@
-After using [Haml](http://haml.hamptoncatlin.com/) for [over a month](/first-haml-evaluation) now, I can now really evaluate how Haml is to work with from day to day basis.
+After using [Haml](http://haml-lang.com/) for [over a month](/first-haml-evaluation) now, I can now really evaluate how Haml is to work with from day to day basis.
 
 Haml actually is a blessing.  Doing minor adjustments is very easy, your code remains looking nice, the output keeps looking nice. Just be sure to know how to shift blocks of code to the left or right in your favorite editor.
 

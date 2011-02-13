@@ -1,4 +1,4 @@
-I am making some acceptance tests for the LevenAls website, using plain text stories from [David Chelimsky](http://blog.davidchelimsky.net/articles/2007/10/25/plain-text-stories-part-iii) together with the Selenium runner from [Kerry Buckley](http://www.kerrybuckley.com/2007/11/07/driving-selenium-from-the-rspec-story-runner-rbehave/)
+I am making some acceptance tests for the LevenAls website, using plain text stories from [David Chelimsky](http://blog.davidchelimsky.net/articles/2007/10/25/plain-text-stories-part-iii) together with the Selenium runner from  Kerry Buckley (http://www.kerrybuckley.com/2007/11/07/driving-selenium-from-the-rspec-story-runner-rbehave/)
 
     Story: Selenium clicking a label
 

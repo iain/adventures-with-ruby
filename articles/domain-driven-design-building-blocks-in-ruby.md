@@ -8,7 +8,7 @@ When you talk about [Domain Driven Design](http://www.amazon.com/Domain-Driven-D
 
 Entity objects are objects that represent something in the real world and can be referenced as such. Translated into Rails terms these would be instances of (most of) your models. You can reference a post instance by getting it via its id from the database.
 
-These objects are prime candidates for using plugins like [friendly_id](http://norman.github.com/friendly_id/), making the fact that these objects have a real identity in real life clearer. This is because you can now reference them by name, instead of some database id. To use friendly_id with Rails 3, point your gemfile to the ['edge' branch on github](http://github.com/norman/friendly_id/tree/edge).
+These objects are prime candidates for using plugins like [friendly_id](http://norman.github.com/friendly_id/), making the fact that these objects have a real identity in real life clearer. This is because you can now reference them by name, instead of some database id. To use friendly_id with Rails 3, point your gemfile to the ['edge' branch on github](https://github.com/norman/friendly_id/tree/edge).
 
 ### Value Objects
 
@@ -73,7 +73,7 @@ In this example, `Person` is actually an aggregate of the entity `Person` and tw
 
 Things that aren't really a 'thing' in the domain you're designing are usually services. They are not really part of any entity or value object, but do something with them.
 
-In Rails, these would be [observers](http://guides.rubyonrails.org/activerecord_validations_callbacks.html#observers) or plain Ruby objects lying around. Maybe it's time to call them what they are and place them in `app/services`.
+In Rails, these would be [observers](http://guides.rubyonrails.org/active_record_validations_callbacks.html#observers) or plain Ruby objects lying around. Maybe it's time to call them what they are and place them in `app/services`.
 
 Every Rails developer knows the pattern "Fat Model, Skinny Controller". This is a pattern to remember that you shouldn't put model logic in your controller but in your model. But this pattern is often taken too far. There are people that give the `params`-object, or worse, the entire controller-instance, to the model and do their shit there. This is not right. Use a service for that.
 
