@@ -34,6 +34,14 @@ module AdventuresWithRuby
       haml :archive
     end
 
+    Dir.glob(File.join(ROOT, "public/*")).each do |file|
+      name = File.basename(file)
+      get "/#{name}" do
+        static!
+        send_file file
+      end
+    end
+
     get '/:article' do
       static!
       @article = Archive.find(params[:article])
