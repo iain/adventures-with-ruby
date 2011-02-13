@@ -37,7 +37,7 @@ In this example, I have a model called Post and it has an attribute named 'title
 
 ### Update 1
 
-The proper way to translate ActiveRecord is described [here!](/translating-activerecord/)
+The proper way to translate ActiveRecord is described [here!](/translating-activerecord)
 
     I18n.store_translations( 'en-US', {
       :active_record => {

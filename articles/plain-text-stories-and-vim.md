@@ -1,12 +1,12 @@
 ### <font color="#ff6600">**Update:** Updated the syntax file, redownload it if you got it before December 19th 2007.</font>
 More news about my adventures with Selenium. It's hot and juicy, so lot's of exciting new things to do. I made a syntax highlighter for plain text stories in vim. Here's how it looks:
 
-To make it look like this, I adjusted the slate colorscheme and added my own story syntax file. Click [Continue Reading](/plain-text-stories-and-vim/#more-31) to download the files and read how to install it.
+To make it look like this, I adjusted the slate colorscheme and added my own story syntax file.
 
 ### Here is what you need to do:
 
-* Put the [black-slate colorscheme file](/black-slate.vim) in /usr/share/vim/vim71/colors directory
-* Put the [story syntax file](/story.vim) in /usr/share/vim/vim71/syntax directory
+* Put the black-slate colorscheme file in /usr/share/vim/vim71/colors directory
+* Put the story syntax file in /usr/share/vim/vim71/syntax directory
 * Append these lines to the end of /usr/share/vim/vim71/scripts.vim:
 
       if did_filetype()

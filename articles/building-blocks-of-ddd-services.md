@@ -1,4 +1,4 @@
-As [promised](/domain-driven-design-building-blocks-in-ruby/), here is an example of how to use the idea of services from Domain Driven Design to help you design your code better. Let's start with some theoretical stuff, before we dive into some example code.
+As [promised](/domain-driven-design-building-blocks-in-ruby), here is an example of how to use the idea of services from Domain Driven Design to help you design your code better. Let's start with some theoretical stuff, before we dive into some example code.
 
 ### In Theory
 

@@ -1,4 +1,4 @@
-Here is the next installment of a series of guides I'm writing for internationalizing a Rails 2.2 application. Please read the first part, [Translating ActiveRecord](/translating-activerecord/), if you haven't already. This time I'm going to talk about how to localize dates and times to a specific language.
+Here is the next installment of a series of guides I'm writing for internationalizing a Rails 2.2 application. Please read the first part, [Translating ActiveRecord](/translating-activerecord), if you haven't already. This time I'm going to talk about how to localize dates and times to a specific language.
 
 First a small recap in how to load locales. Add this to a new initializer:
 

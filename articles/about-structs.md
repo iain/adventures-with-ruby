@@ -1,4 +1,4 @@
-Recently I talked about a [monkey patch called attr_initializer](/monkey-patch-of-the-month-attr_initializer/), allowing you to write code like this:
+Recently I talked about a [monkey patch called attr_initializer](/monkey-patch-of-the-month-attr_initializer), allowing you to write code like this:
 
 <pre class="ir_black"><font face="Monaco, monospace"><font color="#96cbfe">class</font>&nbsp;<font color="#ffffb6">FooBar</font>
 &nbsp;&nbsp;attr_initializer <font color="#99cc99">:foo</font>, <font color="#99cc99">:bar</font>

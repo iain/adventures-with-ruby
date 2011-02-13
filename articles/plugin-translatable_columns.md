@@ -1,4 +1,4 @@
-It was just three days ago when I discussed how to [translate columns](/translating-columns/). At the moment I was writing it, I was already thinking: "this should be a plugin". So today, I took the liberty and created it.
+It was just three days ago when I discussed how to [translate columns](/translating-columns). At the moment I was writing it, I was already thinking: "this should be a plugin". So today, I took the liberty and created it.
 
 ### Installing
 

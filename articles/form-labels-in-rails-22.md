@@ -26,4 +26,4 @@ The result is:
 
     <label for="topic_name">A nice name</label>
 
-For more information about where to put your translations, read my post about [translating ActiveRecord](/translating-activerecord/).
+For more information about where to put your translations, read my post about [translating ActiveRecord](/translating-activerecord).

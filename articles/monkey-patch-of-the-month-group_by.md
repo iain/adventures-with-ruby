@@ -1,4 +1,4 @@
-A while back, I talked about [new additions to ActiveSupport](/3-times-activesupport-3/). And now, I have a confession to make: I like monkey patches! At least, as long as they're short and self-explanatory.
+A while back, I talked about [new additions to ActiveSupport](/3-times-activesupport-3). And now, I have a confession to make: I like monkey patches! At least, as long as they're short and self-explanatory.
 
 I got a few of them lying around, so I am going to post one every month. I also welcome your favorite monkey patch, which you can [email me](mailto:monkey@iain.nl).
 

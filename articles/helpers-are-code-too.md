@@ -1,4 +1,4 @@
-I think [I've talked about this](/bringing-objects-to-views/) before, and there has been a [Railscasts episode](http://railscasts.com/episodes/101-refactoring-out-helper-object) about it too, but I want to touch on it again. I know we're supposed to keep views simple, but that doesn't mean that helpers can only contain methods.
+I think [I've talked about this](/bringing-objects-to-views) before, and there has been a [Railscasts episode](http://railscasts.com/episodes/101-refactoring-out-helper-object) about it too, but I want to touch on it again. I know we're supposed to keep views simple, but that doesn't mean that helpers can only contain methods.
 
 Rails gives you a helper module for every controller. The problem with modules is that they don't contain state and are usually used to just put a lot of methods in. But this can grow quickly out of hand when the stuff that you're building is a little more complex.
 
@@ -85,7 +85,7 @@ This is an example of how I would do it:
 
 Nice! Small testable methods! Readable code! Less repetition. *Run Reek on that!*
 
-If you're wondering what the `attr_initializer` is, it's a monkey patch, that I've [described here](/monkey-patch-of-the-month-attr_initializer/). The [delegate-method](http://apidock.com/rails/Module/delegate) is something ActiveSupport offers you. Use it, it's super effective!
+If you're wondering what the `attr_initializer` is, it's a monkey patch, that I've [described here](/monkey-patch-of-the-month-attr_initializer). The [delegate-method](http://apidock.com/rails/Module/delegate) is something ActiveSupport offers you. Use it, it's super effective!
 
 Wait a minute. Did I say "testable"? Yes, I most certainly did! As with any code, this needs to be tested. But it's not that hard anymore! If you're using [Rspec](http://rspec.info), you can use the [helper specs](http://rspec.info/rails/writing/helpers.html) it provides. But you don't need to!
 

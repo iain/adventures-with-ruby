@@ -23,7 +23,7 @@ module AdventuresWithRuby
     end
 
     get '/articles.xml' do
-      static! archive.last.published_at.to_i
+      static! archive.last.published_at.to_s
       builder :rss
     end
 
