@@ -13,6 +13,7 @@ module AdventuresWithRuby
     before do
       no_www!
       no_dates!
+      no_trailing_slashes!
       @description = "Adventures with Ruby is a blog about developing with Ruby and Ruby on Rails, written by Iain Hecker."
     end
 
@@ -22,7 +23,15 @@ module AdventuresWithRuby
       haml :index
     end
 
-    get '/articles.xml' do
+    Dir.glob(File.join(ROOT, "public/*")).each do |file|
+      name = File.basename(file)
+      get "/#{name}" do
+        static!
+        send_file file
+      end
+    end
+
+    get '/feed' do
       static! archive.last.published_at.to_s
       builder :rss
     end
@@ -32,14 +41,6 @@ module AdventuresWithRuby
       @title = "All articles on Adventures with Ruby"
       @intro = :archive_intro
       haml :archive
-    end
-
-    Dir.glob(File.join(ROOT, "public/*")).each do |file|
-      name = File.basename(file)
-      get "/#{name}" do
-        static!
-        send_file file
-      end
     end
 
     get '/:article' do
