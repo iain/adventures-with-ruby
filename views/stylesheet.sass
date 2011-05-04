@@ -1,6 +1,5 @@
 @import compass/reset
 @import compass
-+reset-html5
 
 $black:       #503e2b
 $warm-gray:   #9e948a
@@ -30,7 +29,7 @@ $background-color: #eeeeef
   font-family: "DejaVu Sans Mono", "Droid Sans Mono", "Menlo", "Monaco", "Courier New" monospace
 
 =embossed
-  +text-shadow(#ffffff, 0px, 1px, 0px)
+  +single-text-shadow(#ffffff, 0px, 1px, 0px)
 
 =aside-left($width)
   margin-left: (($width + (2 * $big-gap)) * -1) - $default-box-shadow-blur - 1
@@ -114,7 +113,7 @@ hr
   min-height: 135px
   h1
     +border-top-radius(7px)
-    +linear-gradient(color-stops(#e9e9e9, #fff 50%, #fff), top)
+    +background-image(linear-gradient(#e9e9e9, #fff 50%, #fff))
     line-height: 50px
     border: 2px solid white
     font-size: 30px
