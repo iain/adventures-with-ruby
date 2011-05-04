@@ -2,9 +2,21 @@ GEM
   remote: http://rubygems.org/
   specs:
     builder (3.0.0)
+    chunky_png (1.1.1)
+    compass (0.11.1)
+      chunky_png (~> 1.1)
+      fssm (>= 0.2.7)
+      sass (~> 3.1)
+    fssm (0.2.7)
     haml (3.1.1)
+    nokogiri (1.4.4)
     rack (1.2.2)
+    rack-test (0.6.0)
+      rack (>= 1.0)
     rdiscount (1.6.8)
+    sass (3.1.1)
+    shotgun (0.9)
+      rack (>= 1.0)
     sinatra (1.2.6)
       rack (~> 1.1)
       tilt (< 2.0, >= 1.2.2)
@@ -15,6 +27,10 @@ PLATFORMS
 
 DEPENDENCIES
   builder
+  compass
   haml
+  nokogiri
+  rack-test
   rdiscount
+  shotgun
   sinatra
