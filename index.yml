@@ -1,6 +1,6 @@
 backends-in-rails-3-1:
   title: Backends in Rails 3.1
-  publish: 2011-07-28
+  publish: 2011-07-31
   summary: Let's make an admin interface for Rails 3.1. Not by using a complete product like RailsAdmin, but by making our own.
 cucumber-vs-steak:
   title: Cucumber vs. Steak
