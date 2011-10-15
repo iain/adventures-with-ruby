@@ -2,7 +2,7 @@ module AdventuresWithRuby
   class Contents < Struct.new(:id)
 
     def introduction
-      remove_images contents_before_first_header
+      remove_images first_three_paragraphs
     end
 
     def html
@@ -21,6 +21,14 @@ module AdventuresWithRuby
 
     def markdown(*extensions)
       @markdown ||= RDiscount.new(contents, *extensions)
+    end
+
+    def first_three_paragraphs
+      contents_before_code_block.to_s.split(/<\/p>/, 4).take(3).join("</p>")
+    end
+
+    def contents_before_code_block
+      contents_before_first_header.to_s.split(/<pre/, 2).first
     end
 
     def contents_before_first_header
