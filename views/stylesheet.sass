@@ -26,7 +26,7 @@ $default-box-shadow-spread:   0
 $background-color: #eeeeef
 
 =code-font
-  font-family: "DejaVu Sans Mono", "Droid Sans Mono", "Menlo", "Monaco", "Courier New" monospace
+  font-family: "DejaVu Sans Mono", "Droid Sans Mono", "Menlo", "Monaco", "Courier New", monospace
 
 =embossed
   +single-text-shadow(#ffffff, 0px, 1px, 0px)
@@ -39,8 +39,6 @@ body
   background-color: $background-color
   font-family: "Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, sans-serif
   font-size: 13px
-  -webkit-font-smoothing: antialiased
-  text-rendering: optimizeLegibility
 
 h1
   font-size: 25px
@@ -280,6 +278,11 @@ hr
       color: $warm-gray
       display: block
       padding: 3px 0
+      &.active
+        color: $blue
+        &:before
+          content: "→ "
+          color: $red
     h3
       border-bottom: 0 none
       font-size: 14px
@@ -314,51 +317,53 @@ hr
       overflow: auto
       z-index:  10000
 
-    .Comment
-      color: #7c7c7c
-    .Conditional
-      color: #6699cc
-    .Constant
-      color: #99cc99
-    .Delimiter
-      color: #00a0a0
-    .Function
-      color: #ffd2a7
-    .Number
-      color: #ff73fd
-    .PreProc
-      color: #96cbfe
-    .Special
-      color: #e18964
-    .String
-      color: #a8ff60
-    .Type
-      color: #ffffb6
-    .rubyControl
-      color: #6699cc
-    .rubyStringDelimiter
-      color: #336633
-    .Identifier
-      color: #c6c5fe
-    .Statement
-      color: #6699cc
-    .Keyword
-      color: #96cbfe
+.Comment
+  color: #7c7c7c
+.Conditional
+  color: #6699cc
+.Constant
+  color: #99cc99
+.Delimiter
+  color: #00a0a0
+.Function
+  color: #ffd2a7
+.Number
+  color: #ff73fd
+.PreProc
+  color: #96cbfe
+.Special
+  color: #e18964
+.String
+  color: #a8ff60
+.Type
+  color: #ffffb6
+.rubyControl
+  color: #6699cc
+.rubyStringDelimiter
+  color: #336633
+.Identifier
+  color: #c6c5fe
+.Statement
+  color: #6699cc
+.Keyword
+  color: #96cbfe
 
 
-  #twitter
-    margin-top: -1px
-    float: left
-    width: 60px
-    +aside-left(60px)
-    border-top: $sidebar-border
-    padding: 2 * $small-gap 13px
+#twitter
+  margin-top: -1px
+  margin-right: -110px
+  float: right
+  width: 60px
+  border-top: $sidebar-border
+  padding: 2 * $small-gap 13px
 
 #comments
   margin: $big-gap ($big-gap * -1) 0 ($big-gap * -1) + 1
   padding: 0 $big-gap 0 $big-gap
   border-top: $sidebar-border
 
+code, pre, .ir_black
+  +code-font
 
 .flash
   color: $black
