@@ -1,0 +1,4 @@
+#!/bin/bash
+set -e
+gem which bundler &> /dev/null || gem install bundler --no-ri --no-rdoc
+bundle check --no-color || time bundle install --no-color

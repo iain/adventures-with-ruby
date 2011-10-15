@@ -1,0 +1,50 @@
+GEM
+  remote: http://rubygems.org/
+  specs:
+    builder (3.0.0)
+    chunky_png (1.2.5)
+    compass (0.11.5)
+      chunky_png (~> 1.2)
+      fssm (>= 0.2.7)
+      sass (~> 3.1)
+    diff-lcs (1.1.3)
+    fssm (0.2.7)
+    haml (3.1.3)
+    nokogiri (1.5.0)
+    rack (1.3.3)
+    rack-protection (1.1.4)
+      rack
+    rack-test (0.6.1)
+      rack (>= 1.0)
+    redcarpet (2.0.0b5)
+    rspec (2.6.0)
+      rspec-core (~> 2.6.0)
+      rspec-expectations (~> 2.6.0)
+      rspec-mocks (~> 2.6.0)
+    rspec-core (2.6.4)
+    rspec-expectations (2.6.0)
+      diff-lcs (~> 1.1.2)
+    rspec-mocks (2.6.0)
+    sass (3.1.10)
+    shotgun (0.9)
+      rack (>= 1.0)
+    sinatra (1.3.0)
+      rack (~> 1.3)
+      rack-protection (~> 1.1)
+      tilt (~> 1.3)
+    tilt (1.3.3)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  builder
+  compass
+  haml
+  nokogiri
+  rack (= 1.3.3)
+  rack-test
+  redcarpet (~> 2.0.0b5)
+  rspec
+  shotgun
+  sinatra

@@ -1,0 +1,3 @@
+#!/bin/bash
+set -e
+time rspec . -fp --profile

@@ -1,0 +1,117 @@
+!!!
+%html
+
+  %head
+    %title= @title || "Adventures with Ruby"
+    %meta(charset='UTF-8')
+    %meta(name='description' content=@description)
+    %link(href='/stylesheet.css' rel='stylesheet')
+    %link(rel='shortcut icon' href='/favicon.png')
+    %link(href='/feed' type='application/rss+xml' rel='alternate' title='RSS Feed')
+    /[if lt IE 9]
+      %script(src='http://html5shiv.googlecode.com/svn/trunk/html5.js')
+  %body
+
+    #container
+      %section#main
+        %header#header
+          %h1
+            %a(href='/') Adventures with Ruby
+          = haml @intro if @intro
+
+        %section#content
+          = yield
+
+        %a#github(href="https://github.com/iain")
+
+
+      %section#sidebar
+        %h3 About me
+        %p
+          I am an open source enthusiast from Rotterdam with a passion for the Ruby language and everything involved with writing good software.
+        %p
+          I also organize the <a href="http://rotterdam-rb.org">Rotterdam.rb</a> meetings and I am a regular visitor of <a href="http://amsterdam-rb.org">Amsterdam.rb</a>. If you're in the neighbourhood please feel free to drop by!
+        %p(style="text-align: right;")
+          %strong Iain Hecker
+
+        %h3 More about me
+        %ul
+          %li
+            %a(href="http://www.facebook.com/iain.nl" rel="me") Facebook
+          %li
+            %a(href="https://github.com/iain" rel="me" title="My open source project on Github") Github
+          %li
+            %a(href="http://www.last.fm/user/iain-nl" rel="me" title="My last.fm account") Last.fm
+          %li
+            %a(href="http://www.linkedin.com/in/iainhecker" rel="me" title="My LinkedIn profile") LinkedIn
+          %li
+            %a(href="http://stackoverflow.com/users/525636/iain" rel="me") StackOverflow
+          %li
+            %a(href="http://twitter.com/iain_nl" rel="me" title="My Twitter account") Twitter
+          %li
+            %a(href="http://workingwithrails.com/person/12406-iain-hecker" rel="me" title="My profile on Working with Rails") Working with Rails
+
+      :javascript
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-3029372-5']);
+        _gaq.push(['_trackPageview']);
+
+        (function() {
+          var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+          ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+          var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+
+
+      %footer#footer
+        %p All contents on this site are &copy; Iain Hecker 2007-#{Date.today.year}, unless otherwise stated. All rights reserved.
+
+    %script(src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js" type="text/javascript")
+    :javascript
+      (function() {
+        var outboundLinks = function() {
+          var links = document.getElementsByTagName("a");
+          var domain = new RegExp("#{request.host}", "i");
+          var linkCount = links.length;
+          for (var i = 0; i < linkCount; i++) {
+            var link = links[i];
+            if (link.hostname.search(domain) == -1) link.target = "_blank";
+          }
+        }
+        jQuery(outboundLinks);
+      })();
+
+      (function() {
+        var scrolling = function() {
+          var scrollPositions = [];
+          jQuery(".toc a").each(function(index, item) {
+            var el = $(item);
+            var id = document.getElementById(el.attr("href").slice(1))
+            var header = $(id);
+            scrollPositions.push({offset: header.offset()['top'], tocItem: el, header: header, id: id});
+          });
+
+          if (scrollPositions.length > 0) {
+            $(window).scroll(function() {
+              offset = $(window).scrollTop()
+              len = scrollPositions.length
+              var active = null;
+              for (var i = 0; i < len; i++) {
+                var head = scrollPositions[i];
+                if (head.offset < offset + 50) {
+                  active = i
+                }
+              }
+              for (var i = 0; i < len; i++) {
+                if (i === active) {
+                  scrollPositions[i].tocItem.addClass('active');
+                } else {
+                  scrollPositions[i].tocItem.removeClass('active');
+                }
+              }
+            });
+          }
+        }
+
+        jQuery(scrolling);
+      })();

@@ -1,0 +1,8 @@
+#!/bin/bash
+
+./script/bundler
+
+# Mark script as untestable for git bisect if bundler fails
+if [ $? != 0 ]; then
+  exit 125
+fi
