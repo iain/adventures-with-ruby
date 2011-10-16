@@ -12,6 +12,7 @@ group :development do
   gem 'compass'
   gem 'rack-test'
   gem 'nokogiri'
+  gem 'heroku'
 end
 
 group :test do
