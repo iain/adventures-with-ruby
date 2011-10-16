@@ -23,6 +23,10 @@ class Article
     @attributes["summary"]
   end
 
+  def published_at
+    @attributes["publish"]
+  end
+
   def url
     "/#{id}"
   end

@@ -39,6 +39,14 @@ describe "Article" do
 
   end
 
+  describe "#published_at" do
+
+    it "is read from the publish attribute" do
+      subject.published_at.should == publish
+    end
+
+  end
+
   describe "#contents" do
 
     it "delegates to Contents class" do
