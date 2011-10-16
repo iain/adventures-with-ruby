@@ -2,11 +2,12 @@ require 'index'
 
 describe Index do
 
-  let(:article) { double(:found? => true) }
+  let(:found) { double(:found? => true) }
+  let(:not_found) { double(:found? => false) }
 
   describe  "#find" do
 
-    subject { Index.new({"existing-article" => article}, nil) }
+    subject { Index.new({"existing-article" => found}, nil, not_found) }
 
     it "cannot find some random article" do
       subject.find("name-of-the-article").should_not be_found
@@ -35,7 +36,7 @@ describe Index do
       reader = double(:fetch => true)
       index_reader = double
       index_reader.should_receive(:read).and_return(reader)
-      Index.new(nil, index_reader).find("something")
+      Index.new(nil, index_reader, not_found).find("something")
     end
 
   end

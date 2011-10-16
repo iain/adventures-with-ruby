@@ -1,18 +1,17 @@
-require 'article_not_found'
-
 class Index
 
   def self.find(name)
     new.find(name)
   end
 
-  def initialize(index = nil, reader = IndexReader)
-    @index = index
-    @reader = reader
+  def initialize(index = nil, reader = IndexReader, not_found = ArticleNotFound.new)
+    @index     = index
+    @reader    = reader
+    @not_found = not_found
   end
 
   def find(name)
-    index.fetch(name) { ArticleNotFound.new }
+    index.fetch(name) { @not_found }
   end
 
   def index
