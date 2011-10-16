@@ -6,9 +6,8 @@ git_hash=`git log -1 --pretty=%h`
 
 todo_count=`grep -ri TODO --include="*.rb" . | wc -l`
 
-prod_lines=`find lib -iname "*.rb" | xargs cat | wc -l`
-spec_lines=`find spec -iname "*.rb" | xargs cat | wc -l`
-
 test_results=`rspec . -f StatisticsFormatter`
 
-echo "$git_hash,$todo_count,$prod_lines,$spec_lines,$test_results"
+git_log=`git log -1 --pretty=%ae,%f`
+
+echo "$git_hash,$todo_count,$test_results,$git_log"
