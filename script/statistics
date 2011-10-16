@@ -6,7 +6,7 @@ git_hash=`git log -1 --pretty=%h`
 
 todo_count=`grep -ri TODO --include="*.rb" . | wc -l`
 
-test_results=`rspec . -f StatisticsFormatter`
+test_results=`rspec -f StatisticsFormatter`
 
 git_log=`git log -1 --pretty=%ae,%f`
 
