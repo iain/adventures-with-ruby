@@ -35,10 +35,10 @@ describe "application" do
     let(:name) { "the-name-of-the-article" }
 
     it "renders the article" do
-      Index.stub(:find) { double(:found? => true) }
-      expect { get "/#{name}" }.to raise_error
-      pending "it misses an article class"
-      subject.should be_ok
+      contents = double("Contents", :toc? => false, :html => "")
+      article = double("Article", :found? => true, :deprecated? => false, :old? => false, :url => "", :id => 1, :title => "", :contents => contents)
+      Index.should_receive(:find).with(name).and_return(article)
+      get "/#{name}"
     end
 
   end

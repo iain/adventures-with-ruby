@@ -20,6 +20,10 @@ def archive
   []
 end
 
+def partial(name, *args)
+  haml "_#{name}", *args
+end
+
 get '/' do
   haml :index
 end
@@ -33,8 +37,8 @@ get '/articles' do
 end
 
 get '/:article' do
-  article = Index.find(params[:article])
-  if article.found?
+  @article = Index.find(params[:article])
+  if @article.found?
     haml :article
   else
     pass
