@@ -1,10 +1,6 @@
-class IndexReader
-end
+require 'article_not_found'
 
-class NotFoundArticle
-  def found?
-    false
-  end
+class IndexReader
 end
 
 class Index
@@ -18,7 +14,7 @@ class Index
   end
 
   def find(name)
-    index.fetch(name) { NotFoundArticle.new }
+    index.fetch(name) { ArticleNotFound.new }
   end
 
   def index
