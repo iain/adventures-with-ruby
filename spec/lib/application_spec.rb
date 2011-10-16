@@ -39,10 +39,12 @@ describe "application" do
       get "/#{name}"
     end
 
-    pending "renders the article" do
+    it "renders the article" do
       Index.stub(:find) { double(:found? => true) }
       get "/#{name}"
-      should be_ok
+      subject.should_not be_ok
+      pending "it misses an article class"
+      subject.should be_ok
     end
 
   end

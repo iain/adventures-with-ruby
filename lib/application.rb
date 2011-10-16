@@ -5,6 +5,8 @@ require 'yaml'
 require 'cgi'
 
 require 'index'
+require 'index_reader'
+require 'article_not_found'
 
 set :haml, :format => :html5, ugly: true
 set :root, File.expand_path('../..', __FILE__)
