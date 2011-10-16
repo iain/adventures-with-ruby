@@ -7,6 +7,9 @@ require 'cgi'
 require 'index'
 require 'index_reader'
 require 'article_not_found'
+require 'article'
+require 'oldness'
+require 'contents'
 
 set :haml, :format => :html5, :ugly => true
 set :root, File.expand_path('../..', __FILE__)
@@ -20,8 +23,12 @@ def archive
   []
 end
 
+def article
+  @article
+end
+
 def partial(name, *args)
-  haml "_#{name}", *args
+  haml :"_#{name}", *args
 end
 
 get '/' do
