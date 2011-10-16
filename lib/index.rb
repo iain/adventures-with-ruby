@@ -4,7 +4,7 @@ class NotFoundArticle
   end
 end
 
-class Article
+class Index
 
   def self.find(name)
     NotFoundArticle.new

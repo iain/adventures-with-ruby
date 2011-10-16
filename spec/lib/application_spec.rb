@@ -35,12 +35,12 @@ describe "application" do
     let(:name) { "the-name-of-the-article" }
 
     it "finds the article" do
-      Article.should_receive(:find).with(name)
+      Index.should_receive(:find).with(name)
       get "/#{name}"
     end
 
     pending "renders the article" do
-      Article.stub(:find) { double(:found? => true) }
+      Index.stub(:find) { double(:found? => true) }
       get "/#{name}"
       should be_ok
     end
@@ -60,7 +60,7 @@ describe "application" do
   describe "other paths" do
 
     before do
-      Article.stub(:find) { double(:found? => false) }
+      Index.stub(:find) { double(:found? => false) }
       get "/this-url-has-not-been-found"
     end
 
