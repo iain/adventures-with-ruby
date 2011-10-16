@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Only commit when tests are passing
+cp -f ./script/pre-commit .git/hooks/pre-commit
+
 ./script/bundler
 
 # Mark script as untestable for git bisect if bundler fails
