@@ -19,6 +19,10 @@ class Contents
     parsed_yaml.fetch("introduction")
   end
 
+  def toc?
+    toc.size > 2
+  end
+
   private
 
   def parsed_yaml

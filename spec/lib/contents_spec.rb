@@ -32,6 +32,16 @@ describe Contents do
 
   describe "#toc?" do
 
+    it "returns true if there are more than 2 items in the table of contents" do
+      subject.should_receive(:toc).and_return([1, 2, 3])
+      subject.toc?.should == true
+    end
+
+    it "returns false if there are 2 items or less" do
+      subject.should_receive(:toc).and_return([1,2])
+      subject.toc?.should == false
+    end
+
   end
 
 end
