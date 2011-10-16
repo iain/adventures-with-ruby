@@ -16,4 +16,5 @@ end
 
 group :test do
   gem 'rspec'
+  gem 'spec_coverage'
 end
