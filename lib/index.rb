@@ -4,18 +4,13 @@ class Index
     new.find(name)
   end
 
-  def initialize(index = nil, reader = IndexReader, not_found = ArticleNotFound.new)
+  def initialize(index = IndexReader.read, not_found = ArticleNotFound.new)
     @index     = index
-    @reader    = reader
     @not_found = not_found
   end
 
   def find(name)
-    index.fetch(name) { @not_found }
-  end
-
-  def index
-    @index || @reader.read
+    @index.fetch(name) { @not_found }
   end
 
 end
