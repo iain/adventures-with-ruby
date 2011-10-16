@@ -1,5 +1,4 @@
 require 'article_not_found'
-require 'index_reader'
 
 class Index
 
@@ -7,8 +6,9 @@ class Index
     new.find(name)
   end
 
-  def initialize(index = nil)
+  def initialize(index = nil, reader = IndexReader)
     @index = index
+    @reader = reader
   end
 
   def find(name)
@@ -16,7 +16,7 @@ class Index
   end
 
   def index
-    @index || IndexReader.read
+    @index || @reader.read
   end
 
 end

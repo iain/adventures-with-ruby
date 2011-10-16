@@ -6,7 +6,7 @@ describe Index do
 
   describe  "#find" do
 
-    subject { Index.new("existing-article" => article) }
+    subject { Index.new({"existing-article" => article}, nil) }
 
     it "cannot find some random article" do
       subject.find("name-of-the-article").should_not be_found
@@ -33,8 +33,9 @@ describe Index do
 
     it "will get it from the list" do
       reader = double(:fetch => true)
-      IndexReader.should_receive(:read).and_return(reader)
-      Index.new.find("something")
+      index_reader = double
+      index_reader.should_receive(:read).and_return(reader)
+      Index.new(nil, index_reader).find("something")
     end
 
   end
