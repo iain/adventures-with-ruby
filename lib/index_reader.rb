@@ -3,7 +3,7 @@ require 'yaml'
 class IndexReader
 
   def self.read(filename = "articles/_index.yml")
-    new(filename).read
+    @read ||= new(filename).read
   end
 
   def initialize(filename, article = Article)

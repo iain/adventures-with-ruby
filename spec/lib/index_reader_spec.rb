@@ -12,6 +12,12 @@ describe IndexReader do
       IndexReader.read
     end
 
+    it "caches reading of the index" do
+      IndexReader.should_receive(:new).once.and_return(double(:read => {}))
+      IndexReader.read
+      IndexReader.read
+    end
+
   end
 
   describe "#read" do
