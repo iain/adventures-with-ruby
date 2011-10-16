@@ -12,7 +12,7 @@ describe "application" do
   subject { last_response }
 
   describe "/" do
-    before { get "/" }
+    before(:all) { get "/" }
     it { should be_ok }
     describe "body" do
       subject { last_response.body }
@@ -22,7 +22,7 @@ describe "application" do
   end
 
   describe "/articles" do
-    before { get "/articles" }
+    before(:all) { get "/articles" }
     it { should be_ok }
     describe "body" do
       subject { last_response.body }
@@ -40,12 +40,12 @@ describe "application" do
   end
 
   describe "/stylesheet.css" do
-    before { get "/stylesheet.css" }
+    before(:all) { get "/stylesheet.css" }
     it { should be_ok }
   end
 
   describe "other paths" do
-    before { get "/this-url-has-not-been-found" }
+    before(:all) { get "/this-url-has-not-been-found" }
     it { should_not be_ok }
     it { should be_not_found }
     describe "body" do
