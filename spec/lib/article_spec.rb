@@ -47,6 +47,14 @@ describe "Article" do
 
   end
 
+  describe "#disqus_id" do
+
+    it "should be the id when there is no wordpress id" do
+      subject.disqus_id.should == id
+    end
+
+  end
+
   describe "#contents" do
 
     it "delegates to Contents class" do
