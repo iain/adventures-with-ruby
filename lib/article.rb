@@ -32,7 +32,7 @@ class Article
   end
 
   def contents(contents = Contents)
-    contents.read(id)
+    @contents ||= contents.new(id)
   end
 
 end

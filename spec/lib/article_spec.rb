@@ -43,8 +43,14 @@ describe "Article" do
 
     it "delegates to Contents class" do
       contents = mock
-      contents.should_receive(:read).with(id)
+      contents.should_receive(:new).with(id)
       subject.contents(contents)
+    end
+
+    it "caches contents" do
+      contents = mock
+      contents.should_receive(:new).with(id).once.and_return(double)
+      2.times { subject.contents(contents) }
     end
 
   end
