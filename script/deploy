@@ -23,4 +23,4 @@ fi
 
 echo "Deploying to $env environment"
 
-git push $env master --force
+git push $env HEAD:master --force
