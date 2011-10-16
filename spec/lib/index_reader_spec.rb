@@ -22,7 +22,7 @@ describe IndexReader do
 
     it "makes an article instance" do
       article = { "title" => "Article Name", "publish" => Date.new(2011, 10, 15), "summary" => "Summary" }
-      article_class.should_receive(:new).with(article)
+      article_class.should_receive(:new).with("article-name", article)
       subject.read
     end
 

@@ -12,10 +12,14 @@ class IndexReader
   end
 
   def read
-    Hash[ load_file.map { |k,v| [ k, @article.new(v) ] } ]
+    Hash[ load_file.map { |id, attributes| [ id, make_article(id, attributes) ] } ]
   end
 
   private
+
+  def make_article(id, attributes)
+    @article.new(id, attributes)
+  end
 
   def load_file
     YAML.load_file(@filename)
