@@ -9,7 +9,7 @@ class StatisticsFormatter < ::RSpec::Core::Formatters::BaseFormatter
   end
 
   def dump_summary(duration, example_count, failure_count, pending_count)
-    output.puts [ loc, lot, format_seconds(duration), example_count, failure_count, pending_count, coverage ].join(',')
+    output.puts [ format_seconds(duration), example_count, failure_count, pending_count, loc, lines_covered, lot ].join(',')
   end
 
   private
@@ -22,9 +22,8 @@ class StatisticsFormatter < ::RSpec::Core::Formatters::BaseFormatter
     lines_in_dir("spec").size
   end
 
-  def coverage
-    uncovered = lines_in_lib.count { |line| line == 0 }
-    ((1.0 - (uncovered.to_f / lines_in_lib.size)) * 100.0).round(3)
+  def lines_covered
+    lines_in_lib.count { |line| line != 0 }
   end
 
   def lines_in_lib
