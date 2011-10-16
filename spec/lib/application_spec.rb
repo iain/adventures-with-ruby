@@ -1,8 +1,8 @@
+ENV['RACK_ENV'] = 'test'
+
 require 'application'
 require 'rack/test'
 require 'nokogiri'
-
-ENV['RACK_ENV'] = 'test'
 
 describe "application" do
 
@@ -34,15 +34,9 @@ describe "application" do
 
     let(:name) { "the-name-of-the-article" }
 
-    it "finds the article" do
-      Index.should_receive(:find).with(name)
-      get "/#{name}"
-    end
-
     it "renders the article" do
       Index.stub(:find) { double(:found? => true) }
-      get "/#{name}"
-      subject.should_not be_ok
+      expect { get "/#{name}" }.to raise_error
       pending "it misses an article class"
       subject.should be_ok
     end
