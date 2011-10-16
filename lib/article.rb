@@ -1,6 +1,6 @@
 class Article
 
-  def initialize(attributes)
+  def initialize(id, attributes)
     @attributes = attributes
   end
 
