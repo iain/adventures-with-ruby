@@ -9,42 +9,76 @@ describe "Article" do
 
   subject { Article.new(id, attributes) }
 
+  it { should be_found }
+
   it "has an id" do
     subject.id.should == id
   end
 
-  it "has a title" do
-    subject.title.should == "Article Name"
+  describe "#title" do
+
+    it "is read from the attributes" do
+      subject.title.should == "Article Name"
+    end
+
   end
 
-  it { should be_found }
+  describe "#summary" do
 
-  it "can be old" do
-    oldness = mock
-    oldness.should_receive(:old?).with(publish)
-    subject.old?(oldness)
+    it "is read from the attributes" do
+      subject.summary.should == summary
+    end
+
   end
 
-  it "has a summary" do
-    subject.summary.should == summary
+  describe "#url" do
+
+    it "is made from the id" do
+      subject.url.should == "/article-name"
+    end
+
   end
 
-  it "has a url" do
-    subject.url.should == "/article-name"
+  describe "#contents" do
+
+    it "delegates to Contents class" do
+      contents = mock
+      contents.should_receive(:read).with(id)
+      subject.contents(contents)
+    end
+
   end
 
-  it "has contents" do
-    contents = mock
-    contents.should_receive(:read).with(id)
-    subject.contents(contents)
+  describe "#old?" do
+
+    let(:oldness) { double }
+
+    before { subject.stub(:deprecated?).and_return(false) }
+
+    it "delegates to oldness class" do
+      oldness.should_receive(:old?).with(publish)
+      subject.old?(oldness)
+    end
+
+    it "is not old when deprecated" do
+      subject.should_receive(:deprecated?).and_return(true)
+      oldness.should_not_receive(:old?)
+      subject.old?(oldness)
+    end
+
   end
 
-  it "might not be deprecated" do
-    subject.should_not be_deprecated
-  end
+  describe "#deprecated?" do
 
-  it "might be deprecated" do
-    Article.new(id, attributes.merge("deprecated" => true)).should be_deprecated
+    it "might not be deprecated" do
+      subject.should_not be_deprecated
+    end
+
+    it "might be deprecated" do
+      subject = Article.new(id, "deprecated" => true)
+      subject.should be_deprecated
+    end
+
   end
 
 end

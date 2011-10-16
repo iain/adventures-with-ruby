@@ -28,7 +28,7 @@ class Article
   end
 
   def old?(oldness = Oldness)
-    oldness.old?(@attributes["publish"])
+    !deprecated? && oldness.old?(@attributes["publish"])
   end
 
   def contents(contents = Contents)
