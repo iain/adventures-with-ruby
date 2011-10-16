@@ -1,0 +1,5 @@
+#!/bin/bash
+set -e
+rm -rf coverage
+rspec . -f SpecCoverage
+open coverage/index.html
