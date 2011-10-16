@@ -4,6 +4,8 @@ require 'builder'
 require 'yaml'
 require 'cgi'
 
+require 'article'
+
 set :haml, :format => :html5, ugly: true
 set :root, File.expand_path('../..', __FILE__)
 
@@ -29,8 +31,12 @@ get '/articles' do
 end
 
 get '/:article' do
-  pass
-  # haml :article
+  article = Article.find(params[:article])
+  if article.found?
+    haml :article
+  else
+    pass
+  end
 end
 
 not_found do

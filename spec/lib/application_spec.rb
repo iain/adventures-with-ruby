@@ -31,7 +31,20 @@ describe "application" do
   end
 
   describe "/:article" do
-    it "renders a single article"
+
+    let(:name) { "the-name-of-the-article" }
+
+    it "finds the article" do
+      Article.should_receive(:find).with(name)
+      get "/#{name}"
+    end
+
+    pending "renders the article" do
+      Article.stub(:find) { double(:found? => true) }
+      get "/#{name}"
+      should be_ok
+    end
+
   end
 
   describe "/feed" do
@@ -45,7 +58,12 @@ describe "application" do
   end
 
   describe "other paths" do
-    before(:all) { get "/this-url-has-not-been-found" }
+
+    before do
+      Article.stub(:find) { double(:found? => false) }
+      get "/this-url-has-not-been-found"
+    end
+
     it { should_not be_ok }
     it { should be_not_found }
     describe "body" do
