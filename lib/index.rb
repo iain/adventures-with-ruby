@@ -1,7 +1,5 @@
 require 'article_not_found'
-
-class IndexReader
-end
+require 'index_reader'
 
 class Index
 
