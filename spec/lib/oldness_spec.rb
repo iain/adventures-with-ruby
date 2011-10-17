@@ -2,12 +2,32 @@ require 'oldness'
 
 describe Oldness do
 
-  it "is old when older than 500 days" do
-    Oldness.should be_old(Date.today - 500)
+  context "when older than 500 days" do
+
+    let(:date) { Date.today - 500 }
+
+    it "is old when not deprecated" do
+      Oldness.should be_old(date, false)
+    end
+
+    it "is not old when deprecated" do
+      Oldness.should_not be_old(date, true)
+    end
+
   end
 
-  it "is not old when younger than 500 days" do
-    Oldness.should_not be_old(Date.today - 499)
+  context "when younger than 500 days" do
+
+    let(:date) { Date.today - 499 }
+
+    it "is not old when not deprecated" do
+      Oldness.should_not be_old(date, false)
+    end
+
+    it "is not old when deprecated" do
+      Oldness.should_not be_old(date, true)
+    end
+
   end
 
 end
