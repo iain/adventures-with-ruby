@@ -12,19 +12,19 @@ class Article
   end
 
   def title
-    @attributes["title"]
+    @attributes.fetch("title")
   end
 
   def deprecated?
-    @attributes["deprecated"]
+    @attributes.fetch("deprecated") { false }
   end
 
   def summary
-    @attributes["summary"]
+    @attributes.fetch("summary")
   end
 
   def published_at
-    @attributes["publish"]
+    @attributes.fetch("publish")
   end
 
   def disqus_id(disqus = Disqus)
