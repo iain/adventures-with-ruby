@@ -27,7 +27,6 @@ class Article
     @attributes["publish"]
   end
 
-  # TODO use same implementation as before
   def disqus_id(disqus = Disqus)
     disqus.id(id, @attributes.fetch("wp"))
   end
