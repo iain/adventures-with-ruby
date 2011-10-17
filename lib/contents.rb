@@ -2,7 +2,7 @@ require 'yaml'
 
 class Contents
 
-  def initialize(id, source = ContentsFile)
+  def initialize(id, source = ContentsStorage)
     @source = source.new(id).read
   end
 

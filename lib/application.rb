@@ -9,6 +9,8 @@ require 'index_reader'
 require 'article_not_found'
 require 'article'
 require 'oldness'
+require 'contents_storage'
+require 'disqus'
 require 'contents'
 
 set :haml, :format => :html5, :ugly => true
