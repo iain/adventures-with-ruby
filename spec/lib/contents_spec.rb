@@ -44,4 +44,9 @@ describe Contents do
 
   end
 
+  it "caches reading the file" do
+    YAML.should_receive(:load_file).once.and_return({"html" => "something"})
+    2.times { subject.html }
+  end
+
 end

@@ -26,7 +26,7 @@ class Contents
   private
 
   def parsed_yaml
-    YAML.load_file(filename)
+    @parsed_yaml ||= YAML.load_file(filename)
   end
 
   def filename
