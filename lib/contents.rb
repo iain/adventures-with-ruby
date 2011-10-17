@@ -2,35 +2,24 @@ require 'yaml'
 
 class Contents
 
-  def initialize(id, path = "contents")
-    @id   = id
-    @path = path
+  def initialize(id, source = ContentsFile)
+    @source = source.new(id).read
   end
 
   def html
-    parsed_yaml.fetch("html")
+    @source.fetch("html")
   end
 
   def toc
-    parsed_yaml.fetch("toc")
+    @source.fetch("toc")
   end
 
   def introduction
-    parsed_yaml.fetch("introduction")
+    @source.fetch("introduction")
   end
 
   def toc?
     toc.size > 2
-  end
-
-  private
-
-  def parsed_yaml
-    @parsed_yaml ||= YAML.load_file(filename)
-  end
-
-  def filename
-    File.join(@path, "#{@id}.yml")
   end
 
 end
