@@ -84,17 +84,12 @@ describe "Article" do
   describe "#old?" do
 
     let(:oldness) { double }
+    let(:deprecated) { double }
 
-    before { subject.stub(:deprecated?).and_return(false) }
+    before { subject.stub(:deprecated?).and_return(deprecated) }
 
-    it "delegates to oldness class" do
-      oldness.should_receive(:old?).with(publish)
-      subject.old?(oldness)
-    end
-
-    it "is not old when deprecated" do
-      subject.should_receive(:deprecated?).and_return(true)
-      oldness.should_not_receive(:old?)
+    it "delegates to oldness class with deprecated" do
+      oldness.should_receive(:old?).with(publish, deprecated)
       subject.old?(oldness)
     end
 
