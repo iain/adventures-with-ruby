@@ -28,7 +28,7 @@ class Article
   end
 
   def disqus_id(disqus = Disqus)
-    disqus.id(id, @attributes.fetch("wp"))
+    disqus.id(id, @attributes["wp"])
   end
 
   def url
