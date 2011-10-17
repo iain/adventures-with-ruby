@@ -15,10 +15,6 @@ class Article
     @attributes.fetch("title")
   end
 
-  def deprecated?
-    @attributes.fetch("deprecated") { false }
-  end
-
   def summary
     @attributes.fetch("summary")
   end
@@ -27,12 +23,16 @@ class Article
     @attributes.fetch("publish")
   end
 
-  def disqus_id(disqus = Disqus)
-    disqus.id(id, @attributes["wp"])
-  end
-
   def url
     "/#{id}"
+  end
+
+  def deprecated?
+    @attributes.fetch("deprecated") { false }
+  end
+
+  def disqus_id(disqus = Disqus)
+    disqus.id(id, @attributes["wp"])
   end
 
   def old?(oldness = Oldness)

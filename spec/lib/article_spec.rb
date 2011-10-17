@@ -31,6 +31,14 @@ describe "Article" do
 
   end
 
+  describe "#published_at" do
+
+    it "is read from the publish attribute" do
+      subject.published_at.should == publish
+    end
+
+  end
+
   describe "#url" do
 
     it "is made from the id" do
@@ -39,10 +47,15 @@ describe "Article" do
 
   end
 
-  describe "#published_at" do
+  describe "#deprecated?" do
 
-    it "is read from the publish attribute" do
-      subject.published_at.should == publish
+    it "might not be deprecated" do
+      subject.should_not be_deprecated
+    end
+
+    it "might be deprecated" do
+      subject = Article.new(id, "deprecated" => true)
+      subject.should be_deprecated
     end
 
   end
@@ -65,22 +78,6 @@ describe "Article" do
 
   end
 
-  describe "#contents" do
-
-    it "delegates to Contents class" do
-      contents = mock
-      contents.should_receive(:new).with(id)
-      subject.contents(contents)
-    end
-
-    it "caches contents" do
-      contents = mock
-      contents.should_receive(:new).with(id).once.and_return(double)
-      2.times { subject.contents(contents) }
-    end
-
-  end
-
   describe "#old?" do
 
     let(:oldness) { double }
@@ -95,15 +92,18 @@ describe "Article" do
 
   end
 
-  describe "#deprecated?" do
+  describe "#contents" do
 
-    it "might not be deprecated" do
-      subject.should_not be_deprecated
+    it "delegates to Contents class" do
+      contents = mock
+      contents.should_receive(:new).with(id)
+      subject.contents(contents)
     end
 
-    it "might be deprecated" do
-      subject = Article.new(id, "deprecated" => true)
-      subject.should be_deprecated
+    it "caches contents" do
+      contents = mock
+      contents.should_receive(:new).with(id).once.and_return(double)
+      2.times { subject.contents(contents) }
     end
 
   end
