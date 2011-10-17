@@ -5,7 +5,8 @@ describe "Article" do
   let(:id) { "article-name" }
   let(:publish) { Date.new(2011, 10, 15) }
   let(:summary) { "The Summary" }
-  let(:attributes) { { "title" => "Article Name", "publish" => publish, "summary" => summary } }
+  let(:wp) { 123 }
+  let(:attributes) { { "title" => "Article Name", "publish" => publish, "summary" => summary, "wp" => wp } }
 
   subject { Article.new(id, attributes) }
 
@@ -49,8 +50,10 @@ describe "Article" do
 
   describe "#disqus_id" do
 
-    it "should be the id when there is no wordpress id" do
-      subject.disqus_id.should == id
+    it "delegates to Disqus" do
+      disqus = double
+      disqus.should_receive(:id).with(id, wp)
+      subject.disqus_id(disqus)
     end
 
   end
