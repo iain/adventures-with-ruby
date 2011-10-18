@@ -1,8 +1,4 @@
-ENV['RACK_ENV'] = 'test'
-
-require 'application'
-require 'rack/test'
-require 'nokogiri'
+require 'web_helper'
 
 describe "application" do
 
@@ -67,30 +63,6 @@ describe "application" do
       it { should have_text("Page Not Found") }
       it { should have_link("list of all articles").to("/articles") }
     end
-  end
-
-end
-
-
-RSpec::Matchers.define :have_link do |expected|
-
-  match do |actual|
-    doc = Nokogiri::HTML(actual)
-    links = doc.xpath("//a[@href='#{@url}']")
-    links.any? { |link| link.inner_text == expected }
-  end
-
-  chain :to do |url|
-    @url = url
-  end
-
-end
-
-RSpec::Matchers.define :have_text do |expected|
-
-  match do |actual|
-    doc = Nokogiri::HTML(actual)
-    doc.inner_text.include?(expected)
   end
 
 end
