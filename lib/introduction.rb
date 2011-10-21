@@ -3,7 +3,7 @@ require 'redcarpet'
 class Introduction < Redcarpet::Render::HTML
 
   def self.read(text)
-    md = Redcarpet::Markdown.new(Introduction.new, :fenced_code_blocks => true)
+    md = Redcarpet::Markdown.new(new, :fenced_code_blocks => true)
     md.render(text)
   end
 
