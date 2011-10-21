@@ -1,6 +1,6 @@
 require 'introduction'
 
-describe "Introduction" do
+describe Introduction do
 
   it "gets the contents before the first header" do
     text = <<-TEXT
