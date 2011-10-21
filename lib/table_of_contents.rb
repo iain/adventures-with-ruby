@@ -1,12 +1,24 @@
 require 'redcarpet'
-require 'nokogiri'
 
-class TableOfContents
+class TableOfContents < Redcarpet::Render::Base
 
   def self.read(text)
-    md  = Redcarpet::Markdown.new(Redcarpet::Render::HTML_TOC.new, :fenced_code_blocks => true)
-    doc = Nokogiri::HTML(md.render(text))
-    doc.css("a").map { |a| { "anchor" => a[:href], "title" => a.inner_text } }
+    md  = Redcarpet::Markdown.new(new, :fenced_code_blocks => true)
+    md.render(text)
+  end
+
+  def initialize(*)
+    super
+    @headers = []
+  end
+
+  def header(text, level)
+    @headers << { "anchor" => "#toc_#{@headers.size}", "title" => text }
+    nil
+  end
+
+  def postprocess(full_document)
+    @headers
   end
 
 end
