@@ -1,10 +1,9 @@
-require 'redcarpet'
+require 'formatting'
 
-class Introduction < Redcarpet::Render::HTML
+class Introduction < Formatting.introduction
 
   def self.read(text)
-    md = Redcarpet::Markdown.new(new, :fenced_code_blocks => true)
-    md.render(text)
+    Formatting.format(new, text)
   end
 
   MARK = "<!-- INTRODUCTION STOPS HERE -->"

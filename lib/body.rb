@@ -1,10 +1,10 @@
-require 'redcarpet'
+require 'formatting'
 
-class Body < Redcarpet::Render::HTML
+class Body < Formatting.body
 
   def self.read(text, code_parser = Code)
-    md = Redcarpet::Markdown.new(new(:with_toc_data => true, :hard_wrap => true, :code_parser => code_parser), :fenced_code_blocks => true)
-    md.render(text).strip
+    options = { :with_toc_data => true, :hard_wrap => true, :code_parser => code_parser }
+    Formatting.format(new(options), text)
   end
 
   def initialize(options)

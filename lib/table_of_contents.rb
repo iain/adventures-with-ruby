@@ -1,10 +1,9 @@
-require 'redcarpet'
+require 'formatting'
 
-class TableOfContents < Redcarpet::Render::Base
+class TableOfContents < Formatting.toc
 
   def self.read(text)
-    md  = Redcarpet::Markdown.new(new, :fenced_code_blocks => true)
-    md.render(text)
+    Formatting.format(new, text)
   end
 
   def initialize(*)
