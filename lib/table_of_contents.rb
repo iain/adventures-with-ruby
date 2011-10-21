@@ -13,7 +13,9 @@ class TableOfContents < Redcarpet::Render::Base
   end
 
   def header(text, level)
-    @headers << { "anchor" => "#toc_#{@headers.size}", "title" => text }
+    if level < 4
+      @headers << { "anchor" => "#toc_#{@headers.size}", "title" => text }
+    end
     nil
   end
 

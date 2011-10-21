@@ -1,8 +1,12 @@
 require 'table_of_contents'
 
-describe "TOC" do
+describe TableOfContents do
 
-  it "works" do
+  def toc(text)
+    TableOfContents.read(text)
+  end
+
+  it "fetches h3 headers" do
     md = <<-MARKDOWN
 This is my introduction
 
@@ -53,8 +57,23 @@ Even more text
     toc(md).should == [ { "anchor" => "#toc_0", "title" => "Name Info" }, { "anchor" => "#toc_1", "title" => "Another header" } ]
   end
 
-  def toc(text)
-    TableOfContents.read(text)
+  it "won't return h4 or higer" do
+    md = <<-MARKDOWN
+This is my introduction
+
+#### This is to low
+
+More text
+
+### Another header
+
+Even more text
+
+##### Even lower
+
+More
+    MARKDOWN
+    toc(md).should == [ { "anchor" => "#toc_0", "title" => "Another header" } ]
   end
 
 end
