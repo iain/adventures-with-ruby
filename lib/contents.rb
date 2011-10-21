@@ -1,5 +1,3 @@
-require 'yaml'
-
 class Contents
 
   def initialize(id, source = ContentsStorage)
