@@ -13,7 +13,7 @@ class Body < Formatting.body
   end
 
   def block_code(code, language)
-    @code_parser.parse(code, language)
+    "<pre>#{@code_parser.parse(code, language)}</pre>"
   end
 
 end

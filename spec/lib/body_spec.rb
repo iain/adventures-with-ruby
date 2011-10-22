@@ -44,4 +44,14 @@ the codez
     body(text)
   end
 
+  it "makes code blocks" do
+    code_parser.stub(:parse).with("the codez\n", "ruby").and_return("code")
+    text = <<-TEXT
+``` ruby
+the codez
+```
+    TEXT
+    body(text).should == "<pre>code</pre>"
+  end
+
 end
