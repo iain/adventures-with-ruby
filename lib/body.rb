@@ -13,7 +13,12 @@ class Body < Formatting.body
   end
 
   def block_code(code, language)
-    "<pre>#{@code_parser.parse(code, language)}</pre>"
+    if language.to_s == ""
+      compiled = code
+    else
+      compiled = @code_parser.parse(code, language)
+    end
+    "<pre>#{compiled}</pre>"
   end
 
 end

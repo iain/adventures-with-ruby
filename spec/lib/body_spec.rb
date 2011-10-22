@@ -54,4 +54,14 @@ the codez
     body(text).should == "<pre>code</pre>"
   end
 
+  it "won't parse code blocks without a language" do
+    code_parser.should_not_receive(:parse)
+    text = <<-TEXT
+```
+other codez
+```
+    TEXT
+    body(text).should == "<pre>other codez</pre>"
+  end
+
 end
