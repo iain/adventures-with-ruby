@@ -3,7 +3,7 @@ require 'formatting'
 class Body < Formatting.body
 
   def self.read(text, code_parser = Code)
-    options = { :with_toc_data => true, :hard_wrap => true, :code_parser => code_parser }
+    options = { :with_toc_data => true, :code_parser => code_parser }
     Formatting.format(new(options), text)
   end
 
