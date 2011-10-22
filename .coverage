@@ -1,0 +1,6 @@
+#!/usr/bin/env ruby
+
+SimpleCov.start do
+  add_group "Lib", "lib"
+  add_group "Web", "web"
+end
