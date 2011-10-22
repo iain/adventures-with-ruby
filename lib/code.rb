@@ -76,7 +76,7 @@ class Code
 
   def save_html_to_file(path)
     execute "mvim --servername #{servername} --remote-send ':set nonumber<CR>:TOhtml<CR>:w! #{path}<CR>:qa!<CR>'" do
-      File.open(path).read != ""
+      File.open(path).read != "" && !`mvim --serverlist`.include?(servername)
     end
   end
 
