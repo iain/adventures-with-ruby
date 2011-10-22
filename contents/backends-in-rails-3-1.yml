@@ -1,0 +1,266 @@
+--- 
+html: "<p>If you find yourself needing a backend interface, you can either get an admin plugin of the shelf, like\n\
+  <a href=\"https://github.com/sferik/rails_admin\">RailsAdmin</a> or <a href=\"http://activeadmin.info/\">ActiveAdmin</a>, or\n\
+  build your own. The of-the-shelf options provide a lot of functionality and are really worth a look.</p>\n\n\
+  <p>You can also build your own backend. Building your own gives you maximum freedom. It requires a bit\n\
+  more work, but it might be preferrable, especially if your customer also needs to work with it.</p>\n\n\
+  <p>There are some awesome tools out there to help you build your own backend. I&#39;ll show you how I would\n\
+  go about making such a backend. I&#39;m using Rails 3.1 (the rc5 at this moment) on Ruby 1.9.2. I might\n\
+  gloss over some details here and there, so use your own expertise to fill in some gaps.</p>\n\n\
+  <p>The entire backend is available on <a href=\"https://github.com/iain/simple-backend-example\">Github</a>. I have\n\
+  also published the end result on <a href=\"http://simple-backend-example.heroku.com/backend\">Heroku</a> You can\n\
+  log in with username &quot;frodo&quot; and the password &quot;thering&quot;.</p>\n\n\
+  <h2 id=\"toc_0\">A new application controller</h2>\n\n\
+  <p>A backend can be seen as a different application inside your regular application. That&#39;s why I start\n\
+  out with a fresh application controller, just for the backend, from which every other controller can\n\
+  inherit.</p>\n\
+  <pre>rails generate controller backend/application</pre>\n\
+  <p>Because I don&#39;t want to be bothered by anything from the normal application controller, I choose to\n\
+  inherit straight from <code>ActionController::Base</code>:</p>\n\
+  <pre><span class=\"Keyword\">class</span> <span class=\"Type\">Backend</span>::<span class=\"Type\">ApplicationController</span> &lt; <span class=\"Type\">ActionController</span>::<span class=\"Type\">Base</span>\n  protect_from_forgery\n\
+  <span class=\"Keyword\">end</span></pre>\n\
+  <p>All routes should be in the backend too. This is extremely simple. Just wrap your normal routes\n\
+  inside a <code>namespace</code> block:</p>\n\
+  <pre><span class=\"Type\">SimpleBackendExample</span>::<span class=\"Type\">Application</span>.routes.draw <span class=\"rubyControl\">do</span>\n\n  root <span class=\"Constant\">to</span>: <span class=\"rubyStringDelimiter\">\"</span><span class=\"String\">home#index</span><span class=\"rubyStringDelimiter\">\"</span>\n  <span class=\"Comment\"># other routes go here</span>\n\n  namespace <span class=\"Constant\">:backend</span> <span class=\"rubyControl\">do</span>\n    root <span class=\"Constant\">to</span>: <span class=\"rubyStringDelimiter\">\"</span><span class=\"String\">products#index</span><span class=\"rubyStringDelimiter\">\"</span>\n    resources <span class=\"Constant\">:products</span>\n    resources <span class=\"Constant\">:widgets</span>\n  <span class=\"rubyControl\">end</span>\n\n\
+  <span class=\"rubyControl\">end</span></pre>\n\
+  <p>Now it&#39;s time to implement these resources.</p>\n\n\
+  <h2 id=\"toc_1\">Resources</h2>\n\n\
+  <p>Usually, you&#39;ll need a lot of CRUD resources inside your backend. I prefer to use the\n\
+  <a href=\"https://github.com/josevalim/inherited_resources\">inherited_resources</a> gem.</p>\n\n\
+  <p>First, make sure you install it, by adding it to your <code>Gemfile</code> and running the <code>bundle</code> command:</p>\n\
+  <pre>gem <span class=\"rubyStringDelimiter\">'</span><span class=\"String\">inherited_resources</span><span class=\"rubyStringDelimiter\">'</span></pre>\n\
+  <p>Next, I prefer to make a base class for all resource controllers too. This is the ideal place for\n\
+  configuring Inherited Resources. Every CRUD controller can inherit from this one, while other\n\
+  controllers can inherit from <code>Backend::ApplicationController</code>.</p>\n\
+  <pre>rails generate controller backend/resource</pre>\n\
+  <p>Normally <code>inherited_resources</code> advices you to inherit from <code>InheritedResources::Base</code>. In turn,\n\
+  <code>InheritedResources::Base</code> inherits from your own <code>ApplicationController</code>. But here we want to\n\
+  inherit from <code>Backend::ApplicationController</code>. Luckily, we can do that:</p>\n\
+  <pre><span class=\"Keyword\">class</span> <span class=\"Type\">Backend</span>::<span class=\"Type\">ResourceController</span> &lt; <span class=\"Type\">Backend</span>::<span class=\"Type\">ApplicationController</span>\n  inherit_resources\n  respond_to <span class=\"Constant\">:html</span>\n\
+  <span class=\"Keyword\">end</span></pre>\n\
+  <p>Now, if we want to create a CRUD controller, we can do that by inheriting from\n\
+  <code>Backend::ResourceController</code>.</p>\n\
+  <pre>rails generate controller backend/products</pre>\n\
+  <p>The controller code is now really simple:</p>\n\
+  <pre><span class=\"Keyword\">class</span> <span class=\"Type\">Backend</span>::<span class=\"Type\">ProductsController</span> &lt; <span class=\"Type\">Backend</span>::<span class=\"Type\">ResourceController</span>\n\
+  <span class=\"Keyword\">end</span></pre>\n\
+  <h2 id=\"toc_2\">View inheritence</h2>\n\n\
+  <p>You&#39;re now free to make the views for every controller. This can be really boring, so it&#39;s a good\n\
+  thing that Rails 3.1 ships with a feature called &#39;view inheritence&#39;. This means that if a view does\n\
+  not exist, it will go up the inheritence tree to find a view to render.</p>\n\n\
+  <p>This means that we can create some simple views for our <code>Backend::ResourceController</code> and every\n\
+  resource controller can render those. Only if we want something different, we need to make a\n\
+  specific view. This means though that our views need to be agnostic about the model they&#39;re\n\
+  handling.</p>\n\n\
+  <p>Inherited Resources provides a lot of helpers to make views agnostic of the model they are\n\
+  rendering. In the index action you have access to <code>collection</code>, in the other actions you can\n\
+  reference <code>resource</code>. There are also URL helpers like <code>resource_path</code> and <code>collection_path</code>.</p>\n\n\
+  <p>But if we&#39;re agnostic of the model, we need to use inflection to see which fields we can render. We\n\
+  can ask the <code>resource_class</code> to see what attributes are defined. This will include automatic fields\n\
+  like <code>id</code>, <code>updated_at</code> and <code>created_at</code> too. But even without these fields, the list can become\n\
+  a bit too long for index pages.</p>\n\n\
+  <p>In fact, I&#39;ve found that the list of columns to display on the index page is something you want to\n\
+  customize just about every time. So let&#39;s build a simple view to be overriden in every controller. In\n\
+  <code>app&#47;views&#47;backend&#47;resource&#47;index.html.haml</code>, I put the following:</p>\n\
+  <pre><span class=\"Special\">=</span> render <span class=\"rubyStringDelimiter\">\"</span><span class=\"String\">index</span><span class=\"rubyStringDelimiter\">\"</span>, <span class=\"Constant\">attributes</span>: attributes</pre>\n\
+  <p>And add to the <code>Backend::ResourceHelper</code>:</p>\n\
+  <pre><span class=\"Keyword\">module</span> <span class=\"Type\">Backend</span>::<span class=\"Type\">ResourceHelper</span>\n\n  <span class=\"PreProc\">def</span> <span class=\"Function\">attributes</span>\n    resource_class.attribute_names - <span class=\"rubyStringDelimiter\">%w(</span><span class=\"String\">id created_at updated_at</span><span class=\"rubyStringDelimiter\">)</span>\n  <span class=\"PreProc\">end</span>\n\n\
+  <span class=\"Keyword\">end</span></pre>\n\
+  <p>This will render the index-partial with the first three attributes of the model. The\n\
+  index-partial then looks like this:</p>\n\
+  <pre><span class=\"Special\">%</span><span class=\"Conditional\">table</span>\n  <span class=\"Special\">%</span><span class=\"Conditional\">thead</span>\n    <span class=\"Special\">%</span><span class=\"Conditional\">tr</span>\n      <span class=\"Special\">-</span> attributes.each <span class=\"rubyControl\">do</span> |<span class=\"Identifier\">attr</span>|\n        <span class=\"Special\">%</span><span class=\"Conditional\">th</span><span class=\"Special\">=</span> resource_class.human_attribute_name(attr)\n      <span class=\"Special\">%</span><span class=\"Conditional\">th</span> <span class=\"Special\">&amp;nbsp;</span>\n  <span class=\"Special\">%</span><span class=\"Conditional\">tbody</span>\n    <span class=\"Special\">-</span> collection.each <span class=\"rubyControl\">do</span> |<span class=\"Identifier\">resource</span>|\n      <span class=\"Special\">%</span><span class=\"Conditional\">tr</span><span class=\"Delimiter\">[</span>resource<span class=\"Delimiter\">]</span>\n        <span class=\"Special\">-</span> attributes.each <span class=\"rubyControl\">do</span> |<span class=\"Identifier\">attr</span>|\n          <span class=\"Special\">%</span><span class=\"Conditional\">td</span><span class=\"Special\">=</span> resource.public_send(attr).to_s.truncate(<span class=\"Number\">20</span>)\n        <span class=\"Special\">%</span><span class=\"Conditional\">td</span>\n          <span class=\"Special\">=</span> link_to <span class=\"rubyStringDelimiter\">'</span><span class=\"String\">show</span><span class=\"rubyStringDelimiter\">'</span>, resource_path(resource)\n          |\n          <span class=\"Special\">=</span> link_to <span class=\"rubyStringDelimiter\">'</span><span class=\"String\">edit</span><span class=\"rubyStringDelimiter\">'</span>, edit_resource_path(resource)\n          |\n          <span class=\"Special\">=</span> link_to <span class=\"rubyStringDelimiter\">'</span><span class=\"String\">destroy</span><span class=\"rubyStringDelimiter\">'</span>, resource_path(resource), <span class=\"Constant\">method</span>: <span class=\"Constant\">:delete</span>, <span class=\"Constant\">confirm</span>: <span class=\"rubyStringDelimiter\">\"</span><span class=\"String\">Are you sure?</span><span class=\"rubyStringDelimiter\">\"</span></pre>\n\
+  <p>I can now easily override this per controller. If, for example, I wanted to only show the name\n\
+  column for products, I could create <code>app&#47;views&#47;backend&#47;products&#47;index.html.haml</code> with only this\n\
+  line:</p>\n\
+  <pre><span class=\"Special\">=</span> render <span class=\"rubyStringDelimiter\">\"</span><span class=\"String\">index</span><span class=\"rubyStringDelimiter\">\"</span>, <span class=\"Constant\">attributes</span>: <span class=\"rubyStringDelimiter\">%w(</span><span class=\"String\">name</span><span class=\"rubyStringDelimiter\">)</span></pre>\n\
+  <p>The show action probably wants to list everything, so it&#39;ll be something like this:</p>\n\
+  <pre><span class=\"Special\">%</span><span class=\"Conditional\">dl</span>\n  <span class=\"Special\">-</span> resource_class.attribute_names.each <span class=\"rubyControl\">do</span> |<span class=\"Identifier\">attr</span>|\n    <span class=\"Special\">%</span><span class=\"Conditional\">dt</span><span class=\"Special\">=</span> resource_class.human_attribute_name(attr)\n    <span class=\"Special\">%</span><span class=\"Conditional\">dd</span><span class=\"Special\">=</span> resource.public_send(attr)</pre>\n\
+  <h2 id=\"toc_3\">Simple Form</h2>\n\n\
+  <p>My favorite gem for creating forms is <a href=\"https://github.com/plataformatec/simple_form\">simple_form</a>.\n\
+  It is really flexible. Install it, by adding it to your <code>Gemfile</code> and following the instructions in\n\
+  simple_form&#39;s README.</p>\n\n\
+  <p>Our form partial in <code>app&#47;view&#47;backend&#47;resource&#47;_form.html.haml</code> will look something like:</p>\n\
+  <pre><span class=\"Special\">=</span> simple_form_for [ <span class=\"Constant\">:backend</span>, resource ] <span class=\"rubyControl\">do</span> |<span class=\"Identifier\">f</span>|\n  <span class=\"Special\">-</span> attributes.each <span class=\"rubyControl\">do</span> |<span class=\"Identifier\">attr</span>|\n    <span class=\"Special\">=</span> f.input attr\n  <span class=\"Special\">=</span> f.submit</pre>\n\
+  <p>And the new and edit pages will simply render this partial, and look similar to the index template:</p>\n\
+  <pre><span class=\"Special\">%</span><span class=\"Conditional\">h2</span> Edit <span class=\"Delimiter\">#{</span>resource_class.model_name.human<span class=\"Delimiter\">}</span>\n\n\
+  <span class=\"Special\">=</span> render <span class=\"rubyStringDelimiter\">\"</span><span class=\"String\">form</span><span class=\"rubyStringDelimiter\">\"</span>, <span class=\"Constant\">attributes</span>: attributes</pre>\n\
+  <h2 id=\"toc_4\">Scopes &amp; Pagination</h2>\n\n\
+  <p>For the index page, you&#39;ll need pagination too. My favorite choice is\n\
+  <a href=\"https://github.com/amatsuda/kaminari\">Kaminari</a> in combination with\n\
+  <a href=\"https://github.com/plataformatec/has_scope\">has_scope</a>:</p>\n\
+  <pre>gem <span class=\"rubyStringDelimiter\">'</span><span class=\"String\">kaminari</span><span class=\"rubyStringDelimiter\">'</span>\n\
+  gem <span class=\"rubyStringDelimiter\">'</span><span class=\"String\">has_scope</span><span class=\"rubyStringDelimiter\">'</span>, <span class=\"Constant\">git</span>: <span class=\"rubyStringDelimiter\">'</span><span class=\"String\">git://github.com/plataformatec/has_scope.git</span><span class=\"rubyStringDelimiter\">'</span></pre>\n\
+  <p>I&#39;m using the version of <code>has_scope</code> directly, because it has a fixed a deprecation error.</p>\n\n\
+  <p>Next, implement it by adding this line to <code>Backend::ResourceController</code>:</p>\n\
+  <pre>has_scope <span class=\"Constant\">:page</span>, <span class=\"Constant\">default</span>: <span class=\"Number\">1</span></pre>\n\
+  <p>And put it in your view as well:</p>\n\
+  <pre><span class=\"Special\">=</span> paginate collection</pre>\n\
+  <p>Super easy! Don&#39;t forget to run the generators provided by kaminari to configure it further, if you want.</p>\n\n\
+  <h2 id=\"toc_5\">Responders</h2>\n\n\
+  <p>To get flash messages, we&#39;ll need to create a responder. The responders gem has a generator for\n\
+  this, which you should use. We&#39;ll need a small tweak to get it to work:</p>\n\
+  <pre><span class=\"Comment\"># app/controllers/backend/responder.rb</span>\n\
+  <span class=\"Keyword\">class</span> <span class=\"Type\">Backend</span>::<span class=\"Type\">Responder</span> &lt; <span class=\"Type\">ActionController</span>::<span class=\"Type\">Responder</span>\n\n  <span class=\"PreProc\">include</span> <span class=\"Type\">Responders</span>::<span class=\"Type\">FlashResponder</span>\n  <span class=\"PreProc\">include</span> <span class=\"Type\">Responders</span>::<span class=\"Type\">HttpCacheResponder</span>\n\n  <span class=\"PreProc\">def</span> <span class=\"Function\">initialize</span>(*)\n    <span class=\"Keyword\">super</span>\n    <span class=\"Identifier\">@flash_now</span> = <span class=\"Constant\">:on_failure</span>\n  <span class=\"PreProc\">end</span>\n\n\
+  <span class=\"Keyword\">end</span></pre>\n\
+  <p>I&#39;ve renamed it to make it clearer that this is the responder for the backend only. For the reason\n\
+  of the initializer, see this <a href=\"https://github.com/plataformatec/responders/pull/26\">pull request</a>.</p>\n\n\
+  <p>To get flash messages for validation errors, you need to customize the locale file that was\n\
+  generated, to include alert messages for create and update:</p>\n\
+  <pre><span class=\"Identifier\">en</span><span class=\"Delimiter\">:</span>\n  <span class=\"Identifier\">flash</span><span class=\"Delimiter\">:</span>\n    <span class=\"Identifier\">actions</span><span class=\"Delimiter\">:</span>\n      <span class=\"Identifier\">create</span><span class=\"Delimiter\">:</span>\n        <span class=\"Identifier\">notice</span><span class=\"Delimiter\">:</span> <span class=\"String\">'</span><span class=\"String\">%{resource_name} was successfully created.</span><span class=\"String\">'</span>\n        <span class=\"Identifier\">alert</span><span class=\"Delimiter\">:</span> <span class=\"String\">'</span><span class=\"String\">%{resource_name} could not be created.</span><span class=\"String\">'</span>\n      <span class=\"Identifier\">update</span><span class=\"Delimiter\">:</span>\n        <span class=\"Identifier\">notice</span><span class=\"Delimiter\">:</span> <span class=\"String\">'</span><span class=\"String\">%{resource_name} was successfully updated.</span><span class=\"String\">'</span>\n        <span class=\"Identifier\">alert</span><span class=\"Delimiter\">:</span> <span class=\"String\">'</span><span class=\"String\">%{resource_name} could not be updated.</span><span class=\"String\">'</span>\n      <span class=\"Identifier\">destroy</span><span class=\"Delimiter\">:</span>\n        <span class=\"Identifier\">notice</span><span class=\"Delimiter\">:</span> <span class=\"String\">'</span><span class=\"String\">%{resource_name} was successfully destroyed.</span><span class=\"String\">'</span>\n        <span class=\"Identifier\">alert</span><span class=\"Delimiter\">:</span> <span class=\"String\">'</span><span class=\"String\">%{resource_name} could not be destroyed.</span><span class=\"String\">'</span></pre>\n\
+  <p>Next, you&#39;ll need to add it to <code>Backend::ResourceController</code>, because Inherited Resources will\n\
+  otherwise override it with its own responders.</p>\n\
+  <pre><span class=\"Comment\"># app/controllers/backend/resource_controller.rb</span>\n\
+  <span class=\"Constant\">self</span>.responder = <span class=\"Type\">Backend</span>::<span class=\"Type\">Responder</span></pre>\n\
+  <p>By adding the <code>HttpCacheResponder</code>, the website speeds up quite a bit. It will set the appropriate\n\
+  headers, like ETags, based on the resource you&#39;re viewing. This means that if you&#39;re viewing a page\n\
+  for the second time, you don&#39;t have to render the view anymore and your Rails app only sends a <code>304\n\
+  Not Modified</code> to your browser. If you&#39;re viewing my example on Heroku, you can see Varnish adding\n\
+  another layer of caching on top of it, using those ETags. It makes your backend really snappy!</p>\n\n\
+  <h2 id=\"toc_6\">Authentication</h2>\n\n\
+  <p>Our backend needs to be private, so we&#39;ll need some form of authentication. In most cases (more\n\
+  than you&#39;d think even) basic authentication will work. This can be easily done inside the\n\
+  <code>Backend::ApplicationController</code>, by adding one simple line:</p>\n\
+  <pre>http_basic_authenticate_with <span class=\"Constant\">name</span>: <span class=\"rubyStringDelimiter\">\"</span><span class=\"String\">frodo</span><span class=\"rubyStringDelimiter\">\"</span>, <span class=\"Constant\">password</span>: <span class=\"rubyStringDelimiter\">\"</span><span class=\"String\">thering</span><span class=\"rubyStringDelimiter\">\"</span></pre>\n\
+  <p>If you&#39;re opting for a more complex system, with users and so on, I would go for\n\
+  <a href=\"https://github.com/plataformatec/devise\">Devise</a>. The powerful thing about Devise is that you can\n\
+  really easily create a multiple types of users who have nothing with each other in common. They each\n\
+  have their own tables and sign in pages.</p>\n\n\
+  <p>You can configure Devise to use your own controllers instead of its own, so you can really separate\n\
+  the admins from the rest of the system.</p>\n\n\
+  <p>To generate administrators:</p>\n\
+  <pre>rails generate devise admin</pre>\n\
+  <p>Then I prefer to place the views inside the backend namespace as well. This means that I need to\n\
+  recreate the controllers that Devise provides. This sounds like a lot of work, but it also means\n\
+  that I can really easily customize it. Rather than depending on the customization hooks that Devise\n\
+  provides (they are really good), I can override certain methods inside the controller. Devise&#39;s code\n\
+  is so nice, I can easily override just the functionality I like to make it work.</p>\n\n\
+  <p>To do this, place the <code>devise_for</code> route inside your namespace:</p>\n\
+  <pre>namespace <span class=\"Constant\">:backend</span> <span class=\"rubyControl\">do</span>\n  devise_for <span class=\"Constant\">:admins</span>, <span class=\"Constant\">skip</span>: <span class=\"Constant\">:registrations</span>\n\
+  <span class=\"rubyControl\">end</span></pre>\n\
+  <p>And create controllers like this:</p>\n\
+  <pre><span class=\"Keyword\">class</span> <span class=\"Type\">Backend</span>::<span class=\"Type\">SessionsController</span> &lt; <span class=\"Type\">Devise</span>::<span class=\"Type\">SessionsController</span>\n  layout <span class=\"rubyStringDelimiter\">\"</span><span class=\"String\">backend/sign_in</span><span class=\"rubyStringDelimiter\">\"</span>\n\
+  <span class=\"Keyword\">end</span></pre>\n\
+  <p>As you can see, I can now easily define the backend layout inside\n\
+  the controller, without having to revert to a more complex <a href=\"https://github.com/plataformatec/devise/wiki/How-To:-Create-custom-layouts\">hook\n\
+  method</a>. Remember\n\
+  that, due to view inheritance, you don&#39;t need to install the views. The original views that Devise\n\
+  provides are in the inheritence tree, so they will be rendered if you don&#39;t provide your own.</p>\n\n\
+  <p>And don&#39;t forget to activate the authentication to every controller in the backend, by adding to\n\
+  your <code>Backend::ApplicationController</code>:</p>\n\
+  <pre>before_filter <span class=\"Constant\">:authenticate_admin!</span></pre>\n\
+  <p>Personally, I would try to avoid going with Devise and stick to basic authentication as long as\n\
+  possible. That&#39;s also one of the main reasons I don&#39;t tend to go with the of the shelf admin\n\
+  solutions. They require Devise. It adds a lot of overhead that I don&#39;t usually need. You might also\n\
+  want to check out the <a href=\"http://railscasts.com/episodes/270-authentication-in-rails-3-1\">Railscast</a> on\n\
+  creating your own authentication system.</p>\n\n\
+  <h2 id=\"toc_7\">Styling</h2>\n\n\
+  <p>So, we now have a nice backend system in place. But it still looks ugly. Time\n\
+  to add some style! Let&#39;s get something of-the-shelf to get going. I like\n\
+  <a href=\"https://github.com/pilu/web-app-theme\">web-app-theme</a>. This will make our backend look just like\n\
+  RailsAdmin.</p>\n\n\
+  <p>The easiest way to get a theme, I found, is to just clone web-app-theme somewhere and copy over the\n\
+  files you need. Rails 3.1 has the asset pipeline, so this means we can have a nice spot to put them:\n\
+  in the <code>vendor&#47;assets</code> directory.</p>\n\
+  <pre><span class=\"Statement\">mkdir</span> <span class=\"Special\">-p</span> vendor/assets/stylesheets/web-app-theme\n\
+  cp ../web-app-theme/stylesheets/base.css vendor/assets/stylesheets/web-app-theme/\n\
+  cp ../web-app-theme/stylesheets/themes/default/style.css vendor/assets/stylesheets/web-app-theme\n\
+  cp <span class=\"Special\">-r</span> ../web-app-theme/stylesheets/themes/default/images vendor/assets\n\
+  cp <span class=\"Special\">-r</span> ../web-app-theme/stylesheets/themes/default/fonts public</pre>\n\
+  <p>You need to change styles.css a bit to change the paths to images and any custom fonts. In Rails\n\
+  3.1, assets aren&#39;t located in an <code>images</code> directory, but in <code>&#47;assets</code>. Fonts are not served through\n\
+  Rails, so those should go inside the <code>public</code> directory. A quick find and replace should do the\n\
+  trick just fine.</p>\n\n\
+  <p>Next up is the layout. You can install web-app-theme as a gem in your project and let\n\
+  it generate the layout for you. This is not necessary. You can find a layout inside\n\
+  <code>lib&#47;generators&#47;web_app_theme&#47;theme&#47;templates&#47;layout_admin.html.erb</code>. Copy it to\n\
+  <code>app&#47;views&#47;layouts&#47;backend&#47;application.html.erb</code>. Remember, view inheritance will automatically pick\n\
+  it up for every controller in the backend. I&#39;m a Haml user, so I converted it using <code>html2haml</code>:</p>\n\
+  <pre>gem <span class=\"Statement\">install</span> hpricot ruby_parser\n\
+  <span class=\"Statement\">mkdir</span> <span class=\"Special\">-p</span> app/views/layouts/backend\n\
+  html2haml ../web-app-theme/lib/web_app_theme/theme/layout_admin.html.erb <span class=\"Operator\">&gt;</span> app/views/layouts/backend/application.html.haml</pre>\n\
+  <p>You have some cleaning up to do. Or just <a href=\"https://github.com/iain/simple-backend-example/blob/master/app/views/layouts/backend/application.html.haml\">grab the\n\
+  one</a>\n\
+  I&#39;ve already made! Afterwards, look at the classes web-app-theme uses and apply it to\n\
+  your views as well.</p>\n\n\
+  <p>To include the stylesheets, I just include one inside the layout:</p>\n\
+  <pre><span class=\"Special\">=</span> stylesheet_link_tag <span class=\"rubyStringDelimiter\">\"</span><span class=\"String\">backend</span><span class=\"rubyStringDelimiter\">\"</span></pre>\n\
+  <p>In <code>app&#47;assets&#47;stylesheets&#47;backend.css</code>, I use the awesome power of Sprockets to include the rest:</p>\n\
+  <pre><span class=\"Comment\">/*</span>\n\
+  <span class=\"Comment\"> *= require web-app-theme/base</span>\n\
+  <span class=\"Comment\"> *= require web-app-theme/style</span>\n\
+  <span class=\"Comment\"> *= require_tree ./backend</span>\n\
+  <span class=\"Comment\"> */</span></pre>\n\
+  <p>It also includes every css file I have inside the <code>app&#47;assets&#47;stylesheets&#47;backend</code> directory, which\n\
+  is where future customizations will go.</p>\n\n\
+  <p>I also use the same structure for javascripts, creating the following\n\
+  <code>app&#47;assets&#47;javascripts&#47;backend.js</code>:</p>\n\
+  <pre><span class=\"Comment\">//= require jquery</span>\n\
+  <span class=\"Comment\">//= require jquery_ujs</span>\n\
+  <span class=\"Comment\">//= require_tree ./backend</span></pre>\n\
+  <p>This styling would give you enough to start your backend. There are a ton of customizations you can\n\
+  do, but I&#39;ll leave that up to you.</p>\n\n\
+  <h2 id=\"toc_8\">More namespacing</h2>\n\n\
+  <p>Because of the way namespacing works, you can customize your models for use in the backend. This\n\
+  allows you to add methods for use in the backend only, without cluttering your classes in the rest\n\
+  of the application.</p>\n\
+  <pre><span class=\"Comment\"># app/models/product.rb</span>\n\
+  <span class=\"Keyword\">class</span> <span class=\"Type\">Product</span> &lt; <span class=\"Type\">ActiveRecord</span>::<span class=\"Type\">Base</span>\n  has_many <span class=\"Constant\">:widgets</span>\n\
+  <span class=\"Keyword\">end</span>\n\n\
+  <span class=\"Comment\"># app/models/backend/product.rb</span>\n\
+  <span class=\"Keyword\">class</span> <span class=\"Type\">Backend</span>::<span class=\"Type\">Product</span> &lt; ::<span class=\"Type\">Product</span>\n\n  <span class=\"PreProc\">def</span> <span class=\"Function\">deactivate_all_widgets</span>\n    widgets.each(&amp;<span class=\"Constant\">:deactivate</span>)\n  <span class=\"PreProc\">end</span>\n\n\
+  <span class=\"Keyword\">end</span></pre>\n\
+  <p>Because Inherited Resources is in the Backend namespace, it will use this class instead of the normal\n\
+  one.</p>\n\n\
+  <p>You can also make use of lexical scoping to implicitly reference the namespaced classes. This is\n\
+  quite subtle, so it&#39;s a bit error-prone.</p>\n\n\
+  <p>In the following example, <code>@product</code> will be an instance of <code>Backend::Product</code>:</p>\n\
+  <pre><span class=\"Keyword\">module</span> <span class=\"Type\">Backend</span>\n  <span class=\"Keyword\">class</span> <span class=\"Type\">ProductsController</span>\n    <span class=\"PreProc\">def</span> <span class=\"Function\">new</span>\n      <span class=\"Identifier\">@product</span> = <span class=\"Type\">Product</span>.new\n    <span class=\"PreProc\">end</span>\n  <span class=\"Keyword\">end</span>\n\
+  <span class=\"Keyword\">end</span></pre>\n\
+  <p>In the next example, <code>@product</code> will be an instance of <code>::Product</code>, because only the <code>class</code> and\n\
+  <code>module</code> keywords will create the scope for you. You are scoped inside\n\
+  <code>Backend::ProductsController</code>, but not really inside <code>Backend</code>.</p>\n\
+  <pre><span class=\"Keyword\">class</span> <span class=\"Type\">Backend</span>::<span class=\"Type\">ProductsController</span>\n  <span class=\"PreProc\">def</span> <span class=\"Function\">new</span>\n    <span class=\"Identifier\">@product</span> = <span class=\"Type\">Product</span>.new\n  <span class=\"PreProc\">end</span>\n\
+  <span class=\"Keyword\">end</span></pre>\n\
+  <p>Also, you don&#39;t need to explicitly tell the form that its resource needs to be scoped to the\n\
+  backend. There are a lot of tiny nuances that change when you go this route. So beware. Ruby&#39;s\n\
+  namespacing is powerful, but combined with Rails&#39; naming conventions it can also be a bit confusing\n\
+  at times.</p>\n\n\
+  <h2 id=\"toc_9\">Conclusion</h2>\n\n\
+  <p>Making your own backend is really easy. Sure, there are out of the box gems that do all this for\n\
+  you and more. But if you want more control, yet still get some of the productivity, Rails 3.1 has all the\n\
+  tools to make it work. All the gems I&#39;ve used fit nicely together. Sure, most of them are\n\
+  made by <a href=\"http://twitter.com/josevalim\">Jos\xC3\xA9 Valim</a>, or by his company\n\
+  <a href=\"http://www.plataformatec.com.br/en/\">Plataforma</a>, but it shows how extensible the Rails platform really\n\
+  is.</p>\n\n\
+  <p>Whether to choose for a custom solution or something more automatic is something you should decide\n\
+  on a per-project basis. If you&#39;re building it for non-technical customers, doing it yourself might\n\
+  be the better solution. But products like RailsAdmin give so much nice features, you&#39;d better make\n\
+  sure.</p>\n"
+toc: 
+- anchor: "#toc_0"
+  title: A new application controller
+- anchor: "#toc_1"
+  title: Resources
+- anchor: "#toc_2"
+  title: View inheritence
+- anchor: "#toc_3"
+  title: Simple Form
+- anchor: "#toc_4"
+  title: Scopes & Pagination
+- anchor: "#toc_5"
+  title: Responders
+- anchor: "#toc_6"
+  title: Authentication
+- anchor: "#toc_7"
+  title: Styling
+- anchor: "#toc_8"
+  title: More namespacing
+- anchor: "#toc_9"
+  title: Conclusion
+introduction: |-
+  <p>If you find yourself needing a backend interface, you can either get an admin plugin of the shelf, like
+  <a href="https://github.com/sferik/rails_admin">RailsAdmin</a> or <a href="http://activeadmin.info/">ActiveAdmin</a>, or
+  build your own. The of-the-shelf options provide a lot of functionality and are really worth a look.</p><p>You can also build your own backend. Building your own gives you maximum freedom. It requires a bit
+  more work, but it might be preferrable, especially if your customer also needs to work with it.</p><p>There are some awesome tools out there to help you build your own backend. I&#39;ll show you how I would
+  go about making such a backend. I&#39;m using Rails 3.1 (the rc5 at this moment) on Ruby 1.9.2. I might
+  gloss over some details here and there, so use your own expertise to fill in some gaps.</p>

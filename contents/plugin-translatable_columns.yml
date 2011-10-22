@@ -1,0 +1,90 @@
+--- 
+html: |
+  <p>It was just three days ago when I discussed how to <a href="/translating-columns">translate columns</a>. At the moment I was writing it, I was already thinking: &quot;this should be a plugin&quot;. So today, I took the liberty and created it.</p>
+  
+  <h3 id="toc_0">Installing</h3>
+  
+  <p>First make sure you&#39;re running Rails 2.2 or edge:</p>
+  <pre>rake rails:freeze:edge
+  </pre>
+  <p>Install the plugin:</p>
+  <pre>./script/plugin install git://github.com/iain/translatable_columns.git
+  </pre>
+  <p>Create or modify a model to have multiple columns for one attribute:</p>
+  <pre>./script/generate model Topic title_en:string title_nl:string title_de:string title_fr:string
+  </pre>
+  <h3 id="toc_1">Usage</h3>
+  
+  <p>Identify the columns you want to translate:</p>
+  <pre>class Topic < ActiveRecord::Base
+    translatable_columns :title
+  end
+  </pre>
+  <p>And you&#39;re done!</p>
+  
+  <p>Create a form like this:</p>
+  <pre><% form_for(@topic) do |f| %>
+    <%= f.text_field :title %>
+  <% end %>
+  </pre>
+  <p>And it will save to whatever locale is set in I18n. No hard feelings, nothing to worry about.</p>
+  
+  <h3 id="toc_2">Validating</h3>
+  
+  <p>Validation is of course built in. If you want to validate the presence of at least one of the translations, just call <code>validates_translation_of</code>:</p>
+  <pre>class Topic < ActiveRecord::Base
+    translatable_columns :title
+    validates_translation_of :title
+  end
+  </pre>
+  <p>This will make your record invalid when none of the translated columns exist. It works exactly as <code>validates_presence_of</code>, including <strong>all</strong> its options!</p>
+  
+  <h3 id="toc_3">Customizing</h3>
+  
+  <p>You can change the settings of translatable_columns on both a global level and at individual attribute level. There are two configuration options at the moment, called <code>full_locale</code> and <code>use_default</code>.</p>
+  
+  <p>Set the global configuration in your environment file:</p>
+  <pre># These are the defaults of translatable_columns:
+  ActiveRecord::Base.translatable_columns_config.full_locale = false
+  ActiveRecord::Base.translatable_columns_config.use_default = true
+  </pre>
+  <h4>full_locale</h4>
+  
+  <p>With this option you can change which part of the locale is used in the columns. Default is <u>false</u>, so only the first part of the locale is expected in the column. So a title for en-US is called title_en and a title for en-GB is also called title_en. When you set <code>full_locale</code> to <u>true</u>, it uses the entire locale, substituting the hyphen with an underscore. This way a title for en-US is called title_en_us and a title for en-GB is called title_en_gb.</p>
+  
+  <p>full_locale cannot be set per attribute just now.</p>
+  
+  <h4>use_default</h4>
+  
+  <p>With this option you can specify which value will be returned automatically if no proper value has been found. Default is <u>true</u>, so it will try harder to find a value. It might even be a value in another language.</p>
+  
+  <p>You can set this option per attribute if you&#39;d like, to override the global config.</p>
+  <pre>class Topic < ActiveRecord::Base
+    translatable_columns :title, :use_default => false
+  end
+  </pre>
+  <h3 id="toc_4">Some extras</h3>
+  
+  <p>What if the user has selected a locale which you don&#39;t have in the database? In this case it&#39;ll get the column belonging to the I18n.default_locale. Make sure you have a column for this locale, because you&#39;ll be serving a nasty error if even this one isn&#39;t present!</p>
+  
+  <p>You might want to provide multiple languages for a user to fill in at once. This is one way to do it:</p>
+  <pre><% form_for(@topic) do |f| %>
+    <% Topic.available_translatable_columns_of(:title).each do |attribute| %>
+      <%= f.text_field attribute %>
+    <% end %>
+  <% end %>
+  </pre>
+  <p>Happy devving!</p>
+
+toc: 
+- anchor: "#toc_0"
+  title: Installing
+- anchor: "#toc_1"
+  title: Usage
+- anchor: "#toc_2"
+  title: Validating
+- anchor: "#toc_3"
+  title: Customizing
+- anchor: "#toc_4"
+  title: Some extras
+introduction: "<p>It was just three days ago when I discussed how to <a href=\"/translating-columns\">translate columns</a>. At the moment I was writing it, I was already thinking: &quot;this should be a plugin&quot;. So today, I took the liberty and created it.</p>"

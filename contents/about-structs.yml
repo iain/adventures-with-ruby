@@ -1,0 +1,38 @@
+--- 
+html: |
+  <p>Recently I talked about a <a href="/monkey-patch-of-the-month-attr_initializer">monkey patch called attr_initializer</a>, allowing you to write code like this:</p>
+  <pre><span class="Keyword">class</span> <span class="Type">FooBar</span>
+    attr_initializer <span class="Constant">:foo</span>, <span class="Constant">:bar</span>
+    <span class="PreProc">def</span> <span class="Function">to_s</span>
+      <span class="rubyStringDelimiter">"</span><span class="String">your </span><span class="rubyInterpolationDelimiter">#{</span>foo<span class="rubyInterpolationDelimiter">}</span><span class="String"> is </span><span class="rubyInterpolationDelimiter">#{</span>bar<span class="rubyInterpolationDelimiter">}</span><span class="rubyStringDelimiter">"</span>
+    <span class="PreProc">end</span>
+  <span class="Keyword">end</span>
+  
+  <span class="Type">FooBar</span>.new(<span class="rubyStringDelimiter">'</span><span class="String">foo</span><span class="rubyStringDelimiter">'</span>, <span class="rubyStringDelimiter">'</span><span class="String">bar</span><span class="rubyStringDelimiter">'</span>)</pre>
+  <p>But there is a way of doing it without a monkey patch. Use the <a href="http://apidock.com/ruby/Struct">Struct</a>.</p>
+  <pre><span class="Type">FooBar</span> = <span class="Type">Struct</span>.new(<span class="Constant">:foo</span>, <span class="Constant">:bar</span>) <span class="rubyControl">do</span>
+    <span class="PreProc">def</span> <span class="Function">to_s</span>
+      <span class="rubyStringDelimiter">"</span><span class="String">your </span><span class="rubyInterpolationDelimiter">#{</span>foo<span class="rubyInterpolationDelimiter">}</span><span class="String"> is </span><span class="rubyInterpolationDelimiter">#{</span>bar<span class="rubyInterpolationDelimiter">}</span><span class="rubyStringDelimiter">"</span>
+    <span class="PreProc">end</span>
+  <span class="rubyControl">end</span>
+  
+  <span class="Type">FooBar</span>.new(<span class="rubyStringDelimiter">'</span><span class="String">foo</span><span class="rubyStringDelimiter">'</span>, <span class="rubyStringDelimiter">'</span><span class="String">bar</span><span class="rubyStringDelimiter">'</span>)</pre>
+  <p>Pretty cool.</p>
+  
+  <h3>Update</h3>
+  
+  <p>As was pointed out in my comments by <a href="http://rstankov.com/">Radoslav Stankov</a> (which you can&#39;t see anymore, because I switched to Disqus), you can also do this:</p>
+  <pre><span class="Keyword">class</span> <span class="Type">FooBar</span> &lt; <span class="Type">Struct</span>.new(<span class="Constant">:foo</span>, <span class="Constant">:bar</span>)
+    <span class="PreProc">def</span> <span class="Function">to_s</span>
+      <span class="rubyStringDelimiter">"</span><span class="String">your </span><span class="rubyInterpolationDelimiter">#{</span>foo<span class="rubyInterpolationDelimiter">}</span><span class="String"> is </span><span class="rubyInterpolationDelimiter">#{</span>bar<span class="rubyInterpolationDelimiter">}</span><span class="rubyStringDelimiter">"</span>
+    <span class="PreProc">end</span>
+  <span class="Keyword">end</span>
+  
+  <span class="Type">FooBar</span>.new(<span class="rubyStringDelimiter">'</span><span class="String">foo</span><span class="rubyStringDelimiter">'</span>, <span class="rubyStringDelimiter">'</span><span class="String">bar</span><span class="rubyStringDelimiter">'</span>)</pre>
+  <p>I use this one more often, actually.</p>
+  
+  <p>One final note: the parameters here aren&#39;t stored as instance variables, they can only be accessed through their accessor methods.</p>
+
+toc: []
+
+introduction: <p>Recently I talked about a <a href="/monkey-patch-of-the-month-attr_initializer">monkey patch called attr_initializer</a>, allowing you to write code like this:</p>

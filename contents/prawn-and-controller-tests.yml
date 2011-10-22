@@ -1,0 +1,16 @@
+--- 
+html: |-
+  <p>There is a real annoying gotcha in using controller tests to test an action that renders a pdf with <a href="http://prawn.majesticseacreature.com/">Prawn</a>. You&#39;ll get a NoMethodException on &quot;nil.downcase&quot;. The troubling part is that it totally puts you off by providing the wrong lines and backtrace.</p>
+  
+  <p>This has been mentioned somewhere on some <a href="http://groups.google.com/group/prawn-ruby/browse_thread/thread/a44c7647894d165c">mailinglists</a>, but to make it a bit more findable, I&#39;d thought I&#39;d post it here.</p>
+  
+  <p>The <del>solution</del> workaround is to set the server protocol, like this:</p>
+  <pre>it "should show the pdf" do
+    request.env["SERVER_PROTOCOL"] = "http"
+    get :show, :id => "report", "format" => "pdf"
+    response.should render_template(:show)
+  end
+  </pre>
+toc: []
+
+introduction: <p>There is a real annoying gotcha in using controller tests to test an action that renders a pdf with <a href="http://prawn.majesticseacreature.com/">Prawn</a>. You&#39;ll get a NoMethodException on &quot;nil.downcase&quot;. The troubling part is that it totally puts you off by providing the wrong lines and backtrace.</p><p>This has been mentioned somewhere on some <a href="http://groups.google.com/group/prawn-ruby/browse_thread/thread/a44c7647894d165c">mailinglists</a>, but to make it a bit more findable, I&#39;d thought I&#39;d post it here.</p><p>The <del>solution</del> workaround is to set the server protocol, like this:</p>

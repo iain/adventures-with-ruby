@@ -1,0 +1,93 @@
+--- 
+html: "<p>If you&#39;ve ever worked extensively with I18n in a Rails project, you know that the organisation of your locale files is hard. Much like CSS files, locale files can grow large and become cluttered within weeks. And as they grow, the likelyhood of merge conflicts increases and resolving them becomes harder. Keeping your locale files short and tidy is important.</p>\n\n\
+  <h3 id=\"toc_0\">The goal</h3>\n\n\
+  <p>Let me start by trying to define what we want from our locale files. This way, you can judge by yourself if you organized your translations well enough.</p>\n\n\
+  <p>We want to have less mental overhead when managing large sets of translations. The best way to test this is to get someone outside your team to find a translation. Show him a phrase on the website and tell him to change it. Is he able to find the translation quickly? Or does he have to rely on a search tool?</p>\n\n\
+  <p>The more intuitive your system is, the easier it becomes to manage and change it.</p>\n\n\
+  <h3 id=\"toc_1\">Agree on a system</h3>\n\n\
+  <p>You should want everyone in the team to agree on the same structure. There is going to be some logic to the way you organize your translations, so make sure everyone understands this logic and adheres to it.</p>\n\n\
+  <p>If you&#39;re going to restructure the translations, inform the others before pushing your changes. Due to their indentation, merge conflicts in yaml-files can be hard to resolve, and you don&#39;t want to surprise your colleagues with large conflicts.</p>\n\n\
+  <h3 id=\"toc_2\">Use scopes</h3>\n\n\
+  <p>Just like in programming, <a href=\"http://www.python.org/dev/peps/pep-0020/\">namespaces are one honking great idea</a>. You should probably do more of those. This also applies for translation keys.</p>\n\n\
+  <p>This means, rather than doing:</p>\n\
+  <pre><span class=\"Type\">I18n</span>.t <span class=\"Constant\">:name</span></pre>\n\
+  <p>You should do something like:</p>\n\
+  <pre><span class=\"Type\">I18n</span>.t <span class=\"Constant\">:name</span>, <span class=\"Constant\">:scope</span> =&gt; <span class=\"rubyStringDelimiter\">\"</span><span class=\"String\">projects</span><span class=\"rubyStringDelimiter\">\"</span></pre>\n\
+  <p>Or specify the scope in the translation key:</p>\n\
+  <pre><span class=\"Type\">I18n</span>.t <span class=\"rubyStringDelimiter\">\"</span><span class=\"String\">projects.name</span><span class=\"rubyStringDelimiter\">\"</span></pre>\n\
+  <p>This is to prevent name clashes, and to provide structure in your locale files.</p>\n\n\
+  <h3 id=\"toc_3\">Split on feature</h3>\n\n\
+  <p>It&#39;s common to see locale files splitted on scope. This means that all the ActiveRecord translations go into <code>activerecord.yml</code> and view translations of <code>projects&#47;index.html.erb</code> (if you use <code>&lt;%= t(&#39;.foo&#39;) %&gt;</code>) go into <code>projects.yml</code>. This is <em>not</em> the way to go.</p>\n\n\
+  <p>You should split files up by feature. This means that <code>projects.yml</code> contains both the ActiveRecord translations for the Project-model and the view translations, flash messages and so on. This makes it easier to find translations. Your thought process could go along the lines of: &quot;I am working on something related to projects, so my translations need to go into <code>projects.yml</code>.&quot;</p>\n\n\
+  <p>It also helps refactoring. If you need to change a word in your translations, you should only have to look in one file. If the customer thinks that the &quot;project manager&quot; should now be called the &quot;project administrator&quot;, you can find the ActiveRecord translation, as well as flash messages and the view translations on this subject nicely grouped together.</p>\n\n\
+  <p>I18n will deeply merge the translations of different files. If you would define the same scope in one file, the latter will override the former, but if they are in different files, the translations will be woven together.</p>\n\n\
+  <p>However, defining the exact same scope twice, will make one disappear, so make sure you create a structure in which this won&#39;t happen easily. If two files are equally likely to contain the translations, you might be tempted to choose the wrong one and end up defining the translation twice.</p>\n\n\
+  <h3 id=\"toc_4\">Consider using subdirectories</h3>\n\n\
+  <p>Directories are used to group files. That shouldn&#39;t be news to you. Feel free to use subdirectories in the <code>config&#47;locales</code> directory to structure your files even further.</p>\n\n\
+  <p>Als consider transposing your directory structure. If your current structure is like this:</p>\n\
+  <pre>config/locales\n\
+  \xE2\x94\x9C\xE2\x94\x80\xE2\x94\x80 en\n\
+  \xE2\x94\x82   \xE2\x94\x9C\xE2\x94\x80\xE2\x94\x80 foo.yml\n\
+  \xE2\x94\x82   \xE2\x94\x94\xE2\x94\x80\xE2\x94\x80 bar.yml\n\
+  \xE2\x94\x94\xE2\x94\x80\xE2\x94\x80 nl\n    \xE2\x94\x9C\xE2\x94\x80\xE2\x94\x80 foo.yml\n    \xE2\x94\x94\xE2\x94\x80\xE2\x94\x80 bar.yml\n\
+  </pre>\n\
+  <p>Try changing it to:</p>\n\
+  <pre>config/locales\n\
+  \xE2\x94\x9C\xE2\x94\x80\xE2\x94\x80 foo\n\
+  \xE2\x94\x82   \xE2\x94\x9C\xE2\x94\x80\xE2\x94\x80 nl.yml\n\
+  \xE2\x94\x82   \xE2\x94\x94\xE2\x94\x80\xE2\x94\x80 en.yml\n\
+  \xE2\x94\x94\xE2\x94\x80\xE2\x94\x80 bar\n    \xE2\x94\x9C\xE2\x94\x80\xE2\x94\x80 nl.yml\n    \xE2\x94\x94\xE2\x94\x80\xE2\x94\x80 en.yml\n\
+  </pre>\n\
+  <p>This might make your application more modular. You could add or remove the &quot;foo&quot;-feature more easily.</p>\n\n\
+  <p>Don&#39;t overdo it though. If your directory structure isn&#39;t clear, it can let you search for many minutes to find the translation you&#39;re looking for. Fragmentation is as bad as big files. If you have to resort to tools like <code>grep</code>, <code>ack</code> or <code>rak</code>, you&#39;ve definitely overdone it.</p>\n\n\
+  <h3 id=\"toc_5\">Use namespacing</h3>\n\n\
+  <p>Using namespacing is a solution to many problems and you should probably do more of it. In this case, you can define I18n in a namespace to add scopes automatically.</p>\n\n\
+  <p>The main reason to scope your translations is because, even though translations in different files will be deeply merged, when the scope is exactly identical, the last file to be loaded wins. So try to avoid translations without any scope.</p>\n\n\
+  <p>For instance, you could write something like:</p>\n\
+  <pre><span class=\"Keyword\">module</span> <span class=\"Type\">Projects</span>::<span class=\"Type\">I18n</span>\n  <span class=\"PreProc\">def</span> <span class=\"Constant\">self</span>.<span class=\"Function\">t</span>(key, options = {})\n    new_scope = [<span class=\"Constant\">:projects</span>] + Array(options[<span class=\"Constant\">:scope</span>])\n    ::<span class=\"Type\">I18n</span>.t(key, options.merge(<span class=\"Constant\">:scope</span> =&gt; new_scope))\n  <span class=\"PreProc\">end</span>\n\
+  <span class=\"Keyword\">end</span></pre>\n\
+  <p>Whenver you call <code>I18n.t()</code> from inside the Projects namespace, it will put all translations the projects scope. But you will have to really be inside that namespace for it to work. The next example will work:</p>\n\
+  <pre><span class=\"Keyword\">module</span> <span class=\"Type\">Projects</span>\n  <span class=\"Keyword\">class</span> <span class=\"Type\">StatusesController</span> &lt; <span class=\"Type\">ApplicationController</span>\n    <span class=\"PreProc\">def</span> <span class=\"Function\">show</span>\n      flash[<span class=\"Constant\">:notice</span>] = <span class=\"Type\">I18n</span>.t(<span class=\"Constant\">:show_notice</span>)\n    <span class=\"PreProc\">end</span>\n  <span class=\"Keyword\">end</span>\n\
+  <span class=\"Keyword\">end</span></pre>\n\
+  <p>But the next example won&#39;t work, because you&#39;re not really <em>in</em> the namespace:</p>\n\
+  <pre><span class=\"Keyword\">class</span> <span class=\"Type\">Projects</span>::<span class=\"Type\">StatusesController</span> &lt; <span class=\"Type\">ApplicationController</span>\n  <span class=\"PreProc\">def</span> <span class=\"Function\">show</span>\n    flash[<span class=\"Constant\">:notice</span>] = <span class=\"Type\">I18n</span>.t(<span class=\"Constant\">:show_notice</span>)\n  <span class=\"PreProc\">end</span>\n\
+  <span class=\"Keyword\">end</span></pre>\n\
+  <p>You might also want to delegate <code>I18n.l()</code>, for translating dates, and make aliases for the long names <code>I18n.translate()</code> and <code>I18n.localize()</code>.</p>\n\n\
+  <h3 id=\"toc_6\">Use presenters</h3>\n\n\
+  <p>If you prepend your keys with a dot in a view, it will automatically scope to the location of the view. So if the <code>projects&#47;index.html.erb</code> contains:</p>\n\
+  <pre><span class=\"PreProc\">&lt;%=</span> t(<span class=\"rubyStringDelimiter\">'</span><span class=\"String\">.title</span><span class=\"rubyStringDelimiter\">'</span>) <span class=\"PreProc\">%&gt;</span></pre>\n\
+  <p>It will be looked up within the <code>projects.index.title</code> scope.</p>\n\n\
+  <p>This is very handy. You can divide views into multiple partials, each with their own title, intro and body, and your locale file will be nicely structured, like this:</p>\n\
+  <pre><span class=\"Identifier\">en</span><span class=\"Delimiter\">:</span>\n  <span class=\"Identifier\">projects</span><span class=\"Delimiter\">:</span>\n    <span class=\"Identifier\">index</span><span class=\"Delimiter\">:</span>\n      <span class=\"Identifier\">title</span><span class=\"Delimiter\">:</span> All projects\n    <span class=\"Identifier\">search</span><span class=\"Delimiter\">:</span>\n      <span class=\"Identifier\">title</span><span class=\"Delimiter\">:</span> Find me some projects</pre>\n\
+  <p>But this approach does have its downsides. If you have identical texts in different views, you&#39;ll have to either publicate the translation in your locale files, specify the complete scope in at least one of the views or, do some linking in your locale files*.</p>\n\n\
+  <p>Another approach is to use a presenter (e.g. Draper) and define a translate function on that. You can prepend a scope just like I&#39;ve shown earlier.</p>\n\n\
+  <p>The goal is to keep the distance of the translations similar to the distance they have in the result. So if you have a title and a subtitle translation and they are shown next to each other in the view, they should be next to eachother in the locale file.</p>\n\n\
+  <p>*) Linking in locale files is done like this:</p>\n\
+  <pre><span class=\"Identifier\">foo</span><span class=\"Delimiter\">:</span> <span class=\"Type\">&amp;some_name</span>\n  <span class=\"Identifier\">bar</span><span class=\"Delimiter\">:</span> baz\n\n\
+  <span class=\"Identifier\">bang</span><span class=\"Delimiter\">:</span>\n  &lt;&lt;<span class=\"Delimiter\">:</span> <span class=\"Type\">*some_name</span></pre>\n\
+  <p>Now <code>bang.bar</code> will also result in &quot;baz&quot;. It is a useful technique in small files, like in <code>config&#47;database.yml</code>, but in bigger locale files, it will become a mess.</p>\n\n\
+  <h3 id=\"toc_7\">Finding big files</h3>\n\n\
+  <p>A file that is changed a lot, is a file you need to pay extra attention to. If a part of your code base changes often, you have a higher risk of breaking things.</p>\n\n\
+  <p>You can use the gem <code>churn</code> to find these files. It&#39;s worth checking out how often your locale files change. If you&#39;ve changed a locale file many times, it might contain to much translations.</p>\n\n\
+  <p>Compare the churn on the locale file to the churn of the code that use this locale file. A large difference indicates too many responsibilities.</p>\n\n\
+  <p>Another possibility is to count the lines of your locales:</p>\n\
+  <pre><span class=\"Statement\">for </span>f <span class=\"Statement\">in</span> config/locales/**/*.yml; <span class=\"Conditional\">do</span> <span class=\"Statement\">echo</span><span class=\"String\"> </span><span class=\"Operator\">\"</span><span class=\"PreProc\">$(</span><span class=\"Special\">cat </span><span class=\"PreProc\">$f</span><span class=\"Special\"> </span><span class=\"Operator\">|</span><span class=\"Special\"> wc -l</span><span class=\"PreProc\">)</span><span class=\"String\"> </span><span class=\"PreProc\">$f</span><span class=\"Operator\">\"</span><span class=\"Operator\">;</span> <span class=\"Conditional\">done</span></pre>\n\
+  <p>Smaller features probably have less translations than larger features, so if you see files that are bigger than you&#39;d expect, they are probably too big.</p>\n"
+toc: 
+- anchor: "#toc_0"
+  title: The goal
+- anchor: "#toc_1"
+  title: Agree on a system
+- anchor: "#toc_2"
+  title: Use scopes
+- anchor: "#toc_3"
+  title: Split on feature
+- anchor: "#toc_4"
+  title: Consider using subdirectories
+- anchor: "#toc_5"
+  title: Use namespacing
+- anchor: "#toc_6"
+  title: Use presenters
+- anchor: "#toc_7"
+  title: Finding big files
+introduction: <p>If you&#39;ve ever worked extensively with I18n in a Rails project, you know that the organisation of your locale files is hard. Much like CSS files, locale files can grow large and become cluttered within weeks. And as they grow, the likelyhood of merge conflicts increases and resolving them becomes harder. Keeping your locale files short and tidy is important.</p>

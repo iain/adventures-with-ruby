@@ -1,0 +1,70 @@
+--- 
+html: |
+  <p>In my previous post, I talked about making filters using named scopes. To summorize:</p>
+  
+  <blockquote>
+  <p>I like the method of using a named_scope and delegating to specified filters. This way, you can structure your filters properly and get clean URLs. Also, you can chain other named scopes to the filter.</p>
+  </blockquote>
+  
+  <p>If you find yourself making an administrative web application, with many tables and filters, here&#39;s an example to make it a little more DRY.</p>
+  
+  <h3 id="toc_0">Making a partial</h3>
+  
+  <p>First, make the filters a partial, in something like <code>app&#47;views&#47;shared&#47;_filters.html.haml</code>.</p>
+  <pre>%h3= t(model_name, :scope => :filter_titles)
+  %ul
+    - model_class.available_filters.each do |filter|
+      %li= link_to t(filter, :scope => [:filter_names, model_name]), url_for(params.merge(:filter => filter))
+  </pre>
+  <p>I&#39;ve changed the translate-calls a bit, so they work with different models.</p>
+  
+  <h3 id="toc_1">A helper method</h3>
+  
+  <p>Then, create a helper method:</p>
+  <pre>def show_filters_for(model_name)
+    render :partial => "shared/filters",
+           :locals => { :model_name => model_name, :model_class => model_name.to_s.camilze.constantize }
+  end
+  </pre>
+  <p>Now you can render the filters like this:</p>
+  <pre>= show_filters_for :person
+  </pre>
+  <h3 id="toc_2">And a module</h3>
+  
+  <p>On the model side, you can make a module, probably in <code>lib&#47;chainable_filters.rb</code>.</p>
+  <pre>module ChainableFilters
+  
+    def self.extended(model)
+      model.named_scope :filter, lambda { |f|
+        model.available_filters.include?(f) ? model.send("filter_#{f}") : {}
+      }
+    end
+  
+    def available_filters
+      self.methods.select { |m| m =~ /^filter_/ }.map { |m| m[7..-1].to_sym }
+    end
+  
+  end
+  </pre>
+  <p>Use it in a specific model, by extending with the module you just made:</p>
+  <pre>class Person < ActiveRecord::Base
+    extend ChainableFilters
+  end
+  </pre>
+  <p>Or just every ActiveRecord class, by creating an initializer file (i.e. <code>config&#47;initializers&#47;chainable_filters.rb</code>):</p>
+  <pre>ActiveRecord::Base.extend ChainableFilters
+  </pre>
+  <p>Now, that is some nice meta-programming, if you ask me! ;)</p>
+
+toc: 
+- anchor: "#toc_0"
+  title: Making a partial
+- anchor: "#toc_1"
+  title: A helper method
+- anchor: "#toc_2"
+  title: And a module
+introduction: |-
+  <p>In my previous post, I talked about making filters using named scopes. To summorize:</p>
+  <blockquote>
+  <p>I like the method of using a named_scope and delegating to specified filters. This way, you can structure your filters properly and get clean URLs. Also, you can chain other named scopes to the filter.</p></blockquote>
+  <p>If you find yourself making an administrative web application, with many tables and filters, here&#39;s an example to make it a little more DRY.</p>

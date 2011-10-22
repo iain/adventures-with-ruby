@@ -32,7 +32,7 @@ describe "application" do
 
     it "renders the article" do
       contents = double("Contents", :toc? => false, :html => "")
-      article = double("Article", :found? => true, :deprecated? => false, :old? => false, :url => "", :id => 1, :title => "", :contents => contents, :published_at => Date.today, :disqus_id => "")
+      article = double("Article", :found? => true, :summary => false, :deprecated? => false, :old? => false, :url => "", :id => 1, :title => "", :contents => contents, :published_at => Date.today, :disqus_id => "")
       Index.should_receive(:find).with(name).and_return(article)
       get "/#{name}"
     end

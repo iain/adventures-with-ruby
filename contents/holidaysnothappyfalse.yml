@@ -1,0 +1,33 @@
+--- 
+html: |-
+  <p>Well then: <strong>happy holidays!</strong> This x-mas, there have been a few nice Ruby presents, like the <a href="http://rubyonrails.org/merb">merging of Rails with Merb</a> and Github <a href="http://github.com/blog/277-pages-generator">has a shiny new feature</a> for creating project sites.</p>
+  
+  <p>I too will present you a Ruby x-mas present. It&#39;s a nice, but useless present, not totally out of line with the usual x-mas presents.</p>
+  
+  <p>It is a gem called <a href="http://iain.github.com/not"><strong>not</strong></a>. With not you can get rid of exclamation marks and the not keyword, and putting it later on in the sentence, thus making it better English.</p>
+  
+  <p>An example:</p>
+  <pre># for core Ruby methods:
+  @foo.not.nil?
+  # or any custom method:
+  @user.not.active?
+  @user.not.save!
+  </pre>
+  <p>If you want it, you can install it as a gem:</p>
+  <pre>sudo gem install not
+  </pre>
+  <p>or as a Rails plugin:</p>
+  <pre>./script/plugin install git://github.com/iain/not.git
+  </pre>
+  <p>I hope you&#39;ll like it! <strong>Happy holidays!</strong></p>
+  
+  <h3 id="toc_0">Update</h3>
+  
+  <p>I moved the gem to <a href="http://gemcutter.org">gemcutter</a>. If you haven&#39;t tumbled yet, please do so, before installing my gem:</p>
+  <pre>gem install gemcutter
+  gem tumble
+  </pre>
+toc: 
+- anchor: "#toc_0"
+  title: Update
+introduction: "<p>Well then: <strong>happy holidays!</strong> This x-mas, there have been a few nice Ruby presents, like the <a href=\"http://rubyonrails.org/merb\">merging of Rails with Merb</a> and Github <a href=\"http://github.com/blog/277-pages-generator\">has a shiny new feature</a> for creating project sites.</p><p>I too will present you a Ruby x-mas present. It&#39;s a nice, but useless present, not totally out of line with the usual x-mas presents.</p><p>It is a gem called <a href=\"http://iain.github.com/not\"><strong>not</strong></a>. With not you can get rid of exclamation marks and the not keyword, and putting it later on in the sentence, thus making it better English.</p>"

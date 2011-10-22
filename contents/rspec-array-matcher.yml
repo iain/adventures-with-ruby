@@ -1,0 +1,21 @@
+--- 
+html: |
+  <p>If you&#39;re testing arrays a lot, like ActiveRecord&#39;s (named) scopes, you should know the following RSpec matcher: <code>=~</code>. It doesn&#39;t care about sorting and it gives you all the output you need when the spec fails. Here is an example:</p>
+  <pre>describe <span class="rubyStringDelimiter">"</span><span class="String">array matching</span><span class="rubyStringDelimiter">"</span> <span class="rubyControl">do</span>
+  
+    it <span class="rubyStringDelimiter">"</span><span class="String">should pass</span><span class="rubyStringDelimiter">"</span> <span class="rubyControl">do</span>
+      [ <span class="Number">1</span>, <span class="Number">2</span>, <span class="Number">3</span> ].should =~ [ <span class="Number">2</span>, <span class="Number">3</span>, <span class="Number">1</span> ]
+    <span class="rubyControl">end</span>
+  
+    it <span class="rubyStringDelimiter">"</span><span class="String">should fail</span><span class="rubyStringDelimiter">"</span> <span class="rubyControl">do</span>
+      [ <span class="Number">1</span>, <span class="Number">2</span>, <span class="Number">3</span> ].should =~ [ <span class="Number">4</span>, <span class="Number">2</span>, <span class="Number">3</span> ]
+    <span class="rubyControl">end</span>
+  
+  <span class="rubyControl">end</span></pre>
+  <figure class="ir_black"><img src="/rspec-array-matcher-result.png" alt="" title="rspec array matcher result" width="392" height="229"></figure>
+  
+  <p>Note: There is no inverse (should_not) version of this matcher.</p>
+
+toc: []
+
+introduction: "<p>If you&#39;re testing arrays a lot, like ActiveRecord&#39;s (named) scopes, you should know the following RSpec matcher: <code>=~</code>. It doesn&#39;t care about sorting and it gives you all the output you need when the spec fails. Here is an example:</p>"

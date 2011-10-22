@@ -1,0 +1,66 @@
+--- 
+html: |
+  <p>Probably every Rails developer has used
+  <a href="http://github.com/technoweenie/restful-authentication">restful_authentication</a>. Most of us on
+  practically every application. But restful_authentication generates quite some code and is somewhat
+  an odd plugin. It is a bit out of place in the regular restful controllers that you make. They are
+  making a new <a href="http://github.com/technoweenie/restful-authentication/tree/modular">modular version</a>
+  of it, but it isn&#39;t much of an improvement, if you ask me.</p>
+  
+  <p>Luckily, there is a new plugin&#47;gem that does this better. It&#39;s called
+  <a href="http://github.com/binarylogic/authlogic">AuthLogic</a>. It used to be called AuthGasm, but now we
+  can actually install it without blushing every time we do <code>ls vendor&#47;plugins</code>. It gives you a
+  familiar <code>acts_as_authentic</code> for your user model (nothing more, mind you!) and a UserSession model,
+  which isn&#39;t inheriting from ActiveRecord, but from AuthLogic::Session::Base class, which AuthLogic
+  provides.</p>
+  
+  <p>The big plus is that now you can use <code>form_for</code> for user sessions just as you would for any
+  ActiveRecord model. Your UserSessionsController can even be like rails scaffold provides. Just save
+  to the @user_session object and a session is set.</p>
+  
+  <p>You&#39;re free to make multiple sessions per user to be able to log in on multiple locations. Just
+  read the <a href="http://github.com/binarylogic/authlogic/tree/master/README.rdoc">README</a> to see what is
+  possible!</p>
+  
+  <p>There are no specs provided with AuthLogic, so here are some helpers to spec controllers. Add them
+  to spec_helper.rb or in another file which gets loaded by RSpec.</p>
+  <pre><span class="PreProc">def</span> <span class="Function">current_user</span>(stubs = {})
+    <span class="Identifier">@current_user</span> ||= mock_model(<span class="Type">User</span>, stubs)
+  <span class="PreProc">end</span>
+  
+  <span class="PreProc">def</span> <span class="Function">user_session</span>(stubs = {}, user_stubs = {})
+    <span class="Identifier">@current_user</span> ||= mock_model(<span class="Type">UserSession</span>, {<span class="Constant">:user</span> =&gt; current_user(user_stubs)}.merge(stubs))
+  <span class="PreProc">end</span>
+  
+  <span class="PreProc">def</span> <span class="Function">login</span>(session_stubs = {}, user_stubs = {})
+    <span class="Type">UserSession</span>.stub!(<span class="Constant">:find</span>).and_return(user_session(session_stubs, user_stubs))
+  <span class="PreProc">end</span>
+  
+  <span class="PreProc">def</span> <span class="Function">logout</span>
+    <span class="Identifier">@user_session</span> = <span class="Constant">nil</span>
+  <span class="PreProc">end</span></pre>
+  <p>So you can write specs like this:</p>
+  <pre>describe <span class="Type">SecretsController</span> <span class="rubyControl">do</span>
+    before { login }
+    it <span class="rubyStringDelimiter">"</span><span class="String">should be very very secret!</span><span class="rubyStringDelimiter">"</span>
+  <span class="rubyControl">end</span></pre>
+  <p>And as a litte bonus, it works nice with my plugin:
+  <a href="/acts_as_translatable_model-plugin">acts_as_translatable_model</a>. Making your login forms is easier
+  than ever! So please take a look at it! I&#39;m betting you&#39;ll love it!</p>
+
+toc: []
+
+introduction: |-
+  <p>Probably every Rails developer has used
+  <a href="http://github.com/technoweenie/restful-authentication">restful_authentication</a>. Most of us on
+  practically every application. But restful_authentication generates quite some code and is somewhat
+  an odd plugin. It is a bit out of place in the regular restful controllers that you make. They are
+  making a new <a href="http://github.com/technoweenie/restful-authentication/tree/modular">modular version</a>
+  of it, but it isn&#39;t much of an improvement, if you ask me.</p><p>Luckily, there is a new plugin&#47;gem that does this better. It&#39;s called
+  <a href="http://github.com/binarylogic/authlogic">AuthLogic</a>. It used to be called AuthGasm, but now we
+  can actually install it without blushing every time we do <code>ls vendor&#47;plugins</code>. It gives you a
+  familiar <code>acts_as_authentic</code> for your user model (nothing more, mind you!) and a UserSession model,
+  which isn&#39;t inheriting from ActiveRecord, but from AuthLogic::Session::Base class, which AuthLogic
+  provides.</p><p>The big plus is that now you can use <code>form_for</code> for user sessions just as you would for any
+  ActiveRecord model. Your UserSessionsController can even be like rails scaffold provides. Just save
+  to the @user_session object and a session is set.</p>

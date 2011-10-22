@@ -1,0 +1,79 @@
+--- 
+html: |-
+  <p>I did some research into <a href="http://agilewebdevelopment.com/plugins/category/8">i18n plugins for Ruby on Rails</a>.  I found <a href="http://wiki.globalize-rails.org/">Globalize </a>not manageable enough, especially looking at substitution of values and pluralization. Click to globalize (http:&#47;&#47;www.lucaguidi.com&#47;pages&#47;click-to-globalize) didn&#39;t support substitution or pluralization.  Many (http:&#47;&#47;simple-localization.arkanis.de&#47;) <a href="http://agilewebdevelopment.com/plugins/i18n">others</a> used symbols as translation key, but that provided the same problem as Globalize.</p>
+  
+  <p>So I turned to <a href="http://www.gnu.org/software/gettext/">Gettext</a>. Gettext uses .po- and .mo files, like a proper GNU application, which attracted me. But when it came to substitution, small parts, like link texts, were scattered through the language file. I had to come up with a little scheme.</p>
+  
+  <p>So I wrote a simple plugin for Ruby on Rails. This plugin inspects a single string to get pluralization with substitution. The single string keeps the translation in one place.</p>
+  
+  <p>Although I created this plugin for gettext, it can be used whenever you like. If you&#39;re not using gettext, <code>_(&quot;string&quot;).pluralize_for becomes &quot;string&quot;.pluralize_for</code>... Simple enough...</p>
+  
+  <p>I&#39;ve opened a <a href="http://code.google.com/p/pluralize-for-gettext/">google-code spot</a>, so you can have a peak there, although I haven&#39;t gotten round to filling out every page there.</p>
+  
+  <p>Learn how to install gettext in <a href="http://manuals.rubyonrails.com/read/chapter/105">this excellent guide</a>. Use this tip to get it <a href="http://zargony.com/2007/07/29/using-ruby-gettext-with-edge-rails/">working with Rails 2.0</a>.</p>
+  
+  <h3 id="toc_0">Installation</h3>
+  <pre>./script/plugin install http://pluralize-for-gettext.googlecode.com/svn/trunk/
+  </pre>
+  <p>And then rename <code>vendor&#47;plugins&#47;svn</code> to <code>vendor&#47;plugins&#47;pluralize_for_gettext</code></p>
+  
+  <h3 id="toc_1">Examples</h3>
+  <pre><%=_('No posts ~~ Only one post ~~ You have {$N} posts!').pluralize_for(Post.count) %>
+  </pre>
+  <p>The example speaks for itself.</p>
+  
+  <p>You can change the conditions for each part in the string:</p>
+  <pre><%=_('~~$N==0: No posts ~~$N==1: Only one post ~~else: You have {$N} posts').pluralize_for(Post.count)%>
+  </pre>
+  <p>Note: The translator can change the logic for this, for languages with weird pluralization rules. ;)</p>
+  
+  <p>Caution: It&#39;s being eval&#39;ed, so always check language files (or ruby code) for any Ruby injections.</p>
+  
+  <h3 id="toc_2">Substituting more variables</h3>
+  
+  <p>Why not use the default sprintf-like function from rails? You&#39;d get this:</p>
+  <pre><%_('You have %d posts, view %s') % [ Post.count, link_to(_('more'), view_more_url)%>
+  </pre>
+  <p>You&#39;d get multiple entries in you .po file, and just &#39;more&#39; can&#39;t be translated differently according to the context. The point of this whole exercise was to keep text that appears in one place together in the .po-file.</p>
+  
+  <p>More advanced, for entering links and stuff, simply use {1:your text} and pass a block to the function to manipulate the texts in anyway you like. The number becomes the id for the array, so be careful in how you use them.</p>
+  <pre><%=_('No posts, create one by clicking {1:here} ~~ Only one post ~~ You have {$N} posts ~~$N&gt;6: You have {$N} posts, view {2:more}').pluralize_for(Post.count) do |i|
+      i[1] = link_to(i[1], create_post_url) if i[1]
+      i[2] = link_to(i[2], view_more_url) if i[2]
+    %>
+  </pre>
+  <p>Which would result in the .po file:</p>
+  <pre>#: app/controllers/some_controller.rb:102
+    msgid "No posts, create one by clicking {1:here} ~~ Only one post ~~ You have {$N} posts ~$N>6~ You have {$N} posts, view {2:more}"
+    msgstr "Geen artikelen, {1:plaats een artikel} ~~ Slechts een artikel ~~ Je hebt {$N} artikelen ~$N>6~ Je hebt {$N} artikelen ({2:bekijk meer...})"
+  </pre>
+  <h3 id="toc_3">Simple pluralizations</h3>
+  
+  <p>Perhaps you just want to specify a singular and plural for one word in the entire sentence:</p>
+  <pre><%=_('You have {$N} {post|posts}').pluralize_for(Post.count)%>
+  </pre>
+  <p>English is simpler than many other languages, so the translator could change it into the more elaborate version:</p>
+  <pre>#: app/controllers/some_controller.rb:102
+    msgid "You have {$N} {post|posts}"
+    msgstr "~~$N==0: Helemaal geen artikelen ~~$N==1: U heeft een artikel ~~$N>1: U heeft {$N} artikelen"</pre>
+  </pre>
+  <h3 id="toc_4">Nesting</h3>
+  
+  <p>You can nest any way you&#39;d like, but keep it sane. Here&#39;s a nice example:</p>
+  <pre>"$N==0:No posts. {1:create one}.~~else:You have {1:{$N} new {post|posts}}...".pluralize_for(Post.count) do |i|
+    i[1] =  link_to(i[1], url) if i[1]
+    i[2] = link_to(i[2], other_url) if i[2]
+  end
+  </pre>
+toc: 
+- anchor: "#toc_0"
+  title: Installation
+- anchor: "#toc_1"
+  title: Examples
+- anchor: "#toc_2"
+  title: Substituting more variables
+- anchor: "#toc_3"
+  title: Simple pluralizations
+- anchor: "#toc_4"
+  title: Nesting
+introduction: <p>I did some research into <a href="http://agilewebdevelopment.com/plugins/category/8">i18n plugins for Ruby on Rails</a>.  I found <a href="http://wiki.globalize-rails.org/">Globalize </a>not manageable enough, especially looking at substitution of values and pluralization. Click to globalize (http:&#47;&#47;www.lucaguidi.com&#47;pages&#47;click-to-globalize) didn&#39;t support substitution or pluralization.  Many (http:&#47;&#47;simple-localization.arkanis.de&#47;) <a href="http://agilewebdevelopment.com/plugins/i18n">others</a> used symbols as translation key, but that provided the same problem as Globalize.</p><p>So I turned to <a href="http://www.gnu.org/software/gettext/">Gettext</a>. Gettext uses .po- and .mo files, like a proper GNU application, which attracted me. But when it came to substitution, small parts, like link texts, were scattered through the language file. I had to come up with a little scheme.</p><p>So I wrote a simple plugin for Ruby on Rails. This plugin inspects a single string to get pluralization with substitution. The single string keeps the translation in one place.</p>

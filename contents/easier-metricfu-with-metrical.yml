@@ -1,0 +1,21 @@
+--- 
+html: |
+  <p><strong>TL;DR:</strong> I&#39;ve just released <strong><a href="http://github.com/iain/metrical">metrical</a></strong>. It is a tiny wrapper around metric_fu.</p>
+  
+  <p>MetricFu is awesome. It helps me keep my code clean by identifying problem spots in my code. Unfortunately, it&#39;s difficult to get running. MetricFu requires to be run with Rake. But by doing that, it becomes part of your project&#39;s dependencies. Especially if you&#39;re using Bundler.</p>
+  
+  <h3 id="toc_0">Enter Metrical</h3>
+  
+  <p>Metrical is a wrapper around MetricFu, that allows it to be run as an executable on any project. Just install it, and run it. No setup or adjustments to your project should be required. It&#39;s that easy!</p>
+  <pre>cd /path/to/project/
+  gem install metrical
+  metrical
+  </pre>
+  <p>If you want to configure MetricFu, you can add a file called <tt>.metrics</tt>, in which you can add your regular configuration. For all configuration options, you can visit the <a href="http://metric-fu.rubyforge.org">MetricFu homepage</a>. All I&#39;ve done is add a small tweak to the rcov options, so it&#39;ll run RSpec without problems.</p>
+  
+  <p>So, give it a spin and tell me what you think of it!</p>
+
+toc: 
+- anchor: "#toc_0"
+  title: Enter Metrical
+introduction: <p><strong>TL;DR:</strong> I&#39;ve just released <strong><a href="http://github.com/iain/metrical">metrical</a></strong>. It is a tiny wrapper around metric_fu.</p><p>MetricFu is awesome. It helps me keep my code clean by identifying problem spots in my code. Unfortunately, it&#39;s difficult to get running. MetricFu requires to be run with Rake. But by doing that, it becomes part of your project&#39;s dependencies. Especially if you&#39;re using Bundler.</p>

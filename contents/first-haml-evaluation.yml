@@ -1,0 +1,48 @@
+--- 
+html: |
+  <p>As I <a href="/the-knights-templater-part-ii-priory-of-haml">promised</a>, here is the evaluation of redoing a site from ERB to <a href="http://haml-lang.com">Haml</a>. To immediately cut to the chase: Haml IS worth it!</p>
+  
+  <ul>
+  <li>It&#39;s so definitely faster and easier to write than ERB.</li>
+  <li>Your HTML output is nicer.</li>
+  <li>Partials rendering with the right indentation automatically.</li>
+  <li>It forces you to take a good look of what you&#39;re actually making.</li>
+  <li>Because it&#39;s so strict on it&#39;s syntax, you will be using more helpers and custom model methods, which is a good thing.</li>
+  <li>No more forgetting to close a div and spending hours to find out which one.</li>
+  <li>Faster refactoring because of less code and easier to read.</li>
+  </ul>
+  
+  <p>There are some downsides however. I&#39;d rather not talk about the hours I tried to fix some idiot problem with partials and the locals option. Just use locals as less as possible, preferably not at all. Some cons:</p>
+  
+  <ul>
+  <li>Yet another syntax to be learned.</li>
+  <li>Errors with Haml syntax are a bit harder to locate, but you&#39;ll make less after you encountered a few.</li>
+  <li>A gem needs to be installed on the server, which can be difficult if you don&#39;t have root rights on the server</li>
+  <li>The syntax highlighter on VIm is not quite up to it.</li>
+  <li>Rails helpers screw up the nice HTML Haml creates for you. The form_tag helpers for example.</li>
+  </ul>
+  
+  <p>So if you are starting a new project, or redoing the entire HTML of you&#39;re application: try Haml! Chances are you&#39;ll like it!</p>
+
+toc: []
+
+introduction: |-
+  <p>As I <a href="/the-knights-templater-part-ii-priory-of-haml">promised</a>, here is the evaluation of redoing a site from ERB to <a href="http://haml-lang.com">Haml</a>. To immediately cut to the chase: Haml IS worth it!</p>
+  <ul>
+  <li>It&#39;s so definitely faster and easier to write than ERB.</li>
+  <li>Your HTML output is nicer.</li>
+  <li>Partials rendering with the right indentation automatically.</li>
+  <li>It forces you to take a good look of what you&#39;re actually making.</li>
+  <li>Because it&#39;s so strict on it&#39;s syntax, you will be using more helpers and custom model methods, which is a good thing.</li>
+  <li>No more forgetting to close a div and spending hours to find out which one.</li>
+  <li>Faster refactoring because of less code and easier to read.</li>
+  </ul>
+  <p>There are some downsides however. I&#39;d rather not talk about the hours I tried to fix some idiot problem with partials and the locals option. Just use locals as less as possible, preferably not at all. Some cons:</p>
+  <ul>
+  <li>Yet another syntax to be learned.</li>
+  <li>Errors with Haml syntax are a bit harder to locate, but you&#39;ll make less after you encountered a few.</li>
+  <li>A gem needs to be installed on the server, which can be difficult if you don&#39;t have root rights on the server</li>
+  <li>The syntax highlighter on VIm is not quite up to it.</li>
+  <li>Rails helpers screw up the nice HTML Haml creates for you. The form_tag helpers for example.</li>
+  </ul>
+  <p>So if you are starting a new project, or redoing the entire HTML of you&#39;re application: try Haml! Chances are you&#39;ll like it!</p>

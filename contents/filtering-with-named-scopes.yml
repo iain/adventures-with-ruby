@@ -1,0 +1,80 @@
+--- 
+html: |
+  <p>Suppose you have an index page with people and you want to have a series of neat filters to show a selection of people. For example only the people still alive of only the adults. How would one do that?</p>
+  
+  <p>I like the method of using a <a href="http://apidock.com/rails/ActiveRecord/NamedScope/ClassMethods/named_scope">named_scope</a> and delegating to specified filters. This way, you can structure your filters properly and get clean URLs. Also, you can chain other named scopes to the filter.</p>
+  
+  <p>This is an example of how I would do that.</p>
+  
+  <h3 id="toc_0">The view</h3>
+  
+  <p>In your index view, add a list of all filters:</p>
+  <pre>%h3= t(:people, :scope => :filter_titles)
+  %ul
+    - Person.available_filters.each do |filter|
+      %li= link_to t(filter, :scope => [:filter_names, :people]), people_path(:filter => filter)
+  </pre>
+  <p>This will generate links that go to your index page (e.g. <code>&#47;people?filter=adults</code>). You can even make a route that will clean up your views even more.</p>
+  <pre>map.connect "/people/filter/:filter", :controller => "people", :action => "index"
+  </pre>
+  <p>I use i18n to get the displayed link text for each link, so my locale file might look something like:</p>
+  <pre>en:
+    filter_titles:
+      people: Select a subset
+    filter_names:
+      people:
+        deceased: Select deceased people
+        alive: Select people that are (still) alive
+        adults: Select people over 18
+  </pre>
+  <h3 id="toc_1">The controller</h3>
+  
+  <p>Add the <code>named_scope</code> to your query:</p>
+  <pre>def index
+    @people = Person.filter(params[:filter]).paginate(:page => params[:page])
+  end
+  </pre>
+  <h3 id="toc_2">The model</h3>
+  
+  <p>Here&#39;s the interesting stuff. Define the available filters as a class method:</p>
+  <pre>def self.available_filters
+    [ :deceased, :alive, :adults ]
+  end
+  </pre>
+  <p>Then, define class methods for each those filters, specifying what they need to do. I like to prepend them with &quot;<code>filter_</code>&quot;, so it shows more intent. You can go crazy with these filter methods if you&#39;d like. Just return valid <a href="http://apidock.com/rails/ActiveRecord/Base/find/class">ActiveRecord find-options</a>.</p>
+  <pre>def self.filter_deceased
+    { :conditions => "deceased_on IS NOT NULL" }
+  end
+  
+  def self.filter_alive
+    { :conditions => "deceased_on IS NULL" }
+  end
+  
+  def self.filter_adults
+    { :conditions => ["birthday <= ?", 18.years.ago.to_date] }
+  end
+  </pre>
+  <p>And finally, add the named scope that uses these filters:</p>
+  <pre>named_scope :filter, lambda { |f| available_filters.include?(f) ? send("filter_#{f}") : {} }
+  </pre>
+  <p>We check to see if the filter is available, excluding any invalid filter. Also, by default no filter is given from the controller. Then <code>params[:filter]</code> will be <code>nil</code> and so it won&#39;t try to call <code>Person.filter_</code>. You can replace the empty hash with a default filter if you like.</p>
+  
+  <h3 id="toc_3">Conclusion</h3>
+  
+  <p>These predefined filters can really help the usability of your new fancy web application. And I like the code too, because it looks very clear and it&#39;s easy to test.</p>
+  
+  <p>Named scopes can get quite messy, certainly if you use a lambda and some logic. Delegating the body of the lambda to a class method is a good idea. Just be sure that the method returns a hash of some sort.</p>
+  <pre>named_scope :foo, lambda { |*args| foo_parameters(*args) }
+  </pre>
+  <p>You can make this into a named_scope generator even, but I&#39;ll save that for another time and post. Also, stay tuned for the encore: DRYing up the code for re-use!</p>
+
+toc: 
+- anchor: "#toc_0"
+  title: The view
+- anchor: "#toc_1"
+  title: The controller
+- anchor: "#toc_2"
+  title: The model
+- anchor: "#toc_3"
+  title: Conclusion
+introduction: <p>Suppose you have an index page with people and you want to have a series of neat filters to show a selection of people. For example only the people still alive of only the adults. How would one do that?</p><p>I like the method of using a <a href="http://apidock.com/rails/ActiveRecord/NamedScope/ClassMethods/named_scope">named_scope</a> and delegating to specified filters. This way, you can structure your filters properly and get clean URLs. Also, you can chain other named scopes to the filter.</p><p>This is an example of how I would do that.</p>

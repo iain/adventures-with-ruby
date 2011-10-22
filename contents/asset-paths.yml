@@ -1,0 +1,19 @@
+--- 
+html: |
+  <p>Just a quickie. We all know that Rails adds asset ids to images, javascript include tags and stylesheet link tags. This is to help the browser in caching assets properly. The generated code looks something like this:</p>
+  <pre><span class="Keyword">&lt;</span><span class="Conditional">img</span><span class="Keyword"> </span><span class="Type">src</span><span class="Keyword">=</span><span class="String">"rails.png?20849923"</span><span class="Keyword"> </span><span class="Type">alt</span><span class="Keyword">=</span><span class="String">"Rails"</span><span class="Keyword"> /&gt;</span></pre>
+  <p>If I wonder if a website was made in Rails, I always look at the HTML. This is a good indicator.</p>
+  
+  <p>Sometimes you don&#39;t want this behavior. It can get in the way of <code>wget</code>, which saves the file including everything after the question mark. But it&#39;s not that straightforward to turn this off. At least, I couldn&#39;t find it. There is not much information available on this subject and I had to dive into the Rails source code to solve it.</p>
+  
+  <p>The easiest way I found was to override a helper method:</p>
+  <pre><span class="Keyword">module</span> <span class="Type">ApplicationHelper</span>
+    <span class="PreProc">def</span> <span class="Function">rewrite_asset_path</span>(source)
+      source
+    <span class="PreProc">end</span>
+  <span class="Keyword">end</span></pre>
+  <p>Please correct me if there is a simpler way!</p>
+
+toc: []
+
+introduction: <p>Just a quickie. We all know that Rails adds asset ids to images, javascript include tags and stylesheet link tags. This is to help the browser in caching assets properly. The generated code looks something like this:</p>

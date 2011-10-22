@@ -1,0 +1,83 @@
+--- 
+html: |
+  <p><strong>TL;DR</strong>: Check out my new <a href="http://github.com/iain/osx_settings/blob/master/.irbrc"><code>.irbrc</code>-file</a>!</p>
+  
+  <p>Customizing my work environment is a nerdish hobby of mine. I spend far to much time tweaking my terminal. While I&#39;ll save my terminal customizations for another time, I&#39;ll show you my IRB tweaks in this post.</p>
+  
+  <p>There are several tools to improve your IRB, and some of them have been around for ages. But the arrival of <a href="http://gembundler.com/">Bundler</a> makes it difficult to use them. Bundler creates a bubble in which you have to specify your dependencies explicitly. Furthermore, with project specific gemsets, provided by the ever so awesome <a href="http://rvm.beginrescueend.com/">RVM</a>, we need to install these IRB extensions for every project.</p>
+  
+  <p>This means that you cannot be sure that extensions like Wirble are available in your new and shiny Rails console. There is only one way around that: add them to your Gemfile. This is what I usually add:</p>
+  
+  <pre class="ir_black"><!-- you're looking at ir_black colorscheme exported by macvim, I don't write my HTML like this AT ALL, seriously!  But, why in FSM's name are you reading my source? --><font face="Monaco, Courier new, monospace"><font color="#96cbfe">group</font>&nbsp;<font color="#99cc99">:development</font>&nbsp;<font color="#6699cc">do</font>
+  &nbsp;&nbsp;<font color="#96cbfe">gem</font>&nbsp;<font color="#336633">&quot;</font><font color="#a8ff60">wirble</font><font color="#336633">&quot;</font>
+  &nbsp;&nbsp;<font color="#96cbfe">gem</font>&nbsp;<font color="#336633">&quot;</font><font color="#a8ff60">hirb</font><font color="#336633">&quot;</font>
+  &nbsp;&nbsp;<font color="#96cbfe">gem</font>&nbsp;<font color="#336633">&quot;</font><font color="#a8ff60">awesome_print</font><font color="#336633">&quot;</font>, <font color="#99cc99">:require</font>&nbsp;=&gt; <font color="#336633">&quot;</font><font color="#a8ff60">ap</font><font color="#336633">&quot;</font>
+  &nbsp;&nbsp;<font color="#96cbfe">gem</font>&nbsp;<font color="#336633">&quot;</font><font color="#a8ff60">interactive_editor</font><font color="#336633">&quot;</font>
+  <font color="#6699cc">end</font></font></pre>
+  
+  <h3 id="toc_0">Extension Loading</h3>
+  
+  <p>To load the IRB extensions without blowing up in your face when they&#39;re not available, I gently try to load them, and configure them only when that is successful. <a href="http://github.com/iain/osx_settings/blob/master/.irbrc">You can download my <code>.irbrc</code> on github</a>. Here is what it looks like:</p>
+  
+  <figure class="ir_black"><img src="/irb.png" alt="" title="irb" width="737" height="188"></figure>
+  
+  <p>When you start IRB, it shows a line with the extensions loaded. If it&#39;s gray, it&#39;s not appropriate (like rails2 in this example), loaded extensions are green and extensions that are not available are in red.</p>
+  
+  <h3 id="toc_1">Showing Queries in ActiveRecord 3</h3>
+  
+  <p>As you can see, the queries done by ActiveRecord are displayed in the same way as they are displayed in your log files. In Rails 2, you would&#39;ve done this by redirecting the log output to <code>STDOUT</code>. In Rails 3 you need to subscribe to the &#39;<code>sql.active_record</code>&#39;-notifications.</p>
+  
+  <p>This could in theory also be done for other Rails 3 compatible ORMs like Mongoid, but I haven&#39;t looked into that yet.</p>
+  
+  <h3 id="toc_2">Hirb</h3>
+  
+  <p><a href="http://tagaholic.me/hirb/">Hirb</a> formats objects into pretty tables, as you can see in the picture above. It also provides some scrolling possibilities like the command line tools less and more. Very handy!</p>
+  
+  <h3 id="toc_3">Wirble</h3>
+  
+  <p>The first IRB extension anyone uses. <a href="http://pablotron.org/software/wirble/">Wirble</a> provides you with history and syntax highlighting.</p>
+  
+  <h3 id="toc_4">Awesome Print</h3>
+  
+  <p>While Wirble colorizes the output to improve readability, it can get cluttered really fast, especially when you&#39;re dealing with nested hashes and arrays. <a href="http://github.com/michaeldv/awesome_print">AwesomePrint</a> helps to untangle your object mess:</p>
+  
+  <figure class="ir_black"><img src="/awesomeprint.png" alt="" title="awesomeprint" width="278" height="150"></figure>
+  
+  <h3 id="toc_5">Print Methods</h3>
+  
+  <p>The &#39;<code>pm</code>&#39;-extension I found <a href="http://snippets.dzone.com/posts/show/2916">on the intertubes</a> some time ago, lists the methods and what arguments they take on any given object. You can filter it, by providing a regex. This is what it looks like:</p>
+  
+  <figure class="ir_black"><img src="/pm.png" alt="" title="pm" width="324" height="138"></figure>
+  
+  <p>It&#39;s not a gem, but a snippet pasted directly into my irbrc, so it&#39;s always available.</p>
+  
+  <h3 id="toc_6">Interactive Editor</h3>
+  
+  <p>Open vim (or any other editor) from IRB, edit your code, save it, close your editor and the code gets executed. Open vim again and your code is visible and editable again. Very awesome! <a href="http://github.com/jberkel/interactive_editor">Check it out</a>!</p>
+  
+  <h3 id="toc_7">More</h3>
+  
+  <p>Yeah, there more. There&#39;s <a href="http://tagaholic.me/2009/07/16/bond-from-irb-with-completion-love.html">bond</a>, which makes autocompletion better, and <a href="http://utilitybelt.rubyforge.org/">utility belt</a>, and more. I can&#39;t remember to use them all, so I haven&#39;t included them into my irbrc. They certainly are cool enough for you to check out! Also, a lot of great tips are <a href="http://stackoverflow.com/questions/123494/whats-your-favourite-irb-trick">here on Stack Overflow</a>.</p>
+  
+  <p>If you have any good tips, please share them! Oh, and the other OSX tweaks I use are on <a href="http://github.com/iain/osx_settings">github</a>.</p>
+  
+  <p>PS. For those that don&#39;t know how to load this: put the <code>.irbrc</code> file in your home directory and it will load automatically.</p>
+
+toc: 
+- anchor: "#toc_0"
+  title: Extension Loading
+- anchor: "#toc_1"
+  title: Showing Queries in ActiveRecord 3
+- anchor: "#toc_2"
+  title: Hirb
+- anchor: "#toc_3"
+  title: Wirble
+- anchor: "#toc_4"
+  title: Awesome Print
+- anchor: "#toc_5"
+  title: Print Methods
+- anchor: "#toc_6"
+  title: Interactive Editor
+- anchor: "#toc_7"
+  title: More
+introduction: "<p><strong>TL;DR</strong>: Check out my new <a href=\"http://github.com/iain/osx_settings/blob/master/.irbrc\"><code>.irbrc</code>-file</a>!</p><p>Customizing my work environment is a nerdish hobby of mine. I spend far to much time tweaking my terminal. While I&#39;ll save my terminal customizations for another time, I&#39;ll show you my IRB tweaks in this post.</p><p>There are several tools to improve your IRB, and some of them have been around for ages. But the arrival of <a href=\"http://gembundler.com/\">Bundler</a> makes it difficult to use them. Bundler creates a bubble in which you have to specify your dependencies explicitly. Furthermore, with project specific gemsets, provided by the ever so awesome <a href=\"http://rvm.beginrescueend.com/\">RVM</a>, we need to install these IRB extensions for every project.</p>"

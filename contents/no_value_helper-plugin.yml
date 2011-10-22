@@ -1,0 +1,77 @@
+--- 
+html: |-
+  <p>It took some late night coding, but I finished another plugin. It&#39;s a little helper that goes by the name of <a href="http://github.com/iain/no_value_helper">no_value_helper</a>. To install it, type: <code>.&#47;script&#47;plugin install git:&#47;&#47;github.com&#47;iain&#47;no_value_helper.git</code>. It&#39;s not that big, but fully <a href="http://github.com/iain/no_value_helper/tree/master/spec/no_value_helper_spec.rb">tested</a>, which may save you some time.</p>
+  
+  <p>It changes:</p>
+  <pre><%= @user.name.blank? ? 'no value' : h(@user.name) %>
+  </pre>
+  <p>Into:</p>
+  <pre><%= show(@user.name, :h) %>
+  </pre>
+  <p>But wait! There is more! This method can accept blocks too and rescue you from those pesky nils! Keep on reading!</p>
+  
+  <h3 id="toc_0">The problem I wanted to solve</h3>
+  
+  <p>This Ruby on Rails plugin tries to solve a common pattern when showing
+  values from the database. If you want to show a nice message like &#39;no value&#39;
+  when an optional attribute has been left empty, you usually need to do the
+  same thing over and over again:</p>
+  <pre><%= @user.name.blank? ? 'no value' : @user.name %>
+  </pre>
+  <p>It gets even worse when it&#39;s about an optional relation, with some extra methods:</p>
+  <pre><%= @user.daddy ? link_to(@user.daddy.name, @user.daddy) : 'no daddy' %>
+  </pre>
+  <h3 id="toc_1">The solution: no_value_helper</h3>
+  
+  <p>So this plugin tries to shorten this:</p>
+  <pre><%= show(@user.name) %>
+  </pre>
+  <p>Or the second example:</p>
+  <pre><%= show(:link_to, @user.daddy) { @user.daddy.name } %>
+  </pre>
+  <p>Don&#39;t worry, NoMethodErrors will be caught for you. That is why we use a block
+  in this case.</p>
+  
+  <p>For the exact usage, read the <a href="http://github.com/iain/no_value_helper/tree/master/spec/no_value_helper_spec.rb">specs</a>.</p>
+  
+  <h3 id="toc_2">Configuration</h3>
+  
+  <p>To translate the message, you can simply add the &quot;no_value&quot; key (no scope) to
+  your translation files.</p>
+  <pre>nl-NL:
+    no_value: geen waarde
+  </pre>
+  <p>By default the message is encapsulated by an em-tag with the class &#39;no_value&#39;.
+  To change this, set the class variable <code>@@no_value_text</code> with a lambda. This is
+  done so I18n.translate will work. Make an initializer
+  (in <code>config&#47;initializers&#47;no_value_helper.rb</code>), containing this:</p>
+  <pre>module NoValueHelper
+    @@no_value_text = lambda { "something more to your liking" }
+  end
+  </pre>
+  <p>You can also change how this plugin checks for empty values. By default this is
+  done with the method <a href="http://apidock.com/rails/Object/blank%3F">blank?</a>
+  This means that empty strings are also treated as &#39;no value&#39;. To change this,
+  set the class variable <code>@@no_value_check_method</code> to a lambda that does what you
+  want. Your initializer will look something like this:</p>
+  <pre>module NoValueHelper
+    @@no_value_check_method = lambda { |value| value.nil? }
+  end
+  </pre>
+  <h3 id="toc_3">Some more examples</h3>
+  
+  <p>Here are some more examples to inspire you:</p>
+  <pre><%= show(:l, :format => :long){@user.birthday} %>
+  <%= show(@user.savings, :number_to_currency) %>
+  <%= show(:simple_format){@user.contract.company.billing_address} %>
+  </pre>
+toc: 
+- anchor: "#toc_0"
+  title: The problem I wanted to solve
+- anchor: "#toc_1"
+  title: "The solution: no_value_helper"
+- anchor: "#toc_2"
+  title: Configuration
+- anchor: "#toc_3"
+  title: Some more examples
+introduction: "<p>It took some late night coding, but I finished another plugin. It&#39;s a little helper that goes by the name of <a href=\"http://github.com/iain/no_value_helper\">no_value_helper</a>. To install it, type: <code>.&#47;script&#47;plugin install git:&#47;&#47;github.com&#47;iain&#47;no_value_helper.git</code>. It&#39;s not that big, but fully <a href=\"http://github.com/iain/no_value_helper/tree/master/spec/no_value_helper_spec.rb\">tested</a>, which may save you some time.</p><p>It changes:</p>"

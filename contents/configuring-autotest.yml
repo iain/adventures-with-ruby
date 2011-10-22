@@ -1,0 +1,34 @@
+--- 
+html: |
+  <p>I have a big test suite in the current Rails application I&#39;m working on. I have 2340 examples in RSpec, taking over 2 minutes to run. This is an absolute pain to run. Luckily there is autotest (or autospec if you&#39;re running RSpec, like I am), which tests only the changed files. I&#39;ve grown to be totally dependent on this behavior, and I can&#39;t imagine programming without it anymore.</p>
+  
+  <p>I also do TDD, which means that I write a failing test first, and then program until it passes. But Autotest&#39;s flow is that, once you&#39;ve fixed a failing test or spec, it reruns the entire the suite to see if you&#39;re solution doesn&#39;t have any side effects. Normally this is fine, but with this kind of test suite, I cannot afford to wait for it to complete.</p>
+  
+  <p>So, after going through Autotest&#39;s code, I&#39;ve decided to stub out this behavior. You can still trigger a complete rerun of the entire suite by pressing Ctrl+C, but it doesn&#39;t do that every time you go green. It&#39;s a bit of a monkey patch, but it works just right.</p>
+  
+  <p>The autotest-growl gem clears the terminal. I don&#39;t like that, because I like to see a bit of history. That&#39;s why I changed that behavior too.</p>
+  
+  <p>Here&#39;s my <code>~&#47;.autotest</code> file:</p>
+  <pre># Use file system hooks on OS X
+  require 'autotest/fsevent'
+  
+  # Don't run entire test suite when going from red to green
+  class Autotest
+    def tainted
+      false
+    end
+  end
+  
+  # Use Growl support
+  require 'autotest/growl'
+  
+  # Don't clear the terminal, when using Growl
+  module Autotest::Growl
+    @@clear_terminal = false
+  end
+  </pre>
+  <p>While browsing through the code of Autotest I also found that it also looks for a <code>.autotest</code> file in the current working directory. So if you want to apply these changes to one project only, you can define this file locally for the project. I didn&#39;t know that!</p>
+
+toc: []
+
+introduction: <p>I have a big test suite in the current Rails application I&#39;m working on. I have 2340 examples in RSpec, taking over 2 minutes to run. This is an absolute pain to run. Luckily there is autotest (or autospec if you&#39;re running RSpec, like I am), which tests only the changed files. I&#39;ve grown to be totally dependent on this behavior, and I can&#39;t imagine programming without it anymore.</p><p>I also do TDD, which means that I write a failing test first, and then program until it passes. But Autotest&#39;s flow is that, once you&#39;ve fixed a failing test or spec, it reruns the entire the suite to see if you&#39;re solution doesn&#39;t have any side effects. Normally this is fine, but with this kind of test suite, I cannot afford to wait for it to complete.</p><p>So, after going through Autotest&#39;s code, I&#39;ve decided to stub out this behavior. You can still trigger a complete rerun of the entire suite by pressing Ctrl+C, but it doesn&#39;t do that every time you go green. It&#39;s a bit of a monkey patch, but it works just right.</p>

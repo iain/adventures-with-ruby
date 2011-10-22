@@ -1,0 +1,71 @@
+--- 
+html: |
+  <p>Cal it tiny, I don&#39;t care. I&#39;ve made a gem named <a href="http://github.com/iain/basic_named_scopes">BasicNamedScopes</a>.</p>
+  
+  <h3 id="toc_0">Basic Usage</h3>
+  
+  <p>I was fed up with writing:</p>
+  <pre><span class="Type">Post</span>.all(<span class="Constant">:conditions</span> =&gt; { <span class="Constant">:published</span> =&gt; <span class="Constant">true</span> }, <span class="Constant">:select</span> =&gt; <span class="Constant">:title</span>, <span class="Constant">:include</span> =&gt; <span class="Constant">:author</span>)</pre>
+  <p>So with BasicNamedScopes, you can now write:</p>
+  
+  <p>Post.conditions(:published =&gt; true).select(:title).with(:author)</p>
+  
+  <p>All named scopes are called the same, except for <code>include</code>, which is now called <code>with</code>, because <code>include</code> is a reserved method.</p>
+  
+  <p>Reuse them by making class methods:</p>
+  <pre><span class="Keyword">class</span> <span class="Type">Post</span> &lt; <span class="Type">ActiveRecord</span>::<span class="Type">Base</span>
+    <span class="PreProc">def</span> <span class="Constant">self</span>.<span class="Function">published</span>
+      conditions(<span class="Constant">:published</span> =&gt; <span class="Constant">true</span>)
+    <span class="PreProc">end</span>
+  
+    <span class="PreProc">def</span> <span class="Constant">self</span>.<span class="Function">visible</span>
+      conditions(<span class="Constant">:visible</span> =&gt; <span class="Constant">true</span>)
+    <span class="PreProc">end</span>
+  
+    <span class="PreProc">def</span> <span class="Constant">self</span>.<span class="Function">index</span>
+      published.visible
+    <span class="PreProc">end</span>
+  <span class="Keyword">end</span></pre>
+  <p>Also, the <code>all</code>-method is a named scope now, so you can chain after callling <code>all</code>, for greater flexibility.</p>
+  <pre><span class="Type">Post</span>.all.published</pre>
+  <p>Arrays can be used as multple parameters too, sparing you some brackets.</p>
+  <pre><span class="Type">Post</span>.with(<span class="Constant">:author</span>, <span class="Constant">:comments</span>).conditions(<span class="rubyStringDelimiter">"</span><span class="String">name LIKE ?</span><span class="rubyStringDelimiter">"</span>, query)</pre>
+  <p>The <code>read_only</code> and <code>lock</code> scopes default to true, but can be adjusted.</p>
+  <pre><span class="Type">Post</span>.readonly         <span class="Comment"># =&gt; same as Post.all(:readonly =&gt; true)</span>
+  <span class="Type">Post</span>.readonly(<span class="Constant">false</span>)  <span class="Comment"># =&gt; same as Post.all(:readonly =&gt; false)</span></pre>
+  <h3 id="toc_1">Why?</h3>
+  
+  <p>NamedScopes are really handy and they should play a more central theme in ActiveRecord. While I heard that Rails 3 will support similar syntax, there is no reason to wait any longer.</p>
+  
+  <p>I find defining named scopes very ugly, especially when dealing with parameters. Just compare the amount of curly braces!</p>
+  <pre><span class="Comment"># Using normal named scope:</span>
+  named_scope <span class="Constant">:name_like</span>, <span class="Keyword">lambda</span> { |<span class="Identifier">query</span>| { <span class="Constant">:conditions</span> =&gt; [<span class="rubyStringDelimiter">"</span><span class="String">name LIKE ?</span><span class="rubyStringDelimiter">"</span>, query] } }
+  
+  <span class="Comment"># Using BasicNamedScopes</span>
+  <span class="PreProc">def</span> <span class="Constant">self</span>.<span class="Function">name_like</span>(query)
+    conditions(<span class="rubyStringDelimiter">"</span><span class="String">name LIKE ?</span><span class="rubyStringDelimiter">"</span>, query)
+  <span class="PreProc">end</span></pre>
+  <p>Also, regular named scopes don&#39;t support using other named scopes at all!</p>
+  
+  <p>I found myself implementing these named scopes (mostly conditions, but others too) so often, that a little gem like this would be the obvious choice. Use it if a gem like <a href="http://github.com/binarylogic/searchlogic">searchlogic</a> is overkill for your needs.</p>
+  
+  <h3 id="toc_2">Installing</h3>
+  
+  <p>The gem is called &quot;basic_named_scopes&quot;. You know how to install it.</p>
+  <pre>gem <span class="Statement">install</span> basic_named_scopes</pre>
+  <p>Use it in Rails:</p>
+  <pre>config.gem <span class="rubyStringDelimiter">"</span><span class="String">basic_named_scopes</span><span class="rubyStringDelimiter">"</span></pre>
+  <h12 id="toc_41943040">Update</h3>
+  
+  <p>The syntax is fully compatible with ActiveRecord 3, and if you&#39;re using ActiveRecord 3, you don&#39;t need to use this gem.</p>
+
+toc: 
+- anchor: "#toc_0"
+  title: Basic Usage
+- anchor: "#toc_1"
+  title: Why?
+- anchor: "#toc_2"
+  title: Installing
+- anchor: "#toc_3"
+  title: Update
+introduction: <p>Cal it tiny, I don&#39;t care. I&#39;ve made a gem named <a href="http://github.com/iain/basic_named_scopes">BasicNamedScopes</a>.</p>

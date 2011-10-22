@@ -1,0 +1,119 @@
+--- 
+html: |
+  <p>Yes, I&#39;ve written another plugin for Rails. It&#39;s about so called root tables. It seem to be making them often. I want a list with options to choose from and some easy way to manage that list, which is a tedious task. That&#39;s why I made a <a href="http://github.com/iain/root_table">plugin</a> to do this for me.</p>
+  
+  <h3 id="toc_0">What I have so far is:</h3>
+  
+  <ul>
+  <li>Automatic validations and relations</li>
+  <li>Completely configurable, with sensible defaults</li>
+  <li>A management interface</li>
+  <li>Works with <a href="http://github.com/rails/acts_as_list">acts_as_list</a> and supports drag and drop sorting</li>
+  <li>I18n support</li>
+  </ul>
+  
+  <h3 id="toc_1">Let&#39;s take a tour of it&#39;s usage.</h3>
+  
+  <p>Install acts_as_list, if you want to:</p>
+  <pre>./script/plugin install git://github.com/rails/acts_as_list.git
+  </pre>
+  <p>Install root_table:</p>
+  <pre>./script/plugin install git://github.com/iain/root_table.git
+  </pre>
+  <p>Make a model that needs a list to choose from, like a product that has a category:</p>
+  <pre>./script/genetate model Product name:string category_id:integer
+  </pre>
+  <p>Make a model for the root table, category:</p>
+  <pre>./script/generate model Category name:string position:integer
+  </pre>
+  <p>Make category a root table for product:</p>
+  <pre>class Category < ActiveRecord::Base
+    root_table_for :product
+  end
+  </pre>
+  <p>And let the product model know as well what is happening:</p>
+  <pre>class Product < ActiveRecord::Base
+    has_root_table :category
+  end
+  </pre>
+  <p>Let&#39;s add a configured root table for good measure. Let&#39;s convert the User-model to a root table. User is not a list, and doesn&#39;t have a <code>name</code>-field to recognize it, nor does it have a position field. It requires some options to make it work.</p>
+  <pre>class User < ActiveRecord::Base
+    root_table_for :product, :to => :last_edited_by,
+        :validate => false, :field => :login
+  end
+  </pre>
+  <p>And update the product model again:</p>
+  <pre>class Product < ActiveRecord::Base
+    has_root_table :category
+    has_root_table :user
+  end
+  </pre>
+  <p>The relation is called <code>last_edited_by</code>, it doesn&#39;t add any validations and the displayed (and thus sorted) field is <code>login</code> instead of <code>name</code>. It doesn&#39;t have position field, nor do I provide it, so it&#39;ll sort on <code>login</code> and won&#39;t be manually sortable, as we&#39;ll se in a bit.</p>
+  
+  <p><small>Using the User model might not be the best example, but you&#39;ll get the point.</small></p>
+  
+  <h3 id="toc_2">Management in a Rails Engine</h3>
+  
+  <p>Visit the management interface at <code>http:&#47;&#47;localhost:3000&#47;root_tables</code> and see something like this:</p>
+  
+  <p><img src="/root_tables_path.png" alt="root_tables_path" title="root_tables_path" width="508" height="339" class="alignnone size-full wp-image-478" /></p>
+  
+  <p>Since User has no position field, you&#39;ll end up with a simple scaffold-like management screen for it:</p>
+  
+  <p><img src="/root_table_contents_pathuser.png" alt="root_table_contents_path(user)" title="root_table_contents_path(user)" width="508" height="339" class="alignnone size-full wp-image-479" /></p>
+  
+  <p>However, the Category model does have a position, so the interface has drag and drop functionality:</p>
+  
+  <p><img src="/root_table_contents_pathcategory.png" alt="root_table_contents_path(category)" title="root_table_contents_path(category)" width="508" height="339" class="alignnone size-full wp-image-480" /></p>
+  
+  <p>It has a very simple new and edit screen, just as you would with scaffold:</p>
+  
+  <p><img src="/edit_root_table_contents_path.png" alt="edit_root_table_contents_path" title="edit_root_table_contents_path" width="508" height="339" class="alignnone size-full wp-image-481" /></p>
+  
+  <p>This is all done with a layout that Rails scaffold generates. If you have your own layout it might look completely different. The management pages are a Rails engine. This means that you can override any file by creating a file with the same name in your <code>app</code>-directory. Have a look at the code to see which files you can override.</p>
+  
+  <p>Also, to enable the drag and drop interface, you&#39;ll need to have prototype included. If you don&#39;t want prototype be loaded everywhere, I&#39;ve made it so that only drag and drop pages load the javascript. Please add <tt>&lt;%= yield(:head) %&gt;</tt> to your html header.</p>
+  
+  <p>You can also override views on a table basis. That means that you might want a view that is different just in case of one table. The form for new users might want to have more fields than just the login field, but also include password fields. Create a view for that in <code>app&#47;views&#47;root_table_contents&#47;new_user.html.erb</code>. Available for override per model are index, new and edit.</p>
+  
+  <h3 id="toc_3">Using it elsewhere</h3>
+  
+  <p>But we&#39;re not there yet. Now we&#39;ve built a root table and filled it, we need to use it somewhere. The plugin provides a <code>root_table_select</code> helper, that renders a drop down. The first parameter is the root_tables (real) name, it figures the rest out automatically. You can pass any options as the options you would pass the other select helpers. Here&#39;s an example:</p>
+  <pre><% form_for @product do |f| %>
+    <p>
+      <%= f.label :category_id %><br />
+      <%= f.root_table_select :category, :include_blank => true %>
+    </p>
+  <% end %>
+  </pre>
+  <p>Also for showing a delegate method is provided. This is how you can show the category name:</p>
+  <pre>@product.category_name
+  </pre>
+  <p>That about wraps it up for <a href="http://github.com/iain/root_table">root_table</a>. Please provide me with feedback and report any bugs and improvements. You can use the comments on my blog, or the <a href="http://github.com/iain/root_table/issues">issues page on github</a>.</p>
+  
+  <h3 id="toc_4">Update!</h3>
+  
+  <p>I&#39;ve made some tiny updates, most importantly reducing the amount of magic. Rails does a very nice job of lazy loading your models which can lead to some strange errors with the previous version of my plugin. These should be fixed now.</p>
+  
+  <h3 id="toc_5">Lessons learned:</h3>
+  
+  <ul>
+  <li>A model does not know another model exist in development environment. Mentioning a model is enough to trigger Rails autoload and even constantizing a string works. Sweet!</li>
+  <li>Don&#39;t require a model again during a request. Some models will break. I found this to be the case with the session class needed by AuthLogic. Again, to know for sure that a model has been loaded, simply mention it in your code, usually that is enough.</li>
+  <li>Tests are run in an environment very similar to production. I already knew that, but it&#39;s worth mentioning that a stable development environment is also essential and you might not catch that with unit tests alone.</li>
+  </ul>
+
+toc: 
+- anchor: "#toc_0"
+  title: "What I have so far is:"
+- anchor: "#toc_1"
+  title: Let's take a tour of it's usage.
+- anchor: "#toc_2"
+  title: Management in a Rails Engine
+- anchor: "#toc_3"
+  title: Using it elsewhere
+- anchor: "#toc_4"
+  title: Update!
+- anchor: "#toc_5"
+  title: "Lessons learned:"
+introduction: <p>Yes, I&#39;ve written another plugin for Rails. It&#39;s about so called root tables. It seem to be making them often. I want a list with options to choose from and some easy way to manage that list, which is a tedious task. That&#39;s why I made a <a href="http://github.com/iain/root_table">plugin</a> to do this for me.</p>

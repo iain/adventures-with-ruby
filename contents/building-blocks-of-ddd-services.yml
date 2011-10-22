@@ -1,0 +1,160 @@
+--- 
+html: |-
+  <p>As <a href="/domain-driven-design-building-blocks-in-ruby">promised</a>, here is an example of how to use the idea of services from Domain Driven Design to help you design your code better. Let&#39;s start with some theoretical stuff, before we dive into some example code.</p>
+  
+  <h3 id="toc_0">In Theory</h3>
+  
+  <p>Services are best defined by what they&#39;re not. They&#39;re not entities or value objects.  To recap: entities are identifiable objects, that have real meaning in your domain. This might be a user or a post (if you&#39;re making a blog). Value objects are objects that are not defined by their identity, but by their value. An address of a person is usually a good example. It doesn&#39;t matter which address object it really is, as long as it contains the data it is supposed to have. Services are none of these. Services do something with the entities in your domain.</p>
+  
+  <p>A good example of services are classes. By their very nature, classes are services for initializing objects. In Ruby this is idea is emphasized by the fact that classes are objects too. They have state and behavior, just as any other Ruby object. But their behavior is always aimed at something else, not themselves. Services tend to have no state, or very little at the most.</p>
+  
+  <p>What&#39;s the advantage of thinking of classes as being services? Well, in my opinion it leads you to organize your code better. Class methods are only allowed to do something with creating instances of that class. If they are not doing that, they shouldn&#39;t be class methods.</p>
+  
+  <p>It also answers the question: where should this behavior go? If it&#39;s not obvious, it&#39;s probably a service. The &#39;fat model, skinny controller&#39;-principle has gotten some news lately. This principle was invented because developers (me included) were putting too much logic into the controllers. It made the controllers skinny and readable; but it had the side affect that everybody jammed the behavior into their models (entities), making them big and unwieldy. Services will help you create small and manageable classes.</p>
+  
+  <h3 id="toc_1">In Practice</h3>
+  
+  <p>Time for an example. Suppose you have an admin interface which allows the user to find their entities in many different ways, filtering on attributes and ordering them around until he finds the entities he wants. It might be part of a advanced search box. This filtering business is an excellent candidate for a service.</p>
+  
+  <p>There are many ways of making a filter service. I&#39;ve made something similar to this recently. I&#39;ll start by making a basic filter, with nothing specific.</p>
+  <pre><span class="Keyword">module</span> <span class="Type">Filter</span>
+    <span class="Keyword">class</span> <span class="Type">Base</span>
+  
+      class_inheritable_array <span class="Constant">:filters</span>
+      <span class="Constant">self</span>.filters = []
+  
+      <span class="Comment"># Call filter to define which filters are available.</span>
+      <span class="Comment"># These will all be run in the order you specified</span>
+      <span class="PreProc">def</span> <span class="Constant">self</span>.<span class="Function">filter</span>(*filters)
+        <span class="Constant">self</span>.filters.unshift(*filters)
+      <span class="PreProc">end</span>
+  
+      <span class="Comment"># The params are the parameters you might have entered in your form.</span>
+      <span class="Statement">attr_reader</span> <span class="Constant">:params</span>
+      <span class="PreProc">def</span> <span class="Function">initialize</span>(params)
+        <span class="Identifier">@params</span> = params
+      <span class="PreProc">end</span>
+  
+      <span class="Comment"># Get all filtered results. This is the public facing method that</span>
+      <span class="Comment"># you'd want to call when getting the results of the filter.</span>
+      <span class="PreProc">def</span> <span class="Function">all</span>
+        apply_filters
+        scope
+      <span class="PreProc">end</span>
+  
+      <span class="Statement">private</span>
+  
+      <span class="Comment"># As part of the contract, set the default scope by overriding this method.</span>
+      <span class="PreProc">def</span> <span class="Function">scope</span>
+        <span class="Statement">raise</span> <span class="Type">NotImplementedError</span>
+      <span class="PreProc">end</span>
+  
+      <span class="Comment"># Run all the filters, specified in subclasses.</span>
+      <span class="PreProc">def</span> <span class="Function">apply_filters</span>
+        filters.each { |<span class="Identifier">filter</span>| send(filter) }
+      <span class="PreProc">end</span>
+  
+      <span class="Comment"># Probably every filter should be able to paginate the results.</span>
+      <span class="Comment"># remember to call pagination last, because will_paginate won't return</span>
+      <span class="Comment"># a real ActiveRecord::Relation object.</span>
+      <span class="PreProc">def</span> <span class="Function">pagination</span>
+        <span class="Identifier">@scope</span> = scope.paginate(<span class="Constant">:page</span> =&gt; page, <span class="Constant">:per_page</span> =&gt; per_page)
+      <span class="PreProc">end</span>
+  
+      <span class="PreProc">def</span> <span class="Function">page</span>
+        params[<span class="Constant">:page</span>] || <span class="Number">1</span>
+      <span class="PreProc">end</span>
+  
+      <span class="PreProc">def</span> <span class="Function">per_page</span>
+        params[<span class="Constant">:per_page</span>] || <span class="Number">20</span>
+      <span class="PreProc">end</span>
+  
+      <span class="Comment"># Similar to pagination, sorting is something common to all filters,</span>
+      <span class="Comment"># The default order is :id, because that will be available on every</span>
+      <span class="Comment"># model. You can override it easily however.</span>
+      <span class="PreProc">def</span> <span class="Function">sort</span>(default = <span class="Constant">:id</span>)
+        <span class="Identifier">@scope</span> = scope.order(params[<span class="Constant">:order</span>] || default)
+        <span class="Identifier">@scope</span> = scope.reverse_order <span class="Conditional">if</span> params[<span class="Constant">:direction</span>] == <span class="rubyStringDelimiter">'</span><span class="String">desc</span><span class="rubyStringDelimiter">'</span>
+      <span class="PreProc">end</span>
+  
+    <span class="Keyword">end</span>
+  <span class="Keyword">end</span></pre>
+  <p>Now, you can make filters for every model. This means creating a class that inherits from this base class and implementing the simple contract we put in place. I&#39;ll use the (t)rusty Post model as an example implementation.</p>
+  <pre><span class="Keyword">module</span> <span class="Type">Filter</span>
+    <span class="Keyword">class</span> <span class="Type">Posts</span> &lt; <span class="Type">Base</span>
+  
+      <span class="Comment"># Here I define the filter methods that will be used for posts.</span>
+      filter <span class="Constant">:published</span>, <span class="Constant">:by_name</span>, <span class="Constant">:sort</span>, <span class="Constant">:pagination</span>
+  
+      <span class="Comment"># The default scope for posts is a plain Post class without any scope added.</span>
+      <span class="Comment"># You can apply some permissions here, for instance.</span>
+      <span class="PreProc">def</span> <span class="Function">scope</span>
+        <span class="Identifier">@scope</span> ||= ::<span class="Type">Post</span>
+      <span class="PreProc">end</span>
+  
+      <span class="Comment"># Only show published posts, when the 'only_published' checkbox has been</span>
+      <span class="Comment"># checked in the form.</span>
+      <span class="PreProc">def</span> <span class="Function">published</span>
+        <span class="Identifier">@scope</span> = scope.published <span class="Conditional">if</span> params[<span class="Constant">:only_published</span>] == <span class="rubyStringDelimiter">'</span><span class="String">1</span><span class="rubyStringDelimiter">'</span>
+      <span class="PreProc">end</span>
+  
+      <span class="Comment"># Provide a simple name field to filter on the name of the post</span>
+      <span class="PreProc">def</span> <span class="Function">by_name</span>
+        <span class="Conditional">if</span> params[<span class="Constant">:name</span>].present?
+          <span class="Identifier">@scope</span> = scope.where(<span class="rubyStringDelimiter">'</span><span class="String">name LIKE ?</span><span class="rubyStringDelimiter">'</span>, <span class="rubyStringDelimiter">"</span><span class="String">%</span><span class="rubyInterpolationDelimiter">#{</span>params[<span class="Constant">:name</span>]<span class="rubyInterpolationDelimiter">}</span><span class="String">%</span><span class="rubyStringDelimiter">"</span>)
+        <span class="Conditional">end</span>
+      <span class="PreProc">end</span>
+  
+      <span class="Comment"># I want to sort by the published_at column by default</span>
+      <span class="PreProc">def</span> <span class="Function">sort</span>(default = <span class="Constant">:published_at</span>)
+        <span class="Keyword">super</span>(default)
+      <span class="PreProc">end</span>
+  
+    <span class="Keyword">end</span>
+  <span class="Keyword">end</span></pre>
+  <p>To use this filter, call it from the controller:</p>
+  <pre><span class="Keyword">class</span> <span class="Type">Backend</span>::<span class="Type">PostsController</span> &lt; <span class="Type">ApplicationController</span>
+  
+    respond_to <span class="Constant">:html</span>, <span class="Constant">:json</span>, <span class="Constant">:xml</span>
+  
+    <span class="PreProc">def</span> <span class="Function">index</span>
+      <span class="Identifier">@posts</span> = <span class="Type">Filter</span>::<span class="Type">Posts</span>.new(params[<span class="Constant">:filter</span>]).all
+      respond_with <span class="Identifier">@posts</span>
+    <span class="PreProc">end</span>
+  
+  <span class="Keyword">end</span></pre>
+  <p>As you can see, this places the logic of filtering in its proper place. It&#39;s not part of the model, since it&#39;s not part of initializing objects, or behavior of individual post objects. It&#39;s a separate service, doing something with something else.</p>
+  
+  <p>These services are incredibly easy to make. Just think about the objects it&#39;s trying to handle. These are probably the arguments of your initializer. Store those methods with an instance variable. All methods you create do something with either these objects or call methods that do so.</p>
+  
+  <p>Don&#39;t forget to run <a href="http://wiki.github.com/kevinrutherford/reek/">reek</a> on your code to see if you have any Low Cohesion or Feature Envy warnings. If you get any, than that method probably doesn&#39;t belong here, or you&#39;ve got you&#39;re initial parameters wrong.</p>
+  
+  <h11 id="toc_30055936">Some bonus material</h3>
+  
+  <p>If you wish to simplify the interface even further, you can create a class method on the service to make it even easier (that&#39;s a service to create a service, so to speak).</p>
+  <pre><span class="Keyword">module</span> <span class="Type">Filter</span>
+    <span class="Keyword">class</span> <span class="Type">Base</span>
+  
+      <span class="PreProc">def</span> <span class="Constant">self</span>.<span class="Function">all</span>(*args)
+        new(*args).all
+      <span class="PreProc">end</span>
+  
+      <span class="Comment"># ... rest of the base class ...</span>
+  
+    <span class="Keyword">end</span>
+  <span class="Keyword">end</span></pre>
+  <p>This reduces the connascence needed to use the service. Not really needed here, but it&#39;s a nice way of cleaning up your interface.</p>
+  
+  <p>You might ask where do I put this into my Rails application. I make a folder <code>app&#47;services</code> and (because I use RSpec) a folder named <code>spec&#47;services</code>. If you use autotest, you need to tell it to pick up changes in these directories. You&#39;ll need to add the file <code>.autotest</code> to your application root folder, containing this bit of code to do the mapping:</p>
+  <pre><span class="Type">Autotest</span>.add_hook <span class="Constant">:initialize</span> <span class="rubyControl">do</span> |<span class="Identifier">at</span>|
+    at.add_mapping(<span class="rubyRegexpDelimiter">%r%</span><span class="Special">^</span><span class="rubyRegexp">spec/</span><span class="Special">(</span><span class="Special">.</span><span class="Special">*</span><span class="Special">)</span><span class="rubyRegexp">_spec</span><span class="Special">\.</span><span class="rubyRegexp">rb</span><span class="Special">$</span><span class="rubyRegexpDelimiter">%</span>) { |<span class="Identifier">filename</span>, <span class="Identifier">_</span>| filename }
+    at.add_mapping(<span class="rubyRegexpDelimiter">%r%</span><span class="Special">^</span><span class="rubyRegexp">app/</span><span class="Special">(</span><span class="Special">.</span><span class="Special">*</span><span class="Special">)</span><span class="Special">\.</span><span class="rubyRegexp">rb</span><span class="Special">$</span><span class="rubyRegexpDelimiter">%</span>) { |<span class="Identifier">_</span>, <span class="Identifier">m</span>| [<span class="rubyStringDelimiter">"</span><span class="String">spec/</span><span class="rubyInterpolationDelimiter">#{</span>m[<span class="Number">1</span>]<span class="rubyInterpolationDelimiter">}</span><span class="String">_spec.rb</span><span class="rubyStringDelimiter">"</span>] }
+  <span class="rubyControl">end</span></pre>
+toc: 
+- anchor: "#toc_0"
+  title: In Theory
+- anchor: "#toc_1"
+  title: In Practice
+- anchor: "#toc_2"
+  title: Some bonus material
+introduction: <p>As <a href="/domain-driven-design-building-blocks-in-ruby">promised</a>, here is an example of how to use the idea of services from Domain Driven Design to help you design your code better. Let&#39;s start with some theoretical stuff, before we dive into some example code.</p>

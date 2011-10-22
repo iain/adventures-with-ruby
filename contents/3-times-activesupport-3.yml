@@ -1,0 +1,62 @@
+--- 
+html: |
+  <p>Rails 3 is coming. All the big changes are spoken of elsewhere, so I&#39;m going to mention some small changes. Here are 3 random new methods added to ActiveSupport:</p>
+  
+  <h3 id="toc_0">presence</h3>
+  
+  <p>First up is <code>Object#presence</code> which is a shortcut for <code>Object#present? &amp;&amp; Object</code>. It is a bit of a sanitizer. Empty strings and other blank values will return <code>nil</code> and any other value will return itself. Use this one and your code might be a tad cleaner.</p>
+  <pre><span class="rubyStringDelimiter">""</span>.presence <span class="Comment"># =&gt; nil</span>
+  <span class="rubyStringDelimiter">"</span><span class="String">foo</span><span class="rubyStringDelimiter">"</span>.presence <span class="Comment">#=&gt; "foo"</span>
+  
+  <span class="Comment"># without presence:</span>
+  <span class="Conditional">if</span> params[<span class="Constant">:foo</span>].present? &amp;&amp; (foo = params[<span class="Constant">:foo</span>])
+    <span class="Comment"># ..</span>
+  <span class="Conditional">end</span>
+  
+  <span class="Comment"># with presence:</span>
+  <span class="Conditional">if</span> foo = params[<span class="Constant">:foo</span>].presence
+    <span class="Comment"># ...</span>
+  <span class="Conditional">end</span>
+  
+  <span class="Comment"># The example Rails gives:</span>
+  state   = params[<span class="Constant">:state</span>]   <span class="Conditional">if</span> params[<span class="Constant">:state</span>].present?
+  country = params[<span class="Constant">:country</span>] <span class="Conditional">if</span> params[<span class="Constant">:country</span>].present?
+  region  = state || country || <span class="rubyStringDelimiter">'</span><span class="String">US</span><span class="rubyStringDelimiter">'</span>
+  <span class="Comment"># ...becomes:</span>
+  region = params[<span class="Constant">:state</span>].presence || params[<span class="Constant">:country</span>].presence || <span class="rubyStringDelimiter">'</span><span class="String">US</span><span class="rubyStringDelimiter">'</span></pre>
+  <p>I like this way of cleaning up you&#39;re code. I guess it&#39;s Rubyesque to feel the need to tidy and shorten your code like this.</p>
+  
+  <h3 id="toc_1">uniq_by</h3>
+  
+  <p>Another funny one is <code>Array.uniq_by</code> (and it sister-with-a-bang-method). It works as select, but returns only the first element from the array that complies with the block you gave it. Here are some examples to illustrate that:</p>
+  <pre>[ <span class="Number">1</span>, <span class="Number">2</span>, <span class="Number">3</span>, <span class="Number">4</span> ].uniq_by(&amp;<span class="Constant">:odd?</span>) <span class="Comment"># =&gt; [ 1, 2 ]</span>
+  
+  posts = <span class="rubyStringDelimiter">%W"</span><span class="String">foo bar foo</span><span class="rubyStringDelimiter">"</span>.map.with_index <span class="rubyControl">do</span> |<span class="Identifier">title</span>, <span class="Identifier">i</span>|
+    <span class="Type">Post</span>.create(<span class="Constant">:title</span> =&gt; title, <span class="Constant">:index</span> =&gt; i)
+  <span class="rubyControl">end</span>
+  posts.uniq_by(&amp;<span class="Constant">:title</span>)
+  <span class="Comment"># =&gt; [ Post("foo", 0), Post("bar", 1) ] ( and not Post("foo", 2) )</span>
+  
+  some_array.uniq_by(&amp;<span class="Constant">:object_id</span>) <span class="Comment"># same as some_array.uniq</span></pre>
+  <h3 id="toc_2">exclude?</h3>
+  
+  <p>And the final one for today is <code>exclude?</code> which is the opposite of <code>include?</code>. Nobody likes the exclamation mark before predicate methods.</p>
+  <pre><span class="Comment"># yuck:</span>
+  !some_array.include?(some_value)
+  <span class="Comment"># better:</span>
+  some_array.exclude?(some_value)</pre>
+  <p>And it also works on strings:</p>
+  <pre><span class="Comment"># even more yuck:</span>
+  !<span class="rubyStringDelimiter">"</span><span class="String">The quick fox</span><span class="rubyStringDelimiter">"</span>.include?(<span class="rubyStringDelimiter">"</span><span class="String">quick</span><span class="rubyStringDelimiter">"</span>) <span class="Comment"># =&gt; false</span>
+  <span class="Comment"># better:</span>
+  <span class="rubyStringDelimiter">"</span><span class="String">The quick fox</span><span class="rubyStringDelimiter">"</span>.exclude?(<span class="rubyStringDelimiter">"</span><span class="String">quick</span><span class="rubyStringDelimiter">"</span>) <span class="Comment"># =&gt; false</span></pre>
+  <p>The full release notes of Rails 3 can be <a href="http://guides.rails.info/3_0_release_notes.html">read here</a>.</p>
+
+toc: 
+- anchor: "#toc_0"
+  title: presence
+- anchor: "#toc_1"
+  title: uniq_by
+- anchor: "#toc_2"
+  title: exclude?
+introduction: <p>Rails 3 is coming. All the big changes are spoken of elsewhere, so I&#39;m going to mention some small changes. Here are 3 random new methods added to ActiveSupport:</p>
