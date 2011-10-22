@@ -3,16 +3,18 @@ require 'nokogiri'
 
 class Code
 
-  def self.parse(code, language)
-    new(code, language).to_html.strip
+  def self.parse(code, language, out = STDOUT)
+    new(code, language, out).to_html.strip
   end
 
   LANGUAGES = { "ruby" => "rb", "javascript" => "js", "yaml" => "yml" }
 
-  def initialize(code, language)
+  def initialize(code, language, out)
     fail "Command `mvim` not found" if command_not_found?
-    @code = code
+    @code     = code
     @language = language
+    @out      = out
+    @out.puts "Parsing code in #{@language} format"
   end
 
   def to_html
@@ -85,7 +87,7 @@ class Code
   def execute(command)
     thread = Thread.new do
       system command
-      true until yield
+      sleep 0.1 until yield
     end
     thread.value
   end
