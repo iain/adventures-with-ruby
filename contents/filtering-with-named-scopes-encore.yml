@@ -3,57 +3,54 @@ html: |
   <p>In my previous post, I talked about making filters using named scopes. To summorize:</p>
   
   <blockquote>
-  <p>I like the method of using a named_scope and delegating to specified filters. This way, you can structure your filters properly and get clean URLs. Also, you can chain other named scopes to the filter.</p>
+  <p>I like the method of using a named_scope and delegating to specified filters. This way, you can
+  structure your filters properly and get clean URLs. Also, you can chain other named scopes to the
+  filter.</p>
   </blockquote>
   
-  <p>If you find yourself making an administrative web application, with many tables and filters, here&#39;s an example to make it a little more DRY.</p>
+  <p>If you find yourself making an administrative web application, with many tables and filters, here&#39;s
+  an example to make it a little more DRY.</p>
   
   <h3 id="toc_0">Making a partial</h3>
   
   <p>First, make the filters a partial, in something like <code>app&#47;views&#47;shared&#47;_filters.html.haml</code>.</p>
-  <pre>%h3= t(model_name, :scope => :filter_titles)
-  %ul
-    - model_class.available_filters.each do |filter|
-      %li= link_to t(filter, :scope => [:filter_names, model_name]), url_for(params.merge(:filter => filter))
-  </pre>
+  <pre><span class="Special">%</span><span class="Conditional">h3</span><span class="Special">=</span> t(model_name, <span class="Constant">:scope</span> =&gt; <span class="Constant">:filter_titles</span>)
+  <span class="Special">%</span><span class="Conditional">ul</span>
+    <span class="Special">-</span> model_class.available_filters.each <span class="rubyControl">do</span> |<span class="Identifier">filter</span>|
+      <span class="Special">%</span><span class="Conditional">li</span><span class="Special">=</span> link_to t(filter, <span class="Constant">:scope</span> =&gt; [<span class="Constant">:filter_names</span>, model_name]), url_for(params.merge(<span class="Constant">:filter</span> =&gt; filter))</pre>
   <p>I&#39;ve changed the translate-calls a bit, so they work with different models.</p>
   
   <h3 id="toc_1">A helper method</h3>
   
   <p>Then, create a helper method:</p>
-  <pre>def show_filters_for(model_name)
-    render :partial => "shared/filters",
-           :locals => { :model_name => model_name, :model_class => model_name.to_s.camilze.constantize }
-  end
-  </pre>
+  <pre><span class="PreProc">def</span> <span class="Function">show_filters_for</span>(model_name)
+    render <span class="Constant">:partial</span> =&gt; <span class="rubyStringDelimiter">"</span><span class="String">shared/filters</span><span class="rubyStringDelimiter">"</span>,
+           <span class="Constant">:locals</span> =&gt; { <span class="Constant">:model_name</span> =&gt; model_name, <span class="Constant">:model_class</span> =&gt; model_name.to_s.camilze.constantize }
+  <span class="PreProc">end</span></pre>
   <p>Now you can render the filters like this:</p>
-  <pre>= show_filters_for :person
-  </pre>
+  <pre><span class="Special">=</span> show_filters_for <span class="Constant">:person</span></pre>
   <h3 id="toc_2">And a module</h3>
   
   <p>On the model side, you can make a module, probably in <code>lib&#47;chainable_filters.rb</code>.</p>
-  <pre>module ChainableFilters
+  <pre><span class="Keyword">module</span> <span class="Type">ChainableFilters</span>
   
-    def self.extended(model)
-      model.named_scope :filter, lambda { |f|
-        model.available_filters.include?(f) ? model.send("filter_#{f}") : {}
+    <span class="PreProc">def</span> <span class="Constant">self</span>.<span class="Function">extended</span>(model)
+      model.named_scope <span class="Constant">:filter</span>, <span class="Keyword">lambda</span> { |<span class="Identifier">f</span>|
+        model.available_filters.include?(f) ? model.send(<span class="rubyStringDelimiter">"</span><span class="String">filter_</span><span class="rubyInterpolationDelimiter">#{</span>f<span class="rubyInterpolationDelimiter">}</span><span class="rubyStringDelimiter">"</span>) : {}
       }
-    end
+    <span class="PreProc">end</span>
   
-    def available_filters
-      self.methods.select { |m| m =~ /^filter_/ }.map { |m| m[7..-1].to_sym }
-    end
+    <span class="PreProc">def</span> <span class="Function">available_filters</span>
+      <span class="Constant">self</span>.methods.select { |<span class="Identifier">m</span>| m =~ <span class="rubyRegexpDelimiter">/</span><span class="Special">^</span><span class="rubyRegexp">filter_</span><span class="rubyRegexpDelimiter">/</span> }.map { |<span class="Identifier">m</span>| m[<span class="Number">7</span>..<span class="Number">-1</span>].to_sym }
+    <span class="PreProc">end</span>
   
-  end
-  </pre>
+  <span class="Keyword">end</span></pre>
   <p>Use it in a specific model, by extending with the module you just made:</p>
-  <pre>class Person < ActiveRecord::Base
-    extend ChainableFilters
-  end
-  </pre>
+  <pre><span class="Keyword">class</span> <span class="Type">Person</span> &lt; <span class="Type">ActiveRecord</span>::<span class="Type">Base</span>
+    <span class="PreProc">extend</span> <span class="Type">ChainableFilters</span>
+  <span class="Keyword">end</span></pre>
   <p>Or just every ActiveRecord class, by creating an initializer file (i.e. <code>config&#47;initializers&#47;chainable_filters.rb</code>):</p>
-  <pre>ActiveRecord::Base.extend ChainableFilters
-  </pre>
+  <pre><span class="Type">ActiveRecord</span>::<span class="Type">Base</span>.extend <span class="Type">ChainableFilters</span></pre>
   <p>Now, that is some nice meta-programming, if you ask me! ;)</p>
 
 toc: 
@@ -66,5 +63,8 @@ toc:
 introduction: |-
   <p>In my previous post, I talked about making filters using named scopes. To summorize:</p>
   <blockquote>
-  <p>I like the method of using a named_scope and delegating to specified filters. This way, you can structure your filters properly and get clean URLs. Also, you can chain other named scopes to the filter.</p></blockquote>
-  <p>If you find yourself making an administrative web application, with many tables and filters, here&#39;s an example to make it a little more DRY.</p>
+  <p>I like the method of using a named_scope and delegating to specified filters. This way, you can
+  structure your filters properly and get clean URLs. Also, you can chain other named scopes to the
+  filter.</p></blockquote>
+  <p>If you find yourself making an administrative web application, with many tables and filters, here&#39;s
+  an example to make it a little more DRY.</p>

@@ -1,45 +1,54 @@
 --- 
 html: |
-  <p>Everybody probably read about has_many :through relations. With one simple command you can do some amazing stuff. Consider the following:</p>
-  <pre>class User < ActiveRecord::Base
-    has_many :subscriptions
-    has_many :newsletters, :through => :subscriptions
-  end
+  <p>Everybody probably read about has_many :through relations. With one simple command you can do some
+  amazing stuff. Consider the following:</p>
+  <pre><span class="Keyword">class</span> <span class="Type">User</span> &lt; <span class="Type">ActiveRecord</span>::<span class="Type">Base</span>
+    has_many <span class="Constant">:subscriptions</span>
+    has_many <span class="Constant">:newsletters</span>, <span class="Constant">:through</span> =&gt; <span class="Constant">:subscriptions</span>
+  <span class="Keyword">end</span>
   
-  class Subscription < ActiveRecord::Base
-    belongs_to :user, :dependent => :destroy
-    belongs_to :newsletter, :dependent => :destroy
-  end
+  <span class="Keyword">class</span> <span class="Type">Subscription</span> &lt; <span class="Type">ActiveRecord</span>::<span class="Type">Base</span>
+    belongs_to <span class="Constant">:user</span>, <span class="Constant">:dependent</span> =&gt; <span class="Constant">:destroy</span>
+    belongs_to <span class="Constant">:newsletter</span>, <span class="Constant">:dependent</span> =&gt; <span class="Constant">:destroy</span>
+  <span class="Keyword">end</span>
   
-  class Newsletter < ActiveRecord::Base
-    has_many :subscriptions
-    has_many :users, :through => :subscriptions
-    has_many :old_users, :through => :subscription, :conditions => 'age > 60'
-  end
-  </pre>
-  <p>Now you&#39;ll see that having a nice name for the join model is important for keeping it readable. From personal experience I really need to repeat that: <strong>It is important to give a good name to your join model.</strong> You might be tempted to use the default way of calling has_and_belongs_to_many. That would be newsletter_users. It would be incredibly annoying to have to refer to that name all the time, confusing and ugly.</p>
+  <span class="Keyword">class</span> <span class="Type">Newsletter</span> &lt; <span class="Type">ActiveRecord</span>::<span class="Type">Base</span>
+    has_many <span class="Constant">:subscriptions</span>
+    has_many <span class="Constant">:users</span>, <span class="Constant">:through</span> =&gt; <span class="Constant">:subscriptions</span>
+    has_many <span class="Constant">:old_users</span>, <span class="Constant">:through</span> =&gt; <span class="Constant">:subscription</span>, <span class="Constant">:conditions</span> =&gt; <span class="rubyStringDelimiter">'</span><span class="String">age &gt; 60</span><span class="rubyStringDelimiter">'</span>
+  <span class="Keyword">end</span></pre>
+  <p>Now you&#39;ll see that having a nice name for the join model is important for keeping it readable. From
+  personal experience I really need to repeat that: <strong>It is important to give a good name to your join
+  model.</strong> You might be tempted to use the default way of calling has_and_belongs_to_many. That would
+  be newsletter_users. It would be incredibly annoying to have to refer to that name all the time,
+  confusing and ugly.</p>
   
-  <p>Anyway, with this in place you can do nice stuff like: <code>current_user.newsletters</code> or <code>@my_mag.old_users</code>. It&#39;s cool, but still very elementary. And though you can do much more than this, there are still some loose ends. Sometimes you&#39;ll want to have the subscription, because you&#39;ll want to update it, or destroy it, or whatever. Here is one of many solutions:</p>
-  <pre>class Newsletter < ActiveRecord::Base
+  <p>Anyway, with this in place you can do nice stuff like: <code>current_user.newsletters</code> or
+  <code>@my_mag.old_users</code>. It&#39;s cool, but still very elementary. And though you can do much more than
+  this, there are still some loose ends. Sometimes you&#39;ll want to have the subscription, because
+  you&#39;ll want to update it, or destroy it, or whatever. Here is one of many solutions:</p>
+  <pre><span class="Keyword">class</span> <span class="Type">Newsletter</span> &lt; <span class="Type">ActiveRecord</span>::<span class="Type">Base</span>
   
-    # amongst all the other stuff
+    <span class="Comment"># amongst all the other stuff</span>
   
-    # find the subscription, call it like this:
-    #   @newsletter.subscription_by(current_user).created_at
-    def subscription_by(user)
-      self.subscriptions.find_by_user_id(user.id)
-    end
+    <span class="Comment"># find the subscription, call it like this:</span>
+    <span class="Comment">#   @newsletter.subscription_by(current_user).created_at</span>
+    <span class="PreProc">def</span> <span class="Function">subscription_by</span>(user)
+      <span class="Constant">self</span>.subscriptions.find_by_user_id(user.id)
+    <span class="PreProc">end</span>
   
-    # Creates a new subscription or updates the one already there, with the given attributes
-    def save_subscription_for(user, attributes = {})
-      s = self.subscription_by(user) || self.subscriptions.new(:user => user)
+    <span class="Comment"># Creates a new subscription or updates the one already there, with the given attributes</span>
+    <span class="PreProc">def</span> <span class="Function">save_subscription_for</span>(user, attributes = {})
+      s = <span class="Constant">self</span>.subscription_by(user) || <span class="Constant">self</span>.subscriptions.new(<span class="Constant">:user</span> =&gt; user)
       s.update_attributes(attributes)
-    end
+    <span class="PreProc">end</span>
   
-  end
-  </pre>
-  <p>There is more and more elegant ways to do this. I&#39;ll get back to you on that. Leave any suggestions in the comments.</p>
+  <span class="Keyword">end</span></pre>
+  <p>There is more and more elegant ways to do this. I&#39;ll get back to you on that. Leave any suggestions
+  in the comments.</p>
 
 toc: []
 
-introduction: <p>Everybody probably read about has_many :through relations. With one simple command you can do some amazing stuff. Consider the following:</p>
+introduction: |-
+  <p>Everybody probably read about has_many :through relations. With one simple command you can do some
+  amazing stuff. Consider the following:</p>

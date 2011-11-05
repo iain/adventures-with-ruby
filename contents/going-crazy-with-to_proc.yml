@@ -1,130 +1,112 @@
 --- 
 html: |
   <p>You all know <code>Symbol#to_proc</code>, right? It allows you to write this:</p>
+  <pre><span class="Comment"># Without Symbol#to_proc</span>
+  [<span class="Number">1</span>, <span class="Number">2</span>, <span class="Number">3</span>].map { |<span class="Identifier">it</span>| it.to_s }
+  [<span class="Number">3</span>, <span class="Number">4</span>, <span class="Number">5</span>].inject { |<span class="Identifier">memo</span>, <span class="Identifier">it</span>| memo * it }
   
-  <pre class="ir_black"><font color="#7c7c7c"># Without Symbol#to_proc</font>
-  [<font color="#ff73fd">1</font>, <font color="#ff73fd">2</font>, <font color="#ff73fd">3</font>].map { |<font color="#c6c5fe">it</font>|&nbsp;it.to_s }
-  [<font color="#ff73fd">3</font>, <font color="#ff73fd">4</font>, <font color="#ff73fd">5</font>].inject { |<font color="#c6c5fe">memo</font>, <font color="#c6c5fe">it</font>|&nbsp;memo * it }
-  
-  <font color="#7c7c7c"># With Symbol#to_proc</font>
-  [<font color="#ff73fd">1</font>, <font color="#ff73fd">2</font>, <font color="#ff73fd">3</font>].map(&amp;<font color="#99cc99">:to_s</font>)
-  [<font color="#ff73fd">3</font>, <font color="#ff73fd">4</font>, <font color="#ff73fd">5</font>].inject(&amp;<font color="#99cc99">:*</font>)</pre>
-  
-  <p>It has been in Rails as long as I can remember, and is in Ruby 1.8.7 and 1.9.x. I love it to death and I use it everywhere I can.</p>
+  <span class="Comment"># With Symbol#to_proc</span>
+  [<span class="Number">1</span>, <span class="Number">2</span>, <span class="Number">3</span>].map(&amp;<span class="Constant">:to_s</span>)
+  [<span class="Number">3</span>, <span class="Number">4</span>, <span class="Number">5</span>].inject(&amp;<span class="Constant">:*</span>)</pre>
+  <p>It has been in Rails as long as I can remember, and is in Ruby 1.8.7 and 1.9.x. I love it to death
+  and I use it everywhere I can.</p>
   
   <p>It is actually quite simple, and you can implement it yourself:</p>
+  <pre><span class="Keyword">class</span> <span class="Type">Symbol</span>
+    <span class="PreProc">def</span> <span class="Function">to_proc</span>
+      <span class="Type">Proc</span>.new { |<span class="Identifier">obj</span>, *<span class="Identifier">args</span>| obj.send(<span class="Constant">self</span>, *args) }
+    <span class="PreProc">end</span>
+  <span class="Keyword">end</span></pre>
+  <p>It works because when you prepend an ampersand (&amp;) to any Ruby object, it calls <code>#to_proc</code> to
+  get a proc to use as block for the method.</p>
   
-  <pre class="ir_black"><font color="#96cbfe">class</font>&nbsp;<font color="#ffffb6">Symbol</font>
-  &nbsp;&nbsp;<font color="#96cbfe">def</font>&nbsp;<font color="#ffd2a7">to_proc</font>
-  &nbsp;&nbsp;&nbsp;&nbsp;<font color="#ffffb6">Proc</font>.new { |<font color="#c6c5fe">obj</font>, *<font color="#c6c5fe">args</font>|&nbsp;obj.send(<font color="#99cc99">self</font>, *args) }
-  &nbsp;&nbsp;<font color="#96cbfe">end</font>
-  <font color="#96cbfe">end</font></pre>
+  <p>What I always regretted though was not being to pass any arguments, so I hacked and monkeypatched a
+  bit, and got:</p>
+  <pre><span class="Keyword">class</span> <span class="Type">Symbol</span>
   
-  <p>It works because when you prepend an ampersand (&amp;) to any Ruby object, it calls <code>#to_proc</code> to get a proc to use as block for the method.</p>
+    <span class="PreProc">def</span> <span class="Function">with</span>(*args, &amp;block)
+      <span class="Identifier">@proc_arguments</span> = { <span class="Constant">:args</span> =&gt; args, <span class="Constant">:block</span> =&gt; block }
+      <span class="Constant">self</span>
+    <span class="PreProc">end</span>
   
-  <p>What I always regretted though was not being to pass any arguments, so I hacked and monkeypatched a bit, and got:</p>
+    <span class="PreProc">def</span> <span class="Function">to_proc</span>
+      <span class="Identifier">@proc_arguments</span> ||= {}
+      args = <span class="Identifier">@proc_arguments</span>[<span class="Constant">:args</span>] || []
+      block = <span class="Identifier">@proc_arguments</span>[<span class="Constant">:block</span>]
+      <span class="Identifier">@proc_arguments</span> = <span class="Constant">nil</span>
+      <span class="Type">Proc</span>.new { |<span class="Identifier">obj</span>, *<span class="Identifier">other</span>| obj.send(<span class="Constant">self</span>, *(other + args), &amp;block) }
+    <span class="PreProc">end</span>
   
-  <pre class="ir_black"><font color="#96cbfe">class</font>&nbsp;<font color="#ffffb6">Symbol</font>
-  
-  &nbsp;&nbsp;<font color="#96cbfe">def</font>&nbsp;<font color="#ffd2a7">with</font>(*args, &amp;block)
-  &nbsp;&nbsp;&nbsp;&nbsp;<font color="#c6c5fe">@proc_arguments</font>&nbsp;= { <font color="#99cc99">:args</font>&nbsp;=&gt; args, <font color="#99cc99">:block</font>&nbsp;=&gt; block }
-  &nbsp;&nbsp;&nbsp;&nbsp;<font color="#99cc99">self</font>
-  &nbsp;&nbsp;<font color="#96cbfe">end</font>
-  
-  &nbsp;&nbsp;<font color="#96cbfe">def</font>&nbsp;<font color="#ffd2a7">to_proc</font>
-  &nbsp;&nbsp;&nbsp;&nbsp;<font color="#c6c5fe">@proc_arguments</font>&nbsp;||= {}
-  &nbsp;&nbsp;&nbsp;&nbsp;args = <font color="#c6c5fe">@proc_arguments</font>[<font color="#99cc99">:args</font>] || []
-  &nbsp;&nbsp;&nbsp;&nbsp;block = <font color="#c6c5fe">@proc_arguments</font>[<font color="#99cc99">:block</font>]
-  &nbsp;&nbsp;&nbsp;&nbsp;<font color="#c6c5fe">@proc_arguments</font>&nbsp;= <font color="#99cc99">nil</font>
-  &nbsp;&nbsp;&nbsp;&nbsp;<font color="#ffffb6">Proc</font>.new { |<font color="#c6c5fe">obj</font>, *<font color="#c6c5fe">other</font>|&nbsp;obj.send(<font color="#99cc99">self</font>, *(other + args), &amp;block) }
-  &nbsp;&nbsp;<font color="#96cbfe">end</font>
-  
-  <font color="#96cbfe">end</font></pre>
-  
+  <span class="Keyword">end</span></pre>
   <p>So you can now write:</p>
+  <pre>some_dates.map(&amp;<span class="Constant">:strftime</span>.with(<span class="rubyStringDelimiter">"</span><span class="String">%d-%M-%Y</span><span class="rubyStringDelimiter">"</span>))</pre>
+  <p>Not that this is any shorter than just creating the darn block in the first place. But hey, it&#39;s a
+  good exercise in metaprogramming and show of more of Ruby&#39;s awesome flexibility.</p>
   
-  <pre class="ir_black">some_dates.map(&amp;<font color="#99cc99">:strftime</font>.with(<font color="#336633">&quot;</font><font color="#a8ff60">%d-%M-%Y</font><font color="#336633">&quot;</font>))</pre>
+  <p>After this I remembered something similar that annoyed me before. It&#39;s that Rails helper methods are
+  just a bag of methods available to, because they are mixed in your template. So if you have an array
+  of numbers that you want to format as currency, you&#39;d have to do:</p>
+  <pre><span class="PreProc">&lt;%=</span> <span class="Identifier">@prices</span>.map { |<span class="Identifier">price</span>| number_to_currency(price) }.to_sentence <span class="PreProc">%&gt;</span></pre>
+  <p>What if I could apply some <code>to_proc</code>-love to that too? All these helper methods cannot be added to
+  strings, fixnums, and the likes; that would clutter <em>way</em> to much. Rather, it might by a nice idea
+  to use procs that understands helper methods. Here is what I created:</p>
+  <pre><span class="Keyword">module</span> <span class="Type">ProcProxyHelper</span>
   
-  <p>Not that this is any shorter than just creating the darn block in the first place. But hey, it&#39;s a good exercise in metaprogramming and show of more of Ruby&#39;s awesome flexibility.</p>
+    <span class="PreProc">def</span> <span class="Function">it</span>(position = <span class="Number">1</span>)
+      <span class="Type">ProcProxy</span>.new(<span class="Constant">self</span>, position)
+    <span class="PreProc">end</span>
   
-  <p>After this I remembered something similar that annoyed me before. It&#39;s that Rails helper methods are just a bag of methods available to, because they are mixed in your template. So if you have an array of numbers that you want to format as currency, you&#39;d have to do:</p>
+    <span class="Keyword">class</span> <span class="Type">ProcProxy</span>
   
-  <pre class="ir_black"><font color="#00a0a0">&lt;%=</font>&nbsp;<font color="#c6c5fe">@prices</font>.map { |<font color="#c6c5fe">price</font>|&nbsp;number_to_currency(price) }.to_sentence <font color="#00a0a0">%&gt;</font></pre>
+      instance_methods.each { |<span class="Identifier">m</span>| undef_method(m) <span class="Conditional">unless</span> m.to_s =~ <span class="rubyRegexpDelimiter">/</span><span class="Special">^</span><span class="rubyRegexp">__</span><span class="Special">|</span><span class="rubyRegexp">respond_to</span><span class="Special">\?</span><span class="Special">|</span><span class="rubyRegexp">method_missing</span><span class="rubyRegexpDelimiter">/</span> }
   
-  <p>What if I could apply some <code>to_proc</code>-love to that too? All these helper methods cannot be added to strings, fixnums, and the likes; that would clutter <em>way</em> to much. Rather, it might by a nice idea to use procs that understands helper methods. Here is what I created:</p>
+      <span class="PreProc">def</span> <span class="Function">initialize</span>(object, position = <span class="Number">1</span>)
+        <span class="Identifier">@object</span>, <span class="Identifier">@position</span> = object, position
+      <span class="PreProc">end</span>
   
-  <pre class="ir_black"><font color="#96cbfe">module</font>&nbsp;<font color="#ffffb6">ProcProxyHelper</font>
+      <span class="PreProc">def</span> <span class="Function">to_proc</span>
+        <span class="Statement">raise</span> <span class="rubyStringDelimiter">"</span><span class="String">Please specify a method to be called on the object</span><span class="rubyStringDelimiter">"</span> <span class="Conditional">unless</span> <span class="Identifier">@delegation</span>
+        <span class="Type">Proc</span>.new { |*<span class="Identifier">values</span>| <span class="Identifier">@object</span>.__send__(*<span class="Identifier">@delegation</span>[<span class="Constant">:args</span>].dup.insert(<span class="Identifier">@position</span>, *values), &amp;<span class="Identifier">@delegation</span>[<span class="Constant">:block</span>]) }
+      <span class="PreProc">end</span>
   
-  &nbsp;&nbsp;<font color="#96cbfe">def</font>&nbsp;<font color="#ffd2a7">it</font>(position = <font color="#ff73fd">1</font>)
-  &nbsp;&nbsp;&nbsp;&nbsp;<font color="#ffffb6">ProcProxy</font>.new(<font color="#99cc99">self</font>, position)
-  &nbsp;&nbsp;<font color="#96cbfe">end</font>
+      <span class="PreProc">def</span> <span class="Function">method_missing</span>(*args, &amp;block)
+        <span class="Identifier">@delegation</span> = { <span class="Constant">:args</span> =&gt; args, <span class="Constant">:block</span> =&gt; block }
+        <span class="Constant">self</span>
+      <span class="PreProc">end</span>
   
-  &nbsp;&nbsp;<font color="#96cbfe">class</font>&nbsp;<font color="#ffffb6">ProcProxy</font>
+    <span class="Keyword">end</span>
   
-  &nbsp;&nbsp;&nbsp;&nbsp;instance_methods.each { |<font color="#c6c5fe">m</font>|&nbsp;undef_method(m) <font color="#6699cc">unless</font>&nbsp;m.to_s =~ <font color="#ff8000">/</font><font color="#e18964">^</font><font color="#b18a3d">__</font><font color="#e18964">|</font><font color="#b18a3d">respond_to</font><font color="#e18964">\?</font><font color="#e18964">|</font><font color="#b18a3d">method_missing</font><font color="#ff8000">/</font>&nbsp;}
+  <span class="Keyword">end</span></pre>
+  <p>I used a clean blank class (in Ruby 1.9, you&#39;d want to inherit it from <code>BasicObject</code>), in which I
+  will provide the proper <code>proc</code>-object. I play around with the argument list a bit, handling multiple
+  arguments and blocks too. You can now use this syntax:</p>
+  <pre><span class="PreProc">&lt;%=</span> <span class="Identifier">@prices</span>.map(&amp;it.number_to_currency).to_sentence <span class="PreProc">%&gt;</span></pre>
+  <p>That is a lot sexier if you as me. And you can use it in any object, not just inside views. And lets
+  add some extra arguments and some <code>Enumerator</code>-love too:</p>
+  <pre><span class="Keyword">class</span> <span class="Type">SomeClass</span>
+    <span class="PreProc">include</span> <span class="Type">ProcProxyHelper</span>
   
-  &nbsp;&nbsp;&nbsp;&nbsp;<font color="#96cbfe">def</font>&nbsp;<font color="#ffd2a7">initialize</font>(object, position = <font color="#ff73fd">1</font>)
-  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#c6c5fe">@object</font>, <font color="#c6c5fe">@position</font>&nbsp;= object, position
-  &nbsp;&nbsp;&nbsp;&nbsp;<font color="#96cbfe">end</font>
+    <span class="PreProc">def</span> <span class="Function">initialize</span>(name, list)
+      <span class="Identifier">@name</span>, <span class="Identifier">@list</span> = name, list
+    <span class="PreProc">end</span>
   
-  &nbsp;&nbsp;&nbsp;&nbsp;<font color="#96cbfe">def</font>&nbsp;<font color="#ffd2a7">to_proc</font>
-  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#6699cc">raise</font>&nbsp;<font color="#336633">&quot;</font><font color="#a8ff60">Please specify a method to be called on the object</font><font color="#336633">&quot;</font>&nbsp;<font color="#6699cc">unless</font>&nbsp;<font color="#c6c5fe">@delegation</font>
-  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#ffffb6">Proc</font>.new { |*<font color="#c6c5fe">values</font>|&nbsp;<font color="#c6c5fe">@object</font>.__send__(*<font color="#c6c5fe">@delegation</font>[<font color="#99cc99">:args</font>].dup.insert(<font color="#c6c5fe">@position</font>, *values), &amp;<font color="#c6c5fe">@delegation</font>[<font color="#99cc99">:block</font>]) }
-  &nbsp;&nbsp;&nbsp;&nbsp;<font color="#96cbfe">end</font>
+    <span class="PreProc">def</span> <span class="Function">apply</span>(value, index, seperator)
+      <span class="rubyStringDelimiter">"</span><span class="rubyInterpolationDelimiter">#{</span><span class="Identifier">@name</span><span class="rubyInterpolationDelimiter">}</span><span class="String">, </span><span class="rubyInterpolationDelimiter">#{</span>index<span class="rubyInterpolationDelimiter">}</span><span class="String"> </span><span class="rubyInterpolationDelimiter">#{</span>separator<span class="rubyInterpolationDelimiter">}</span><span class="String"> </span><span class="rubyInterpolationDelimiter">#{</span>value<span class="rubyInterpolationDelimiter">}</span><span class="rubyStringDelimiter">"</span>
+    <span class="PreProc">end</span>
   
-  &nbsp;&nbsp;&nbsp;&nbsp;<font color="#96cbfe">def</font>&nbsp;<font color="#ffd2a7">method_missing</font>(*args, &amp;block)
-  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#c6c5fe">@delegation</font>&nbsp;= { <font color="#99cc99">:args</font>&nbsp;=&gt; args, <font color="#99cc99">:block</font>&nbsp;=&gt; block }
-  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#99cc99">self</font>
-  &nbsp;&nbsp;&nbsp;&nbsp;<font color="#96cbfe">end</font>
+    <span class="PreProc">def</span> <span class="Function">applied_list</span>
+      <span class="Identifier">@list</span>.map.with_index(&amp;it.apply(<span class="rubyStringDelimiter">"</span><span class="String">:</span><span class="rubyStringDelimiter">"</span>))
+    <span class="PreProc">end</span>
   
-  &nbsp;&nbsp;<font color="#96cbfe">end</font>
-  
-  <font color="#96cbfe">end</font></pre>
-  
-  <p>I used a clean blank class (in Ruby 1.9, you&#39;d want to inherit it from <code>BasicObject</code>), in which I will provide the proper <code>proc</code>-object. I play around with the argument list a bit, handling multiple arguments and blocks too. You can now use this syntax:</p>
-  
-  <pre class="ir_black"><font color="#00a0a0">&lt;%=</font>&nbsp;<font color="#c6c5fe">@prices</font>.map(&amp;it.number_to_currency).to_sentence <font color="#00a0a0">%&gt;</font></pre>
-  
-  <p>That is a lot sexier if you as me. And you can use it in any object, not just inside views. And lets add some extra arguments and some <code>Enumerator</code>-love too:</p>
-  
-  <pre class="ir_black"><font color="#96cbfe">class</font>&nbsp;<font color="#ffffb6">SomeClass</font>
-  &nbsp;&nbsp;<font color="#96cbfe">include</font>&nbsp;<font color="#ffffb6">ProcProxyHelper</font>
-  
-  &nbsp;&nbsp;<font color="#96cbfe">def</font>&nbsp;<font color="#ffd2a7">initialize</font>(name, list)
-  &nbsp;&nbsp;&nbsp;&nbsp;<font color="#c6c5fe">@name</font>, <font color="#c6c5fe">@list</font>&nbsp;= name, list
-  &nbsp;&nbsp;<font color="#96cbfe">end</font>
-  
-  &nbsp;&nbsp;<font color="#96cbfe">def</font>&nbsp;<font color="#ffd2a7">apply</font>(value, index, seperator)
-  &nbsp;&nbsp;&nbsp;&nbsp;<font color="#336633">&quot;</font><font color="#00a0a0">#{</font><font color="#c6c5fe">@name</font><font color="#00a0a0">}</font><font color="#a8ff60">, </font><font color="#00a0a0">#{</font>index<font color="#00a0a0">}</font><font color="#a8ff60">&nbsp;</font><font color="#00a0a0">#{</font>separator<font color="#00a0a0">}</font><font color="#a8ff60">&nbsp;</font><font color="#00a0a0">#{</font>value<font color="#00a0a0">}</font><font color="#336633">&quot;</font>
-  &nbsp;&nbsp;<font color="#96cbfe">end</font>
-  
-  &nbsp;&nbsp;<font color="#96cbfe">def</font>&nbsp;<font color="#ffd2a7">applied_list</font>
-  &nbsp;&nbsp;&nbsp;&nbsp;<font color="#c6c5fe">@list</font>.map.with_index(&amp;it.apply(<font color="#336633">&quot;</font><font color="#a8ff60">:</font><font color="#336633">&quot;</font>))
-  &nbsp;&nbsp;<font color="#96cbfe">end</font>
-  
-  <font color="#96cbfe">end</font></pre>
-  
-  <p>In case you are wondering, the position you can specify is to tell where the arguments need to go. Position 0 is the method name, so you shouldn&#39;t use that, but any other value is okay.  An example might be that you cant to wrap an array of texts into span-tags:</p>
-  
-  <pre class="ir_black"><font color="#00a0a0">&lt;%=</font>&nbsp;some_texts.map(&amp;it(<font color="#ff73fd">2</font>).content_tag(<font color="#99cc99">:span</font>, <font color="#99cc99">:class</font>&nbsp;=&gt; <font color="#336633">&quot;</font><font color="#a8ff60">foo</font><font color="#336633">&quot;</font>)).to_sentence <font color="#00a0a0">%&gt;</font></pre>
-  
-  <p>So there you have it. I&#39;m probably solving a problem that doesn&#39;t exist. It is however a nice example of the awesome power of Ruby. I hope you&#39;ve enjoyed this little demonstration of the possible uses of <code>to_proc</code>.</p>
+  <span class="Keyword">end</span></pre>
+  <p>In case you are wondering, the position you can specify is to tell where the arguments need to go.
+  Position 0 is the method name, so you shouldn&#39;t use that, but any other value is okay. An example
+  might be that you cant to wrap an array of texts into span-tags:</p>
+  <pre><span class="PreProc">&lt;%=</span> some_texts.map(&amp;it(<span class="Number">2</span>).content_tag(<span class="Constant">:span</span>, <span class="Constant">:class</span> =&gt; <span class="rubyStringDelimiter">"</span><span class="String">foo</span><span class="rubyStringDelimiter">"</span>)).to_sentence <span class="PreProc">%&gt;</span></pre>
+  <p>So there you have it. I&#39;m probably solving a problem that doesn&#39;t exist. It is however a nice
+  example of the awesome power of Ruby. I hope you&#39;ve enjoyed this little demonstration of the
+  possible uses of <code>to_proc</code>.</p>
 
 toc: []
 
-introduction: |
-  <p>You all know <code>Symbol#to_proc</code>, right? It allows you to write this:</p>
-  <pre class="ir_black"><font color="#7c7c7c"># Without Symbol#to_proc</font>
-  [<font color="#ff73fd">1</font>, <font color="#ff73fd">2</font>, <font color="#ff73fd">3</font>].map { |<font color="#c6c5fe">it</font>|&nbsp;it.to_s }
-  [<font color="#ff73fd">3</font>, <font color="#ff73fd">4</font>, <font color="#ff73fd">5</font>].inject { |<font color="#c6c5fe">memo</font>, <font color="#c6c5fe">it</font>|&nbsp;memo * it }
-  
-  <font color="#7c7c7c"># With Symbol#to_proc</font>
-  [<font color="#ff73fd">1</font>, <font color="#ff73fd">2</font>, <font color="#ff73fd">3</font>].map(&amp;<font color="#99cc99">:to_s</font>)
-  [<font color="#ff73fd">3</font>, <font color="#ff73fd">4</font>, <font color="#ff73fd">5</font>].inject(&amp;<font color="#99cc99">:*</font>)</pre>
-  <p>It has been in Rails as long as I can remember, and is in Ruby 1.8.7 and 1.9.x. I love it to death and I use it everywhere I can.</p><p>It is actually quite simple, and you can implement it yourself:</p>
-  <pre class="ir_black"><font color="#96cbfe">class</font>&nbsp;<font color="#ffffb6">Symbol</font>
-  &nbsp;&nbsp;<font color="#96cbfe">def</font>&nbsp;<font color="#ffd2a7">to_proc</font>
-  &nbsp;&nbsp;&nbsp;&nbsp;<font color="#ffffb6">Proc</font>.new { |<font color="#c6c5fe">obj</font>, *<font color="#c6c5fe">args</font>|&nbsp;obj.send(<font color="#99cc99">self</font>, *args) }
-  &nbsp;&nbsp;<font color="#96cbfe">end</font>
-  <font color="#96cbfe">end</font></pre>
-
+introduction: <p>You all know <code>Symbol#to_proc</code>, right? It allows you to write this:</p>

@@ -2,46 +2,54 @@
 html: "<p><strong>I made this into a plugin: <a href=\"/plugin-translatable_columns\">translatable_columns</a>.</strong></p>\n\n\
   <p>Dmitry <a href=\"/translating-activerecord#comment-96\">asked in the comments</a> of my last post <a href=\"/translating-activerecord\">about translating ActiveRecord</a>:</p>\n\n\
   <blockquote>\n\
-  <p>Can you write about how to use translated columns of database in rails? For example we have table named \xE2\x80\x98blog\xE2\x80\x99, and I want to translate it on several languages: fr, en, ru. How to do that?</p>\n\
+  <p>Can you write about how to use translated columns of database in rails? For example we have table\n\
+  named \xE2\x80\x98blog\xE2\x80\x99, and I want to translate it on several languages: fr, en, ru. How to do that?</p>\n\
   </blockquote>\n\n\
-  <p>And although I don&#39;t think this is the way to go, I can of course demonstrate an easy way to do this, using I18n.</p>\n\n\
+  <p>And although I don&#39;t think this is the way to go, I can of course demonstrate an easy way to do\n\
+  this, using I18n.</p>\n\n\
   <p>Here&#39;s the table definition:</p>\n\
-  <pre>create_table :posts do |t|\n  t.string :title_en, :title_nl, :title_fr, :title_de\n  t.string :text_en, :text_nl, :text_fr, :text_de\n\
-  end\n\
-  </pre>\n\
+  <pre>create_table <span class=\"Constant\">:posts</span> <span class=\"rubyControl\">do</span> |<span class=\"Identifier\">t</span>|\n  t.string <span class=\"Constant\">:title_en</span>, <span class=\"Constant\">:title_nl</span>, <span class=\"Constant\">:title_fr</span>, <span class=\"Constant\">:title_de</span>\n  t.string <span class=\"Constant\">:text_en</span>, <span class=\"Constant\">:text_nl</span>, <span class=\"Constant\">:text_fr</span>, <span class=\"Constant\">:text_de</span>\n\
+  <span class=\"rubyControl\">end</span></pre>\n\
   <p>So what you&#39;d want to do is read the currently selected locale and choose to write to the proper attribute depending on that.</p>\n\
-  <pre>class Post < ActiveRecord::Base\n  def title\n    self[column('title')]\n  end\n  def title=(str)\n    self[column('title')] = str\n  end\n\
-  private\n  def column(name)\n    column_name = \"#{name}_#{I18n.locale.split('-').first}\"\n    self.class.column_names.include?(column_name) ? column_name.to_sym : \"#{name}_#{I18n.default_locale.split('-').first.to_sym}\"\n  end\n\
-  end\n\
-  </pre>\n\
-  <p>Now, you can treat Post as if it had a normal title attribute, but it would save to the proper column. If you don&#39;t have a column named for this attribute, it&#39;ll save or get the value of the default_locale.</p>\n\n\
+  <pre><span class=\"Keyword\">class</span> <span class=\"Type\">Post</span> &lt; <span class=\"Type\">ActiveRecord</span>::<span class=\"Type\">Base</span>\n  <span class=\"PreProc\">def</span> <span class=\"Function\">title</span>\n    <span class=\"Constant\">self</span>[column(<span class=\"rubyStringDelimiter\">'</span><span class=\"String\">title</span><span class=\"rubyStringDelimiter\">'</span>)]\n  <span class=\"PreProc\">end</span>\n  <span class=\"PreProc\">def</span> <span class=\"Function\">title=</span>(str)\n    <span class=\"Constant\">self</span>[column(<span class=\"rubyStringDelimiter\">'</span><span class=\"String\">title</span><span class=\"rubyStringDelimiter\">'</span>)] = str\n  <span class=\"PreProc\">end</span>\n\
+  <span class=\"Statement\">private</span>\n  <span class=\"PreProc\">def</span> <span class=\"Function\">column</span>(name)\n    column_name = <span class=\"rubyStringDelimiter\">\"</span><span class=\"rubyInterpolationDelimiter\">#{</span>name<span class=\"rubyInterpolationDelimiter\">}</span><span class=\"String\">_</span><span class=\"rubyInterpolationDelimiter\">#{</span><span class=\"Type\">I18n</span>.locale.split(<span class=\"rubyStringDelimiter\">'</span><span class=\"String\">-</span><span class=\"rubyStringDelimiter\">'</span>).first<span class=\"rubyInterpolationDelimiter\">}</span><span class=\"rubyStringDelimiter\">\"</span>\n    <span class=\"Constant\">self</span>.class.column_names.include?(column_name) ? column_name.to_sym : <span class=\"rubyStringDelimiter\">\"</span><span class=\"rubyInterpolationDelimiter\">#{</span>name<span class=\"rubyInterpolationDelimiter\">}</span><span class=\"String\">_</span><span class=\"rubyInterpolationDelimiter\">#{</span><span class=\"Type\">I18n</span>.default_locale.split(<span class=\"rubyStringDelimiter\">'</span><span class=\"String\">-</span><span class=\"rubyStringDelimiter\">'</span>).first.to_sym<span class=\"rubyInterpolationDelimiter\">}</span><span class=\"rubyStringDelimiter\">\"</span>\n  <span class=\"PreProc\">end</span>\n\
+  <span class=\"Keyword\">end</span></pre>\n\
+  <p>Now, you can treat Post as if it had a normal title attribute, but it would save to the proper\n\
+  column. If you don&#39;t have a column named for this attribute, it&#39;ll save or get the value of the\n\
+  default_locale.</p>\n\n\
   <p>So for instance you can do this in your edit view:</p>\n\
-  <pre><% form_for(@post) do |f| %>\n  <%= f.text_field :title %>\n\
-  <% end %>\n\
-  </pre>\n\
-  <p>But when you have multiple columns that needs to be translated, even scattered through multiple models, it tends to be a boring and repeating business to add all those virtual attributes. So let&#39;s do some meta-programming, and clean up models!</p>\n\n\
-  <p>First, make a file in the <code>RAILS_ROOT&#47;lib</code> directory, called <code>load_translations.rb</code> and put in this Ruby meta-programming goodness&#47;madness:</p>\n\
-  <pre>module TranslatableColumns\n\n  def translatable_columns(*columns)\n    columns.each do |column|\n\n      define_method column do\n        self[self.class.column_translated(column)]\n      end\n\n      define_method \"#{column}=\" do |value|\n        self[self.class.column_translated(column)] = value\n      end\n\n    end\n  end\n\n  def column_translated(name)\n    column_name = \"#{name}_#{I18n.locale.split('-').first}\"\n    self.column_names.include?(column_name) ? column_name.to_sym : \"#{name}_#{I18n.default_locale.split('-').first.to_sym}\"\n  end\n\n\
-  end\n\
-  </pre>\n\
-  <p>Now all you have to to in the model is extend it with this module and specify which columns can be translated:</p>\n\
-  <pre>class Post < ActiveRecord::Base\n  extend TranslatableColumns\n  translatable_columns :title, :text\n\
-  end\n\
-  </pre>\n\
-  <p>Still I&#39;m not really fond of this. I can&#39;t find a good, sensible scenario where this would be the best option. I would rather go with an attribute called &#39;locale&#39;. So let&#39;s look at that too.</p>\n\
+  <pre><span class=\"PreProc\">&lt;%</span> form_for(<span class=\"Identifier\">@post</span>) <span class=\"rubyControl\">do</span> |<span class=\"Identifier\">f</span>| <span class=\"PreProc\">%&gt;</span>\n  <span class=\"PreProc\">&lt;%=</span> f.text_field <span class=\"Constant\">:title</span> <span class=\"PreProc\">%&gt;</span>\n\
+  <span class=\"PreProc\">&lt;%</span> <span class=\"rubyControl\">end</span> <span class=\"PreProc\">%&gt;</span></pre>\n\
+  <p>But when you have multiple columns that needs to be translated, even scattered through multiple\n\
+  models, it tends to be a boring and repeating business to add all those virtual attributes. So let&#39;s\n\
+  do some meta-programming, and clean up models!</p>\n\n\
+  <p>First, make a file in the <code>RAILS_ROOT&#47;lib</code> directory, called <code>load_translations.rb</code> and put in this\n\
+  Ruby meta-programming goodness&#47;madness:</p>\n\
+  <pre><span class=\"Keyword\">module</span> <span class=\"Type\">TranslatableColumns</span>\n\n  <span class=\"PreProc\">def</span> <span class=\"Function\">translatable_columns</span>(*columns)\n    columns.each <span class=\"rubyControl\">do</span> |<span class=\"Identifier\">column</span>|\n\n      define_method column <span class=\"rubyControl\">do</span>\n        <span class=\"Constant\">self</span>[<span class=\"Constant\">self</span>.class.column_translated(column)]\n      <span class=\"rubyControl\">end</span>\n\n      define_method <span class=\"rubyStringDelimiter\">\"</span><span class=\"rubyInterpolationDelimiter\">#{</span>column<span class=\"rubyInterpolationDelimiter\">}</span><span class=\"String\">=</span><span class=\"rubyStringDelimiter\">\"</span> <span class=\"rubyControl\">do</span> |<span class=\"Identifier\">value</span>|\n        <span class=\"Constant\">self</span>[<span class=\"Constant\">self</span>.class.column_translated(column)] = value\n      <span class=\"rubyControl\">end</span>\n\n    <span class=\"rubyControl\">end</span>\n  <span class=\"PreProc\">end</span>\n\n  <span class=\"PreProc\">def</span> <span class=\"Function\">column_translated</span>(name)\n    column_name = <span class=\"rubyStringDelimiter\">\"</span><span class=\"rubyInterpolationDelimiter\">#{</span>name<span class=\"rubyInterpolationDelimiter\">}</span><span class=\"String\">_</span><span class=\"rubyInterpolationDelimiter\">#{</span><span class=\"Type\">I18n</span>.locale.split(<span class=\"rubyStringDelimiter\">'</span><span class=\"String\">-</span><span class=\"rubyStringDelimiter\">'</span>).first<span class=\"rubyInterpolationDelimiter\">}</span><span class=\"rubyStringDelimiter\">\"</span>\n    <span class=\"Constant\">self</span>.column_names.include?(column_name) ? column_name.to_sym : <span class=\"rubyStringDelimiter\">\"</span><span class=\"rubyInterpolationDelimiter\">#{</span>name<span class=\"rubyInterpolationDelimiter\">}</span><span class=\"String\">_</span><span class=\"rubyInterpolationDelimiter\">#{</span><span class=\"Type\">I18n</span>.default_locale.split(<span class=\"rubyStringDelimiter\">'</span><span class=\"String\">-</span><span class=\"rubyStringDelimiter\">'</span>).first.to_sym<span class=\"rubyInterpolationDelimiter\">}</span><span class=\"rubyStringDelimiter\">\"</span>\n  <span class=\"PreProc\">end</span>\n\n\
+  <span class=\"Keyword\">end</span></pre>\n\
+  <p>Now all you have to to in the model is extend it with this module and specify which columns can be\n\
+  translated:</p>\n\
+  <pre><span class=\"Keyword\">class</span> <span class=\"Type\">Post</span> &lt; <span class=\"Type\">ActiveRecord</span>::<span class=\"Type\">Base</span>\n  <span class=\"PreProc\">extend</span> <span class=\"Type\">TranslatableColumns</span>\n  translatable_columns <span class=\"Constant\">:title</span>, <span class=\"Constant\">:text</span>\n\
+  <span class=\"Keyword\">end</span></pre>\n\
+  <p>Still I&#39;m not really fond of this. I can&#39;t find a good, sensible scenario where this would be the\n\
+  best option. I would rather go with an attribute called &#39;locale&#39;. So let&#39;s look at that too.</p>\n\
   <pre>./script/generate migration add_locale_to_post locale:string\n\
-  rake db:migrate\n\
-  </pre>\n\
-  <p>And add a named_scope to the models you want to be localized, like Post in this case, to get the proper locales and save it to whatever locale was selected at the moment, if it hasn&#39;t already been set any other way (you might want to make the user able to choose it when entering the post).</p>\n\
-  <pre>class Post < ActiveRecord::Base\n  named_scope :localized, { :conditions => { :locale => I18n.locale } } }\n  before_save :store_locale\n\
-  private\n  def store_locale\n    self[:locale] ||= I18n.locale\n  end\n\
-  end\n\
-  </pre>\n\
+  rake db:migrate</pre>\n\
+  <p>And add a named_scope to the models you want to be localized, like Post in this case, to get the\n\
+  proper locales and save it to whatever locale was selected at the moment, if it hasn&#39;t already been\n\
+  set any other way (you might want to make the user able to choose it when entering the post).</p>\n\
+  <pre><span class=\"Keyword\">class</span> <span class=\"Type\">Post</span> &lt; <span class=\"Type\">ActiveRecord</span>::<span class=\"Type\">Base</span>\n  named_scope <span class=\"Constant\">:localized</span>, { <span class=\"Constant\">:conditions</span> =&gt; { <span class=\"Constant\">:locale</span> =&gt; <span class=\"Type\">I18n</span>.locale } } }\n  before_save <span class=\"Constant\">:store_locale</span>\n\
+  <span class=\"Statement\">private</span>\n  <span class=\"PreProc\">def</span> <span class=\"Function\">store_locale</span>\n    <span class=\"Constant\">self</span>[<span class=\"Constant\">:locale</span>] ||= <span class=\"Type\">I18n</span>.locale\n  <span class=\"PreProc\">end</span>\n\
+  <span class=\"Keyword\">end</span></pre>\n\
   <p>Let&#39;s meta-program this one as well!</p>\n\n\
-  <p>Get the proper posts, just call <code>Post.localized</code> or <code>Post.localized.find(params[:id])</code>. Note that I&#39;m not using any translatable columns now. Just use normal columns and create multiple posts if you want more than one language for a post (e.g. create a Dutch one and a French one).</p>\n\n\
-  <p>As you can see, I&#39;m not using the translating functionality of I18n here. I just use I18n to know which locale to choose.</p>\n"
+  <p>Get the proper posts, just call <code>Post.localized</code> or <code>Post.localized.find(params[:id])</code>. Note that\n\
+  I&#39;m not using any translatable columns now. Just use normal columns and create multiple posts if you\n\
+  want more than one language for a post (e.g. create a Dutch one and a French one).</p>\n\n\
+  <p>As you can see, I&#39;m not using the translating functionality of I18n here. I just use I18n to know\n\
+  which locale to choose.</p>\n"
 toc: []
 
 introduction: "<p><strong>I made this into a plugin: <a href=\"/plugin-translatable_columns\">translatable_columns</a>.</strong></p><p>Dmitry <a href=\"/translating-activerecord#comment-96\">asked in the comments</a> of my last post <a href=\"/translating-activerecord\">about translating ActiveRecord</a>:</p>\n\
   <blockquote>\n\
-  <p>Can you write about how to use translated columns of database in rails? For example we have table named \xE2\x80\x98blog\xE2\x80\x99, and I want to translate it on several languages: fr, en, ru. How to do that?</p></blockquote>\n"
+  <p>Can you write about how to use translated columns of database in rails? For example we have table\n\
+  named \xE2\x80\x98blog\xE2\x80\x99, and I want to translate it on several languages: fr, en, ru. How to do that?</p></blockquote>\n"

@@ -1,26 +1,26 @@
 --- 
 html: "<p>Shamelessly copy-pasted from the README file of the new plugin I released today:</p>\n\n\
-  <p>Since form labels don\xE2\x80\x99t use I18n in Rails 2.2 (I was too late in submitting the patch), we\xE2\x80\x99d have to make due with a plugin.</p>\n\n\
+  <p>Since form labels don\xE2\x80\x99t use I18n in Rails 2.2 (I was too late in submitting the patch), we\xE2\x80\x99d have to\n\
+  make due with a plugin.</p>\n\n\
   <p>Installation and configuration consists of 1 easy steps:</p>\n\n\
   <ul>\n\
   <li>Run: <code>.&#47;script&#47;plugin install git:&#47;&#47;github.com&#47;iain&#47;i18n_label.git</code></li>\n\
   </ul>\n\n\
   <h3 id=\"toc_0\">Example</h3>\n\n\
   <p>In your translation file:</p>\n\
-  <pre>en-US:\n  activerecord:\n    attributes:\n      topic:\n        name: 'A nice name'\n\
-  </pre>\n\
+  <pre><span class=\"Identifier\">en-US</span><span class=\"Special\">:</span>\n  <span class=\"Identifier\">activerecord</span><span class=\"Special\">:</span>\n    <span class=\"Identifier\">attributes</span><span class=\"Special\">:</span>\n      <span class=\"Identifier\">topic</span><span class=\"Special\">:</span>\n        <span class=\"Identifier\">name</span><span class=\"Special\">:</span> <span class=\"String\">'</span><span class=\"String\">A nice name</span><span class=\"String\">'</span></pre>\n\
   <p>In your view:</p>\n\
-  <pre><% form_for Topic.new do |f| %>\n  <%= f.label :name %>\n\
-  <% end %>\n\
-  </pre>\n\
+  <pre><span class=\"PreProc\">&lt;%</span> form_for <span class=\"Type\">Topic</span>.new <span class=\"rubyControl\">do</span> |<span class=\"Identifier\">f</span>| <span class=\"PreProc\">%&gt;</span>\n  <span class=\"PreProc\">&lt;%=</span> f.label <span class=\"Constant\">:name</span> <span class=\"PreProc\">%&gt;</span>\n\
+  <span class=\"PreProc\">&lt;%</span> <span class=\"rubyControl\">end</span> <span class=\"PreProc\">%&gt;</span></pre>\n\
   <p>The result is:</p>\n\
-  <pre><label for=\"topic_name\">A nice name</label>\n\
-  </pre>\n\
-  <p>For more information about where to put your translations, read my post about <a href=\"/translating-activerecord\">translating ActiveRecord</a>.</p>\n"
+  <pre><span class=\"Keyword\">&lt;</span><span class=\"Conditional\">label</span><span class=\"Keyword\"> </span><span class=\"Type\">for</span><span class=\"Keyword\">=</span><span class=\"String\">\"topic_name\"</span><span class=\"Keyword\">&gt;</span>A nice name<span class=\"Identifier\">&lt;/</span><span class=\"Conditional\">label</span><span class=\"Identifier\">&gt;</span></pre>\n\
+  <p>For more information about where to put your translations, read my post about <a href=\"/translating-activerecord\">translating\n\
+  ActiveRecord</a>.</p>\n"
 toc: 
 - anchor: "#toc_0"
   title: Example
-introduction: "<p>Shamelessly copy-pasted from the README file of the new plugin I released today:</p><p>Since form labels don\xE2\x80\x99t use I18n in Rails 2.2 (I was too late in submitting the patch), we\xE2\x80\x99d have to make due with a plugin.</p><p>Installation and configuration consists of 1 easy steps:</p>\n\
+introduction: "<p>Shamelessly copy-pasted from the README file of the new plugin I released today:</p><p>Since form labels don\xE2\x80\x99t use I18n in Rails 2.2 (I was too late in submitting the patch), we\xE2\x80\x99d have to\n\
+  make due with a plugin.</p><p>Installation and configuration consists of 1 easy steps:</p>\n\
   <ul>\n\
   <li>Run: <code>.&#47;script&#47;plugin install git:&#47;&#47;github.com&#47;iain&#47;i18n_label.git</code></li>\n\
   </ul>\n"

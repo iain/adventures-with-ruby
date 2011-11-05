@@ -1,4 +1,5 @@
-As I [promised](/the-knights-templater-part-ii-priory-of-haml), here is the evaluation of redoing a site from ERB to [Haml](http://haml-lang.com). To immediately cut to the chase: Haml IS worth it!
+As I [promised](/the-knights-templater-part-ii-priory-of-haml), here is the evaluation of redoing a
+site from ERB to [Haml](http://haml-lang.com). To immediately cut to the chase: Haml IS worth it!
 
 * It's so definitely faster and easier to write than ERB.
 * Your HTML output is nicer.
@@ -8,7 +9,9 @@ As I [promised](/the-knights-templater-part-ii-priory-of-haml), here is the eval
 * No more forgetting to close a div and spending hours to find out which one.
 * Faster refactoring because of less code and easier to read.
 
-There are some downsides however. I'd rather not talk about the hours I tried to fix some idiot problem with partials and the locals option. Just use locals as less as possible, preferably not at all. Some cons:
+There are some downsides however. I'd rather not talk about the hours I tried to fix some idiot
+problem with partials and the locals option. Just use locals as less as possible, preferably not at
+all. Some cons:
 
 * Yet another syntax to be learned.
 * Errors with Haml syntax are a bit harder to locate, but you'll make less after you encountered a few.
@@ -16,4 +19,5 @@ There are some downsides however. I'd rather not talk about the hours I tried to
 * The syntax highlighter on VIm is not quite up to it.
 * Rails helpers screw up the nice HTML Haml creates for you. The form_tag helpers for example.
 
-So if you are starting a new project, or redoing the entire HTML of you're application: try Haml! Chances are you'll like it!
+So if you are starting a new project, or redoing the entire HTML of you're application: try Haml!
+Chances are you'll like it!

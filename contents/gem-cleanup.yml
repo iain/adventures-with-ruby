@@ -1,10 +1,13 @@
 --- 
 html: |
-  <p>I was browsing through the gem documentation today, and I found a command that I didn&#39;t know existed.</p>
-  <pre>sudo gem cleanup
-  </pre>
-  <p>It removes old versions of your installed gems. You can of course specify the gems you&#39;d like to cleanup.</p>
+  <p>I was browsing through the gem documentation today, and I found a command that I didn&#39;t know
+  existed.</p>
+  <pre>sudo gem cleanup</pre>
+  <p>It removes old versions of your installed gems. You can of course specify the gems you&#39;d like to
+  cleanup.</p>
 
 toc: []
 
-introduction: <p>I was browsing through the gem documentation today, and I found a command that I didn&#39;t know existed.</p>
+introduction: |-
+  <p>I was browsing through the gem documentation today, and I found a command that I didn&#39;t know
+  existed.</p>

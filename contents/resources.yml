@@ -1,25 +1,36 @@
 --- 
 html: |
-  <p>Just a simple little advice for all <a href="http://apidock.com/rails/ActionController/Resources/resources">RESTful</a> programmers out there. It&#39;s really simple, and cleans up your code quite a bit. A lot of Rails applications have two roles: an admin and non admin. Your code can get pretty ugly when implementing extra features for the admin. I&#39;m guessing everybody does this from time to time:</p>
-  <pre>- if current_user.admin?
-    %p= link_to(@project, :method => :delete)
-  -# or this:
-  %p= link_to(@project, :method => :delete) if current_user.admin?
-  </pre>
-  <p>It&#39;s no problem when you&#39;re doing this only once or twice, but as the project moves on, your views get swamped, and your controllers too! My suggestion is splitting it into multiple controllers, one for each role, like this:</p>
-  <pre>ActionController::Routing::Routes.draw do |map|
-    map.resources :projects
-    map.resource :admin do |a|
-      a.resources :projects, :controller => 'admin_projects'
-    end
-  end
-  </pre>
+  <p>Just a simple little advice for all
+  <a href="http://apidock.com/rails/ActionController/Resources/resources">RESTful</a> programmers out there. It&#39;s
+  really simple, and cleans up your code quite a bit. A lot of Rails applications have two roles: an
+  admin and non admin. Your code can get pretty ugly when implementing extra features for the admin.
+  I&#39;m guessing everybody does this from time to time:</p>
+  <pre><span class="Special">-</span> <span class="rubyControl">if</span> current_user.admin?
+    <span class="Special">%</span><span class="Conditional">p</span><span class="Special">=</span> link_to(<span class="Identifier">@project</span>, <span class="Constant">:method</span> =&gt; <span class="Constant">:delete</span>)
+  <span class="Comment">-# or this:</span>
+  <span class="Special">%</span><span class="Conditional">p</span><span class="Special">=</span> link_to(<span class="Identifier">@project</span>, <span class="Constant">:method</span> =&gt; <span class="Constant">:delete</span>) <span class="rubyControl">if</span> current_user.admin?</pre>
+  <p>It&#39;s no problem when you&#39;re doing this only once or twice, but as the project moves on, your views
+  get swamped, and your controllers too! My suggestion is splitting it into multiple controllers, one
+  for each role, like this:</p>
+  <pre><span class="Type">ActionController</span>::<span class="Type">Routing</span>::<span class="Type">Routes</span>.draw <span class="rubyControl">do</span> |<span class="Identifier">map</span>|
+    map.resources <span class="Constant">:projects</span>
+    map.resource <span class="Constant">:admin</span> <span class="rubyControl">do</span> |<span class="Identifier">a</span>|
+      a.resources <span class="Constant">:projects</span>, <span class="Constant">:controller</span> =&gt; <span class="rubyStringDelimiter">'</span><span class="String">admin_projects</span><span class="rubyStringDelimiter">'</span>
+    <span class="rubyControl">end</span>
+  <span class="rubyControl">end</span></pre>
   <p>This will generate these paths (amongst all usual others):</p>
   <pre>      project GET /projects/:id       { :action=>"show", :controller=>"projects"}
   admin_project GET /admin/projects/:id { :action=>"show", :controller=>"admin_projects"}
   </pre>
-  <p>This way controllers and views stay clean and uncluttered. It has a cluttered <code>rake routes</code> as trade off though, but that&#39;s just a minor problem if you ask me. The admin controller can be used as administrator dashboard. If you have another solution, I&#39;d love to hear it!</p>
+  <p>This way controllers and views stay clean and uncluttered. It has a cluttered <code>rake routes</code> as trade
+  off though, but that&#39;s just a minor problem if you ask me. The admin controller can be used as
+  administrator dashboard. If you have another solution, I&#39;d love to hear it!</p>
 
 toc: []
 
-introduction: "<p>Just a simple little advice for all <a href=\"http://apidock.com/rails/ActionController/Resources/resources\">RESTful</a> programmers out there. It&#39;s really simple, and cleans up your code quite a bit. A lot of Rails applications have two roles: an admin and non admin. Your code can get pretty ugly when implementing extra features for the admin. I&#39;m guessing everybody does this from time to time:</p>"
+introduction: |-
+  <p>Just a simple little advice for all
+  <a href="http://apidock.com/rails/ActionController/Resources/resources">RESTful</a> programmers out there. It&#39;s
+  really simple, and cleans up your code quite a bit. A lot of Rails applications have two roles: an
+  admin and non admin. Your code can get pretty ugly when implementing extra features for the admin.
+  I&#39;m guessing everybody does this from time to time:</p>

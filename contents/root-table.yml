@@ -1,6 +1,9 @@
 --- 
 html: |
-  <p>Yes, I&#39;ve written another plugin for Rails. It&#39;s about so called root tables. It seem to be making them often. I want a list with options to choose from and some easy way to manage that list, which is a tedious task. That&#39;s why I made a <a href="http://github.com/iain/root_table">plugin</a> to do this for me.</p>
+  <p>Yes, I&#39;ve written another plugin for Rails. It&#39;s about so called root tables. It seem to be making
+  them often. I want a list with options to choose from and some easy way to manage that list, which
+  is a tedious task. That&#39;s why I made a <a href="http://github.com/iain/root_table">plugin</a> to do this for
+  me.</p>
   
   <h3 id="toc_0">What I have so far is:</h3>
   
@@ -27,28 +30,28 @@ html: |
   <pre>./script/generate model Category name:string position:integer
   </pre>
   <p>Make category a root table for product:</p>
-  <pre>class Category < ActiveRecord::Base
-    root_table_for :product
-  end
-  </pre>
+  <pre><span class="Keyword">class</span> <span class="Type">Category</span> &lt; <span class="Type">ActiveRecord</span>::<span class="Type">Base</span>
+    root_table_for <span class="Constant">:product</span>
+  <span class="Keyword">end</span></pre>
   <p>And let the product model know as well what is happening:</p>
-  <pre>class Product < ActiveRecord::Base
-    has_root_table :category
-  end
-  </pre>
-  <p>Let&#39;s add a configured root table for good measure. Let&#39;s convert the User-model to a root table. User is not a list, and doesn&#39;t have a <code>name</code>-field to recognize it, nor does it have a position field. It requires some options to make it work.</p>
-  <pre>class User < ActiveRecord::Base
-    root_table_for :product, :to => :last_edited_by,
-        :validate => false, :field => :login
-  end
-  </pre>
+  <pre><span class="Keyword">class</span> <span class="Type">Product</span> &lt; <span class="Type">ActiveRecord</span>::<span class="Type">Base</span>
+    has_root_table <span class="Constant">:category</span>
+  <span class="Keyword">end</span></pre>
+  <p>Let&#39;s add a configured root table for good measure. Let&#39;s convert the User-model to a root table.
+  User is not a list, and doesn&#39;t have a <code>name</code>-field to recognize it, nor does it have a position
+  field. It requires some options to make it work.</p>
+  <pre><span class="Keyword">class</span> <span class="Type">User</span> &lt; <span class="Type">ActiveRecord</span>::<span class="Type">Base</span>
+    root_table_for <span class="Constant">:product</span>, <span class="Constant">:to</span> =&gt; <span class="Constant">:last_edited_by</span>,
+        <span class="Constant">:validate</span> =&gt; <span class="Constant">false</span>, <span class="Constant">:field</span> =&gt; <span class="Constant">:login</span>
+  <span class="Keyword">end</span></pre>
   <p>And update the product model again:</p>
-  <pre>class Product < ActiveRecord::Base
-    has_root_table :category
-    has_root_table :user
-  end
-  </pre>
-  <p>The relation is called <code>last_edited_by</code>, it doesn&#39;t add any validations and the displayed (and thus sorted) field is <code>login</code> instead of <code>name</code>. It doesn&#39;t have position field, nor do I provide it, so it&#39;ll sort on <code>login</code> and won&#39;t be manually sortable, as we&#39;ll se in a bit.</p>
+  <pre><span class="Keyword">class</span> <span class="Type">Product</span> &lt; <span class="Type">ActiveRecord</span>::<span class="Type">Base</span>
+    has_root_table <span class="Constant">:category</span>
+    has_root_table <span class="Constant">:user</span>
+  <span class="Keyword">end</span></pre>
+  <p>The relation is called <code>last_edited_by</code>, it doesn&#39;t add any validations and the displayed (and thus
+  sorted) field is <code>login</code> instead of <code>name</code>. It doesn&#39;t have position field, nor do I provide it, so
+  it&#39;ll sort on <code>login</code> and won&#39;t be manually sortable, as we&#39;ll se in a bit.</p>
   
   <p><small>Using the User model might not be the best example, but you&#39;ll get the point.</small></p>
   
@@ -70,26 +73,35 @@ html: |
   
   <p><img src="/edit_root_table_contents_path.png" alt="edit_root_table_contents_path" title="edit_root_table_contents_path" width="508" height="339" class="alignnone size-full wp-image-481" /></p>
   
-  <p>This is all done with a layout that Rails scaffold generates. If you have your own layout it might look completely different. The management pages are a Rails engine. This means that you can override any file by creating a file with the same name in your <code>app</code>-directory. Have a look at the code to see which files you can override.</p>
+  <p>This is all done with a layout that Rails scaffold generates. If you have your own layout it might
+  look completely different. The management pages are a Rails engine. This means that you can override
+  any file by creating a file with the same name in your <code>app</code>-directory. Have a look at the code to
+  see which files you can override.</p>
   
-  <p>Also, to enable the drag and drop interface, you&#39;ll need to have prototype included. If you don&#39;t want prototype be loaded everywhere, I&#39;ve made it so that only drag and drop pages load the javascript. Please add <tt>&lt;%= yield(:head) %&gt;</tt> to your html header.</p>
+  <p>Also, to enable the drag and drop interface, you&#39;ll need to have prototype included. If you don&#39;t
+  want prototype be loaded everywhere, I&#39;ve made it so that only drag and drop pages load the
+  javascript. Please add <tt>&lt;%= yield(:head) %&gt;</tt> to your html header.</p>
   
-  <p>You can also override views on a table basis. That means that you might want a view that is different just in case of one table. The form for new users might want to have more fields than just the login field, but also include password fields. Create a view for that in <code>app&#47;views&#47;root_table_contents&#47;new_user.html.erb</code>. Available for override per model are index, new and edit.</p>
+  <p>You can also override views on a table basis. That means that you might want a view that is
+  different just in case of one table. The form for new users might want to have more fields
+  than just the login field, but also include password fields. Create a view for that in
+  <code>app&#47;views&#47;root_table_contents&#47;new_user.html.erb</code>. Available for override per model are index, new
+  and edit.</p>
   
   <h3 id="toc_3">Using it elsewhere</h3>
   
   <p>But we&#39;re not there yet. Now we&#39;ve built a root table and filled it, we need to use it somewhere. The plugin provides a <code>root_table_select</code> helper, that renders a drop down. The first parameter is the root_tables (real) name, it figures the rest out automatically. You can pass any options as the options you would pass the other select helpers. Here&#39;s an example:</p>
-  <pre><% form_for @product do |f| %>
-    <p>
-      <%= f.label :category_id %><br />
-      <%= f.root_table_select :category, :include_blank => true %>
-    </p>
-  <% end %>
-  </pre>
+  <pre><span class="PreProc">&lt;%</span> form_for <span class="Identifier">@product</span> <span class="rubyControl">do</span> |<span class="Identifier">f</span>| <span class="PreProc">%&gt;</span>
+    <span class="Keyword">&lt;</span><span class="Conditional">p</span><span class="Keyword">&gt;</span>
+      <span class="PreProc">&lt;%=</span> f.label <span class="Constant">:category_id</span> <span class="PreProc">%&gt;</span><span class="Keyword">&lt;</span><span class="Conditional">br</span><span class="Keyword"> /&gt;</span>
+      <span class="PreProc">&lt;%=</span> f.root_table_select <span class="Constant">:category</span>, <span class="Constant">:include_blank</span> =&gt; <span class="Constant">true</span> <span class="PreProc">%&gt;</span>
+    <span class="Identifier">&lt;/</span><span class="Conditional">p</span><span class="Identifier">&gt;</span>
+  <span class="PreProc">&lt;%</span> <span class="rubyControl">end</span> <span class="PreProc">%&gt;</span></pre>
   <p>Also for showing a delegate method is provided. This is how you can show the category name:</p>
-  <pre>@product.category_name
-  </pre>
-  <p>That about wraps it up for <a href="http://github.com/iain/root_table">root_table</a>. Please provide me with feedback and report any bugs and improvements. You can use the comments on my blog, or the <a href="http://github.com/iain/root_table/issues">issues page on github</a>.</p>
+  <pre><span class="Identifier">@product</span>.category_name</pre>
+  <p>That about wraps it up for <a href="http://github.com/iain/root_table">root_table</a>. Please provide me with
+  feedback and report any bugs and improvements. You can use the comments on my blog, or the <a href="http://github.com/iain/root_table/issues">issues
+  page on github</a>.</p>
   
   <h3 id="toc_4">Update!</h3>
   
@@ -116,4 +128,8 @@ toc:
   title: Update!
 - anchor: "#toc_5"
   title: "Lessons learned:"
-introduction: <p>Yes, I&#39;ve written another plugin for Rails. It&#39;s about so called root tables. It seem to be making them often. I want a list with options to choose from and some easy way to manage that list, which is a tedious task. That&#39;s why I made a <a href="http://github.com/iain/root_table">plugin</a> to do this for me.</p>
+introduction: |-
+  <p>Yes, I&#39;ve written another plugin for Rails. It&#39;s about so called root tables. It seem to be making
+  them often. I want a list with options to choose from and some easy way to manage that list, which
+  is a tedious task. That&#39;s why I made a <a href="http://github.com/iain/root_table">plugin</a> to do this for
+  me.</p>

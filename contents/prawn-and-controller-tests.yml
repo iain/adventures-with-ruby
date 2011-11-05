@@ -1,16 +1,24 @@
 --- 
 html: |-
-  <p>There is a real annoying gotcha in using controller tests to test an action that renders a pdf with <a href="http://prawn.majesticseacreature.com/">Prawn</a>. You&#39;ll get a NoMethodException on &quot;nil.downcase&quot;. The troubling part is that it totally puts you off by providing the wrong lines and backtrace.</p>
+  <p>There is a real annoying gotcha in using controller tests to test an action that renders a pdf with
+  <a href="http://prawn.majesticseacreature.com/">Prawn</a>. You&#39;ll get a NoMethodException on &quot;nil.downcase&quot;.
+  The troubling part is that it totally puts you off by providing the wrong lines and backtrace.</p>
   
-  <p>This has been mentioned somewhere on some <a href="http://groups.google.com/group/prawn-ruby/browse_thread/thread/a44c7647894d165c">mailinglists</a>, but to make it a bit more findable, I&#39;d thought I&#39;d post it here.</p>
+  <p>This has been mentioned somewhere on some
+  <a href="http://groups.google.com/group/prawn-ruby/browse_thread/thread/a44c7647894d165c">mailinglists</a>, but
+  to make it a bit more findable, I&#39;d thought I&#39;d post it here.</p>
   
   <p>The <del>solution</del> workaround is to set the server protocol, like this:</p>
-  <pre>it "should show the pdf" do
-    request.env["SERVER_PROTOCOL"] = "http"
-    get :show, :id => "report", "format" => "pdf"
-    response.should render_template(:show)
-  end
-  </pre>
+  <pre>it <span class="rubyStringDelimiter">"</span><span class="String">should show the pdf</span><span class="rubyStringDelimiter">"</span> <span class="rubyControl">do</span>
+    request.env[<span class="rubyStringDelimiter">"</span><span class="String">SERVER_PROTOCOL</span><span class="rubyStringDelimiter">"</span>] = <span class="rubyStringDelimiter">"</span><span class="String">http</span><span class="rubyStringDelimiter">"</span>
+    get <span class="Constant">:show</span>, <span class="Constant">:id</span> =&gt; <span class="rubyStringDelimiter">"</span><span class="String">report</span><span class="rubyStringDelimiter">"</span>, <span class="rubyStringDelimiter">"</span><span class="String">format</span><span class="rubyStringDelimiter">"</span> =&gt; <span class="rubyStringDelimiter">"</span><span class="String">pdf</span><span class="rubyStringDelimiter">"</span>
+    response.should render_template(<span class="Constant">:show</span>)
+  <span class="rubyControl">end</span></pre>
 toc: []
 
-introduction: <p>There is a real annoying gotcha in using controller tests to test an action that renders a pdf with <a href="http://prawn.majesticseacreature.com/">Prawn</a>. You&#39;ll get a NoMethodException on &quot;nil.downcase&quot;. The troubling part is that it totally puts you off by providing the wrong lines and backtrace.</p><p>This has been mentioned somewhere on some <a href="http://groups.google.com/group/prawn-ruby/browse_thread/thread/a44c7647894d165c">mailinglists</a>, but to make it a bit more findable, I&#39;d thought I&#39;d post it here.</p><p>The <del>solution</del> workaround is to set the server protocol, like this:</p>
+introduction: |-
+  <p>There is a real annoying gotcha in using controller tests to test an action that renders a pdf with
+  <a href="http://prawn.majesticseacreature.com/">Prawn</a>. You&#39;ll get a NoMethodException on &quot;nil.downcase&quot;.
+  The troubling part is that it totally puts you off by providing the wrong lines and backtrace.</p><p>This has been mentioned somewhere on some
+  <a href="http://groups.google.com/group/prawn-ruby/browse_thread/thread/a44c7647894d165c">mailinglists</a>, but
+  to make it a bit more findable, I&#39;d thought I&#39;d post it here.</p><p>The <del>solution</del> workaround is to set the server protocol, like this:</p>

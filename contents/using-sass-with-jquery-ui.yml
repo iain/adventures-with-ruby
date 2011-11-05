@@ -1,73 +1,70 @@
 --- 
 html: |
-  <p>Want to build a quick website or backend? Want to make it look good, but without adding too much effort in it? Then this recipe is for you!</p>
+  <p>Want to build a quick website or backend? Want to make it look good, but without adding too much
+  effort in it? Then this recipe is for you!</p>
   
-  <p>The <a href="http://jqueryui.com">jQuery UI framework</a> contains some nice styles and some nice javascript to accompany it. But the class names you&#39;re ought to be using are awkward. Nobody wants to add &quot;ui-widget-header&quot; to their classes. We have standards; we want semantical html and css, even if we don&#39;t want to be doing much styling ourselves.</p>
+  <p>The <a href="http://jqueryui.com">jQuery UI framework</a> contains some nice styles and some nice javascript
+  to accompany it. But the class names you&#39;re ought to be using are awkward. Nobody wants to add
+  &quot;ui-widget-header&quot; to their classes. We have standards; we want semantical html and css, even if we
+  don&#39;t want to be doing much styling ourselves.</p>
   
-  <p>Editing the css file that jQuery UI gives you is not an option; that would be a hideous mess even before we get started. Luckily, <a href="http://sass-lang.com">Sass</a> can help us. Sass introduced the &quot;<code>@extend</code>&quot; method since version 3, which we can (ab)use.</p>
+  <p>Editing the css file that jQuery UI gives you is not an option; that would be a hideous mess even
+  before we get started. Luckily, <a href="http://sass-lang.com">Sass</a> can help us. Sass introduced the
+  &quot;<code>@extend</code>&quot; method since version 3, which we can (ab)use.</p>
   
-  <p>We need to convert the css file jQuery gave us to Sass. I&#39;m a big fan of sass, not scss, so I&#39;ll be using that:</p>
-  
-  <pre class="ir_black"><font face="Monaco, monospace">sass-convert --from css --to sass \
-  &nbsp;&nbsp;path/to/jquery-ui-1.8.2.custom.css &gt; app/stylesheets/_jquery_ui.sass
-  </font></pre>
-  
-  <p>I&#39;ve included an underscore so it won&#39;t be compiled to a real css file when I run my application. I&#39;ve also configured Sass to load my sass files from <code>app&#47;stylesheets</code>.</p>
+  <p>We need to convert the css file jQuery gave us to Sass. I&#39;m a big fan of sass, not scss, so I&#39;ll be
+  using that:</p>
+  <pre>sass-convert <span class="Special">--from</span> css <span class="Special">--to</span> sass path/to/jquery-ui<span class="Number">-1</span>.<span class="Number">8</span>.<span class="Number">2</span>.custom.css <span class="Operator">&gt;</span> app/stylesheets/_jquery_ui.sass</pre>
+  <p>I&#39;ve included an underscore so it won&#39;t be compiled to a real css file when I run my application.
+  I&#39;ve also configured Sass to load my sass files from <code>app&#47;stylesheets</code>.</p>
   
   <p>Next, create your own sass&#47;scss file and use <code>@extend</code>:</p>
   
-  <table>
-  <tr>
-  <th>screen.sass</th>
-  <th>screen.scss</th>
-  </tr>
-  <tr>
-  <td style="vertical-align: top;">
-  <pre class="ir_black"><font face="Monaco, monospace"><font color="#96cbfe">@import jquery_ui</font>
+  <p>In sass:</p>
+  <pre><span class="PreProc">@import jquery_ui</span>
   
-  <font color="#e18964">.</font><font color="#ffffb6">project-header</font>
-  &nbsp;&nbsp;@extend <font color="#e18964">.</font><font color="#ffffb6">ui-widget</font>
-  &nbsp;&nbsp;@extend <font color="#e18964">.</font><font color="#ffffb6">ui-widget-header</font>
-  &nbsp;&nbsp;@extend <font color="#e18964">.</font><font color="#ffffb6">ui-corner-all</font>
-  </font></pre>
-  </td>
+  <span class="Special">.</span><span class="Type">project-header</span>
+    <span class="PreProc">@extend</span> <span class="Special">.</span><span class="Type">ui-widget</span>
+    <span class="PreProc">@extend</span> <span class="Special">.</span><span class="Type">ui-widget-header</span>
+    <span class="PreProc">@extend</span> <span class="Special">.</span><span class="Type">ui-corner-all</span></pre>
+  <p>In scss:</p>
+  <pre><span class="PreProc">@import "jquery_ui";</span>
   
-  <td>
-  <pre class="ir_black"><font face="Monaco, monospace"><font color="#96cbfe">@import &quot;jquery_ui&quot;;</font>
+  <span class="Special">.</span><span class="Type">project-header</span> <span class="Function">{</span>
+    <span class="PreProc">@extend</span> <span class="Special">.</span><span class="Type">ui-widget</span>;
+    <span class="PreProc">@extend</span> <span class="Special">.</span><span class="Type">ui-widget-header</span>;
+    <span class="PreProc">@extend</span> <span class="Special">.</span><span class="Type">ui-corner-all</span>;
+  <span class="Function">}</span></pre>
+  <p>Now you just need to add the class &quot;<code>project-header</code>&quot; to the appropriate HTML element, include the
+  compiled &quot;screen.css&quot; tag in your layout and you&#39;re done!</p>
   
-  <font color="#e18964">.</font><font color="#ffffb6">project-header</font>&nbsp;<font color="#ffd2a7">{</font>
-  &nbsp;&nbsp;<font color="#96cbfe">@extend</font>&nbsp;<font color="#e18964">.</font><font color="#ffffb6">ui-widget</font>;
-  &nbsp;&nbsp;<font color="#96cbfe">@extend</font>&nbsp;<font color="#e18964">.</font><font color="#ffffb6">ui-widget-header</font>;
-  &nbsp;&nbsp;<font color="#96cbfe">@extend</font>&nbsp;<font color="#e18964">.</font><font color="#ffffb6">ui-corner-all</font>;
-  <font color="#ffd2a7">}</font>
-  </font></pre>
+  <p>Be sure to use the javascript too, for nice interactions. The javascript will add classes
+  dynamically to certain elements. They will still work.</p>
   
-  </td>
-  </tr>
-  </table>
-  
-  <p>Now you just need to add the class &quot;<code>project-header</code>&quot; to the appropriate HTML element, include the compiled &quot;screen.css&quot; tag in your layout and you&#39;re done!</p>
-  
-  <p>Be sure to use the javascript too, for nice interactions. The javascript will add classes dynamically to certain elements. They will still work.</p>
-  
-  <p>So what really happens? Well, <code>@extend</code> appends your own selector to the jQuery selector you specified. So the compiled jQuery css would&#39;ve looked like this before:</p>
-  
-  <pre class="ir_black"><font face="Monaco, monospace"><font color="#ffd2a7">.ui-widget-header</font>&nbsp;<font color="#ffd2a7">{</font>
-  &nbsp;&nbsp;<font color="#ffffb6">border</font>: <font color="#ff73fd">1px</font>&nbsp;<font color="#ffffb6">solid</font>&nbsp;<font color="#99cc99">#aaaaaa</font>;
-  &nbsp;&nbsp;<font color="#7c7c7c">/* more... */</font>
-  <font color="#ffd2a7">}</font></font></pre>
-  
+  <p>So what really happens? Well, <code>@extend</code> appends your own selector to the jQuery selector you
+  specified. So the compiled jQuery css would&#39;ve looked like this before:</p>
+  <pre><span class="Function">.ui-widget-header</span> <span class="Function">{</span>
+    <span class="Type">border</span>: <span class="Number">1px</span> <span class="Type">solid</span> <span class="Constant">#aaaaaa</span>;
+    <span class="Comment">/* more... */</span>
+  <span class="Function">}</span></pre>
   <p>But after doing our <code>@extend</code>-trick, it will now compile to:</p>
+  <pre><span class="Function">.ui-widget-header</span><span class="Normal">,</span> <span class="Function">.project-title</span> <span class="Function">{</span>
+    <span class="Type">border</span>: <span class="Number">1px</span> <span class="Type">solid</span> <span class="Constant">#aaaaaa</span>;
+    <span class="Comment">/* more... */</span>
+  <span class="Function">}</span></pre>
+  <p>Sass parsing is incredibly smart. Really smart. The original jQuery css will be changed
+  automatically. Awesome! And without hardly any effort from my side!</p>
   
-  <pre class="ir_black"><font face="Monaco, monospace"><font color="#ffd2a7">.ui-widget-header</font><span style="background-color: #000000"><font color="#f6f3e8">,</font></span>&nbsp;<font color="#ffd2a7">.project-title</font>&nbsp;<font color="#ffd2a7">{</font>
-  &nbsp;&nbsp;<font color="#ffffb6">border</font>: <font color="#ff73fd">1px</font>&nbsp;<font color="#ffffb6">solid</font>&nbsp;<font color="#99cc99">#aaaaaa</font>;
-  &nbsp;&nbsp;<font color="#7c7c7c">/* more... */</font>
-  <font color="#ffd2a7">}</font></font></pre>
-  
-  <p>Sass parsing is incredibly smart. Really smart. The original jQuery css will be changed automatically. Awesome! And without hardly any effort from my side!</p>
-  
-  <p>For more awesomeness in styling: Have a look at <a href="http://compass-style.org">compass</a>. It will be worth your time!</p>
+  <p>For more awesomeness in styling: Have a look at <a href="http://compass-style.org">compass</a>. It will be
+  worth your time!</p>
 
 toc: []
 
-introduction: <p>Want to build a quick website or backend? Want to make it look good, but without adding too much effort in it? Then this recipe is for you!</p><p>The <a href="http://jqueryui.com">jQuery UI framework</a> contains some nice styles and some nice javascript to accompany it. But the class names you&#39;re ought to be using are awkward. Nobody wants to add &quot;ui-widget-header&quot; to their classes. We have standards; we want semantical html and css, even if we don&#39;t want to be doing much styling ourselves.</p><p>Editing the css file that jQuery UI gives you is not an option; that would be a hideous mess even before we get started. Luckily, <a href="http://sass-lang.com">Sass</a> can help us. Sass introduced the &quot;<code>@extend</code>&quot; method since version 3, which we can (ab)use.</p>
+introduction: |-
+  <p>Want to build a quick website or backend? Want to make it look good, but without adding too much
+  effort in it? Then this recipe is for you!</p><p>The <a href="http://jqueryui.com">jQuery UI framework</a> contains some nice styles and some nice javascript
+  to accompany it. But the class names you&#39;re ought to be using are awkward. Nobody wants to add
+  &quot;ui-widget-header&quot; to their classes. We have standards; we want semantical html and css, even if we
+  don&#39;t want to be doing much styling ourselves.</p><p>Editing the css file that jQuery UI gives you is not an option; that would be a hideous mess even
+  before we get started. Luckily, <a href="http://sass-lang.com">Sass</a> can help us. Sass introduced the
+  &quot;<code>@extend</code>&quot; method since version 3, which we can (ab)use.</p>

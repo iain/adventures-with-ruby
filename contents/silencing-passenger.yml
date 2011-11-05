@@ -1,12 +1,15 @@
 --- 
 html: |
-  <p>When using Rails 2.3 and Passenger, you can do yourself a favor by adding this line to <code>config&#47;silencers&#47;backtrace_silencer.rb</code></p>
-  <pre>Rails.backtrace_cleaner.add_silencer { |line| line =~ /^\s*passenger/ }
-  </pre>
+  <p>When using Rails 2.3 and Passenger, you can do yourself a favor by adding this line to
+  <code>config&#47;silencers&#47;backtrace_silencer.rb</code></p>
+  <pre><span class="Type">Rails</span>.backtrace_cleaner.add_silencer { |<span class="Identifier">line</span>| line =~ <span class="rubyRegexpDelimiter">/</span><span class="Special">^</span><span class="Special">\s</span><span class="Special">*</span><span class="rubyRegexp">passenger</span><span class="rubyRegexpDelimiter">/</span> }</pre>
   <p>Saves you scrolling through the endless backtraces passenger gives you for free :)</p>
   
-  <p>PS. A colleague tweeted this <a href="http://twitter.com/pascaldevink/status/2240565349">lovely backtrace</a> of a spring with grails error. I say: backtrace cleaner FTW!</p>
+  <p>PS. A colleague tweeted this <a href="http://twitter.com/pascaldevink/status/2240565349">lovely backtrace</a>
+  of a spring with grails error. I say: backtrace cleaner FTW!</p>
 
 toc: []
 
-introduction: <p>When using Rails 2.3 and Passenger, you can do yourself a favor by adding this line to <code>config&#47;silencers&#47;backtrace_silencer.rb</code></p>
+introduction: |-
+  <p>When using Rails 2.3 and Passenger, you can do yourself a favor by adding this line to
+  <code>config&#47;silencers&#47;backtrace_silencer.rb</code></p>

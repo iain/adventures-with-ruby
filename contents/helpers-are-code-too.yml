@@ -1,104 +1,140 @@
 --- 
 html: |
-  <p>I think <a href="/bringing-objects-to-views">I&#39;ve talked about this</a> before, and there has been a <a href="http://railscasts.com/episodes/101-refactoring-out-helper-object">Railscasts episode</a> about it too, but I want to touch on it again. I know we&#39;re supposed to keep views simple, but that doesn&#39;t mean that helpers can only contain methods.</p>
+  <p>I think <a href="/bringing-objects-to-views">I&#39;ve talked about this</a> before, and there has been a
+  <a href="http://railscasts.com/episodes/101-refactoring-out-helper-object">Railscasts episode</a> about it too,
+  but I want to touch on it again. I know we&#39;re supposed to keep views simple, but that doesn&#39;t mean
+  that helpers can only contain methods.</p>
   
-  <p>Rails gives you a helper module for every controller. The problem with modules is that they don&#39;t contain state and are usually used to just put a lot of methods in. But this can grow quickly out of hand when the stuff that you&#39;re building is a little more complex.</p>
+  <p>Rails gives you a helper module for every controller. The problem with modules is that they don&#39;t
+  contain state and are usually used to just put a lot of methods in. But this can grow quickly out of
+  hand when the stuff that you&#39;re building is a little more complex.</p>
   
-  <p>Never forget to run tools like <a href="http://wiki.github.com/kevinrutherford/reek/">Reek</a> on your helpers as well. What do they say? Are your methods too long? Do your methods require too many arguments? Is the complexity too high? Do your methods have <em>feature envy</em>?</p>
+  <p>Never forget to run tools like <a href="http://wiki.github.com/kevinrutherford/reek/">Reek</a> on your helpers
+  as well. What do they say? Are your methods too long? Do your methods require too many arguments? Is
+  the complexity too high? Do your methods have <em>feature envy</em>?</p>
   
-  <p>I&#39;ve seen quite a lot of Rails projects and helpers are almost always the forgotten parts of the application. Every Rails developer knows about the &quot;Skinny Controller, Fat Model&quot;-principle. Better teams also make skinny models, by using modules and creating macro&#39;s. But helpers are usually ugly. And they shouldn&#39;t!</p>
+  <p>I&#39;ve seen quite a lot of Rails projects and helpers are almost always the forgotten parts of the
+  application. Every Rails developer knows about the &quot;Skinny Controller, Fat Model&quot;-principle. Better
+  teams also make skinny models, by using modules and creating macro&#39;s. But helpers are usually ugly.
+  And they shouldn&#39;t!</p>
   
   <p><strong>Helpers are code too! They want your love and dedication!</strong></p>
   
-  <p>There are a couple of ways to keep it clean. Sometimes they are called &quot;Presenter Objects&quot; or something similar. It doesn&#39;t matter how you call them, and you don&#39;t have to use any complicated gems or libraries. Regular classes suffice.</p>
+  <p>There are a couple of ways to keep it clean. Sometimes they are called &quot;Presenter Objects&quot; or
+  something similar. It doesn&#39;t matter how you call them, and you don&#39;t have to use any complicated
+  gems or libraries. Regular classes suffice.</p>
   
   <p>Here&#39;s an example of a typical helper:</p>
+  <pre><span class="Keyword">module</span> <span class="Type">PostsHelper</span>
   
-  <pre class="ir_black"><font color="#96cbfe">module</font>&nbsp;<font color="#ffffb6">PostsHelper</font>
+    <span class="PreProc">def</span> <span class="Function">post_title</span>(post)
+      header_class = post.published? ? <span class="rubyStringDelimiter">"</span><span class="String">published</span><span class="rubyStringDelimiter">"</span> : <span class="rubyStringDelimiter">"</span><span class="String">normal</span><span class="rubyStringDelimiter">"</span>
+      header = content_tag(<span class="Constant">:h2</span>, post.title, <span class="Constant">:class</span> =&gt; header_class)
+      content_tag(<span class="Constant">:div</span>, <span class="Constant">:class</span> =&gt; <span class="rubyStringDelimiter">"</span><span class="String">post header</span><span class="rubyStringDelimiter">"</span>) <span class="rubyControl">do</span>
+        <span class="Conditional">if</span> post.user == current_user
+          [ header, edit_post(post), destroy_post(post) ].compact.join(<span class="rubyStringDelimiter">'</span><span class="String"> </span><span class="rubyStringDelimiter">'</span>)
+        <span class="Conditional">else</span>
+          header
+        <span class="Conditional">end</span>
+      <span class="rubyControl">end</span>
+    <span class="PreProc">end</span>
   
-  &nbsp;&nbsp;<font color="#96cbfe">def</font>&nbsp;<font color="#ffd2a7">post_title</font>(post)
-  &nbsp;&nbsp;&nbsp;&nbsp;header_class = post.published? ? <font color="#336633">&quot;</font><font color="#a8ff60">published</font><font color="#336633">&quot;</font>&nbsp;: <font color="#336633">&quot;</font><font color="#a8ff60">normal</font><font color="#336633">&quot;</font>
-  &nbsp;&nbsp;&nbsp;&nbsp;header = content_tag(<font color="#99cc99">:h2</font>, post.title, <font color="#99cc99">:class</font>&nbsp;=&gt; header_class)
-  &nbsp;&nbsp;&nbsp;&nbsp;content_tag(<font color="#99cc99">:div</font>, <font color="#99cc99">:class</font>&nbsp;=&gt; <font color="#336633">&quot;</font><font color="#a8ff60">post header</font><font color="#336633">&quot;</font>) <font color="#6699cc">do</font>
-  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#6699cc">if</font>&nbsp;post.user == current_user
-  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[&nbsp;header, edit_post(post), destroy_post(post) ].compact.join(<font color="#336633">'</font><font color="#a8ff60">&nbsp;</font><font color="#336633">'</font>)
-  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#6699cc">else</font>
-  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;header
-  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#6699cc">end</font>
-  &nbsp;&nbsp;&nbsp;&nbsp;<font color="#6699cc">end</font>
-  &nbsp;&nbsp;<font color="#96cbfe">end</font>
+    <span class="PreProc">def</span> <span class="Function">edit_post</span>(post)
+      link_to(<span class="rubyStringDelimiter">'</span><span class="String">edit</span><span class="rubyStringDelimiter">'</span>, edit_post_path(post))
+    <span class="PreProc">end</span>
   
-  &nbsp;&nbsp;<font color="#96cbfe">def</font>&nbsp;<font color="#ffd2a7">edit_post</font>(post)
-  &nbsp;&nbsp;&nbsp;&nbsp;link_to(<font color="#336633">'</font><font color="#a8ff60">edit</font><font color="#336633">'</font>, edit_post_path(post))
-  &nbsp;&nbsp;<font color="#96cbfe">end</font>
+    <span class="PreProc">def</span> <span class="Function">destroy_post</span>(post)
+      link_to(<span class="rubyStringDelimiter">'</span><span class="String">delete</span><span class="rubyStringDelimiter">'</span>, post, <span class="Constant">:method</span> =&gt; <span class="Constant">:delete</span>, <span class="Constant">:confirm</span> =&gt; <span class="rubyStringDelimiter">"</span><span class="String">are you sure?</span><span class="rubyStringDelimiter">"</span>)
+    <span class="PreProc">end</span>
   
-  &nbsp;&nbsp;<font color="#96cbfe">def</font>&nbsp;<font color="#ffd2a7">destroy_post</font>(post)
-  &nbsp;&nbsp;&nbsp;&nbsp;link_to(<font color="#336633">'</font><font color="#a8ff60">delete</font><font color="#336633">'</font>, post, <font color="#99cc99">:method</font>&nbsp;=&gt; <font color="#99cc99">:delete</font>, <font color="#99cc99">:confirm</font>&nbsp;=&gt; <font color="#336633">&quot;</font><font color="#a8ff60">are you sure?</font><font color="#336633">&quot;</font>)
-  &nbsp;&nbsp;<font color="#96cbfe">end</font>
+  <span class="Keyword">end</span></pre>
+  <p>You might choose a different route, like putting the <code>if</code>-statement in the view. But that&#39;s beside
+  the point. The point is that this is what usually happens when you don&#39;t use objects as they are
+  supposed to be used. Look at the post argument for example. It&#39;s on every frickin&#39; method! That&#39;s
+  not <abbr title="Don't Repeat Yourself">DRY</abbr>!</p>
   
-  <font color="#96cbfe">end</font></pre>
-  
-  <p>You might choose a different route, like putting the <code>if</code>-statement in the view. But that&#39;s beside the point. The point is that this is what usually happens when you don&#39;t use objects as they are supposed to be used. Look at the post argument for example. It&#39;s on every frickin&#39; method! That&#39;s not <abbr title="Don't Repeat Yourself">DRY</abbr>!</p>
-  
-  <p>And what if you need to extend it? What if you need approve and reject links as well? What if the destroy link needs to only show when the post has been approved? It&#39;s becoming more and more messy. Time to refactor!</p>
+  <p>And what if you need to extend it? What if you need approve and reject links as well? What if the
+  destroy link needs to only show when the post has been approved? It&#39;s becoming more and more messy.
+  Time to refactor!</p>
   
   <p>This is an example of how I would do it:</p>
+  <pre><span class="Keyword">module</span> <span class="Type">PostsHelper</span>
   
-  <pre class="ir_black"><font color="#96cbfe">module</font>&nbsp;<font color="#ffffb6">PostsHelper</font>
+    <span class="PreProc">def</span> <span class="Function">post_title</span>(post)
+      <span class="Type">PostTitle</span>.new(<span class="Constant">self</span>, post).to_html
+    <span class="PreProc">end</span>
   
-  &nbsp;&nbsp;<font color="#96cbfe">def</font>&nbsp;<font color="#ffd2a7">post_title</font>(post)
-  &nbsp;&nbsp;&nbsp;&nbsp;<font color="#ffffb6">PostTitle</font>.new(<font color="#99cc99">self</font>, post).to_html
-  &nbsp;&nbsp;<font color="#96cbfe">end</font>
+    <span class="Keyword">class</span> <span class="Type">PostTitle</span>
   
-  &nbsp;&nbsp;<font color="#96cbfe">class</font>&nbsp;<font color="#ffffb6">PostTitle</font>
+      attr_initializer <span class="Constant">:template</span>, <span class="Constant">:post</span>
+      delegate <span class="Constant">:content_tag</span>, <span class="Constant">:link_to</span>, <span class="Constant">:current_user</span>, <span class="Constant">:to</span> =&gt; <span class="Constant">:template</span>
   
-  &nbsp;&nbsp;&nbsp;&nbsp;attr_initializer <font color="#99cc99">:template</font>, <font color="#99cc99">:post</font>
-  &nbsp;&nbsp;&nbsp;&nbsp;delegate <font color="#99cc99">:content_tag</font>, <font color="#99cc99">:link_to</font>, <font color="#99cc99">:current_user</font>, <font color="#99cc99">:to</font>&nbsp;=&gt; <font color="#99cc99">:template</font>
+      <span class="PreProc">def</span> <span class="Function">to_html</span>
+        content_tag(<span class="Constant">:div</span>, elements, <span class="Constant">:class</span> =&gt; <span class="rubyStringDelimiter">"</span><span class="String">post header</span><span class="rubyStringDelimiter">"</span>)
+      <span class="PreProc">end</span>
   
-  &nbsp;&nbsp;&nbsp;&nbsp;<font color="#96cbfe">def</font>&nbsp;<font color="#ffd2a7">to_html</font>
-  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;content_tag(<font color="#99cc99">:div</font>, elements, <font color="#99cc99">:class</font>&nbsp;=&gt; <font color="#336633">&quot;</font><font color="#a8ff60">post header</font><font color="#336633">&quot;</font>)
-  &nbsp;&nbsp;&nbsp;&nbsp;<font color="#96cbfe">end</font>
+      <span class="PreProc">def</span> <span class="Function">elements</span>
+        [ header, edit, delete, approve, reject ].compact.join(<span class="rubyStringDelimiter">'</span><span class="String"> </span><span class="rubyStringDelimiter">'</span>)
+      <span class="PreProc">end</span>
   
-  &nbsp;&nbsp;&nbsp;&nbsp;<font color="#96cbfe">def</font>&nbsp;<font color="#ffd2a7">elements</font>
-  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[&nbsp;header, edit, delete, approve, reject ].compact.join(<font color="#336633">'</font><font color="#a8ff60">&nbsp;</font><font color="#336633">'</font>)
-  &nbsp;&nbsp;&nbsp;&nbsp;<font color="#96cbfe">end</font>
+      <span class="PreProc">def</span> <span class="Function">header</span>
+        content_tag(<span class="Constant">:h2</span>, post.title, <span class="Constant">:class</span> =&gt; header_class)
+      <span class="PreProc">end</span>
   
-  &nbsp;&nbsp;&nbsp;&nbsp;<font color="#96cbfe">def</font>&nbsp;<font color="#ffd2a7">header</font>
-  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;content_tag(<font color="#99cc99">:h2</font>, post.title, <font color="#99cc99">:class</font>&nbsp;=&gt; header_class)
-  &nbsp;&nbsp;&nbsp;&nbsp;<font color="#96cbfe">end</font>
+      <span class="PreProc">def</span> <span class="Function">header_class</span>
+        post.published? ? <span class="rubyStringDelimiter">"</span><span class="String">published</span><span class="rubyStringDelimiter">"</span> : <span class="rubyStringDelimiter">"</span><span class="String">normal</span><span class="rubyStringDelimiter">"</span>
+      <span class="PreProc">end</span>
   
-  &nbsp;&nbsp;&nbsp;&nbsp;<font color="#96cbfe">def</font>&nbsp;<font color="#ffd2a7">header_class</font>
-  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;post.published? ? <font color="#336633">&quot;</font><font color="#a8ff60">published</font><font color="#336633">&quot;</font>&nbsp;: <font color="#336633">&quot;</font><font color="#a8ff60">normal</font><font color="#336633">&quot;</font>
-  &nbsp;&nbsp;&nbsp;&nbsp;<font color="#96cbfe">end</font>
+      <span class="PreProc">def</span> <span class="Function">edit</span>
+        link_to(<span class="rubyStringDelimiter">'</span><span class="String">edit</span><span class="rubyStringDelimiter">'</span>, edit_post_path(post)) <span class="Conditional">if</span> my_post?
+      <span class="PreProc">end</span>
   
-  &nbsp;&nbsp;&nbsp;&nbsp;<font color="#96cbfe">def</font>&nbsp;<font color="#ffd2a7">edit</font>
-  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;link_to(<font color="#336633">'</font><font color="#a8ff60">edit</font><font color="#336633">'</font>, edit_post_path(post)) <font color="#6699cc">if</font>&nbsp;my_post?
-  &nbsp;&nbsp;&nbsp;&nbsp;<font color="#96cbfe">end</font>
+      <span class="PreProc">def</span> <span class="Function">my_post?</span>
+        post.user == current_user
+      <span class="PreProc">end</span>
   
-  &nbsp;&nbsp;&nbsp;&nbsp;<font color="#96cbfe">def</font>&nbsp;<font color="#ffd2a7">my_post?</font>
-  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;post.user == current_user
-  &nbsp;&nbsp;&nbsp;&nbsp;<font color="#96cbfe">end</font>
+      <span class="Comment"># etc... (you get the drift)</span>
   
-  &nbsp;&nbsp;&nbsp;&nbsp;<font color="#7c7c7c"># etc... (you get the drift)</font>
+    <span class="Keyword">end</span>
   
-  &nbsp;&nbsp;<font color="#96cbfe">end</font>
-  
-  <font color="#96cbfe">end</font></pre>
-  
+  <span class="Keyword">end</span></pre>
   <p>Nice! Small testable methods! Readable code! Less repetition. <em>Run Reek on that!</em></p>
   
-  <p>If you&#39;re wondering what the <code>attr_initializer</code> is, it&#39;s a monkey patch, that I&#39;ve <a href="/monkey-patch-of-the-month-attr_initializer">described here</a>. The <a href="http://apidock.com/rails/Module/delegate">delegate-method</a> is something ActiveSupport offers you. Use it, it&#39;s super effective!</p>
+  <p>If you&#39;re wondering what the <code>attr_initializer</code> is, it&#39;s a monkey patch,
+  that I&#39;ve <a href="/monkey-patch-of-the-month-attr_initializer">described here</a>. The
+  <a href="http://apidock.com/rails/Module/delegate">delegate-method</a> is something ActiveSupport offers you.
+  Use it, it&#39;s super effective!</p>
   
-  <p>Wait a minute. Did I say &quot;testable&quot;? Yes, I most certainly did! As with any code, this needs to be tested. But it&#39;s not that hard anymore! If you&#39;re using <a href="http://rspec.info">Rspec</a>, you can use the <a href="http://rspec.info/rails/writing/helpers.html">helper specs</a> it provides. But you don&#39;t need to!</p>
+  <p>Wait a minute. Did I say &quot;testable&quot;? Yes, I most certainly did! As with any code, this needs to be
+  tested. But it&#39;s not that hard anymore! If you&#39;re using <a href="http://rspec.info">Rspec</a>, you can use the
+  <a href="http://rspec.info/rails/writing/helpers.html">helper specs</a> it provides. But you don&#39;t need to!</p>
   
-  <p>The <code>PostTitle</code>-class is a regular Ruby class, and so every test framework can test with it without much effort. You might want to use stubs and mocks for the other helper methods you call. Or subclass <code>PostTitle</code>, define the used helper methods and use this to subclass in your tests. The <code>delegate</code> specifies which other helper methods are used.</p>
+  <p>The <code>PostTitle</code>-class is a regular Ruby class, and so every test framework can test with it without
+  much effort. You might want to use stubs and mocks for the other helper methods you call. Or
+  subclass <code>PostTitle</code>, define the used helper methods and use this to subclass in your tests. The
+  <code>delegate</code> specifies which other helper methods are used.</p>
   
-  <p>Remember that what you program is entirely up to you. You, and only you, have to decide when a simple method is enough, or whether you need to add a class, or something similar. You can also consider using <a href="http://builder.rubyforge.org/">Builder</a> for some parts, if the HTML generation becomes too hard.</p>
+  <p>Remember that what you program is entirely up to you. You, and only you, have to decide when a
+  simple method is enough, or whether you need to add a class, or something similar. You can also
+  consider using <a href="http://builder.rubyforge.org/">Builder</a> for some parts, if the HTML generation
+  becomes too hard.</p>
   
-  <p>The main point is that any part of your application needs to receive the same attention to detail. Don&#39;t hide your dead bodies (of code) in helpers, or anywhere! Be critical everywhere and all the time! Run Reek regularly. It&#39;s a depressing tool and you don&#39;t need to fix every message every time. Use it wisely and pay attention. There is <strong>no</strong> excuse for ugly code!</p>
+  <p>The main point is that any part of your application needs to receive the same attention to detail.
+  Don&#39;t hide your dead bodies (of code) in helpers, or anywhere! Be critical everywhere and all the
+  time! Run Reek regularly. It&#39;s a depressing tool and you don&#39;t need to fix every message every time.
+  Use it wisely and pay attention. There is <strong>no</strong> excuse for ugly code!</p>
   
-  <p>In this example, I would use a partial, but when the view logic increases, you should be thinking about extracting it.</p>
+  <p>In this example, I would use a partial, but when the view logic increases, you should be thinking
+  about extracting it.</p>
 
 toc: []
 
-introduction: <p>I think <a href="/bringing-objects-to-views">I&#39;ve talked about this</a> before, and there has been a <a href="http://railscasts.com/episodes/101-refactoring-out-helper-object">Railscasts episode</a> about it too, but I want to touch on it again. I know we&#39;re supposed to keep views simple, but that doesn&#39;t mean that helpers can only contain methods.</p><p>Rails gives you a helper module for every controller. The problem with modules is that they don&#39;t contain state and are usually used to just put a lot of methods in. But this can grow quickly out of hand when the stuff that you&#39;re building is a little more complex.</p><p>Never forget to run tools like <a href="http://wiki.github.com/kevinrutherford/reek/">Reek</a> on your helpers as well. What do they say? Are your methods too long? Do your methods require too many arguments? Is the complexity too high? Do your methods have <em>feature envy</em>?</p>
+introduction: |-
+  <p>I think <a href="/bringing-objects-to-views">I&#39;ve talked about this</a> before, and there has been a
+  <a href="http://railscasts.com/episodes/101-refactoring-out-helper-object">Railscasts episode</a> about it too,
+  but I want to touch on it again. I know we&#39;re supposed to keep views simple, but that doesn&#39;t mean
+  that helpers can only contain methods.</p><p>Rails gives you a helper module for every controller. The problem with modules is that they don&#39;t
+  contain state and are usually used to just put a lot of methods in. But this can grow quickly out of
+  hand when the stuff that you&#39;re building is a little more complex.</p><p>Never forget to run tools like <a href="http://wiki.github.com/kevinrutherford/reek/">Reek</a> on your helpers
+  as well. What do they say? Are your methods too long? Do your methods require too many arguments? Is
+  the complexity too high? Do your methods have <em>feature envy</em>?</p>

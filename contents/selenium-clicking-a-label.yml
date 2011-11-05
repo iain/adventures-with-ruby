@@ -1,37 +1,42 @@
 --- 
 html: |-
-  <p>I am making some acceptance tests for the LevenAls website, using plain text stories from <a href="http://blog.davidchelimsky.net/articles/2007/10/25/plain-text-stories-part-iii">David Chelimsky</a> together with the Selenium runner from  Kerry Buckley (http:&#47;&#47;www.kerrybuckley.com&#47;2007&#47;11&#47;07&#47;driving-selenium-from-the-rspec-story-runner-rbehave&#47;)</p>
+  <p>I am making some acceptance tests for the LevenAls website, using plain text stories from <a href="http://blog.davidchelimsky.net/articles/2007/10/25/plain-text-stories-part-iii">David
+  Chelimsky</a>
+  together with the Selenium runner from <a href="http://www.kerrybuckley.com/2007/11/07/driving-selenium-from-the-rspec-story-runner-rbehave%0A/">Kerry
+  Buckley</a></p>
   <pre>Story: Selenium clicking a label
   
   As a developer
   I wanted to make acceptence tests
   So I installed Cucumber and Selenium
   
-    Scenario: Writing clean tests
-      When I wanted to make the stories as clean as possible
-      And I wanted to click a rails generated radiobutton
-      Then the story became ugly
-      And it had lines like 'the user clicks a customer_gender_m button'
+    <span class="PreProc">Scenario:</span> Writing clean tests
+      <span class="Function">When</span> I wanted to make the stories as clean as possible
+      <span class="Function">And</span> I wanted to click a rails generated radiobutton
+      <span class="Type">Then</span> the story became ugly
+      <span class="Type">And</span> it had lines like 'the user clicks a customer_gender_m button'
   
-    Scenario: I made a step for labels, getting the text
-      When I wanted to get rid of it
-      And I couldn't find an easy answer
-      And I spent the better part of my evening googling it
-      Then I made a post on the Selenium forum
-      And asked for advice
+    <span class="PreProc">Scenario:</span> I made a step for labels, getting the text
+      <span class="Function">When</span> I wanted to get rid of it
+      <span class="Function">And</span> I couldn't find an easy answer
+      <span class="Function">And</span> I spent the better part of my evening googling it
+      <span class="Type">Then</span> I made a post on the Selenium forum
+      <span class="Type">And</span> asked for advice
   
-    Scenario: I found a solution myself
-      When I was sitting in the train
-      And I was trying all kinds of solutions
-      Then I stumbled upon the solution
-      And I was overjoyed
-      And it was: $selenium.click("//label[text()='#{label}']")
-  </pre>
+    <span class="PreProc">Scenario:</span> I found a solution myself
+      <span class="Function">When</span> I was sitting in the train
+      <span class="Function">And</span> I was trying all kinds of solutions
+      <span class="Type">Then</span> I stumbled upon the solution
+      <span class="Type">And</span> I was overjoyed
+      <span class="Type">And</span> it was: $selenium.click("//label[text()='#{label}']")</pre>
   <p>So here is the entire step:</p>
-  <pre>When "the user clicks on a $element labelled $label" do |element, label|
-    $selenium.click "//label[text()='#{label}']"
-  end
-  </pre>
+  <pre><span class="Type">When</span> <span class="rubyStringDelimiter">"</span><span class="String">the user clicks on a $element labelled $label</span><span class="rubyStringDelimiter">"</span> <span class="rubyControl">do</span> |<span class="Identifier">element</span>, <span class="Identifier">label</span>|
+    <span class="Identifier">$selenium</span>.click <span class="rubyStringDelimiter">"</span><span class="String">//label[text()='</span><span class="rubyInterpolationDelimiter">#{</span>label<span class="rubyInterpolationDelimiter">}</span><span class="String">']</span><span class="rubyStringDelimiter">"</span>
+  <span class="rubyControl">end</span></pre>
 toc: []
 
-introduction: <p>I am making some acceptance tests for the LevenAls website, using plain text stories from <a href="http://blog.davidchelimsky.net/articles/2007/10/25/plain-text-stories-part-iii">David Chelimsky</a> together with the Selenium runner from  Kerry Buckley (http:&#47;&#47;www.kerrybuckley.com&#47;2007&#47;11&#47;07&#47;driving-selenium-from-the-rspec-story-runner-rbehave&#47;)</p>
+introduction: |-
+  <p>I am making some acceptance tests for the LevenAls website, using plain text stories from <a href="http://blog.davidchelimsky.net/articles/2007/10/25/plain-text-stories-part-iii">David
+  Chelimsky</a>
+  together with the Selenium runner from <a href="http://www.kerrybuckley.com/2007/11/07/driving-selenium-from-the-rspec-story-runner-rbehave%0A/">Kerry
+  Buckley</a></p>

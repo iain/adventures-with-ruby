@@ -1,63 +1,80 @@
 --- 
 html: |
-  <p>I have been playing with the matchers that Thoughtbot&#39;s <a href="http://www.thoughtbot.com/projects/shoulda/">Shoulda</a> provides, and they are very cute!</p>
+  <p>I have been playing with the matchers that Thoughtbot&#39;s
+  <a href="http://www.thoughtbot.com/projects/shoulda/">Shoulda</a> provides, and they are very cute!</p>
   
   <p>For instance, a controller can be easily tested like this:</p>
-  <pre>describe ArticlesController do
+  <pre>describe <span class="Type">ArticlesController</span> <span class="rubyControl">do</span>
   
     integrate_views
   
-    describe "the index action" do
+    describe <span class="rubyStringDelimiter">"</span><span class="String">the index action</span><span class="rubyStringDelimiter">"</span> <span class="rubyControl">do</span>
   
-      before :each do
-        stub(@article = Article.new).id { 1337 }
-        mock(Article).all { [@article] }
-        get :index
-      end
+      before <span class="Constant">:each</span> <span class="rubyControl">do</span>
+        stub(<span class="Identifier">@article</span> = <span class="Type">Article</span>.new).id { <span class="Number">1337</span> }
+        mock(<span class="Type">Article</span>).all { [<span class="Identifier">@article</span>] }
+        get <span class="Constant">:index</span>
+      <span class="rubyControl">end</span>
   
-      it { should route(:get, articles_path).to(:action => :index) }
-      it { should respond_with(:success) }
-      it { should render_template(:index) }
+      it { should route(<span class="Constant">:get</span>, articles_path).to(<span class="Constant">:action</span> =&gt; <span class="Constant">:index</span>) }
+      it { should respond_with(<span class="Constant">:success</span>) }
+      it { should render_template(<span class="Constant">:index</span>) }
       it { should_not set_the_flash }
-      it { should assign_to(:articles).with([@article]) }
+      it { should assign_to(<span class="Constant">:articles</span>).with([<span class="Identifier">@article</span>]) }
   
-    end
-  end
-  </pre>
-  <p>As you see I&#39;m a fan of <a href="http://github.com/btakita/rr/">rr</a> as well. I love the sleek and concise syntax it offers, just as the Shoulda matchers.</p>
+    <span class="rubyControl">end</span>
+  <span class="rubyControl">end</span></pre>
+  <p>As you see I&#39;m a fan of <a href="http://github.com/btakita/rr/">rr</a> as well. I love the sleek and concise
+  syntax it offers, just as the Shoulda matchers.</p>
   
   <p>So, now what?</p>
   
-  <p>Well, I don&#39;t like to spec views separately. It&#39;s too much of a drag to set up all the required instance variables, because there tend to be a lot of them. That&#39;s why I use the <code>integrate_views</code> command. I do want to spec some essential elements rendered in the view. Just knowing that no exceptions were thrown is not always good enough.</p>
+  <p>Well, I don&#39;t like to spec views separately. It&#39;s too much of a drag to set up all the required
+  instance variables, because there tend to be a lot of them. That&#39;s why I use the <code>integrate_views</code>
+  command. I do want to spec some essential elements rendered in the view. Just knowing that no
+  exceptions were thrown is not always good enough.</p>
   
-  <p>The solution is the <a href="http://rubypond.com/articles/2008/03/31/using-rspec-have_tag/">have_tag</a> matcher. This is actually a wrapper around assert_select, allowing you to use CSS selectors to check your view. I ended up testing links to certain actions, to ensure all the actions are reachable for the user. For example:</p>
-  <pre>it { should have_tag("a[href=#{article_path(@article)}]") }
-  </pre>
-  <p>Yuck! That is a lot of noise! The whole use of RSpec is to create human readable tests. Also, there is a lot that can go wrong here. I will easily forget one or more of those differently shaped brackets. I want to write something like:</p>
-  <pre>it { should have_link_to(article_path(@article)) }
-  </pre>
+  <p>The solution is the <a href="http://rubypond.com/articles/2008/03/31/using-rspec-have_tag/">have_tag</a>
+  matcher. This is actually a wrapper around assert_select, allowing you to use CSS selectors to check
+  your view. I ended up testing links to certain actions, to ensure all the actions are reachable for
+  the user. For example:</p>
+  <pre>it { should have_tag(<span class="rubyStringDelimiter">"</span><span class="String">a[href=</span><span class="rubyInterpolationDelimiter">#{</span>article_path(<span class="Identifier">@article</span>)<span class="rubyInterpolationDelimiter">}</span><span class="String">]</span><span class="rubyStringDelimiter">"</span>) }</pre>
+  <p>Yuck! That is a lot of noise! The whole use of RSpec is to create human readable tests. Also, there
+  is a lot that can go wrong here. I will easily forget one or more of those differently shaped
+  brackets. I want to write something like:</p>
+  <pre>it { should have_link_to(article_path(<span class="Identifier">@article</span>)) }</pre>
   <p>Much cleaner! Making a matcher for this isn&#39;t that difficult:</p>
-  <pre>module CustomLinkMatcher
+  <pre><span class="Keyword">module</span> <span class="Type">CustomLinkMatcher</span>
   
-    include Spec::Rails::Matchers
+    <span class="PreProc">include</span> <span class="Type">Spec</span>::<span class="Type">Rails</span>::<span class="Type">Matchers</span>
   
-    def have_link_to(url)
-      AssertSelect.new(:assert_select, self, "a[href=#{url}]")
-    end
+    <span class="PreProc">def</span> <span class="Function">have_link_to</span>(url)
+      <span class="Type">AssertSelect</span>.new(<span class="Constant">:assert_select</span>, <span class="Constant">self</span>, <span class="rubyStringDelimiter">"</span><span class="String">a[href=</span><span class="rubyInterpolationDelimiter">#{</span>url<span class="rubyInterpolationDelimiter">}</span><span class="String">]</span><span class="rubyStringDelimiter">"</span>)
+    <span class="PreProc">end</span>
   
-  end
-  </pre>
+  <span class="Keyword">end</span></pre>
   <p>Don&#39;t forget to activate it, though:</p>
-  <pre>Spec::Runner.configure do |config|
-    config.include CustomLinkMatcher
-  end
-  </pre>
-  <p>So, why go through all this trouble? Why should I even care? I mean, the have_tag selector isn&#39;t that unreadable, just a bit cluttered. Well, I found that the ease of which you can type specs is directly related to how extensive you test. If a test is difficult to type, hard to read, or feels repetitive, most people (with possible exception of <a href="http://smartic.us/">Bryan Liles</a> ;) ) will get annoyed with it and don&#39;t do it anymore.</p>
+  <pre><span class="Type">Spec</span>::<span class="Type">Runner</span>.configure <span class="rubyControl">do</span> |<span class="Identifier">config</span>|
+    config.include <span class="Type">CustomLinkMatcher</span>
+  <span class="rubyControl">end</span></pre>
+  <p>So, why go through all this trouble? Why should I even care? I mean, the have_tag selector isn&#39;t
+  that unreadable, just a bit cluttered. Well, I found that the ease of which you can type specs is
+  directly related to how extensive you test. If a test is difficult to type, hard to read, or feels
+  repetitive, most people (with possible exception of <a href="http://smartic.us/">Bryan Liles</a> ;) ) will get
+  annoyed with it and don&#39;t do it anymore.</p>
   
-  <p>To give myself as an example. I never cared much about <a href="http://ruby.sadi.st/Heckle.html">heckle</a>. Heckle could mutate so much code, I soon stopped caring. Now, with the matchers Shoulda gives me, I like running Heckle! I know keeping Heckle happy shouldn&#39;t be a goal, and I accept certain things Heckle will heckle me about even now, but writing specs like this really made my tests much more robust!</p>
+  <p>To give myself as an example. I never cared much about <a href="http://ruby.sadi.st/Heckle.html">heckle</a>.
+  Heckle could mutate so much code, I soon stopped caring. Now, with the matchers Shoulda gives me, I
+  like running Heckle! I know keeping Heckle happy shouldn&#39;t be a goal, and I accept certain things
+  Heckle will heckle me about even now, but writing specs like this really made my tests much more
+  robust!</p>
   
-  <p>So, in conclusion: if you find yourself hating to write certain specs, try to refactor your specs so it becomes easy <em>and fun</em>! Try to write tests as you would like your tests to be written. Testing should be fun! Keep it that way! Use every gem, tool and technique you have to do so!</p>
+  <p>So, in conclusion: if you find yourself hating to write certain specs, try to refactor your specs so
+  it becomes easy <em>and fun</em>! Try to write tests as you would like your tests to be written. Testing
+  should be fun! Keep it that way! Use every gem, tool and technique you have to do so!</p>
 
 toc: []
 
-introduction: <p>I have been playing with the matchers that Thoughtbot&#39;s <a href="http://www.thoughtbot.com/projects/shoulda/">Shoulda</a> provides, and they are very cute!</p><p>For instance, a controller can be easily tested like this:</p>
+introduction: |-
+  <p>I have been playing with the matchers that Thoughtbot&#39;s
+  <a href="http://www.thoughtbot.com/projects/shoulda/">Shoulda</a> provides, and they are very cute!</p><p>For instance, a controller can be easily tested like this:</p>

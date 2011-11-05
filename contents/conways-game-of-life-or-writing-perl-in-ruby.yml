@@ -1,41 +1,41 @@
 --- 
 html: |
-  <p>We had a programming exercise this week at work. We were set out to write <a href="http://en.wikipedia.org/wiki/Conway%27s_Game_of_Life">Conway&#39;s Game of Life</a>, using pair programming and TDD. It was a fun and educational evening. I even did some Scala.</p>
+  <p>We had a programming exercise this week at work. We were set out to write <a href="http://en.wikipedia.org/wiki/Conway%27s_Game_of_Life">Conway&#39;s Game of
+  Life</a>, using pair programming and TDD. It was
+  a fun and educational evening. I even did some Scala.</p>
   
-  <p>Programmers humor dictates me that from time to time I say things like &quot;In Ruby, that&#39;s only one line!&quot; or &quot;In Ruby, that would cost me just one minute!&quot;. Putting money where my mouth is, I wrote the entire application in just one line of Ruby.</p>
+  <p>Programmers humor dictates me that from time to time I say things like &quot;In Ruby, that&#39;s only one
+  line!&quot; or &quot;In Ruby, that would cost me just one minute!&quot;. Putting money where my mouth is, I wrote
+  the entire application in just one line of Ruby.</p>
   
   <p>So here it is. It looks more like Perl than Ruby. But it works!</p>
-  
-  <pre class="ir_black"><font color="#ffffb6">String</font>.class_eval{define_method(<font color="#99cc99">:to_grid</font>){(<font color="#99cc99">self</font>&nbsp;=~ <font color="#ff8000">/</font><font color="#e18964">\A</font><font color="#e18964">(</font><font color="#e18964">\d</font><font color="#e18964">+</font><font color="#e18964">)</font><font color="#b18a3d">x</font><font color="#e18964">(</font><font color="#e18964">\d</font><font color="#e18964">+</font><font color="#e18964">)</font><font color="#e18964">\z</font><font color="#ff8000">/</font>&nbsp;?
-  (<font color="#ff73fd">0</font>...split(<font color="#336633">'</font><font color="#a8ff60">x</font><font color="#336633">'</font>).last.to_i).map{|<font color="#c6c5fe">_</font>|&nbsp;(<font color="#ff73fd">0</font>...split(<font color="#336633">'</font><font color="#a8ff60">x</font><font color="#336633">'</font>).first.to_i).map{|<font color="#c6c5fe">_</font>|&nbsp;rand &gt; <font color="#ff73fd">0.5</font>&nbsp;} } :
-  split(<font color="#336633">&quot;</font><font color="#e18964">\n</font><font color="#336633">&quot;</font>).map{|<font color="#c6c5fe">row</font>|&nbsp;row.split(<font color="#ff8000">//</font>).map{|<font color="#c6c5fe">cell_string</font>|&nbsp;cell_string == <font color="#336633">&quot;</font><font color="#a8ff60">o</font><font color="#336633">&quot;</font>&nbsp;} }
-  ).tap{|<font color="#c6c5fe">grid</font>|&nbsp;grid.class.class_eval{define_method(<font color="#99cc99">:next</font>){each{|<font color="#c6c5fe">row</font>|&nbsp;
-  row.each{|<font color="#c6c5fe">cell</font>|&nbsp;cell.class.class_eval{define_method(<font color="#99cc99">:next?</font>){|<font color="#c6c5fe">neighbours</font>|&nbsp;
-  (<font color="#99cc99">self</font>&nbsp;&amp;&amp; (<font color="#ff73fd">2</font>..<font color="#ff73fd">3</font>).include?(neighbours.select{|<font color="#c6c5fe">me</font>|&nbsp;me }.size)) ||
-  (!<font color="#99cc99">self</font>&nbsp;&amp;&amp; neighbours.select{|<font color="#c6c5fe">me</font>|&nbsp;me }.size == <font color="#ff73fd">3</font>)}}}} &amp;&amp;
-  enum_for(<font color="#99cc99">:each_with_index</font>).map{|<font color="#c6c5fe">row</font>, <font color="#c6c5fe">row_num</font>|&nbsp;row.enum_for(<font color="#99cc99">:each_with_index</font>).map{|<font color="#c6c5fe">cell</font>, <font color="#c6c5fe">col_num</font>|&nbsp;
-  cell.next?([&nbsp;at(row_num - <font color="#ff73fd">1</font>).at(col_num - <font color="#ff73fd">1</font>), at(row_num - <font color="#ff73fd">1</font>).at(col_num),
-  at(row_num - <font color="#ff73fd">1</font>).at((col_num + <font color="#ff73fd">1</font>) % row.size), row.at((col_num + <font color="#ff73fd">1</font>) % row.size),
-  row.at(col_num - <font color="#ff73fd">1</font>), at((row_num + <font color="#ff73fd">1</font>) % size).at(col_num - <font color="#ff73fd">1</font>),
-  at((row_num + <font color="#ff73fd">1</font>) % size).at(col_num), at((row_num + <font color="#ff73fd">1</font>) % size).at((col_num + <font color="#ff73fd">1</font>) % row.size) ])
-  } }} &amp;&amp; define_method(<font color="#99cc99">:to_s</font>){map{|<font color="#c6c5fe">row</font>|&nbsp;row.map{|<font color="#c6c5fe">cell</font>|&nbsp;cell ? <font color="#336633">&quot;</font><font color="#a8ff60">o</font><font color="#336633">&quot;</font>&nbsp;: <font color="#336633">&quot;</font><font color="#a8ff60">.</font><font color="#336633">&quot;</font>&nbsp;}.join }.join(<font color="#336633">&quot;</font><font color="#e18964">\n</font><font color="#336633">&quot;</font>)}}}}}
-  </pre>
-  
-  <p>I didn&#39;t cheat! No semicolons where harmed during the making of the spaghetti code. I did enter some newlines in the code shown above to prevent wild scrollbars from appearing.</p>
+  <pre><span class="Type">String</span>.class_eval{define_method(<span class="Constant">:to_grid</span>){(<span class="Constant">self</span> =~ <span class="rubyRegexpDelimiter">/</span><span class="Special">\A</span><span class="Special">(</span><span class="Special">\d</span><span class="Special">+</span><span class="Special">)</span><span class="rubyRegexp">x</span><span class="Special">(</span><span class="Special">\d</span><span class="Special">+</span><span class="Special">)</span><span class="Special">\z</span><span class="rubyRegexpDelimiter">/</span> ?
+  (<span class="Number">0</span>...split(<span class="rubyStringDelimiter">'</span><span class="String">x</span><span class="rubyStringDelimiter">'</span>).last.to_i).map{|<span class="Identifier">_</span>| (<span class="Number">0</span>...split(<span class="rubyStringDelimiter">'</span><span class="String">x</span><span class="rubyStringDelimiter">'</span>).first.to_i).map{|<span class="Identifier">_</span>| rand &gt; <span class="Number">0.5</span> } } :
+  split(<span class="rubyStringDelimiter">"</span><span class="Special">\n</span><span class="rubyStringDelimiter">"</span>).map{|<span class="Identifier">row</span>| row.split(<span class="rubyRegexpDelimiter">//</span>).map{|<span class="Identifier">cell_string</span>| cell_string == <span class="rubyStringDelimiter">"</span><span class="String">o</span><span class="rubyStringDelimiter">"</span> } }
+  ).tap{|<span class="Identifier">grid</span>| grid.class.class_eval{define_method(<span class="Constant">:next</span>){each{|<span class="Identifier">row</span>|
+  row.each{|<span class="Identifier">cell</span>| cell.class.class_eval{define_method(<span class="Constant">:next?</span>){|<span class="Identifier">neighbours</span>|
+  (<span class="Constant">self</span> &amp;&amp; (<span class="Number">2</span>..<span class="Number">3</span>).include?(neighbours.select{|<span class="Identifier">me</span>| me }.size)) ||
+  (!<span class="Constant">self</span> &amp;&amp; neighbours.select{|<span class="Identifier">me</span>| me }.size == <span class="Number">3</span>)}}}} &amp;&amp;
+  enum_for(<span class="Constant">:each_with_index</span>).map{|<span class="Identifier">row</span>, <span class="Identifier">row_num</span>| row.enum_for(<span class="Constant">:each_with_index</span>).map{|<span class="Identifier">cell</span>, <span class="Identifier">col_num</span>|
+  cell.next?([ at(row_num - <span class="Number">1</span>).at(col_num - <span class="Number">1</span>), at(row_num - <span class="Number">1</span>).at(col_num),
+  at(row_num - <span class="Number">1</span>).at((col_num + <span class="Number">1</span>) % row.size), row.at((col_num + <span class="Number">1</span>) % row.size),
+  row.at(col_num - <span class="Number">1</span>), at((row_num + <span class="Number">1</span>) % size).at(col_num - <span class="Number">1</span>),
+  at((row_num + <span class="Number">1</span>) % size).at(col_num), at((row_num + <span class="Number">1</span>) % size).at((col_num + <span class="Number">1</span>) % row.size) ])
+  } }} &amp;&amp; define_method(<span class="Constant">:to_s</span>){map{|<span class="Identifier">row</span>| row.map{|<span class="Identifier">cell</span>| cell ? <span class="rubyStringDelimiter">"</span><span class="String">o</span><span class="rubyStringDelimiter">"</span> : <span class="rubyStringDelimiter">"</span><span class="String">.</span><span class="rubyStringDelimiter">"</span> }.join }.join(<span class="rubyStringDelimiter">"</span><span class="Special">\n</span><span class="rubyStringDelimiter">"</span>)}}}}}</pre>
+  <p>I didn&#39;t cheat! No semicolons where harmed during the making of the spaghetti code. I did enter some
+  newlines in the code shown above to prevent wild scrollbars from appearing.</p>
   
   <p>You can use it like this:</p>
-  
-  <pre class="ir_black"><font color="#7c7c7c"># generate a random grid</font>
-  grid = <font color="#336633">&quot;</font><font color="#a8ff60">100x30</font><font color="#336633">&quot;</font>.to_grid
-  <font color="#7c7c7c"># show the grid:</font>
+  <pre><span class="Comment"># generate a random grid</span>
+  grid = <span class="rubyStringDelimiter">"</span><span class="String">100x30</span><span class="rubyStringDelimiter">"</span>.to_grid
+  <span class="Comment"># show the grid:</span>
   puts grid.to_s
-  <font color="#7c7c7c"># get the next generation of the grid</font>
+  <span class="Comment"># get the next generation of the grid</span>
   new_grid = grid.next
-  <font color="#7c7c7c"># convert a drawn out grid to a grid</font>
-  new_grid.to_s.to_grid == new_grid <font color="#7c7c7c"># returns true</font>
-  </pre>
-  
-  <p>If you want to know how it works, or make an animation of it, <a href="http://gist.github.com/384487">it&#39;s all here</a>.</p>
+  <span class="Comment"># convert a drawn out grid to a grid</span>
+  new_grid.to_s.to_grid == new_grid <span class="Comment"># returns true</span></pre>
+  <p>If you want to know how it works, or make an animation of it, <a href="http://gist.github.com/384487">it&#39;s all
+  here</a>.</p>
   
   <p>This is what it looks like:</p>
   
@@ -45,20 +45,9 @@ html: |
 
 toc: []
 
-introduction: |
-  <p>We had a programming exercise this week at work. We were set out to write <a href="http://en.wikipedia.org/wiki/Conway%27s_Game_of_Life">Conway&#39;s Game of Life</a>, using pair programming and TDD. It was a fun and educational evening. I even did some Scala.</p><p>Programmers humor dictates me that from time to time I say things like &quot;In Ruby, that&#39;s only one line!&quot; or &quot;In Ruby, that would cost me just one minute!&quot;. Putting money where my mouth is, I wrote the entire application in just one line of Ruby.</p><p>So here it is. It looks more like Perl than Ruby. But it works!</p>
-  <pre class="ir_black"><font color="#ffffb6">String</font>.class_eval{define_method(<font color="#99cc99">:to_grid</font>){(<font color="#99cc99">self</font>&nbsp;=~ <font color="#ff8000">/</font><font color="#e18964">\A</font><font color="#e18964">(</font><font color="#e18964">\d</font><font color="#e18964">+</font><font color="#e18964">)</font><font color="#b18a3d">x</font><font color="#e18964">(</font><font color="#e18964">\d</font><font color="#e18964">+</font><font color="#e18964">)</font><font color="#e18964">\z</font><font color="#ff8000">/</font>&nbsp;?
-  (<font color="#ff73fd">0</font>...split(<font color="#336633">'</font><font color="#a8ff60">x</font><font color="#336633">'</font>).last.to_i).map{|<font color="#c6c5fe">_</font>|&nbsp;(<font color="#ff73fd">0</font>...split(<font color="#336633">'</font><font color="#a8ff60">x</font><font color="#336633">'</font>).first.to_i).map{|<font color="#c6c5fe">_</font>|&nbsp;rand &gt; <font color="#ff73fd">0.5</font>&nbsp;} } :
-  split(<font color="#336633">&quot;</font><font color="#e18964">\n</font><font color="#336633">&quot;</font>).map{|<font color="#c6c5fe">row</font>|&nbsp;row.split(<font color="#ff8000">//</font>).map{|<font color="#c6c5fe">cell_string</font>|&nbsp;cell_string == <font color="#336633">&quot;</font><font color="#a8ff60">o</font><font color="#336633">&quot;</font>&nbsp;} }
-  ).tap{|<font color="#c6c5fe">grid</font>|&nbsp;grid.class.class_eval{define_method(<font color="#99cc99">:next</font>){each{|<font color="#c6c5fe">row</font>|&nbsp;
-  row.each{|<font color="#c6c5fe">cell</font>|&nbsp;cell.class.class_eval{define_method(<font color="#99cc99">:next?</font>){|<font color="#c6c5fe">neighbours</font>|&nbsp;
-  (<font color="#99cc99">self</font>&nbsp;&amp;&amp; (<font color="#ff73fd">2</font>..<font color="#ff73fd">3</font>).include?(neighbours.select{|<font color="#c6c5fe">me</font>|&nbsp;me }.size)) ||
-  (!<font color="#99cc99">self</font>&nbsp;&amp;&amp; neighbours.select{|<font color="#c6c5fe">me</font>|&nbsp;me }.size == <font color="#ff73fd">3</font>)}}}} &amp;&amp;
-  enum_for(<font color="#99cc99">:each_with_index</font>).map{|<font color="#c6c5fe">row</font>, <font color="#c6c5fe">row_num</font>|&nbsp;row.enum_for(<font color="#99cc99">:each_with_index</font>).map{|<font color="#c6c5fe">cell</font>, <font color="#c6c5fe">col_num</font>|&nbsp;
-  cell.next?([&nbsp;at(row_num - <font color="#ff73fd">1</font>).at(col_num - <font color="#ff73fd">1</font>), at(row_num - <font color="#ff73fd">1</font>).at(col_num),
-  at(row_num - <font color="#ff73fd">1</font>).at((col_num + <font color="#ff73fd">1</font>) % row.size), row.at((col_num + <font color="#ff73fd">1</font>) % row.size),
-  row.at(col_num - <font color="#ff73fd">1</font>), at((row_num + <font color="#ff73fd">1</font>) % size).at(col_num - <font color="#ff73fd">1</font>),
-  at((row_num + <font color="#ff73fd">1</font>) % size).at(col_num), at((row_num + <font color="#ff73fd">1</font>) % size).at((col_num + <font color="#ff73fd">1</font>) % row.size) ])
-  } }} &amp;&amp; define_method(<font color="#99cc99">:to_s</font>){map{|<font color="#c6c5fe">row</font>|&nbsp;row.map{|<font color="#c6c5fe">cell</font>|&nbsp;cell ? <font color="#336633">&quot;</font><font color="#a8ff60">o</font><font color="#336633">&quot;</font>&nbsp;: <font color="#336633">&quot;</font><font color="#a8ff60">.</font><font color="#336633">&quot;</font>&nbsp;}.join }.join(<font color="#336633">&quot;</font><font color="#e18964">\n</font><font color="#336633">&quot;</font>)}}}}}
-  </pre>
-
+introduction: |-
+  <p>We had a programming exercise this week at work. We were set out to write <a href="http://en.wikipedia.org/wiki/Conway%27s_Game_of_Life">Conway&#39;s Game of
+  Life</a>, using pair programming and TDD. It was
+  a fun and educational evening. I even did some Scala.</p><p>Programmers humor dictates me that from time to time I say things like &quot;In Ruby, that&#39;s only one
+  line!&quot; or &quot;In Ruby, that would cost me just one minute!&quot;. Putting money where my mouth is, I wrote
+  the entire application in just one line of Ruby.</p><p>So here it is. It looks more like Perl than Ruby. But it works!</p>

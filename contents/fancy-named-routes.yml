@@ -1,57 +1,78 @@
 --- 
 html: |
-  <p>I know <a href="http://tweakers.net">tweakers.net</a> has it, I liked it, and I wanted it for myself. The uris of news items are like this: <code>http:&#47;&#47;core.tweakers.net&#47;nieuws&#47;50373&#47;intel-stoot-ontwikkeling-netwerkprocessors-af.html</code></p>
+  <p>I know <a href="http://tweakers.net">tweakers.net</a> has it, I liked it,
+  and I wanted it for myself. The uris of news items are like this:
+  <code>http:&#47;&#47;core.tweakers.net&#47;nieuws&#47;50373&#47;intel-stoot-ontwikkeling-netwerkprocessors-af.html</code></p>
   
-  <p>First you get the id, than you get a nice version of the title ending with .html. This is a nice way of making links, scoring high for a googlebot and is incredibly easy to read.</p>
+  <p>First you get the id, than you get a nice version of the title ending with .html. This is a nice way
+  of making links, scoring high for a googlebot and is incredibly easy to read.</p>
   
-  <p>I first tried to use only the title as an identifier. Now normally there would be a problem with having titles in your uri. First of all you might want to have special characters in your title. Rails automatically converts them back into the characters they are when evaluating the routes, so it would result in this problem: <em>&#47;news&#47;my%2Ftitle.html</em> would evaluate to <em>&#47;news&#47;my&#47;title.html</em>, which the Rails Router doesn&#39;t understand.</p>
+  <p>I first tried to use only the title as an identifier. Now normally there would be a problem with
+  having titles in your uri. First of all you might want to have special characters in your title.
+  Rails automatically converts them back into the characters they are when evaluating the routes, so
+  it would result in this problem: <code>&#47;news&#47;my%2Ftitle.html</code> would evaluate to <code>&#47;news&#47;my&#47;title.html</code>,
+  which the Rails Router doesn&#39;t understand.</p>
   
-  <p>Besides, it doesn&#39;t look good. But when changing the title to <em>my-title.html</em>, just for output, there is no good way of getting it back to the original title. Even more problematic is <em>my&#47;title</em> and <em>my-title</em> would lead to the same page. I concluded that you&#39;ll definitely need an id in your uri. But how would I have the title in it then?</p>
+  <p>Besides, it doesn&#39;t look good. But when changing the title to <code>my-title.html</code>, just for output,
+  there is no good way of getting it back to the original title. Even more problematic is <code>my&#47;title</code>
+  and <code>my-title</code> would lead to the same page. I concluded that you&#39;ll definitely need an id in your
+  uri. But how would I have the title in it then?</p>
   
   <p>The solution is a nice named route, like this one:</p>
-  <pre>map.news 'news/:id/*nice_url', :controller => 'news', :action => 'show'
-  </pre>
-  <p>Now to get the title to appear automatically, so you don&#39;t have to code it every time you make a link. Go to the model and add this method:</p>
-  <pre>def to_param
-    self.id.to_s+'/'+self.title.gsub(/\W/, '-').squeeze('-').downcase+'.html'
-  end
-  </pre>
-  <p>Now every time you use news_url(@news) it adds the title nicely formatted. One downside though: Because it is a parameter Ruby converts it to %2F. As it should, I might add. But in this case we don&#39;t want it, it looks silly. But it works. Fixing this is a bit tricky. You must overload the link_to function. I&#39;ve done it like this:</p>
-  <pre>def link_to(text, link, *options)
-    super(text, convert_nice_url(link), *options)
-  end
+  <pre>map.news <span class="rubyStringDelimiter">'</span><span class="String">news/:id/*nice_url</span><span class="rubyStringDelimiter">'</span>, <span class="Constant">:controller</span> =&gt; <span class="rubyStringDelimiter">'</span><span class="String">news</span><span class="rubyStringDelimiter">'</span>, <span class="Constant">:action</span> =&gt; <span class="rubyStringDelimiter">'</span><span class="String">show</span><span class="rubyStringDelimiter">'</span></pre>
+  <p>Now to get the title to appear automatically, so you don&#39;t have to code it every time you make a
+  link. Go to the model and add this method:</p>
+  <pre><span class="PreProc">def</span> <span class="Function">to_param</span>
+    <span class="Constant">self</span>.id.to_s+<span class="rubyStringDelimiter">'</span><span class="String">/</span><span class="rubyStringDelimiter">'</span>+<span class="Constant">self</span>.title.gsub(<span class="rubyRegexpDelimiter">/</span><span class="Special">\W</span><span class="rubyRegexpDelimiter">/</span>, <span class="rubyStringDelimiter">'</span><span class="String">-</span><span class="rubyStringDelimiter">'</span>).squeeze(<span class="rubyStringDelimiter">'</span><span class="String">-</span><span class="rubyStringDelimiter">'</span>).downcase+<span class="rubyStringDelimiter">'</span><span class="String">.html</span><span class="rubyStringDelimiter">'</span>
+  <span class="PreProc">end</span></pre>
+  <p>Now every time you use <code>news_url(@news)</code> it adds the title nicely formatted. One downside though:
+  Because it is a parameter Ruby converts it to <code>%2F</code>. As it should, I might add. But in this case we
+  don&#39;t want it, it looks silly. But it works. Fixing this is a bit tricky. You must overload the
+  <code>link_to</code> function. I&#39;ve done it like this:</p>
+  <pre><span class="PreProc">def</span> <span class="Function">link_to</span>(text, link, *options)
+    <span class="Keyword">super</span>(text, convert_nice_url(link), *options)
+  <span class="PreProc">end</span>
   
-  private
+  <span class="Statement">private</span>
   
-    def bare_path(txt)
-      txt.sub(/^\/*/, '/').sub(index_url,'')
-    end
+    <span class="PreProc">def</span> <span class="Function">bare_path</span>(txt)
+      txt.sub(<span class="rubyRegexpDelimiter">/</span><span class="Special">^</span><span class="Special">\/</span><span class="Special">*</span><span class="rubyRegexpDelimiter">/</span>, <span class="rubyStringDelimiter">'</span><span class="String">/</span><span class="rubyStringDelimiter">'</span>).sub(index_url,<span class="rubyStringDelimiter">''</span>)
+    <span class="PreProc">end</span>
   
-    def convert_nice_url(link)
-      link = url_for(link) unless link.is_a?(String)
-      rs = ::ActionController::Routing::Routes
+    <span class="PreProc">def</span> <span class="Function">convert_nice_url</span>(link)
+      link = url_for(link) <span class="Conditional">unless</span> link.is_a?(<span class="Type">String</span>)
+      rs = ::<span class="Type">ActionController</span>::<span class="Type">Routing</span>::<span class="Type">Routes</span>
       segments = rs.recognize_path(bare_path(link))
-      has_nice_url = false
-      rs.named_routes.routes.each do |key,value|
-        has_nice_url = true if
-          value.defaults.has_value?(segments[:controller]) and
-          value.defaults.has_value?(segments[:action]) and
-          value.defaults.include?(:nice_url)
-      end
-      link.gsub!("%2F","/") if has_nice_url
-      return link
-    rescue ::ActionController::RoutingError
-      return link
-    end
-  </pre>
-  <p>It looks if your route has the parameter *<em>nice_url</em> and in that case it replaces <em>%2F</em> with genuine forward slashes. You might want to do this for <em>link_to_remote</em> and <em>redirect_to</em> as well.</p>
+      has_nice_url = <span class="Constant">false</span>
+      rs.named_routes.routes.each <span class="rubyControl">do</span> |<span class="Identifier">key</span>,<span class="Identifier">value</span>|
+        has_nice_url = <span class="Constant">true</span> <span class="Conditional">if</span>
+          value.defaults.has_value?(segments[<span class="Constant">:controller</span>]) <span class="rubyControl">and</span>
+          value.defaults.has_value?(segments[<span class="Constant">:action</span>]) <span class="rubyControl">and</span>
+          value.defaults.include?(<span class="Constant">:nice_url</span>)
+      <span class="rubyControl">end</span>
+      link.gsub!(<span class="rubyStringDelimiter">"</span><span class="String">%2F</span><span class="rubyStringDelimiter">"</span>,<span class="rubyStringDelimiter">"</span><span class="String">/</span><span class="rubyStringDelimiter">"</span>) <span class="Conditional">if</span> has_nice_url
+      <span class="rubyControl">return</span> link
+    <span class="PreProc">rescue</span> ::<span class="Type">ActionController</span>::<span class="Type">RoutingError</span>
+      <span class="rubyControl">return</span> link
+    <span class="PreProc">end</span></pre>
+  <p>It looks if your route has the parameter <code>nice_url</code> and in that case it replaces <code>%2F</code> with genuine
+  forward slashes. You might want to do this for <code>link_to_remote</code> and <code>redirect_to</code> as well.</p>
   
-  <p><strong>Update:</strong> In routes.rb, don&#39;t forget to add a named route called index, pointing to &#39;&#39;, as a default route. This script needs that. Furthermore, you need to make the default of the parameter nice_url nil. This is the final version of routes.rb:</p>
-  <pre>map.index '', :controller => 'news', :action=>'index'
-  map.news 'news/:id/*nice_url', :controller => 'news', :action => 'show', :nice_url => nil
-  </pre>
+  <p><strong>Update:</strong> In <code>routes.rb</code>, don&#39;t forget to add a named route called index, pointing to <code>&#39;&#39;</code>, as a
+  default route. This script needs that. Furthermore, you need to make the default of the parameter
+  <code>nice_url</code> nil. This is the final version of routes.rb:</p>
+  <pre>map.index <span class="rubyStringDelimiter">''</span>, <span class="Constant">:controller</span> =&gt; <span class="rubyStringDelimiter">'</span><span class="String">news</span><span class="rubyStringDelimiter">'</span>, <span class="Constant">:action</span>=&gt;<span class="rubyStringDelimiter">'</span><span class="String">index</span><span class="rubyStringDelimiter">'</span>
+  map.news <span class="rubyStringDelimiter">'</span><span class="String">news/:id/*nice_url</span><span class="rubyStringDelimiter">'</span>, <span class="Constant">:controller</span> =&gt; <span class="rubyStringDelimiter">'</span><span class="String">news</span><span class="rubyStringDelimiter">'</span>, <span class="Constant">:action</span> =&gt; <span class="rubyStringDelimiter">'</span><span class="String">show</span><span class="rubyStringDelimiter">'</span>, <span class="Constant">:nice_url</span> =&gt; <span class="Constant">nil</span></pre>
   <p><strong>Update 2:</strong> I will be following up on this item, to properly implement this. Come back again later!</p>
 
 toc: []
 
-introduction: "<p>I know <a href=\"http://tweakers.net\">tweakers.net</a> has it, I liked it, and I wanted it for myself. The uris of news items are like this: <code>http:&#47;&#47;core.tweakers.net&#47;nieuws&#47;50373&#47;intel-stoot-ontwikkeling-netwerkprocessors-af.html</code></p><p>First you get the id, than you get a nice version of the title ending with .html. This is a nice way of making links, scoring high for a googlebot and is incredibly easy to read.</p><p>I first tried to use only the title as an identifier. Now normally there would be a problem with having titles in your uri. First of all you might want to have special characters in your title. Rails automatically converts them back into the characters they are when evaluating the routes, so it would result in this problem: <em>&#47;news&#47;my%2Ftitle.html</em> would evaluate to <em>&#47;news&#47;my&#47;title.html</em>, which the Rails Router doesn&#39;t understand.</p>"
+introduction: |-
+  <p>I know <a href="http://tweakers.net">tweakers.net</a> has it, I liked it,
+  and I wanted it for myself. The uris of news items are like this:
+  <code>http:&#47;&#47;core.tweakers.net&#47;nieuws&#47;50373&#47;intel-stoot-ontwikkeling-netwerkprocessors-af.html</code></p><p>First you get the id, than you get a nice version of the title ending with .html. This is a nice way
+  of making links, scoring high for a googlebot and is incredibly easy to read.</p><p>I first tried to use only the title as an identifier. Now normally there would be a problem with
+  having titles in your uri. First of all you might want to have special characters in your title.
+  Rails automatically converts them back into the characters they are when evaluating the routes, so
+  it would result in this problem: <code>&#47;news&#47;my%2Ftitle.html</code> would evaluate to <code>&#47;news&#47;my&#47;title.html</code>,
+  which the Rails Router doesn&#39;t understand.</p>

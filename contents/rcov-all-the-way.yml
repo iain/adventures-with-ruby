@@ -1,20 +1,28 @@
 --- 
 html: |
-  <p>I installed the rails_rcov plugin to see the coverage like any good programmer ;-)  But when I want to know what all the tests combined produce in coverage, it just produced the coverage reports of each individual test (units, functionals and integration) and replacing each with one another. I am not a briliant googler, and when I couldn&#39;t find the answer in time, I decided to make my own rake task for it. Here it is:</p>
-  <pre>namespace :test do
-    desc "Run all tests at once through rcov."
-    task :rcov do
-      test_files = FileList['test/**/*_test.rb']
-      output_dir = File.expand_path("./coverage/all/")
-      command = "rcov -o \"#{output_dir}\" --rails --sort=coverage -T -x \"gems/*,rcov*,lib/*\" \"#{test_files.join('" "')}\""
+  <p>I installed the rails_rcov plugin to see the coverage like any good programmer ;-) But when I want
+  to know what all the tests combined produce in coverage, it just produced the coverage reports of
+  each individual test (units, functionals and integration) and replacing each with one another. I am
+  not a briliant googler, and when I couldn&#39;t find the answer in time, I decided to make my own rake
+  task for it. Here it is:</p>
+  <pre>namespace <span class="Constant">:test</span> <span class="rubyControl">do</span>
+    desc <span class="rubyStringDelimiter">"</span><span class="String">Run all tests at once through rcov.</span><span class="rubyStringDelimiter">"</span>
+    task <span class="Constant">:rcov</span> <span class="rubyControl">do</span>
+      test_files = <span class="Type">FileList</span>[<span class="rubyStringDelimiter">'</span><span class="String">test/**/*_test.rb</span><span class="rubyStringDelimiter">'</span>]
+      output_dir = <span class="Type">File</span>.expand_path(<span class="rubyStringDelimiter">"</span><span class="String">./coverage/all/</span><span class="rubyStringDelimiter">"</span>)
+      command = <span class="rubyStringDelimiter">"</span><span class="String">rcov -o \"</span><span class="rubyInterpolationDelimiter">#{</span>output_dir<span class="rubyInterpolationDelimiter">}</span><span class="String">\" --rails --sort=coverage -T -x \"gems/*,rcov*,lib/*\" \"</span><span class="rubyInterpolationDelimiter">#{</span>test_files.join(<span class="rubyStringDelimiter">'</span><span class="String">" "</span><span class="rubyStringDelimiter">'</span>)<span class="rubyInterpolationDelimiter">}</span><span class="String">\"</span><span class="rubyStringDelimiter">"</span>
       puts command
-      puts `#{command}`
-      puts "View all results at <file://#{output_dir}/index.html>"
-    end
-  end
-  </pre>
+      puts <span class="rubyStringDelimiter">`</span><span class="rubyInterpolationDelimiter">#{</span>command<span class="rubyInterpolationDelimiter">}</span><span class="rubyStringDelimiter">`</span>
+      puts <span class="rubyStringDelimiter">"</span><span class="String">View all results at &lt;file://</span><span class="rubyInterpolationDelimiter">#{</span>output_dir<span class="rubyInterpolationDelimiter">}</span><span class="String">/index.html&gt;</span><span class="rubyStringDelimiter">"</span>
+    <span class="rubyControl">end</span>
+  <span class="rubyControl">end</span></pre>
   <p>Now, it doesn&#39;t take any argument yet, but it works quite all right.</p>
 
 toc: []
 
-introduction: <p>I installed the rails_rcov plugin to see the coverage like any good programmer ;-)  But when I want to know what all the tests combined produce in coverage, it just produced the coverage reports of each individual test (units, functionals and integration) and replacing each with one another. I am not a briliant googler, and when I couldn&#39;t find the answer in time, I decided to make my own rake task for it. Here it is:</p>
+introduction: |-
+  <p>I installed the rails_rcov plugin to see the coverage like any good programmer ;-) But when I want
+  to know what all the tests combined produce in coverage, it just produced the coverage reports of
+  each individual test (units, functionals and integration) and replacing each with one another. I am
+  not a briliant googler, and when I couldn&#39;t find the answer in time, I decided to make my own rake
+  task for it. Here it is:</p>

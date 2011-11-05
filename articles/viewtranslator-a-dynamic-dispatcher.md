@@ -4,45 +4,52 @@ In views you can automatically scope translations to the view you're working in.
 
 So this HAML code (in the `users#index` view):
 
-<pre class="ir_black"><font color="#e18964">=</font>&nbsp;t(<font color="#336633">'</font><font color="#a8ff60">.foo</font><font color="#336633">'</font>)
-</pre>
+``` haml
+= t('.foo')
+```
 
 It's the same as:
 
-<pre class="ir_black"><font color="#e18964">=</font>&nbsp;t(<font color="#99cc99">:foo</font>, <font color="#99cc99">:scope</font>&nbsp;=&gt; [<font color="#99cc99">:users</font>, <font color="#99cc99">:index</font>])</pre>
+``` haml
+= t(:foo, :scope => [:users, :index])
+```
 
 I use this technique a lot.
 
 Anyway, we could clean up it even more, by making a dynamic dispatcher. It would look something like this:
 
-<pre class="ir_black"><font color="#96cbfe">module</font>&nbsp;<font color="#ffffb6">ViewTranslatorHelper</font>
+``` ruby
+module ViewTranslatorHelper
 
-&nbsp;&nbsp;<font color="#96cbfe">def</font>&nbsp;<font color="#ffd2a7">vt</font>
-&nbsp;&nbsp;&nbsp;&nbsp;<font color="#c6c5fe">@view_translator</font>&nbsp;||= <font color="#ffffb6">ViewTranslator</font>.new(<font color="#99cc99">self</font>)
-&nbsp;&nbsp;<font color="#96cbfe">end</font>
+  def vt
+    @view_translator ||= ViewTranslator.new(self)
+  end
 
-&nbsp;&nbsp;<font color="#96cbfe">class</font>&nbsp;<font color="#ffffb6">ViewTranslator</font>&nbsp;&lt; <font color="#ffffb6">ActiveSupport</font>::<font color="#ffffb6">BasicObject</font>
+  class ViewTranslator < ActiveSupport::BasicObject
 
-&nbsp;&nbsp;&nbsp;&nbsp;<font color="#96cbfe">def</font>&nbsp;<font color="#ffd2a7">initialize</font>(template)
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#c6c5fe">@template</font>&nbsp;= template
-&nbsp;&nbsp;&nbsp;&nbsp;<font color="#96cbfe">end</font>
+    def initialize(template)
+      @template = template
+    end
 
-&nbsp;&nbsp;&nbsp;&nbsp;<font color="#96cbfe">def</font>&nbsp;<font color="#ffd2a7">method_missing</font>(method, options = {})
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#ffffb6">ViewTranslator</font>.class_eval &lt;&lt;-<font color="#336633">RUBY</font>
-<font color="#a8ff60">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;def </font><font color="#00a0a0">#{</font>method<font color="#00a0a0">}</font><font color="#a8ff60">(options = {})</font>
-<font color="#a8ff60">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@template.t(&quot;.</font><font color="#00a0a0">#{</font>method<font color="#00a0a0">}</font><font color="#a8ff60">&quot;, options)</font>
-<font color="#a8ff60">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;end</font>
-<font color="#a8ff60">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#336633">RUBY</font>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;__send__(method, options)
-&nbsp;&nbsp;&nbsp;&nbsp;<font color="#96cbfe">end</font>
+    def method_missing(method, options = {})
+      ViewTranslator.class_eval <<-RUBY
+        def #{method}(options = {})
+          @template.t(".#{method}", options)
+        end
+      RUBY
+      __send__(method, options)
+    end
 
-&nbsp;&nbsp;<font color="#96cbfe">end</font>
+  end
 
-<font color="#96cbfe">end</font></pre>
+end
+```
 
 And now you can write:
 
-<pre class="ir_black"><font color="#e18964">=</font>&nbsp;vt.foo</pre>
+``` haml
+= vt.foo
+```
 
 ### How does this work?
 
@@ -50,9 +57,8 @@ The `vt` method returns `ViewTranslator` instance. It is cached inside an instan
 
 When we define `method_missing` every single method we call on it will be passed to there. We could call `@template.t` directly from here, but we don't. To know why, we must know how `method_missing` works. When you call a method on an object, it looks to see if the object knows the method. When it doesn't know it, it looks to it's superclass and tries again. This happens all the way until it reaches the top of the chain. In Ruby 1.8 that is `Object`, because every object inherits from `Object`. Ruby 1.9 goes one step further and goes to `BasicObject`. If a method is not found anywhere, it will go to the original object you called the method on and it calls `method_missing`. Since that usually isn't there, it goes up the superclass chain until it comes to (`Basic`)`Object`. There it exists. It will raise the exception we all know and hate: `NoMethodError`. You can do this yourself too:
 
-<pre class="ir_black">> "any object".method_missing(:to_s)
-NoMethodError: undefined method `to_s' for "any object":String
-</pre>
+    > "any object".method_missing(:to_s)
+    NoMethodError: undefined method `to_s' for "any object":String
 
 You see, even though the method `to_s` does exist on the string, we stepped halfway in the process of a method call. The error message is a bit confusing, but the we just called a method on the superclass of `String`. Anyway, by defining `method_missing` on our own object, it cuts this chain short. To cut it even shorter, I define the method itself, so it doesn't need to go through this process at all. After it's defined I call the freshly created method.
 

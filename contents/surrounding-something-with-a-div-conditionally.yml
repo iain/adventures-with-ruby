@@ -1,51 +1,55 @@
 --- 
 html: |
-  <p>A problem I keep running in to, especially with Haml, is how to render Ajax requests. Say you have a partial on your page which is something dynamic, like a feedback form. Here you might want to replace this partial with an updated version of that same partial. When making an ajax request, you specify the id of the element you wish to update. But when the element is created inside the partial, it gets rendered double.</p>
-  <pre>#feedback
-    = remote_form_for(@feedback ||= Feedback.new, :url => @feedback, :update => 'feedback') do |f|
-      = f.input_field :message
-      = submit_tag
-  </pre>
+  <p>A problem I keep running in to, especially with Haml, is how to render Ajax requests. Say you have
+  a partial on your page which is something dynamic, like a feedback form. Here you might want to
+  replace this partial with an updated version of that same partial. When making an ajax request,
+  you specify the id of the element you wish to update. But when the element is created inside the
+  partial, it gets rendered double.</p>
+  <pre><span class="Special">#</span><span class="Identifier">feedback</span>
+    <span class="Special">=</span> remote_form_for(<span class="Identifier">@feedback</span> ||= <span class="Type">Feedback</span>.new, <span class="Constant">:url</span> =&gt; <span class="Identifier">@feedback</span>, <span class="Constant">:update</span> =&gt; <span class="rubyStringDelimiter">'</span><span class="String">feedback</span><span class="rubyStringDelimiter">'</span>) <span class="rubyControl">do</span> |<span class="Identifier">f</span>|
+      <span class="Special">=</span> f.input_field <span class="Constant">:message</span>
+      <span class="Special">=</span> submit_tag</pre>
   <p>will result after the button is pressed:</p>
-  <pre><div id="feedback">
-    <div id="feedback">
-      <form>etc
-    </div>
-  </div>
-  </pre>
-  <p>One solution is to create the div outside of the partial, but that would make the partial less self sufficient. Since I am a big fan of self sufficient partials, I&#39;d want to just render the partial, and never to care about any div&#39;s around it.</p>
+  <pre><span class="Keyword">&lt;</span><span class="Conditional">div</span><span class="Keyword"> </span><span class="Type">id</span><span class="Keyword">=</span><span class="String">"feedback"</span><span class="Keyword">&gt;</span>
+    <span class="Keyword">&lt;</span><span class="Conditional">div</span><span class="Keyword"> </span><span class="Type">id</span><span class="Keyword">=</span><span class="String">"feedback"</span><span class="Keyword">&gt;</span>
+      <span class="Keyword">&lt;</span><span class="Conditional">form</span><span class="Keyword">&gt;</span>etc
+    <span class="Identifier">&lt;/</span><span class="Conditional">div</span><span class="Identifier">&gt;</span>
+  <span class="Identifier">&lt;/</span><span class="Conditional">div</span><span class="Identifier">&gt;</span></pre>
+  <p>One solution is to create the div outside of the partial, but that would make the partial less self
+  sufficient. Since I am a big fan of self sufficient partials, I&#39;d want to just render the partial,
+  and never to care about any div&#39;s around it.</p>
   
   <p>An <strong>ugly</strong> solution, especially when using Haml, is to dynamically create the open and close tags:</p>
-  <pre>= '<div id="feedback">' unless request.xhr?
-  - remote_form_for(etc)
-  = '</div>' unless request.xhr?
-  </pre>
+  <pre><span class="Special">=</span> <span class="rubyStringDelimiter">'</span><span class="String">&lt;div id="feedback"&gt;</span><span class="rubyStringDelimiter">'</span> <span class="rubyControl">unless</span> request.xhr?
+  <span class="Special">-</span> remote_form_for(etc)
+  <span class="Special">=</span> <span class="rubyStringDelimiter">'</span><span class="String">&lt;/div&gt;</span><span class="rubyStringDelimiter">'</span> <span class="rubyControl">unless</span> request.xhr?</pre>
   <p>My solution is a small helper, resulting in this view-code:</p>
-  <pre>= content_for_ajax_request(:id => 'feedback') do
-    = remote_form_for(etc)
-  </pre>
+  <pre><span class="Special">=</span> content_for_ajax_request(<span class="Constant">:id</span> =&gt; <span class="rubyStringDelimiter">'</span><span class="String">feedback</span><span class="rubyStringDelimiter">'</span>) <span class="rubyControl">do</span>
+    <span class="Special">=</span> remote_form_for(etc)</pre>
   <p>Which requires this helper:</p>
-  <pre>def content_for_ajax_request(options = {}, &block)
-    c = capture_haml { yield }
-    request.xhr? ? c : content_tag(:div, c, options)
-  end
-  </pre>
+  <pre><span class="PreProc">def</span> <span class="Function">content_for_ajax_request</span>(options = {}, &amp;block)
+    c = capture_haml { <span class="Keyword">yield</span> }
+    request.xhr? ? c : content_tag(<span class="Constant">:div</span>, c, options)
+  <span class="PreProc">end</span></pre>
   <p>The only minor problem is, that it screws up the indentation, but I&#39;m not being picky this time.</p>
   
   <p>When you&#39;re not using Haml, but ERB, just use this:</p>
-  <pre>def content_for_ajax_request(options = {}, &block)
-    c = capture { yield }
-    request.xhr? ? c : content_tag(:div, c, options)
-  end
-  </pre>
+  <pre><span class="PreProc">def</span> <span class="Function">content_for_ajax_request</span>(options = {}, &amp;block)
+    c = capture { <span class="Keyword">yield</span> }
+    request.xhr? ? c : content_tag(<span class="Constant">:div</span>, c, options)
+  <span class="PreProc">end</span></pre>
   <p>Naturally, you can change the condition, if you&#39;d like.</p>
-  <pre>def div_if(condition, options = {}, &block)
-    c = capture { yield }
-    condition ? c : content_tag(:div, c, options)
-  end
-  </pre>
+  <pre><span class="PreProc">def</span> <span class="Function">div_if</span>(condition, options = {}, &amp;block)
+    c = capture { <span class="Keyword">yield</span> }
+    condition ? c : content_tag(<span class="Constant">:div</span>, c, options)
+  <span class="PreProc">end</span></pre>
   <p>This is exactly why I like Ruby so much. Using blocks can make your code so much sweeter...</p>
 
 toc: []
 
-introduction: <p>A problem I keep running in to, especially with Haml, is how to render Ajax requests. Say you have a partial on your page which is something dynamic, like a feedback form. Here you might want to replace this partial with an updated version of that same partial. When making an ajax request, you specify the id of the element you wish to update. But when the element is created inside the partial, it gets rendered double.</p>
+introduction: |-
+  <p>A problem I keep running in to, especially with Haml, is how to render Ajax requests. Say you have
+  a partial on your page which is something dynamic, like a feedback form. Here you might want to
+  replace this partial with an updated version of that same partial. When making an ajax request,
+  you specify the id of the element you wish to update. But when the element is created inside the
+  partial, it gets rendered double.</p>

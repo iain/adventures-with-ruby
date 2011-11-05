@@ -1,31 +1,101 @@
 --- 
-html: "<p><a href=\"http://jeffkreeftmeijer.com\">Jeff Kreeftmeijer</a> talked about <a href=\"http://cukes.info/\">Cucumber</a> and <a href=\"https://github.com/cavalle/steak\">Steak</a> at the last <a href=\"http://amsterdam-rb.org/\">Amsterdam Ruby Meetup</a>. He hit upon an important theme in software development: <strong>reducing complexity</strong>; in this case the extra layers of complexity introduced by Cucumber features and step definitions. And he&#39;s absolutely right. If you don&#39;t need the natural language Cucumber provides, then you should get rid of the extra complexity and <a href=\"http://jeffkreeftmeijer.com/2010/steak-because-cucumber-is-for-vegetarians/\">use Steak instead</a>.</p>\n\n\
-  <p>As much as I agree with this, I think there is a way of using Cucumber that makes it a valid option to use it in more cases than you think. It&#39;s for doing Behavior Driven Development with a high focus on the problem you&#39;re trying to solve. Let me explain what I mean by this.</p>\n\n\
+html: "<p><a href=\"http://jeffkreeftmeijer.com\">Jeff Kreeftmeijer</a> talked about <a href=\"http://cukes.info/\">Cucumber</a>\n\
+  and <a href=\"https://github.com/cavalle/steak\">Steak</a> at the last <a href=\"http://amsterdam-rb.org/\">Amsterdam Ruby\n\
+  Meetup</a>. He hit upon an important theme in software development:\n\
+  <strong>reducing complexity</strong>; in this case the extra layers of complexity introduced by Cucumber\n\
+  features and step definitions. And he&#39;s absolutely right. If you don&#39;t need the natural\n\
+  language Cucumber provides, then you should get rid of the extra complexity and <a href=\"http://jeffkreeftmeijer.com/2010/steak-because-cucumber-is-for-vegetarians/\">use Steak\n\
+  instead</a>.</p>\n\n\
+  <p>As much as I agree with this, I think there is a way of using Cucumber that makes it a valid option\n\
+  to use it in more cases than you think. It&#39;s for doing Behavior Driven Development with a high focus\n\
+  on the problem you&#39;re trying to solve. Let me explain what I mean by this.</p>\n\n\
   <h3 id=\"toc_0\">Using steak for integration tests</h3>\n\n\
-  <p>Most examples of Cucumber use the <a href=\"https://github.com/aslakhellesoy/cucumber-rails/blob/master/templates/install/step_definitions/capybara_steps.rb.erb\">web steps</a> that the generator of cucumber-rails provides. These are fairly low level: click a link, fill in some fields, submit and check the outcome. Writing features like this is easy. All the parts are present by default, so you can get some work done quickly. But if you do it like this, there is no reason why you should use Cucumber. You&#39;re adding complexity (features and step definitions) which don&#39;t add anything compared to Steak.</p>\n\n\
-  <p>In fact, Ruby is a very clean language, and the <a href=\"https://github.com/jnicklas/capybara/\">Capybara</a> API is very clean too. Even if you have a customer that wants to read your features, they can read and write for Steak as well, with very little extra effort. So, if you&#39;re only in it for the integration testing, Cucumber will only make your life more complex. And we don&#39;t want this extra complexity, unless there is a good reason for it.</p>\n\n\
+  <p>Most examples of Cucumber use the <a href=\"https://github.com/aslakhellesoy/cucumber-rails/blob/master/templates/install/step_definition%0As/capybara_steps.rb.erb\">web\n\
+  steps</a> that the generator of cucumber-rails provides. These are fairly low level:\n\
+  click a link, fill in some fields, submit and check the outcome. Writing features like this is easy.\n\
+  All the parts are present by default, so you can get some work done quickly. But if you do it like\n\
+  this, there is no reason why you should use Cucumber. You&#39;re adding complexity (features and step\n\
+  definitions) which don&#39;t add anything compared to Steak.</p>\n\n\
+  <p>In fact, Ruby is a very clean language, and the <a href=\"https://github.com/jnicklas/capybara/\">Capybara</a>\n\
+  API is very clean too. Even if you have a customer that wants to read your features, they can\n\
+  read and write for Steak as well, with very little extra effort. So, if you&#39;re only in it for the\n\
+  integration testing, Cucumber will only make your life more complex. And we don&#39;t want this extra\n\
+  complexity, unless there is a good reason for it.</p>\n\n\
   <h3 id=\"toc_1\">On behavior and implementation</h3>\n\n\
-  <p>But there is more to writing acceptance tests, or doing BDD and TDD. One of the more interesting parts is to discover the design of your code (or the structure of your application). To do this in unit tests, you need to focus on <strong>behavior</strong>, rather than implementation.</p>\n\n\
-  <p>For example: this means that you don&#39;t want to test if the results are an empty array, but you should just test that it is empty. The fact that you happened to have implemented this with an array is not important.</p>\n\
+  <p>But there is more to writing acceptance tests, or doing BDD and TDD. One of the more interesting\n\
+  parts is to discover the design of your code (or the structure of your application). To do this in\n\
+  unit tests, you need to focus on <strong>behavior</strong>, rather than implementation.</p>\n\n\
+  <p>For example: this means that you don&#39;t want to test if the results are an empty array, but you\n\
+  should just test that it is empty. The fact that you happened to have implemented this with an array\n\
+  is not important.</p>\n\
   <pre>it { should == []    } <span class=\"Comment\"># bad: testing implementation</span>\n\
   it { should be_empty } <span class=\"Comment\"># good: testing the behavior</span></pre>\n\
-  <p>The same is true for Cucumber. But here we mostly care about the behavior for the feature. Not the fact that you happened to have implemented it as a website with links and buttons. Take a look at the very first example the <a href=\"http://www.pragprog.com/titles/achbd/the-rspec-book\">RSpec book</a> gives of Cucumber:</p>\n\
+  <p>The same is true for Cucumber. But here we mostly care about the behavior for the feature. Not the\n\
+  fact that you happened to have implemented it as a website with links and buttons. Take a look at\n\
+  the very first example the <a href=\"http://www.pragprog.com/titles/achbd/the-rspec-book\">RSpec book</a> gives\n\
+  of Cucumber:</p>\n\
   <pre><span class=\"PreProc\">Feature:</span> pay bill on-line\n  In order to reduce the time I spend paying bills\n  As a bank customer with a checking account\n  I want to pay my bills on-line\n\n  <span class=\"PreProc\">Scenario:</span> pay a bill\n    <span class=\"Conditional\">Given</span> checking account with $50\n    <span class=\"Conditional\">And</span> a payee named Acme\n    <span class=\"Conditional\">And</span> an Acme bill for $37\n    <span class=\"Function\">When</span> I pay the Acme bill\n    <span class=\"Type\">Then</span> I should have $13 remaining in my checking account\n    <span class=\"Type\">And</span> the payment of $37 to Acme should be listed in Recent Payments</pre>\n\
-  <p>There are no implementation details here. No following links, no filling in fields, no pressing buttons. This is in my opinion the biggest reason to use Cucumber. It focusses you to towards what you are actually trying to achieve. The step definitions are here to fill in the details.</p>\n\n\
-  <p>When you use Cucumber this way, it opens the way for real BDD. You&#39;re describing what you want to achieve, not <em>how</em> you want to achieve it. This is in my opinion the unique selling point of Cucumber. It&#39;s a very nice framework to separate the implementation from your intention. <strong>Focussing on your intentions (in a way that can be automated) is the essence of BDD.</strong></p>\n\n\
+  <p>There are no implementation details here. No following links, no filling in fields, no pressing\n\
+  buttons. This is in my opinion the biggest reason to use Cucumber. It focusses you to towards what\n\
+  you are actually trying to achieve. The step definitions are here to fill in the details.</p>\n\n\
+  <p>When you use Cucumber this way, it opens the way for real BDD. You&#39;re describing what you want\n\
+  to achieve, not <em>how</em> you want to achieve it. This is in my opinion the unique selling point of\n\
+  Cucumber. It&#39;s a very nice framework to separate the implementation from your intention. <strong>Focussing\n\
+  on your intentions (in a way that can be automated) is the essence of BDD.</strong></p>\n\n\
   <h3 id=\"toc_2\">But why do this in a natural language?</h3>\n\n\
-  <p>You could also do this with Steak of course. It&#39;s just Ruby, so you could add some code to hide some of the details to helper methods. And because it is Ruby, you&#39;re probably tempted to do it earlier than with Cucumber. You are now programming, so your programming instincts will come in to play, making the features clean and simple. We do this all the time. So why should you write in a natural language?</p>\n\n\
-  <p>You&#39;re doing it human language, so write it down in the same way you are talking about it. Think about how you would explain using the website to the stakeholder of the feature. It doesn&#39;t matter that the stakeholder doesn&#39;t care about your nifty cucumber features. How would (s)he explain it to you?</p>\n\n\
-  <p>Also, the natural language is closer to your understanding of the problem you&#39;re trying to solve. When I write in code, my programmer side becomes active. My programmer side is focussed on solutions. But I want to <strong>delay the solution</strong> as long as I can, until we have a decent understanding of the problem. So by not writing in code, you can focus more on the problem, rather than on the solution.</p>\n\n\
-  <p>Cucumber provides a hard boundary. Your intent is in the feature files, your implementation is in step definitions. And it is helpful in doing this too; it provides you with the right step definition when it encounters something that it doesn&#39;t know yet. It&#39;s really easy to keep the feature files clean and simple. I will grant you that organizing your step definitions requires a fair bit of OCD.</p>\n\n\
-  <p>Make no mistakes about it: it isn&#39;t easy. It&#39;s very hard to figure out the right way of describing your problem, using the right language and in such a way that Cucumber can make sense of it too. But that is what is to be expected. If your problem is hard, than trying to figure out what your problem entails and describing it in a way that isn&#39;t ambiguous, should to be hard too. But you should make the effort to really get the language right, because <strong>the implementation that follows will reflect the way you&#39;ve described it earlier</strong>. And besides, if it wasn&#39;t hard, than it wouldn&#39;t be interesting, now would it?</p>\n\n\
+  <p>You could also do this with Steak of course. It&#39;s just Ruby, so you could add some code to hide some\n\
+  of the details to helper methods. And because it is Ruby, you&#39;re probably tempted to do it earlier\n\
+  than with Cucumber. You are now programming, so your programming instincts will come in to play,\n\
+  making the features clean and simple. We do this all the time. So why should you write in a natural\n\
+  language?</p>\n\n\
+  <p>You&#39;re doing it human language, so write it down in the same way you are talking about it. Think\n\
+  about how you would explain using the website to the stakeholder of the feature. It doesn&#39;t matter\n\
+  that the stakeholder doesn&#39;t care about your nifty cucumber features. How would (s)he explain it to\n\
+  you?</p>\n\n\
+  <p>Also, the natural language is closer to your understanding of the problem you&#39;re trying to\n\
+  solve. When I write in code, my programmer side becomes active. My programmer side is focussed\n\
+  on solutions. But I want to <strong>delay the solution</strong> as long as I can, until we have a decent\n\
+  understanding of the problem. So by not writing in code, you can focus more on the problem, rather\n\
+  than on the solution.</p>\n\n\
+  <p>Cucumber provides a hard boundary. Your intent is in the feature files, your implementation is\n\
+  in step definitions. And it is helpful in doing this too; it provides you with the right step\n\
+  definition when it encounters something that it doesn&#39;t know yet. It&#39;s really easy to keep the\n\
+  feature files clean and simple. I will grant you that organizing your step definitions requires a\n\
+  fair bit of OCD.</p>\n\n\
+  <p>Make no mistakes about it: it isn&#39;t easy. It&#39;s very hard to figure out the right way of describing\n\
+  your problem, using the right language and in such a way that Cucumber can make sense of it too.\n\
+  But that is what is to be expected. If your problem is hard, than trying to figure out what your\n\
+  problem entails and describing it in a way that isn&#39;t ambiguous, should to be hard too. But you\n\
+  should make the effort to really get the language right, because <strong>the implementation that follows\n\
+  will reflect the way you&#39;ve described it earlier</strong>. And besides, if it wasn&#39;t hard, than it wouldn&#39;t\n\
+  be interesting, now would it?</p>\n\n\
   <h3 id=\"toc_3\">Closing thoughts</h3>\n\n\
-  <p>I&#39;m not saying that you shouldn&#39;t use Steak. You should test your application from start to finish, from top to bottom. I don&#39;t care what tools you use, as long as you <strong>test all the fucking time</strong>. If one of these tools is keeping you from doing that, than you shouldn&#39;t use it. If you find writing Cucumber features depressing, then obviously you shouldn&#39;t use it. These tools are here to help us, not the other way around.</p>\n\n\
-  <p>That being said, I think Cucumber can help me in coming up with the right solution to the problem, documenting what my application is all about and testing it, all at the same time. I like that and that&#39;s why I&#39;ll continue to use Cucumber, even for my own projects where I am the only one reading the features.</p>\n\n\
-  <p>And remember, when doing BDD with Cucumber: &quot;When you\xE2\x80\x99re writing a new scenario, I recommend you start with the formulation of the desired outcome. Write the Then steps first. Then write the When step to discover the action&#47;operation and finally write the Given steps that need to be in place in order for the When&#47;Then to make sense.&quot; (from the <a href=\"https://github.com/aslakhellesoy/cucumber/wiki/\">Cucumber wiki</a>)</p>\n\n\
+  <p>I&#39;m not saying that you shouldn&#39;t use Steak. You should test your application from start to finish,\n\
+  from top to bottom. I don&#39;t care what tools you use, as long as you <strong>test all the fucking time</strong>.\n\
+  If one of these tools is keeping you from doing that, than you shouldn&#39;t use it. If you find writing\n\
+  Cucumber features depressing, then obviously you shouldn&#39;t use it. These tools are here to help us,\n\
+  not the other way around.</p>\n\n\
+  <p>That being said, I think Cucumber can help me in coming up with the right solution to the problem,\n\
+  documenting what my application is all about and testing it, all at the same time. I like that and\n\
+  that&#39;s why I&#39;ll continue to use Cucumber, even for my own projects where I am the only one reading\n\
+  the features.</p>\n\n\
+  <p>And remember, when doing BDD with Cucumber: &quot;When you\xE2\x80\x99re writing a new scenario, I recommend\n\
+  you start with the formulation of the desired outcome. Write the Then steps first. Then\n\
+  write the When step to discover the action&#47;operation and finally write the Given steps\n\
+  that need to be in place in order for the When&#47;Then to make sense.&quot; (from the <a href=\"https://github.com/aslakhellesoy/cucumber/wiki/\">Cucumber\n\
+  wiki</a>)</p>\n\n\
   <h3 id=\"toc_4\">More information</h3>\n\n\
-  <p>Looking around to see other people writing Cucumber stories is very educational. Have a look at <a href=\"http://relishapp.com/rspec/\">RSpec&#39;s features on Relish</a>. On writing good steps, you should read up on <a href=\"http://elabs.se/blog/15-you-re-cuking-it-wrong\">cuking it wrong</a> and <a href=\"http://mislav.uniqpath.com/2010/09/cuking-it-right/\">cuking it right</a>. Also, Hashrocket has an <a href=\"http://hashrocket.com/blog/view/cucumber-at-hashrocket-bookclub/\">interesting discussion online</a> about how they use Cucumber. Jeff Kreeftmeijer wrote <a href=\"http://jeffkreeftmeijer.com/2010/steak-because-cucumber-is-for-vegetarians/\">a great introduction on Steak</a>. And finally, the <a href=\"http://www.pragprog.com/titles/achbd/the-rspec-book\">RSpec book</a> is really gives a good insight into how to use Cucumber the right way.</p>\n\n\
-  <p>Also, Dan North wrote a lengthy article on <a href=\"http://dannorth.net/2011/01/31/whose-domain-is-it-anyway/\">how to write stories</a>, making a similar point.</p>\n"
+  <p>Looking around to see other people writing Cucumber stories is very educational. Have a\n\
+  look at <a href=\"http://relishapp.com/rspec/\">RSpec&#39;s features on Relish</a>. On writing good steps,\n\
+  you should read up on <a href=\"http://elabs.se/blog/15-you-re-cuking-it-wrong\">cuking it wrong</a> and\n\
+  <a href=\"http://mislav.uniqpath.com/2010/09/cuking-it-right/\">cuking it right</a>. Also, Hashrocket has an\n\
+  <a href=\"http://hashrocket.com/blog/view/cucumber-at-hashrocket-bookclub/\">interesting discussion online</a>\n\
+  about how they use Cucumber. Jeff Kreeftmeijer wrote <a href=\"http://jeffkreeftmeijer.com/2010/steak-because-cucumber-is-for-vegetarians/\">a great introduction on\n\
+  Steak</a>. And finally,\n\
+  the <a href=\"http://www.pragprog.com/titles/achbd/the-rspec-book\">RSpec book</a> is really gives a good insight\n\
+  into how to use Cucumber the right way.</p>\n\n\
+  <p>Also, Dan North wrote a lengthy article on <a href=\"http://dannorth.net/2011/01/31/whose-domain-is-it-anyway/\">how to write\n\
+  stories</a>, making a similar point.</p>\n"
 toc: 
 - anchor: "#toc_0"
   title: Using steak for integration tests
@@ -37,4 +107,13 @@ toc:
   title: Closing thoughts
 - anchor: "#toc_4"
   title: More information
-introduction: "<p><a href=\"http://jeffkreeftmeijer.com\">Jeff Kreeftmeijer</a> talked about <a href=\"http://cukes.info/\">Cucumber</a> and <a href=\"https://github.com/cavalle/steak\">Steak</a> at the last <a href=\"http://amsterdam-rb.org/\">Amsterdam Ruby Meetup</a>. He hit upon an important theme in software development: <strong>reducing complexity</strong>; in this case the extra layers of complexity introduced by Cucumber features and step definitions. And he&#39;s absolutely right. If you don&#39;t need the natural language Cucumber provides, then you should get rid of the extra complexity and <a href=\"http://jeffkreeftmeijer.com/2010/steak-because-cucumber-is-for-vegetarians/\">use Steak instead</a>.</p><p>As much as I agree with this, I think there is a way of using Cucumber that makes it a valid option to use it in more cases than you think. It&#39;s for doing Behavior Driven Development with a high focus on the problem you&#39;re trying to solve. Let me explain what I mean by this.</p>"
+introduction: |-
+  <p><a href="http://jeffkreeftmeijer.com">Jeff Kreeftmeijer</a> talked about <a href="http://cukes.info/">Cucumber</a>
+  and <a href="https://github.com/cavalle/steak">Steak</a> at the last <a href="http://amsterdam-rb.org/">Amsterdam Ruby
+  Meetup</a>. He hit upon an important theme in software development:
+  <strong>reducing complexity</strong>; in this case the extra layers of complexity introduced by Cucumber
+  features and step definitions. And he&#39;s absolutely right. If you don&#39;t need the natural
+  language Cucumber provides, then you should get rid of the extra complexity and <a href="http://jeffkreeftmeijer.com/2010/steak-because-cucumber-is-for-vegetarians/">use Steak
+  instead</a>.</p><p>As much as I agree with this, I think there is a way of using Cucumber that makes it a valid option
+  to use it in more cases than you think. It&#39;s for doing Behavior Driven Development with a high focus
+  on the problem you&#39;re trying to solve. Let me explain what I mean by this.</p>

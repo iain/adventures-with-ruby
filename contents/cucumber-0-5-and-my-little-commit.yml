@@ -1,32 +1,52 @@
 --- 
-html: "<p>The strangest thing happened to me this week. I was working on a little side project at work. It seemed like a nice time to try out some new gems (<a href=\"http://gemcutter.org/gems/bundler\">Bundler</a> and <a href=\"http://gemcutter.org/gems/devise\">Devise</a>: love it! <a href=\"http://gemcutter.org/gems/inherited_resources\">InheritedResources</a>, not that much, <a href=\"http://gemcutter.org/gems/formtastic\">Formtastic</a>, very nice). I was experimenting with <a href=\"http://cukes.info\">Cucumber</a> and writing Dutch features too.</p>\n\n\
-  <p>I had figured that the supplied dutch keywords in <a href=\"http://github.com/aslakhellesoy/cucumber/blob/master/lib/cucumber/languages.yml#L328-340\">languages.yml</a> were not very practical. It supplied &quot;<em>Gegeven</em>&quot; as a naive translation of &quot;<em>Given</em>&quot;. Although this is correctly translated, it is very unpractical to form Dutch sentences with it. The only to really start a sentence with &quot;<em>Gegeven</em>&quot; is to write &quot;<em>Gegeven het feit dat...</em>&quot; (&quot;<em>Given the fact that...</em>&quot;). It&#39;s very strange to say &quot;<em>Gegeven dat ik een profiel heb</em>&quot; (&quot;<em>Given I have a profile</em>&quot;) in Dutch.</p>\n\n\
-  <p>I decided to use the synonym &quot;<em>Stel</em>&quot; like in &quot;<em>Stel ik heb een profiel</em>&quot;. Not entirely correct either because it misses a comma after &quot;<em>Stel</em>&quot;, but much better, in my honest opinion. So I forked cucumber, changed <code>languages.yml</code> and used this as custom git repository in my <code>Gemfile</code>.</p>\n\n\
-  <p>Apparently I was in the middle of a Release Candidate, so what I had committed on github. The Rails integration was extracted out in that version (like RSpec does) to the &quot;<a href=\"http://github.com/aslakhellesoy/cucumber-rails\">cucumber-rails</a>&quot; gem. This gave about an evening of confusion, but I got it to work eventually.</p>\n\n\
-  <p>Two days later, we had visitors at our company, from another Ruby company, talking about cooperation on future projects. I introduced myself and he was trying to remember if he&#39;d seen anything on the interwebs by me. That seems to be common. When meeting people on conferences it&#39;s always the same question: &quot;Do I know any of your gems?&quot;.</p>\n\n\
-  <p>Anyway, he had actually read my name recently, namely in the commit log of cucumber. Without asking or sending a pull request, they had added my commit to the 0.5 release of cucumber. A pleasant surprise! Aslak Helles\xC3\xB8y, you&#39;re a very observant <a href=\"http://github.com/aslakhellesoy\">GitHub user</a>!</p>\n\n\
+html: "<p>The strangest thing happened to me this week. I was working on a little\n\
+  side project at work. It seemed like a nice time to try out some new gems\n\
+  (<a href=\"http://gemcutter.org/gems/bundler\">Bundler</a> and <a href=\"http://gemcutter.org/gems/devise\">Devise</a>:\n\
+  love it! <a href=\"http://gemcutter.org/gems/inherited_resources\">InheritedResources</a>, not that much,\n\
+  <a href=\"http://gemcutter.org/gems/formtastic\">Formtastic</a>, very nice). I was experimenting with\n\
+  <a href=\"http://cukes.info\">Cucumber</a> and writing Dutch features too.</p>\n\n\
+  <p>I had figured that the supplied dutch keywords in\n\
+  <a href=\"http://github.com/aslakhellesoy/cucumber/blob/master/lib/cucumber/languages.yml#L328%0A-340\">languages.yml</a> were not very practical. It supplied &quot;<em>Gegeven</em>&quot; as a naive translation of &quot;<em>Given</em>&quot;. Although\n\
+  this is correctly translated, it is very unpractical to form Dutch sentences with it. The only to\n\
+  really start a sentence with &quot;<em>Gegeven</em>&quot; is to write &quot;<em>Gegeven het feit dat...</em>&quot; (&quot;<em>Given the fact\n\
+  that...</em>&quot;). It&#39;s very strange to say &quot;<em>Gegeven dat ik een profiel heb</em>&quot; (&quot;<em>Given I have a profile</em>&quot;)\n\
+  in Dutch.</p>\n\n\
+  <p>I decided to use the synonym &quot;<em>Stel</em>&quot; like in &quot;<em>Stel ik heb een profiel</em>&quot;. Not entirely correct\n\
+  either because it misses a comma after &quot;<em>Stel</em>&quot;, but much better, in my honest opinion. So I forked\n\
+  cucumber, changed <code>languages.yml</code> and used this as custom git repository in my <code>Gemfile</code>.</p>\n\n\
+  <p>Apparently I was in the middle of a Release Candidate, so what I had committed on\n\
+  github. The Rails integration was extracted out in that version (like RSpec does) to the\n\
+  &quot;<a href=\"http://github.com/aslakhellesoy/cucumber-rails\">cucumber-rails</a>&quot; gem. This gave about an evening\n\
+  of confusion, but I got it to work eventually.</p>\n\n\
+  <p>Two days later, we had visitors at our company, from another Ruby company, talking about cooperation\n\
+  on future projects. I introduced myself and he was trying to remember if he&#39;d seen anything on the\n\
+  interwebs by me. That seems to be common. When meeting people on conferences it&#39;s always the same\n\
+  question: &quot;Do I know any of your gems?&quot;.</p>\n\n\
+  <p>Anyway, he had actually read my name recently, namely in the commit log of cucumber. Without asking\n\
+  or sending a pull request, they had added my commit to the 0.5 release of cucumber. A pleasant\n\
+  surprise! Aslak Helles\xC3\xB8y, you&#39;re a very observant <a href=\"http://github.com/aslakhellesoy\">GitHub user</a>!</p>\n\n\
   <p>By the way, you can still use &quot;<em>Gegeven</em>&quot;, as it is just an alias.</p>\n\n\
-  <p>I am constantly wrestling with the best way write cucumber features down. Does anyone have Dutch features? Do you write them down with your customers or are they for developers only? Can you share some of them? Here are some of mine:</p>\n\n\
-  <pre class=\"ir_black\">\n\
-  <font color=\"#96cbfe\">Scenario:</font>&nbsp;Inloggen\n\
-  &nbsp;&nbsp;<font color=\"#6699cc\">Stel</font>&nbsp;ik ben uitgelogd\n\
-  &nbsp;&nbsp;<font color=\"#6699cc\">En</font>&nbsp;ik heb een account voor &quot;gebruiker@test.com&quot; met het wachtwoord &quot;geheim&quot;\n\
-  &nbsp;&nbsp;<font color=\"#6699cc\">En</font>&nbsp;ik ben op de inlogpagina\n\
-  &nbsp;&nbsp;<font color=\"#ffd2a7\">Als</font>&nbsp;ik de volgende velden invul:\n\
-  &nbsp;&nbsp;&nbsp;&nbsp;<font color=\"#00a0a0\">|</font>&nbsp;E-mailadres <font color=\"#00a0a0\">|</font>&nbsp;gebruiker@test.com&nbsp;&nbsp;<font color=\"#00a0a0\">|</font>\n\
-  &nbsp;&nbsp;&nbsp;&nbsp;<font color=\"#00a0a0\">|</font>&nbsp;Wachtwoord&nbsp;&nbsp;<font color=\"#00a0a0\">|</font>&nbsp;geheim&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color=\"#00a0a0\">|</font>\n\
-  &nbsp;&nbsp;<font color=\"#ffd2a7\">En</font>&nbsp;ik op &quot;Inloggen&quot; druk\n\
-  &nbsp;&nbsp;<font color=\"#ffd2a7\">Dan</font>&nbsp;zie ik de melding &quot;Je bent ingelogd&quot;\n\n\
-  <font color=\"#96cbfe\">Scenario:</font>&nbsp;Verkeerd wachtwoord\n\
-  &nbsp;&nbsp;<font color=\"#6699cc\">Stel</font>&nbsp;ik ben uitgelogd\n\
-  &nbsp;&nbsp;<font color=\"#6699cc\">En</font>&nbsp;ik heb een account voor &quot;gebruiker@test.com&quot; met het wachtwoord &quot;geheim&quot;\n\
-  &nbsp;&nbsp;<font color=\"#6699cc\">En</font>&nbsp;ik ben op de inlogpagina\n\
-  &nbsp;&nbsp;<font color=\"#ffd2a7\">Als</font>&nbsp;ik de volgende velden invul:\n\
-  &nbsp;&nbsp;&nbsp;&nbsp;<font color=\"#00a0a0\">|</font>&nbsp;E-mailadres <font color=\"#00a0a0\">|</font>&nbsp;gebruiker@test.com&nbsp;&nbsp;<font color=\"#00a0a0\">|</font>\n\
-  &nbsp;&nbsp;&nbsp;&nbsp;<font color=\"#00a0a0\">|</font>&nbsp;Wachtwoord&nbsp;&nbsp;<font color=\"#00a0a0\">|</font>&nbsp;verkeerd&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color=\"#00a0a0\">|</font>\n\
-  &nbsp;&nbsp;<font color=\"#ffd2a7\">En</font>&nbsp;ik op &quot;Inloggen&quot; druk\n\
-  &nbsp;&nbsp;<font color=\"#ffd2a7\">Dan</font>&nbsp;zie ik de foutmelding &quot;Ongeldig e-mailadres of wachtwoord&quot;</pre>\n\n\
-  <p>By the way, don&#39;t forget to order the <a href=\"http://pragprog.com/titles/achbd/the-rspec-book\">RSpec and Friends book</a>. It&#39;ll be released this februari and is a really good read if you want to learn BDD, RSpec or Cucumber.</p>\n"
+  <p>I am constantly wrestling with the best way write cucumber features down. Does anyone have Dutch\n\
+  features? Do you write them down with your customers or are they for developers only? Can you share\n\
+  some of them? Here are some of mine:</p>\n\
+  <pre><span class=\"PreProc\">Scenario:</span> Inloggen\n  <span class=\"Conditional\">Stel</span> ik ben uitgelogd\n  <span class=\"Conditional\">En</span> ik heb een account voor \"gebruiker@test.com\" met het wachtwoord \"geheim\"\n  <span class=\"Conditional\">En</span> ik ben op de inlogpagina\n  <span class=\"Function\">Als</span> ik de volgende velden invul:\n    <span class=\"Delimiter\">|</span> E-mailadres <span class=\"Delimiter\">|</span> gebruiker@test.com  <span class=\"Delimiter\">|</span>\n    <span class=\"Delimiter\">|</span> Wachtwoord  <span class=\"Delimiter\">|</span> geheim              <span class=\"Delimiter\">|</span>\n  <span class=\"Function\">En</span> ik op \"Inloggen\" druk\n  <span class=\"Function\">Dan</span> zie ik de melding \"Je bent ingelogd\"\n\n\
+  <span class=\"PreProc\">Scenario:</span> Verkeerd wachtwoord\n  <span class=\"Conditional\">Stel</span> ik ben uitgelogd\n  <span class=\"Conditional\">En</span> ik heb een account voor \"gebruiker@test.com\" met het wachtwoord \"geheim\"\n  <span class=\"Conditional\">En</span> ik ben op de inlogpagina\n  <span class=\"Function\">Als</span> ik de volgende velden invul:\n    <span class=\"Delimiter\">|</span> E-mailadres <span class=\"Delimiter\">|</span> gebruiker@test.com  <span class=\"Delimiter\">|</span>\n    <span class=\"Delimiter\">|</span> Wachtwoord  <span class=\"Delimiter\">|</span> verkeerd            <span class=\"Delimiter\">|</span>\n  <span class=\"Function\">En</span> ik op \"Inloggen\" druk\n  <span class=\"Function\">Dan</span> zie ik de foutmelding \"Ongeldig e-mailadres of wachtwoord\"</pre>\n\
+  <p>By the way, don&#39;t forget to order the <a href=\"http://pragprog.com/titles/achbd/the-rspec-book\">RSpec and Friends\n\
+  book</a>. It&#39;ll be released this februari and is a\n\
+  really good read if you want to learn BDD, RSpec or Cucumber.</p>\n"
 toc: []
 
-introduction: "<p>The strangest thing happened to me this week. I was working on a little side project at work. It seemed like a nice time to try out some new gems (<a href=\"http://gemcutter.org/gems/bundler\">Bundler</a> and <a href=\"http://gemcutter.org/gems/devise\">Devise</a>: love it! <a href=\"http://gemcutter.org/gems/inherited_resources\">InheritedResources</a>, not that much, <a href=\"http://gemcutter.org/gems/formtastic\">Formtastic</a>, very nice). I was experimenting with <a href=\"http://cukes.info\">Cucumber</a> and writing Dutch features too.</p><p>I had figured that the supplied dutch keywords in <a href=\"http://github.com/aslakhellesoy/cucumber/blob/master/lib/cucumber/languages.yml#L328-340\">languages.yml</a> were not very practical. It supplied &quot;<em>Gegeven</em>&quot; as a naive translation of &quot;<em>Given</em>&quot;. Although this is correctly translated, it is very unpractical to form Dutch sentences with it. The only to really start a sentence with &quot;<em>Gegeven</em>&quot; is to write &quot;<em>Gegeven het feit dat...</em>&quot; (&quot;<em>Given the fact that...</em>&quot;). It&#39;s very strange to say &quot;<em>Gegeven dat ik een profiel heb</em>&quot; (&quot;<em>Given I have a profile</em>&quot;) in Dutch.</p><p>I decided to use the synonym &quot;<em>Stel</em>&quot; like in &quot;<em>Stel ik heb een profiel</em>&quot;. Not entirely correct either because it misses a comma after &quot;<em>Stel</em>&quot;, but much better, in my honest opinion. So I forked cucumber, changed <code>languages.yml</code> and used this as custom git repository in my <code>Gemfile</code>.</p>"
+introduction: |-
+  <p>The strangest thing happened to me this week. I was working on a little
+  side project at work. It seemed like a nice time to try out some new gems
+  (<a href="http://gemcutter.org/gems/bundler">Bundler</a> and <a href="http://gemcutter.org/gems/devise">Devise</a>:
+  love it! <a href="http://gemcutter.org/gems/inherited_resources">InheritedResources</a>, not that much,
+  <a href="http://gemcutter.org/gems/formtastic">Formtastic</a>, very nice). I was experimenting with
+  <a href="http://cukes.info">Cucumber</a> and writing Dutch features too.</p><p>I had figured that the supplied dutch keywords in
+  <a href="http://github.com/aslakhellesoy/cucumber/blob/master/lib/cucumber/languages.yml#L328%0A-340">languages.yml</a> were not very practical. It supplied &quot;<em>Gegeven</em>&quot; as a naive translation of &quot;<em>Given</em>&quot;. Although
+  this is correctly translated, it is very unpractical to form Dutch sentences with it. The only to
+  really start a sentence with &quot;<em>Gegeven</em>&quot; is to write &quot;<em>Gegeven het feit dat...</em>&quot; (&quot;<em>Given the fact
+  that...</em>&quot;). It&#39;s very strange to say &quot;<em>Gegeven dat ik een profiel heb</em>&quot; (&quot;<em>Given I have a profile</em>&quot;)
+  in Dutch.</p><p>I decided to use the synonym &quot;<em>Stel</em>&quot; like in &quot;<em>Stel ik heb een profiel</em>&quot;. Not entirely correct
+  either because it misses a comma after &quot;<em>Stel</em>&quot;, but much better, in my honest opinion. So I forked
+  cucumber, changed <code>languages.yml</code> and used this as custom git repository in my <code>Gemfile</code>.</p>

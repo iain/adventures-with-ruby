@@ -1,45 +1,46 @@
 --- 
 html: |
-  <h3 id="toc_0"><font color="#ff6600"><strong>Update:</strong> Updated the syntax file, redownload it if you got it before December 19th 2007.</font></h3>
+  <p><strong>Update:</strong> Updated the syntax file, redownload it if you got it before December 19th 2007.</p>
   
-  <p>More news about my adventures with Selenium. It&#39;s hot and juicy, so lot&#39;s of exciting new things to do. I made a syntax highlighter for plain text stories in vim. Here&#39;s how it looks:</p>
+  <p>More news about my adventures with Selenium. It&#39;s hot and juicy, so lot&#39;s of exciting new things to
+  do. I made a syntax highlighter for plain text stories in vim. Here&#39;s how it looks:</p>
   
   <p>To make it look like this, I adjusted the slate colorscheme and added my own story syntax file.</p>
   
-  <h3 id="toc_1">Here is what you need to do:</h3>
+  <h3 id="toc_0">Here is what you need to do:</h3>
   
-  <ul>
-  <li>Put the black-slate colorscheme file in &#47;usr&#47;share&#47;vim&#47;vim71&#47;colors directory</li>
-  <li>Put the story syntax file in &#47;usr&#47;share&#47;vim&#47;vim71&#47;syntax directory</li>
-  <li><p>Append these lines to the end of &#47;usr&#47;share&#47;vim&#47;vim71&#47;scripts.vim:</p>
+  <p>Put the black-slate colorscheme file in &#47;usr&#47;share&#47;vim&#47;vim71&#47;colors directory</p>
   
-  <p>if did_filetype()
-      finish
-    endif
-    if getline(1) =~ &quot;^Story:\s.*&quot;
-      setf story
-    endif</p></li>
-  <li><p>Add these lines to your personal vimrc (~&#47;.vimrc) or the systemwide vimrc file (&#47;etc&#47;vim&#47;vimrc):</p>
+  <p>Put the story syntax file in &#47;usr&#47;share&#47;vim&#47;vim71&#47;syntax directory</p>
   
-  <p>set background=dark
-    set tabstop=2   &quot;please default all tabs to 2 spaces
-    set shiftwidth=2
-    set expandtab
-    set number
-    set smartindent
-    set smarttab
-    filetype plugin on
-    filetype indent on
-    colorscheme black-slate</p></li>
-  <li><p>Type your plain text stories, make sure every story file starts with &#39;Story:&#39;
-  It won&#39;t recognize it&#39;s a plain text story right away, so first type &#39;Story:&#39;, save it and reopen it to get nice colours.</p></li>
-  </ul>
+  <p>Append these lines to the end of &#47;usr&#47;share&#47;vim&#47;vim71&#47;scripts.vim:</p>
+  <pre><span class="Statement">if</span> <span class="Function">did_filetype</span><span class="Delimiter">()</span>
+    <span class="Statement">finish</span>
+  <span class="Statement">endif</span>
+  <span class="Statement">if</span> <span class="Function">getline</span><span class="Delimiter">(</span><span class="Number">1</span><span class="Delimiter">)</span> <span class="Operator">=~</span> <span class="String">"^Story:\s.*"</span>
+    <span class="Statement">setf</span> story
+  <span class="Statement">endif</span></pre>
+  <p>Add these lines to your personal vimrc (~&#47;.vimrc) or the systemwide vimrc file (&#47;etc&#47;vim&#47;vimrc):</p>
+  <pre><span class="Statement">set</span> <span class="PreProc">background</span>=dark
+  <span class="Statement">set</span> <span class="PreProc">tabstop</span>=2   <span class="Comment">"please default all tabs to 2 spaces</span>
+  <span class="Statement">set</span> <span class="PreProc">shiftwidth</span>=2
+  <span class="Statement">set</span> <span class="PreProc">expandtab</span>
+  <span class="Statement">set</span> <span class="PreProc">number</span>
+  <span class="Statement">set</span> <span class="PreProc">smartindent</span>
+  <span class="Statement">set</span> <span class="PreProc">smarttab</span>
+  <span class="Statement">filetype</span> <span class="Type">plugin</span> <span class="Type">on</span>
+  <span class="Statement">filetype</span> <span class="Type">indent</span> <span class="Type">on</span>
+  <span class="Statement">colorscheme</span> black<span class="Operator">-</span>slate</pre>
+  <p>Type your plain text stories, make sure every story file starts with &#39;Story:&#39; It won&#39;t recognize
+  it&#39;s a plain text story right away, so first type &#39;Story:&#39;, save it and reopen it to get nice
+  colours.</p>
   
-  <p>By the way, Arie has made a syntax highlighter for the google javascript syntax highlighter. Keep a look out on <a href="http://ariekanarie.nl/">his blog</a> too!</p>
+  <p>By the way, Arie has made a syntax highlighter for the google javascript syntax highlighter. Keep a
+  look out on <a href="http://ariekanarie.nl/">his blog</a> too!</p>
 
 toc: 
 - anchor: "#toc_0"
-  title: <font color="#ff6600">**Update:** Updated the syntax file, redownload it if you got it before December 19th 2007.</font>
-- anchor: "#toc_1"
   title: "Here is what you need to do:"
-introduction: ""
+introduction: |-
+  <p><strong>Update:</strong> Updated the syntax file, redownload it if you got it before December 19th 2007.</p><p>More news about my adventures with Selenium. It&#39;s hot and juicy, so lot&#39;s of exciting new things to
+  do. I made a syntax highlighter for plain text stories in vim. Here&#39;s how it looks:</p><p>To make it look like this, I adjusted the slate colorscheme and added my own story syntax file.</p>

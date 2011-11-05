@@ -1,39 +1,45 @@
 --- 
 html: |-
-  <p>Here are some improvements for <a href="/fancy-named-routes">Fancy Named Routes - Part I</a>. In this part we will be adding a more thorough solution for the html escaping in everywhere.  I noticed this was absolutely important, when I tried to view an escaped url in a production environment with Apache with mod_proxy and mongrel_cluster. Apache doesn&#39;t like &#39;%2F&#39; in the title, and doesn&#39;t forward the request to mongrel, so it returns a nice 404.</p>
+  <p>Here are some improvements for <a href="/fancy-named-routes">Fancy Named Routes - Part I</a>. In this part we
+  will be adding a more thorough solution for the html escaping in everywhere. I noticed this was
+  absolutely important, when I tried to view an escaped url in a production environment with Apache
+  with mod_proxy and mongrel_cluster. Apache doesn&#39;t like &#39;%2F&#39; in the title, and doesn&#39;t forward the
+  request to mongrel, so it returns a nice 404.</p>
   
   <p>To rid yourself of the problem once and for all, add this to your ApplicationController:</p>
-  <pre>def url_for(options)
-    url = super(options)
-    url.gsub!("%2F","/") if has_nice_url?(url)
+  <pre><span class="PreProc">def</span> <span class="Function">url_for</span>(options)
+    url = <span class="Keyword">super</span>(options)
+    url.gsub!(<span class="rubyStringDelimiter">"</span><span class="String">%2F</span><span class="rubyStringDelimiter">"</span>,<span class="rubyStringDelimiter">"</span><span class="String">/</span><span class="rubyStringDelimiter">"</span>) <span class="Conditional">if</span> has_nice_url?(url)
     url
-  end
+  <span class="PreProc">end</span>
   
-  def has_nice_url?(link)
-    rs = ::ActionController::Routing::Routes
+  <span class="PreProc">def</span> <span class="Function">has_nice_url?</span>(link)
+    rs = ::<span class="Type">ActionController</span>::<span class="Type">Routing</span>::<span class="Type">Routes</span>
     segments = rs.recognize_path link
-    rs.named_routes.routes.each do |key,value|
-      return true if
-        value.defaults.has_value?(segments[:controller]) and
-        value.defaults.has_value?(segments[:action]) and
-        value.defaults.include?(:nice_url)
-    end
-  rescue ::ActionController::RoutingError
-    logger.debug{"RoutingError has occured"}
-  end
-  </pre>
-  <p>Now there is no need for overloading link_to or redirected_to. Remember, you&#39;ll need this in your config&#47;routes.rb, to make it all work:</p>
-  <pre>map.show_article 'article/:id/*nice_url', :controller => 'articles', :action => 'show', :nice_url => nil
-  </pre>
+    rs.named_routes.routes.each <span class="rubyControl">do</span> |<span class="Identifier">key</span>,<span class="Identifier">value</span>|
+      <span class="rubyControl">return</span> <span class="Constant">true</span> <span class="Conditional">if</span>
+        value.defaults.has_value?(segments[<span class="Constant">:controller</span>]) <span class="rubyControl">and</span>
+        value.defaults.has_value?(segments[<span class="Constant">:action</span>]) <span class="rubyControl">and</span>
+        value.defaults.include?(<span class="Constant">:nice_url</span>)
+    <span class="rubyControl">end</span>
+  <span class="PreProc">rescue</span> ::<span class="Type">ActionController</span>::<span class="Type">RoutingError</span>
+    logger.debug{<span class="rubyStringDelimiter">"</span><span class="String">RoutingError has occured</span><span class="rubyStringDelimiter">"</span>}
+  <span class="PreProc">end</span></pre>
+  <p>Now there is no need for overloading link_to or redirected_to. Remember, you&#39;ll need this in your
+  config&#47;routes.rb, to make it all work:</p>
+  <pre>map.show_article <span class="rubyStringDelimiter">'</span><span class="String">article/:id/*nice_url</span><span class="rubyStringDelimiter">'</span>, <span class="Constant">:controller</span> =&gt; <span class="rubyStringDelimiter">'</span><span class="String">articles</span><span class="rubyStringDelimiter">'</span>, <span class="Constant">:action</span> =&gt; <span class="rubyStringDelimiter">'</span><span class="String">show</span><span class="rubyStringDelimiter">'</span>, <span class="Constant">:nice_url</span> =&gt; <span class="Constant">nil</span></pre>
   <p>And in your model, you have to add:</p>
-  <pre>def to_param
-    self.id.to_s+'/'+self.title.gsub(/\W+/,'-').downcase+'.html'
-  end
-  </pre>
+  <pre><span class="PreProc">def</span> <span class="Function">to_param</span>
+    <span class="Constant">self</span>.id.to_s+<span class="rubyStringDelimiter">'</span><span class="String">/</span><span class="rubyStringDelimiter">'</span>+<span class="Constant">self</span>.title.gsub(<span class="rubyRegexpDelimiter">/</span><span class="Special">\W</span><span class="Special">+</span><span class="rubyRegexpDelimiter">/</span>,<span class="rubyStringDelimiter">'</span><span class="String">-</span><span class="rubyStringDelimiter">'</span>).downcase+<span class="rubyStringDelimiter">'</span><span class="String">.html</span><span class="rubyStringDelimiter">'</span>
+  <span class="PreProc">end</span></pre>
   <p>Now you can make awesome links like this:</p>
-  <pre>link_to h(@article.title), show_article_url(@article)
-  redirect_to show_article_url(@article)
-  </pre>
+  <pre>link_to h(<span class="Identifier">@article</span>.title), show_article_url(<span class="Identifier">@article</span>)
+  redirect_to show_article_url(<span class="Identifier">@article</span>)</pre>
 toc: []
 
-introduction: <p>Here are some improvements for <a href="/fancy-named-routes">Fancy Named Routes - Part I</a>. In this part we will be adding a more thorough solution for the html escaping in everywhere.  I noticed this was absolutely important, when I tried to view an escaped url in a production environment with Apache with mod_proxy and mongrel_cluster. Apache doesn&#39;t like &#39;%2F&#39; in the title, and doesn&#39;t forward the request to mongrel, so it returns a nice 404.</p><p>To rid yourself of the problem once and for all, add this to your ApplicationController:</p>
+introduction: |-
+  <p>Here are some improvements for <a href="/fancy-named-routes">Fancy Named Routes - Part I</a>. In this part we
+  will be adding a more thorough solution for the html escaping in everywhere. I noticed this was
+  absolutely important, when I tried to view an escaped url in a production environment with Apache
+  with mod_proxy and mongrel_cluster. Apache doesn&#39;t like &#39;%2F&#39; in the title, and doesn&#39;t forward the
+  request to mongrel, so it returns a nice 404.</p><p>To rid yourself of the problem once and for all, add this to your ApplicationController:</p>

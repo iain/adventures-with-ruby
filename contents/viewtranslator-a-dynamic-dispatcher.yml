@@ -5,57 +5,46 @@ html: |
   <p>In views you can automatically scope translations to the view you&#39;re working in.</p>
   
   <p>So this HAML code (in the <code>users#index</code> view):</p>
-  
-  <pre class="ir_black"><font color="#e18964">=</font>&nbsp;t(<font color="#336633">'</font><font color="#a8ff60">.foo</font><font color="#336633">'</font>)
-  </pre>
-  
+  <pre><span class="Special">=</span> t(<span class="rubyStringDelimiter">'</span><span class="String">.foo</span><span class="rubyStringDelimiter">'</span>)</pre>
   <p>It&#39;s the same as:</p>
-  
-  <pre class="ir_black"><font color="#e18964">=</font>&nbsp;t(<font color="#99cc99">:foo</font>, <font color="#99cc99">:scope</font>&nbsp;=&gt; [<font color="#99cc99">:users</font>, <font color="#99cc99">:index</font>])</pre>
-  
+  <pre><span class="Special">=</span> t(<span class="Constant">:foo</span>, <span class="Constant">:scope</span> =&gt; [<span class="Constant">:users</span>, <span class="Constant">:index</span>])</pre>
   <p>I use this technique a lot.</p>
   
   <p>Anyway, we could clean up it even more, by making a dynamic dispatcher. It would look something like this:</p>
+  <pre><span class="Keyword">module</span> <span class="Type">ViewTranslatorHelper</span>
   
-  <pre class="ir_black"><font color="#96cbfe">module</font>&nbsp;<font color="#ffffb6">ViewTranslatorHelper</font>
+    <span class="PreProc">def</span> <span class="Function">vt</span>
+      <span class="Identifier">@view_translator</span> ||= <span class="Type">ViewTranslator</span>.new(<span class="Constant">self</span>)
+    <span class="PreProc">end</span>
   
-  &nbsp;&nbsp;<font color="#96cbfe">def</font>&nbsp;<font color="#ffd2a7">vt</font>
-  &nbsp;&nbsp;&nbsp;&nbsp;<font color="#c6c5fe">@view_translator</font>&nbsp;||= <font color="#ffffb6">ViewTranslator</font>.new(<font color="#99cc99">self</font>)
-  &nbsp;&nbsp;<font color="#96cbfe">end</font>
+    <span class="Keyword">class</span> <span class="Type">ViewTranslator</span> &lt; <span class="Type">ActiveSupport</span>::<span class="Type">BasicObject</span>
   
-  &nbsp;&nbsp;<font color="#96cbfe">class</font>&nbsp;<font color="#ffffb6">ViewTranslator</font>&nbsp;&lt; <font color="#ffffb6">ActiveSupport</font>::<font color="#ffffb6">BasicObject</font>
+      <span class="PreProc">def</span> <span class="Function">initialize</span>(template)
+        <span class="Identifier">@template</span> = template
+      <span class="PreProc">end</span>
   
-  &nbsp;&nbsp;&nbsp;&nbsp;<font color="#96cbfe">def</font>&nbsp;<font color="#ffd2a7">initialize</font>(template)
-  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#c6c5fe">@template</font>&nbsp;= template
-  &nbsp;&nbsp;&nbsp;&nbsp;<font color="#96cbfe">end</font>
+      <span class="PreProc">def</span> <span class="Function">method_missing</span>(method, options = {})
+        <span class="Type">ViewTranslator</span>.class_eval &lt;&lt;-<span class="rubyStringDelimiter">RUBY</span>
+  <span class="String">        def </span><span class="rubyInterpolationDelimiter">#{</span>method<span class="rubyInterpolationDelimiter">}</span><span class="String">(options = {})</span>
+  <span class="String">          @template.t(".</span><span class="rubyInterpolationDelimiter">#{</span>method<span class="rubyInterpolationDelimiter">}</span><span class="String">", options)</span>
+  <span class="String">        end</span>
+  <span class="String">      </span><span class="rubyStringDelimiter">RUBY</span>
+        __send__(method, options)
+      <span class="PreProc">end</span>
   
-  &nbsp;&nbsp;&nbsp;&nbsp;<font color="#96cbfe">def</font>&nbsp;<font color="#ffd2a7">method_missing</font>(method, options = {})
-  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#ffffb6">ViewTranslator</font>.class_eval &lt;&lt;-<font color="#336633">RUBY</font>
-  <font color="#a8ff60">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;def </font><font color="#00a0a0">#{</font>method<font color="#00a0a0">}</font><font color="#a8ff60">(options = {})</font>
-  <font color="#a8ff60">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@template.t(&quot;.</font><font color="#00a0a0">#{</font>method<font color="#00a0a0">}</font><font color="#a8ff60">&quot;, options)</font>
-  <font color="#a8ff60">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;end</font>
-  <font color="#a8ff60">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#336633">RUBY</font>
-  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;__send__(method, options)
-  &nbsp;&nbsp;&nbsp;&nbsp;<font color="#96cbfe">end</font>
+    <span class="Keyword">end</span>
   
-  &nbsp;&nbsp;<font color="#96cbfe">end</font>
-  
-  <font color="#96cbfe">end</font></pre>
-  
+  <span class="Keyword">end</span></pre>
   <p>And now you can write:</p>
-  
-  <pre class="ir_black"><font color="#e18964">=</font>&nbsp;vt.foo</pre>
-  
+  <pre><span class="Special">=</span> vt.foo</pre>
   <h3 id="toc_0">How does this work?</h3>
   
   <p>The <code>vt</code> method returns <code>ViewTranslator</code> instance. It is cached inside an instance variable. The <code>ViewTranslator</code> object inherits from <code>BasicObject</code> (<code>ActiveSupport</code>&#39;s <code>BasicObject</code> uses Ruby 1.9 if it is on Ruby 1.9, and constructs it&#39;s own when on a lower Ruby version). <code>BasicObject</code> is an object that knows no methods, except methods like <code>__id__</code> and <code>__send__</code>. This makes it ideal for using dynamic dispatchers.</p>
   
   <p>When we define <code>method_missing</code> every single method we call on it will be passed to there. We could call <code>@template.t</code> directly from here, but we don&#39;t. To know why, we must know how <code>method_missing</code> works. When you call a method on an object, it looks to see if the object knows the method. When it doesn&#39;t know it, it looks to it&#39;s superclass and tries again. This happens all the way until it reaches the top of the chain. In Ruby 1.8 that is <code>Object</code>, because every object inherits from <code>Object</code>. Ruby 1.9 goes one step further and goes to <code>BasicObject</code>. If a method is not found anywhere, it will go to the original object you called the method on and it calls <code>method_missing</code>. Since that usually isn&#39;t there, it goes up the superclass chain until it comes to (<code>Basic</code>)<code>Object</code>. There it exists. It will raise the exception we all know and hate: <code>NoMethodError</code>. You can do this yourself too:</p>
-  
-  <pre class="ir_black">> "any object".method_missing(:to_s)
+  <pre>> "any object".method_missing(:to_s)
   NoMethodError: undefined method `to_s' for "any object":String
   </pre>
-  
   <p>You see, even though the method <code>to_s</code> does exist on the string, we stepped halfway in the process of a method call. The error message is a bit confusing, but the we just called a method on the superclass of <code>String</code>. Anyway, by defining <code>method_missing</code> on our own object, it cuts this chain short. To cut it even shorter, I define the method itself, so it doesn&#39;t need to go through this process at all. After it&#39;s defined I call the freshly created method.</p>
   
   <p>Now, to be honest. This is not at all that expensive to use method_missing in this case. The chain is only classes long, so it&#39;s hardly putting a dent in your performance. There are cases were this is <em>very</em> important though. One such case is <code>ActiveRecord</code>. When you call a method on a new <code>ActiveRecord</code>-object for the first time, you reach <code>method_missing</code>. It needs to look at the database to find out if it is an attribute. Looking inside the database is very expensive, so <code>method_missing</code> creates methods for all attributes. If the attribute exists, it will be called, and it&#39;ll be a normal method call from then on.</p>
@@ -65,8 +54,4 @@ html: |
 toc: 
 - anchor: "#toc_0"
   title: How does this work?
-introduction: |
-  <p>I&#39;m a sucker for syntax. So once again, here&#39;s a small experiment. It might not be the most useful snippet out there, but maybe it inspires you to do something awesome. The &#39;Dynamic Dispatcher&#39; is a common pattern in Ruby. Here I&#39;ll demonstrate it to add some syntactic sugar.</p><p>In views you can automatically scope translations to the view you&#39;re working in.</p><p>So this HAML code (in the <code>users#index</code> view):</p>
-  <pre class="ir_black"><font color="#e18964">=</font>&nbsp;t(<font color="#336633">'</font><font color="#a8ff60">.foo</font><font color="#336633">'</font>)
-  </pre>
-
+introduction: <p>I&#39;m a sucker for syntax. So once again, here&#39;s a small experiment. It might not be the most useful snippet out there, but maybe it inspires you to do something awesome. The &#39;Dynamic Dispatcher&#39; is a common pattern in Ruby. Here I&#39;ll demonstrate it to add some syntactic sugar.</p><p>In views you can automatically scope translations to the view you&#39;re working in.</p><p>So this HAML code (in the <code>users#index</code> view):</p>

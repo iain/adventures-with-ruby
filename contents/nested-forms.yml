@@ -1,114 +1,121 @@
 --- 
 html: |
-  <p>The old subject of nested forms comes back again to hunt me. Rails 2.3 has the new and shiny <code>accepts_nested_attributes_for</code> feature. I like it, but there are some things to take into consideration. Adding a child object through javascript remains a bitch to tackle. So I sat down and wrote some javascript. Here is what I came up with. Not sure if I&#39;m going to release this a plugin though.</p>
+  <p>The old subject of nested forms comes back again to hunt me. Rails 2.3 has the new and shiny
+  <code>accepts_nested_attributes_for</code> feature. I like it, but there are some things to take into
+  consideration. Adding a child object through javascript remains a bitch to tackle. So I sat down and
+  wrote some javascript. Here is what I came up with. Not sure if I&#39;m going to release this a plugin
+  though.</p>
   
   <p>First of, build the models. I have a project with many stages:</p>
-  <pre>class Project < ActiveRecord::Base
-    validates_presence_of :name
-    has_many :stages
-    accepts_nested_attributes_for :stages, :allow_destroy => true
-  end
+  <pre><span class="Keyword">class</span> <span class="Type">Project</span> &lt; <span class="Type">ActiveRecord</span>::<span class="Type">Base</span>
+    validates_presence_of <span class="Constant">:name</span>
+    has_many <span class="Constant">:stages</span>
+    accepts_nested_attributes_for <span class="Constant">:stages</span>, <span class="Constant">:allow_destroy</span> =&gt; <span class="Constant">true</span>
+  <span class="Keyword">end</span>
   
-  class Stage < ActiveRecord::Base
-    validates_presence_of :title
-    belongs_to :project
-  end
-  </pre>
+  <span class="Keyword">class</span> <span class="Type">Stage</span> &lt; <span class="Type">ActiveRecord</span>::<span class="Type">Base</span>
+    validates_presence_of <span class="Constant">:title</span>
+    belongs_to <span class="Constant">:project</span>
+  <span class="Keyword">end</span></pre>
   <p>Here is what the form partial for the project looks like:</p>
-  <pre>- form_for @project do |form|
-    %p
-      = form.label :name
-      = form.text_field :name
-    #stages
-      - form.fields_for :stages do |fields|
-        = render :partial => "stage", :locals => { :form => fields }
-    %p= partial_button(f, :stage, "Add stage")
-  </pre>
+  <pre><span class="Special">-</span> form_for <span class="Identifier">@project</span> <span class="rubyControl">do</span> |<span class="Identifier">form</span>|
+    <span class="Special">%</span><span class="Conditional">p</span>
+      <span class="Special">=</span> form.label <span class="Constant">:name</span>
+      <span class="Special">=</span> form.text_field <span class="Constant">:name</span>
+    <span class="Special">#</span><span class="Identifier">stages</span>
+      <span class="Special">-</span> form.fields_for <span class="Constant">:stages</span> <span class="rubyControl">do</span> |<span class="Identifier">fields</span>|
+        <span class="Special">=</span> render <span class="Constant">:partial</span> =&gt; <span class="rubyStringDelimiter">"</span><span class="String">stage</span><span class="rubyStringDelimiter">"</span>, <span class="Constant">:locals</span> =&gt; { <span class="Constant">:form</span> =&gt; fields }
+    <span class="Special">%</span><span class="Conditional">p</span><span class="Special">=</span> partial_button(f, <span class="Constant">:stage</span>, <span class="rubyStringDelimiter">"</span><span class="String">Add stage</span><span class="rubyStringDelimiter">"</span>)</pre>
   <p>And the stage partial:</p>
-  <pre>.stage[form.object]
-    %p
-      = form.label :title
-      = form.text_field :title
-    %p= remove_partial(form, "Remove stage")
-  </pre>
-  <p>Ok, so nothing to scary there. Nice clean views. Those two helper methods might be scary though. But apart from that, it&#39;s actually quite normal.</p>
+  <pre><span class="Special">.</span><span class="Type">stage</span><span class="Delimiter">[</span>form.object<span class="Delimiter">]</span>
+    <span class="Special">%</span><span class="Conditional">p</span>
+      <span class="Special">=</span> form.label <span class="Constant">:title</span>
+      <span class="Special">=</span> form.text_field <span class="Constant">:title</span>
+    <span class="Special">%</span><span class="Conditional">p</span><span class="Special">=</span> remove_partial(form, <span class="rubyStringDelimiter">"</span><span class="String">Remove stage</span><span class="rubyStringDelimiter">"</span>)</pre>
+  <p>Ok, so nothing to scary there. Nice clean views. Those two helper methods might be scary though. But
+  apart from that, it&#39;s actually quite normal.</p>
   
-  <p>Notice that the square brackets used at the first line of the stage partial either adds a class &quot;new_stage&quot; or &quot;stage_X&quot; (where X is the id of an existing stage object).</p>
+  <p>Notice that the square brackets used at the first line of the stage partial either adds a class
+  &quot;new_stage&quot; or &quot;stage_X&quot; (where X is the id of an existing stage object).</p>
   
   <p>Let&#39;s see what&#39;s inside the <code>partial_button</code> method!</p>
-  <pre>def partial_button(form, attribute, link_name)
-    returning "" do |out|
+  <pre><span class="PreProc">def</span> <span class="Function">partial_button</span>(form, attribute, link_name)
+    returning <span class="rubyStringDelimiter">""</span> <span class="rubyControl">do</span> |<span class="Identifier">out</span>|
       base      = form.object.class.to_s.underscore
       singular  = attribute.to_s.underscore
       plural    = singular.pluralize
-      id        = "add_nested_partial_#{base}_#{singular}"
-      form.fields_for attribute.to_s.classify.constantize.new do |field|
-        html = render(:partial => singular, :locals => { :form => field})
-        js   = %|new NestedFormPartial("#{escape_javascript(html)}", { parent:"#{base}", singular:"#{singular}", plural:"#{plural}"}).insertHtml();|
-        out << hidden_field_tag(nil, js, :id => "js_#{id}") + "\n"
-        out << content_tag(:input, nil, :type => "button", :value => link_name, :class => "add_nested_partial", :id => id)
-      end
-    end
-  end
-  </pre>
-  <p>Ok, this looks scary. But it isn&#39;t that scary. This method returns a string called <code>out</code>. First of I build some variables, which will be needed as options for the javascript, since javascript doesn&#39;t have those cool inflections ActiveSupport has.</p>
+      id        = <span class="rubyStringDelimiter">"</span><span class="String">add_nested_partial_</span><span class="rubyInterpolationDelimiter">#{</span>base<span class="rubyInterpolationDelimiter">}</span><span class="String">_</span><span class="rubyInterpolationDelimiter">#{</span>singular<span class="rubyInterpolationDelimiter">}</span><span class="rubyStringDelimiter">"</span>
+      form.fields_for attribute.to_s.classify.constantize.new <span class="rubyControl">do</span> |<span class="Identifier">field</span>|
+        html = render(<span class="Constant">:partial</span> =&gt; singular, <span class="Constant">:locals</span> =&gt; { <span class="Constant">:form</span> =&gt; field})
+        js   = <span class="rubyStringDelimiter">%|</span><span class="String">new NestedFormPartial("</span><span class="rubyInterpolationDelimiter">#{</span>escape_javascript(html)<span class="rubyInterpolationDelimiter">}</span><span class="String">", { parent:"</span><span class="rubyInterpolationDelimiter">#{</span>base<span class="rubyInterpolationDelimiter">}</span><span class="String">", singular:"</span><span class="rubyInterpolationDelimiter">#{</span>singular<span class="rubyInterpolationDelimiter">}</span><span class="String">", plural:"</span><span class="rubyInterpolationDelimiter">#{</span>plural<span class="rubyInterpolationDelimiter">}</span><span class="String">"}).insertHtml();</span><span class="rubyStringDelimiter">|</span>
+        out &lt;&lt; hidden_field_tag(<span class="Constant">nil</span>, js, <span class="Constant">:id</span> =&gt; <span class="rubyStringDelimiter">"</span><span class="String">js_</span><span class="rubyInterpolationDelimiter">#{</span>id<span class="rubyInterpolationDelimiter">}</span><span class="rubyStringDelimiter">"</span>) + <span class="rubyStringDelimiter">"</span><span class="Special">\n</span><span class="rubyStringDelimiter">"</span>
+        out &lt;&lt; content_tag(<span class="Constant">:input</span>, <span class="Constant">nil</span>, <span class="Constant">:type</span> =&gt; <span class="rubyStringDelimiter">"</span><span class="String">button</span><span class="rubyStringDelimiter">"</span>, <span class="Constant">:value</span> =&gt; link_name, <span class="Constant">:class</span> =&gt; <span class="rubyStringDelimiter">"</span><span class="String">add_nested_partial</span><span class="rubyStringDelimiter">"</span>, <span class="Constant">:id</span> =&gt; id)
+      <span class="rubyControl">end</span>
+    <span class="rubyControl">end</span>
+  <span class="PreProc">end</span></pre>
+  <p>Ok, this looks scary. But it isn&#39;t that scary. This method returns a string called <code>out</code>. First of I
+  build some variables, which will be needed as options for the javascript, since javascript doesn&#39;t
+  have those cool inflections ActiveSupport has.</p>
   
-  <p>Second, I am going to make a fields_for block, which you&#39;ll already know what it does. I render the partial and assign it to the <code>html</code> variable. Then I generate some javascript which initiates a new <code>NestedFormPartial</code> object. Finally, I build a hidden field, which contains this javascript as value and a button.</p>
+  <p>Second, I am going to make a fields_for block, which you&#39;ll already know what it does. I render the
+  partial and assign it to the <code>html</code> variable. Then I generate some javascript which initiates a new
+  <code>NestedFormPartial</code> object. Finally, I build a hidden field, which contains this javascript as value
+  and a button.</p>
   
   <p>Here&#39;s the javascript, you&#39;ll need to add:</p>
-  <pre>var NestedFormPartial = Class.create();
-  NestedFormPartial.prototype = {
-    initialize : function(html, options){
-      this.newId          = "new_" + new Date().getTime();
-      this.html           = html;
-      this.parentName     = options["parent"];
-      this.singularName   = options["singular"];
-      this.pluralName     = options["plural"];
-      if (!this.pluralName) this.pluralName = this.singularName + "s";
-      this.replaceHtml();
-    },
-    oldPartialId : function(){
-      return this.singularName + "_new";
-    },
-    oldElementId : function(){
-      return this.parentName + "_" + this.singularName + "_";
-    },
-    oldElementName : function(){
-      return this.parentName + "\\[" + this.singularName + "\\]";
-    },
-    newPartialId : function(){
-      return this.singularName + "_" + this.newId;
-    },
-    newElementId : function(){
-      return this.parentName + "_" + this.newPartialId() + "_";
-    },
-    newElementName : function(){
-      return this.parentName + "[" + this.pluralName + "_attributes][" + this.newId + "]";
-    },
-    replaceFunction : function(pattern, replacement) {
-      this.html = this.html.replace(new RegExp(pattern, "g"), replacement);
-    },
-    replaceHtml : function(){
-      this.replaceFunction(this.oldPartialId(),   this.newPartialId());
-      this.replaceFunction(this.oldElementId(),   this.newElementId());
-      this.replaceFunction(this.oldElementName(), this.newElementName());
-    },
-    insertHtml : function(){
-      $(this.pluralName).insert({ bottom :  this.html });
-    },
-  }
+  <pre><span class="Identifier">var</span> NestedFormPartial = Class.create();
+  NestedFormPartial.prototype = <span class="Function">{</span>
+    initialize : <span class="Function">function</span>(html, options)<span class="Function">{</span>
+      <span class="Identifier">this</span>.newId          = <span class="String">"new_"</span> + <span class="Operator">new</span> <span class="Type">Date</span>().getTime();
+      <span class="Identifier">this</span>.html           = html;
+      <span class="Identifier">this</span>.parentName     = options<span class="Function">[</span><span class="String">"parent"</span><span class="Function">]</span>;
+      <span class="Identifier">this</span>.singularName   = options<span class="Function">[</span><span class="String">"singular"</span><span class="Function">]</span>;
+      <span class="Identifier">this</span>.pluralName     = options<span class="Function">[</span><span class="String">"plural"</span><span class="Function">]</span>;
+      <span class="Conditional">if</span> (!<span class="Identifier">this</span>.pluralName) <span class="Identifier">this</span>.pluralName = <span class="Identifier">this</span>.singularName + <span class="String">"s"</span>;
+      <span class="Identifier">this</span>.replaceHtml();
+    <span class="Function">}</span>,
+    oldPartialId : <span class="Function">function</span>()<span class="Function">{</span>
+      <span class="Statement">return</span> <span class="Identifier">this</span>.singularName + <span class="String">"_new"</span>;
+    <span class="Function">}</span>,
+    oldElementId : <span class="Function">function</span>()<span class="Function">{</span>
+      <span class="Statement">return</span> <span class="Identifier">this</span>.parentName + <span class="String">"_"</span> + <span class="Identifier">this</span>.singularName + <span class="String">"_"</span>;
+    <span class="Function">}</span>,
+    oldElementName : <span class="Function">function</span>()<span class="Function">{</span>
+      <span class="Statement">return</span> <span class="Identifier">this</span>.parentName + <span class="String">"</span><span class="Special">\\</span><span class="String">["</span> + <span class="Identifier">this</span>.singularName + <span class="String">"</span><span class="Special">\\</span><span class="String">]"</span>;
+    <span class="Function">}</span>,
+    newPartialId : <span class="Function">function</span>()<span class="Function">{</span>
+      <span class="Statement">return</span> <span class="Identifier">this</span>.singularName + <span class="String">"_"</span> + <span class="Identifier">this</span>.newId;
+    <span class="Function">}</span>,
+    newElementId : <span class="Function">function</span>()<span class="Function">{</span>
+      <span class="Statement">return</span> <span class="Identifier">this</span>.parentName + <span class="String">"_"</span> + <span class="Identifier">this</span>.newPartialId() + <span class="String">"_"</span>;
+    <span class="Function">}</span>,
+    newElementName : <span class="Function">function</span>()<span class="Function">{</span>
+      <span class="Statement">return</span> <span class="Identifier">this</span>.parentName + <span class="String">"["</span> + <span class="Identifier">this</span>.pluralName + <span class="String">"_attributes]["</span> + <span class="Identifier">this</span>.newId + <span class="String">"]"</span>;
+    <span class="Function">}</span>,
+    replaceFunction : <span class="Function">function</span>(pattern, replacement) <span class="Function">{</span>
+      <span class="Identifier">this</span>.html = <span class="Identifier">this</span>.html.replace(<span class="Operator">new</span> <span class="Type">RegExp</span>(pattern, <span class="String">"g"</span>), replacement);
+    <span class="Function">}</span>,
+    replaceHtml : <span class="Function">function</span>()<span class="Function">{</span>
+      <span class="Identifier">this</span>.replaceFunction(<span class="Identifier">this</span>.oldPartialId(),   <span class="Identifier">this</span>.newPartialId());
+      <span class="Identifier">this</span>.replaceFunction(<span class="Identifier">this</span>.oldElementId(),   <span class="Identifier">this</span>.newElementId());
+      <span class="Identifier">this</span>.replaceFunction(<span class="Identifier">this</span>.oldElementName(), <span class="Identifier">this</span>.newElementName());
+    <span class="Function">}</span>,
+    insertHtml : <span class="Function">function</span>()<span class="Function">{</span>
+      $(<span class="Identifier">this</span>.pluralName).insert(<span class="Function">{</span> bottom :  <span class="Identifier">this</span>.html <span class="Function">}</span>);
+    <span class="Function">}</span>,
+  <span class="Function">}</span>
   
-  function initPartialButtons() {
-    $$(".add_nested_partial").each(function(button, index) {
-      Event.observe(button, "click", function(evt) {
-        eval($("js_" + button.id).value);
-      })
-    });
-  }
+  <span class="Function">function</span> initPartialButtons() <span class="Function">{</span>
+    $$(<span class="String">".add_nested_partial"</span>).each(<span class="Function">function</span>(button, index) <span class="Function">{</span>
+      Event.observe(button, <span class="String">"click"</span>, <span class="Function">function</span>(evt) <span class="Function">{</span>
+        eval($(<span class="String">"js_"</span> + button.id).value);
+      <span class="Function">}</span>)
+    <span class="Function">}</span>);
+  <span class="Function">}</span>
   
-  Event.observe(window, 'load', initPartialButtons, false);
-  </pre>
-  <p>Ehm, what did I just do there? Well, the most important thing is that some parts of the partial get replaced. There are three problems which need to be addressed:</p>
+  Event.observe(<span class="Keyword">window</span>, <span class="String">'load'</span>, initPartialButtons, <span class="Constant">false</span>);</pre>
+  <p>Ehm, what did I just do there? Well, the most important thing is that some parts of the partial get
+  replaced. There are three problems which need to be addressed:</p>
   
   <ul>
   <li>A new object always has the same generated id for input fields. Adding two stages would mean that their ids would be the same and that would mean that the labels wouldn&#39;t be clickable (and it wouldn&#39;t be valid html).</li>
@@ -116,22 +123,25 @@ html: |
   <li>Rails expects a hash as stages_attributes. We&#39;ll need to add some arbitrary key, so it&#39;ll turn into a hash.</li>
   </ul>
   
-  <p>I generate a new id by using the timestamp and replace the values in my html. When the window loads I find any add_nested_partial class button and eval the value of the hidden field I added earlier, so the scripts gets executed.</p>
+  <p>I generate a new id by using the timestamp and replace the values in my html. When the window loads
+  I find any add_nested_partial class button and eval the value of the hidden field I added earlier,
+  so the scripts gets executed.</p>
   
   <p>As you can see, I did my best to make this as unobtrusive as possible, but going any further made my head hurt.</p>
   
   <p>Finally, the <code>remove_partial</code> method, which I haven&#39;t cleaned up yet:</p>
-  <pre>def remove_partial(form, link_name)
+  <pre><span class="PreProc">def</span> <span class="Function">remove_partial</span>(form, link_name)
     attribute = form.object.class.name.underscore
-    if form.object.new_record?
-      button_to_function(link_name, "$(this).up('.#{attribute}').remove()")
-    else
-      form.hidden_field(:_delete) +
-      button_to_function(link_name, "$(this).up('.#{attribute}').hide(); $(this).previous().value = '1'")
-    end
-  end
-  </pre>
-  <p>I hope this helps. I found a lot of my initial optimism after hearing about <code>accepts_nested_attributes_for</code> have gone now. It cleans up a lot of code in the model though. I&#39;ll keep this post updated when I have some improvements.</p>
+    <span class="Conditional">if</span> form.object.new_record?
+      button_to_function(link_name, <span class="rubyStringDelimiter">"</span><span class="String">$(this).up('.</span><span class="rubyInterpolationDelimiter">#{</span>attribute<span class="rubyInterpolationDelimiter">}</span><span class="String">').remove()</span><span class="rubyStringDelimiter">"</span>)
+    <span class="Conditional">else</span>
+      form.hidden_field(<span class="Constant">:_delete</span>) +
+      button_to_function(link_name, <span class="rubyStringDelimiter">"</span><span class="String">$(this).up('.</span><span class="rubyInterpolationDelimiter">#{</span>attribute<span class="rubyInterpolationDelimiter">}</span><span class="String">').hide(); $(this).previous().value = '1'</span><span class="rubyStringDelimiter">"</span>)
+    <span class="Conditional">end</span>
+  <span class="PreProc">end</span></pre>
+  <p>I hope this helps. I found a lot of my initial optimism after hearing about
+  <code>accepts_nested_attributes_for</code> have gone now. It cleans up a lot of code in the model though. I&#39;ll
+  keep this post updated when I have some improvements.</p>
   
   <p>Sources:</p>
   
@@ -142,4 +152,9 @@ html: |
 
 toc: []
 
-introduction: <p>The old subject of nested forms comes back again to hunt me. Rails 2.3 has the new and shiny <code>accepts_nested_attributes_for</code> feature. I like it, but there are some things to take into consideration. Adding a child object through javascript remains a bitch to tackle. So I sat down and wrote some javascript. Here is what I came up with. Not sure if I&#39;m going to release this a plugin though.</p><p>First of, build the models. I have a project with many stages:</p>
+introduction: |-
+  <p>The old subject of nested forms comes back again to hunt me. Rails 2.3 has the new and shiny
+  <code>accepts_nested_attributes_for</code> feature. I like it, but there are some things to take into
+  consideration. Adding a child object through javascript remains a bitch to tackle. So I sat down and
+  wrote some javascript. Here is what I came up with. Not sure if I&#39;m going to release this a plugin
+  though.</p><p>First of, build the models. I have a project with many stages:</p>
