@@ -366,6 +366,11 @@ creating your own authentication system.
 
 ## Styling
 
+**Update** I've switched to using the [Twitter Bootstrap](http://twitter.github.com/bootstrap/)
+styling. It's a lot prettier and cleaner than wep-app-theme. Have a look at [this
+commit](https://github.com/iain/simple-backend-example/commit/0a9f5a8ab5e9a82ce90c092aab2b628211f7036b)
+to see what I've had to do. You can skip this chapter if you like now.
+
 So, we now have a nice backend system in place. But it still looks ugly. Time
 to add some style! Let's get something of-the-shelf to get going. I like
 [web-app-theme](https://github.com/pilu/web-app-theme). This will make our backend look just like
