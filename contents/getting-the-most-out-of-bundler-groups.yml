@@ -1,0 +1,161 @@
+--- 
+html: |
+  <p>Did you know you can create as many groups in Bundler as you like? You can and
+  I think you should! Let me show you some ways I use groups to clean up my
+  Gemfile.</p>
+  
+  <h2 id="toc_0">Why groups?</h2>
+  
+  <p><strong>Speed:</strong> Requiring gems can get slow, even more so when you have a lot of
+  them. Groups help you require the gems only when they are needed.</p>
+  
+  <p>This is especially true if you use Ruby 1.9.2. In this version of Ruby, the
+  <code>require</code> statement can get very slow. Since the number of gems inside a
+  project can get rather large. Loading only the gems that are needed can improve
+  Rails boot time immensely.</p>
+  
+  <p><strong>Safety:</strong> Some gems provide functionality that you don&#39;t want to enable in
+  certain cases.  Take webmock, for instance. This handy gem blocks all outgoing
+  network traffic inside your application. Very handy for testing purposes, but
+  not in production!</p>
+  
+  <p><strong>Clearity:</strong> The group name can act as documentation. If you ever wonder what
+  a gem does and where it is used inside your application, a group can tell you a
+  lot.</p>
+  
+  <h2 id="toc_1">The Basics</h2>
+  
+  <p>You probably already know the basics of groups in Bundler. Rails already uses
+  groups out of the box. If you have a group named after the Rails environment,
+  it will get loaded.</p>
+  
+  <p>If you have gems that are used in the application itself, your best bet is to
+  put them outside of any group. I&#39;m talking about gems like Rails itself,
+  devise, will_paginate, and so on.</p>
+  
+  <p>Gems without a specified group are placed in the <code>:default</code> group and will be
+  loaded in every Rails environment.</p>
+  
+  <p>This is your safest choice. When in doubt in which group to place a gem, don&#39;t
+  use a group at all.</p>
+  
+  <h2 id="toc_2">Adding custom groups</h2>
+  
+  <p>You can easily add other groups. For example, Rails 3.1 and up have gems in the
+  <code>:assets</code> group. This line from <code>config/application.rb</code> instructs Bundler to
+  only require the assets in development and test environments.</p>
+  <pre><span class="Type">Bundler</span>.require(<span class="Operator">*</span><span class="Type">Rails</span>.groups(<span class="Constant">:assets</span> =&gt; <span class="rubyStringDelimiter">%w(</span><span class="String">development test</span><span class="rubyStringDelimiter">)</span>))</pre>
+  <p>You can add your own groups and let Bundler require them automatically.</p>
+  
+  <p>Here is an example:</p>
+  <pre>group <span class="Constant">:security</span> <span class="rubyControl">do</span>
+    gem <span class="rubyStringDelimiter">'</span><span class="String">devise</span><span class="rubyStringDelimiter">'</span>
+    gem <span class="rubyStringDelimiter">'</span><span class="String">cancan</span><span class="rubyStringDelimiter">'</span>
+  <span class="rubyControl">end</span>
+  
+  group <span class="Constant">:monitoring</span> <span class="rubyControl">do</span>
+    gem <span class="rubyStringDelimiter">'</span><span class="String">newrelic_rpm</span><span class="rubyStringDelimiter">'</span>
+    gem <span class="rubyStringDelimiter">'</span><span class="String">airbrake</span><span class="rubyStringDelimiter">'</span>
+  <span class="rubyControl">end</span></pre>
+  <p>So, we want security to always be there, but monitoring only in production.
+  Then your configuration inside <code>config/application.rb</code> should read:</p>
+  <pre>groups = {
+    <span class="Constant">assets</span>:     <span class="rubyStringDelimiter">%w(</span><span class="String">development test</span><span class="rubyStringDelimiter">)</span>,
+    <span class="Constant">monitoring</span>: <span class="rubyStringDelimiter">%w(</span><span class="String">production</span><span class="rubyStringDelimiter">)</span>
+  }
+  <span class="Type">Bundler</span>.require(<span class="Constant">:security</span>, <span class="Operator">*</span><span class="Type">Rails</span>.groups(groups))</pre>
+  <p>You can group together gems per type of gem, like <code>:assets</code>, or per part of the
+  application, like <code>:security</code>, or <code>:backend</code>. See what makes the most sense for
+  your application.</p>
+  
+  <h2 id="toc_3">Grouping related gems</h2>
+  
+  <p>When you use Cucumber, Spinach, or Turnip, you&#39;ll end up with a set of related
+  gems.  When you cram all of these into the test group, they&#39;ll end up loaded in
+  your RSpec tests too.</p>
+  
+  <p>You could create a group for this:</p>
+  <pre>group <span class="Constant">:cucumber</span> <span class="rubyControl">do</span>
+    gem <span class="rubyStringDelimiter">'</span><span class="String">cucumber-rails</span><span class="rubyStringDelimiter">'</span>
+    gem <span class="rubyStringDelimiter">'</span><span class="String">capybara</span><span class="rubyStringDelimiter">'</span>
+    gem <span class="rubyStringDelimiter">'</span><span class="String">launchy</span><span class="rubyStringDelimiter">'</span>
+    gem <span class="rubyStringDelimiter">'</span><span class="String">database_cleaner</span><span class="rubyStringDelimiter">'</span>
+  <span class="rubyControl">end</span></pre>
+  <p>This group won&#39;t be loaded. If you want to require these gems inside your
+  Cucumber tests, add this line to <code>features/support/env.rb</code>:</p>
+  <pre><span class="Type">Bundler</span>.require(<span class="Constant">:cucumber</span>)</pre>
+  <p>You could do this for other groups of related gems too. For instance, you might
+  have a couple of scripts or rake tasks running periodically that use gems that
+  you don&#39;t use in the rest of your application. With groups you can require them
+  at the right moment.</p>
+  
+  <h2 id="toc_4">Other gems</h2>
+  
+  <p>There are also some gems that are only used from the command line. An example
+  might be thin, or capistrano. Here are some more examples:</p>
+  <pre>group <span class="Constant">:capistrano</span> <span class="rubyControl">do</span>
+    gem <span class="rubyStringDelimiter">'</span><span class="String">capistrano</span><span class="rubyStringDelimiter">'</span>
+    gem <span class="rubyStringDelimiter">'</span><span class="String">capistrano-ext</span><span class="rubyStringDelimiter">'</span>
+    gem <span class="rubyStringDelimiter">'</span><span class="String">capistrano_colors</span><span class="rubyStringDelimiter">'</span>
+    gem <span class="rubyStringDelimiter">'</span><span class="String">capistrano_chef_solo</span><span class="rubyStringDelimiter">'</span>
+  <span class="rubyControl">end</span>
+  
+  group <span class="Constant">:test_tools</span> <span class="rubyControl">do</span>
+    gem <span class="rubyStringDelimiter">'</span><span class="String">autotest</span><span class="rubyStringDelimiter">'</span>
+    gem <span class="rubyStringDelimiter">'</span><span class="String">spork</span><span class="rubyStringDelimiter">'</span>
+    gem <span class="rubyStringDelimiter">'</span><span class="String">spec_coverage</span><span class="rubyStringDelimiter">'</span>, <span class="Constant">:platforms</span> =&gt; <span class="Constant">:ruby_19</span>
+    gem <span class="rubyStringDelimiter">'</span><span class="String">fuubar</span><span class="rubyStringDelimiter">'</span>
+    gem <span class="rubyStringDelimiter">'</span><span class="String">fuubar-cucumber</span><span class="rubyStringDelimiter">'</span>
+  <span class="rubyControl">end</span></pre>
+  <p>There is no need to add <code>:require =&gt; false</code> to every gem, because it won&#39;t get
+  loaded anyway. These gems either provide a command line tool like <code>cap</code> or
+  <code>autotest</code>, or they will be required manually at a specific moment, only when
+  they are needed.</p>
+  
+  <h2 id="toc_5">Console Extensions</h2>
+  
+  <p>There are a number of gems that will spice up your IRB session, like
+  awesome_print, hirb and wirb. You can load them inside your <code>~/.irbrc</code> file,
+  but if they are not present inside your Gemfile, they won&#39;t be available
+  inside projects using Bundler.</p>
+  
+  <p>A group can play a part in solving this problem.</p>
+  <pre>group <span class="Constant">:console</span> <span class="rubyControl">do</span>
+    gem <span class="rubyStringDelimiter">'</span><span class="String">wirb</span><span class="rubyStringDelimiter">'</span>
+    gem <span class="rubyStringDelimiter">'</span><span class="String">hirb-unicode</span><span class="rubyStringDelimiter">'</span>
+    gem <span class="rubyStringDelimiter">'</span><span class="String">awesome_print</span><span class="rubyStringDelimiter">'</span>, <span class="Constant">:require</span> =&gt; <span class="rubyStringDelimiter">'</span><span class="String">ap</span><span class="rubyStringDelimiter">'</span>
+  <span class="rubyControl">end</span></pre>
+  <p>Now, to automatically load them in Rails, but only when opening the console,
+  open up <code>config/application.rb</code>.  At the top you&#39;ll find an if-statement
+  checking for Bundler. Inside this block, you can add this piece of code:</p>
+  <pre><span class="Type">Class</span>.new <span class="Type">Rails</span><span class="Operator">::</span><span class="Type">Railtie</span> <span class="rubyControl">do</span>
+    console <span class="rubyControl">do</span> |<span class="Identifier">app</span>|
+      <span class="Type">Bundler</span>.require(<span class="Constant">:console</span>)
+      <span class="Type">Wirb</span>.start
+      <span class="Type">Hirb</span>.enable
+    <span class="rubyControl">end</span>
+  <span class="rubyControl">end</span></pre>
+  <p>This creates an anonymous Railtie in which you can specify what happens when
+  the console is started. Here you can require all your console extensions and
+  perform additional configuration.</p>
+  
+  <p>Railties need to be loaded before you define your Rails application, or else
+  you&#39;re too late and the console block won&#39;t be executed.</p>
+
+toc: 
+- anchor: "#toc_0"
+  title: Why groups?
+- anchor: "#toc_1"
+  title: The Basics
+- anchor: "#toc_2"
+  title: Adding custom groups
+- anchor: "#toc_3"
+  title: Grouping related gems
+- anchor: "#toc_4"
+  title: Other gems
+- anchor: "#toc_5"
+  title: Console Extensions
+introduction: |-
+  <p>Did you know you can create as many groups in Bundler as you like? You can and
+  I think you should! Let me show you some ways I use groups to clean up my
+  Gemfile.</p>
