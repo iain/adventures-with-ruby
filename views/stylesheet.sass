@@ -109,7 +109,7 @@ hr
 #header
   border-bottom: $content-border
   min-height: 135px
-  h1
+  .blog-title
     +border-top-radius(7px)
     +background-image(linear-gradient(#e9e9e9, #fff 50%, #fff))
     line-height: 50px
@@ -226,9 +226,12 @@ hr
     p
       color: $warm-gray
 
-
   article
     min-height: 100px
+    h1
+      a
+        color: $black
+
     h2
       margin: $big-gap 0 $small-gap ($big-gap * -1) + 1
       padding: 0 0 $small-gap $big-gap
