@@ -4,10 +4,9 @@ source :rubygems
 gem 'sinatra'
 gem 'haml'
 gem 'builder'
-gem 'rack', '1.3.3'
 
 group :development do
-  gem 'redcarpet', '~> 2.0.0b5'
+  gem 'redcarpet'
   gem 'shotgun'
   gem 'compass'
   gem 'rack-test'
