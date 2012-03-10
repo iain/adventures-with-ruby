@@ -66,19 +66,14 @@
       %footer#footer
         %p All contents on this site are &copy; Iain Hecker 2007-#{Date.today.year}, unless otherwise stated. All rights reserved.
 
-    %script(src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js" type="text/javascript")
     :javascript
       (function() {
-        var outboundLinks = function() {
-          var links = document.getElementsByTagName("a");
-          var domain = new RegExp("#{request.host}", "i");
-          var linkCount = links.length;
-          for (var i = 0; i < linkCount; i++) {
-            var link = links[i];
-            if (link.hostname.search(domain) == -1) link.target = "_blank";
-          }
-        }
-        jQuery(outboundLinks);
+        var s = document.createElement('script');
+        s.type = 'text/javascript';
+        s.async = true;
+        s.src = 'http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js';
+        var x = document.getElementsByTagName('footer')[0];
+        x.parentNode.insertBefore(s, x);
       })();
 
       (function() {
@@ -113,5 +108,5 @@
           }
         }
 
-        jQuery(scrolling);
+        window.onload = function() { jQuery(scrolling) };
       })();
