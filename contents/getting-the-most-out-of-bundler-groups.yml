@@ -10,16 +10,16 @@ html: |
   them. Groups help you require the gems only when they are needed.</p>
   
   <p>This is especially true if you use Ruby 1.9.2. In this version of Ruby, the
-  <code>require</code> statement can get very slow. Since the number of gems inside a
-  project can get rather large. Loading only the gems that are needed can improve
-  Rails boot time immensely.</p>
+  <code>require</code> statement can get very slow. The number of gems inside a
+  project can get rather large, so loading only the gems that are needed can improve
+  Rails&#39; boot time immensely.</p>
   
   <p><strong>Safety:</strong> Some gems provide functionality that you don&#39;t want to enable in
   certain cases.  Take webmock, for instance. This handy gem blocks all outgoing
   network traffic inside your application. Very handy for testing purposes, but
   not in production!</p>
   
-  <p><strong>Clearity:</strong> The group name can act as documentation. If you ever wonder what
+  <p><strong>Clarity:</strong> The group name can act as documentation. If you ever wonder what
   a gem does and where it is used inside your application, a group can tell you a
   lot.</p>
   
