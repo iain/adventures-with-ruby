@@ -8,9 +8,9 @@ Gemfile.
 them. Groups help you require the gems only when they are needed.
 
 This is especially true if you use Ruby 1.9.2. In this version of Ruby, the
-`require` statement can get very slow. Since the number of gems inside a
-project can get rather large. Loading only the gems that are needed can improve
-Rails boot time immensely.
+`require` statement can get very slow. The number of gems inside a
+project can get rather large, so loading only the gems that are needed can improve
+Rails' boot time immensely.
 
 **Safety:** Some gems provide functionality that you don't want to enable in
 certain cases.  Take webmock, for instance. This handy gem blocks all outgoing
@@ -18,7 +18,7 @@ network traffic inside your application. Very handy for testing purposes, but
 not in production!
 
 
-**Clearity:** The group name can act as documentation. If you ever wonder what
+**Clarity:** The group name can act as documentation. If you ever wonder what
 a gem does and where it is used inside your application, a group can tell you a
 lot.
 
