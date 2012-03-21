@@ -1,0 +1,171 @@
+--- 
+html: |
+  <p>Testing ActiveRecord doesn&#39;t have to be slow. With some clever loading you can
+  require only the parts that you need and it isn&#39;t even that difficult.</p>
+  
+  <p>Another reason might be that you&#39;re using ActiveRecord without Rails. This
+  might be in another framework like Sinatra, or in a gem. Without Rails you
+  might be lost a little on how to set up ActiveRecord.</p>
+  
+  <h2 id="toc_0">Preparation</h2>
+  
+  <p>First, install the gems you&#39;ll need. This should be enough:</p>
+  <pre>gem install activerecord rspec sqlite3
+  </pre>
+  <p>I&#39;m using a really simple spec to get up and running. I&#39;m even defining the
+  model inside the spec itself, just because it&#39;s easier to get started:</p>
+  <pre><span class="Comment"># spec/widget_spec.rb</span>
+  
+  <span class="rubyControl">class</span> <span class="Type">Widget</span> &lt; <span class="Type">ActiveRecord</span><span class="Operator">::</span><span class="Type">Base</span>
+    validates_presence_of <span class="Constant">:name</span>
+  <span class="rubyControl">end</span>
+  
+  describe <span class="Type">Widget</span> <span class="rubyControl">do</span>
+  
+    it <span class="rubyStringDelimiter">"</span><span class="String">requires a name</span><span class="rubyStringDelimiter">"</span> <span class="rubyControl">do</span>
+      subject.name = <span class="rubyStringDelimiter">""</span>
+      subject.should have(<span class="Number">1</span>).error_on(<span class="Constant">:name</span>)
+      subject.name = <span class="rubyStringDelimiter">"</span><span class="String">Foo</span><span class="rubyStringDelimiter">"</span>
+      subject.should have(<span class="Constant">:no</span>).errors_on(<span class="Constant">:name</span>)
+    <span class="rubyControl">end</span>
+  
+  <span class="rubyControl">end</span></pre>
+  <h2 id="toc_1">Loading ActiveRecord</h2>
+  
+  <p>Run this spec on its own, simply by running:</p>
+  <pre>rspec spec/widget_spec.rb
+  </pre>
+  <p>You&#39;ll see that it doesn&#39;t even know ActiveRecord yet.</p>
+  
+  <p>Let&#39;s create a support file for specs that need ActiveRecord. I put this in
+  <code>spec/support/active_record.rb</code>.</p>
+  
+  <p>For now, this file will just require ActiveRecord for us:</p>
+  <pre><span class="Comment"># Create the file spec/support/active_record.rb:</span>
+  
+  <span class="PreProc">require</span> <span class="rubyStringDelimiter">'</span><span class="String">active_record</span><span class="rubyStringDelimiter">'</span></pre>
+  <p>We need ActiveRecord before we define our model, so require the support file at
+  the very top of your spec:</p>
+  <pre><span class="Comment"># Prepend to spec/widget_spec.rb:</span>
+  
+  <span class="PreProc">require</span> <span class="rubyStringDelimiter">'</span><span class="String">support/active_record</span><span class="rubyStringDelimiter">'</span></pre>
+  <p>RSpec automatically adds the <code>lib</code> and <code>spec</code> directory to the load paths, so
+  these files can be required easily.</p>
+  
+  <h2 id="toc_2">Connecting with the database</h2>
+  
+  <p>When we run the spec now, it should tell us that ActiveRecord has no connection
+  with the database. I&#39;m going for a SQLite database in memory, so let&#39;s define
+  the connection in the support file.</p>
+  <pre><span class="Comment"># Append to spec/support/active_record.rb:</span>
+  
+  <span class="Type">ActiveRecord</span><span class="Operator">::</span><span class="Type">Base</span>.establish_connection <span class="Constant">adapter</span>: <span class="rubyStringDelimiter">"</span><span class="String">sqlite3</span><span class="rubyStringDelimiter">"</span>, <span class="Constant">database</span>: <span class="rubyStringDelimiter">"</span><span class="String">:memory:</span><span class="rubyStringDelimiter">"</span></pre>
+  <p>When we run it now, it will tell us that we don&#39;t have a table yet.</p>
+  
+  <h2 id="toc_3">Run migrations</h2>
+  
+  <p>If you have migrations, you can run them with just one simple line:</p>
+  <pre><span class="Comment"># Append to spec/support/active_record.rb:</span>
+  
+  <span class="Type">ActiveRecord</span><span class="Operator">::</span><span class="Type">Migrator</span>.up <span class="rubyStringDelimiter">"</span><span class="String">db/migrate</span><span class="rubyStringDelimiter">"</span></pre>
+  <p>You can also just create the migration inline, which is probably even simpler:</p>
+  <pre><span class="Comment"># Append to spec/support/active_record.rb:</span>
+  
+  <span class="Type">ActiveRecord</span><span class="Operator">::</span><span class="Type">Migration</span>.create_table <span class="Constant">:widgets</span> <span class="rubyControl">do</span> |<span class="Identifier">t</span>|
+    t.string <span class="Constant">:name</span>
+    t.timestamps
+  <span class="rubyControl">end</span></pre>
+  <p>If you have a <code>schema.rb</code> file, you can simply load it:</p>
+  <pre><span class="Comment"># Append to spec/support/active_record.rb:</span>
+  
+  <span class="PreProc">load</span> <span class="rubyStringDelimiter">"</span><span class="String">path/to/db/schema.rb</span><span class="rubyStringDelimiter">"</span></pre>
+  <h2 id="toc_4">Getting some RSpec helpers</h2>
+  
+  <p>When we run it now, we&#39;ll see the familiar output of the migrations. The next
+  error we get is an undefined method <code>error_on</code>.</p>
+  
+  <p>If your project already depends on <code>rspec-rails</code>, you can simply require the file:</p>
+  <pre><span class="Comment"># Append to spec/support/active_record.rb:</span>
+  <span class="PreProc">require</span> <span class="rubyStringDelimiter">'</span><span class="String">rspec/rails/extensions/active_record/base</span><span class="rubyStringDelimiter">'</span></pre>
+  <p>If you&#39;re not in a Rails project (but in a Gem or Engine), you might not want
+  to have rspec-rails as a dependency, because it adds a lot of extra
+  dependencies. You can just define the <code>error_on</code> method yourself, by
+  copy-pasting it:</p>
+  <pre><span class="Comment"># Append to spec/support/active_record.rb:</span>
+  
+  <span class="rubyControl">module</span> <span class="Type">ActiveModel</span><span class="Operator">::</span><span class="Type">Validations</span>
+    <span class="Comment"># Extension to enhance `should have` on AR Model instances.  Calls</span>
+    <span class="Comment"># model.valid? in order to prepare the object's errors object.</span>
+    <span class="Comment">#</span>
+    <span class="Comment"># You can also use this to specify the content of the error messages.</span>
+    <span class="Comment">#</span>
+    <span class="Comment"># @example</span>
+    <span class="Comment">#</span>
+    <span class="Comment">#     model.should have(:no).errors_on(:attribute)</span>
+    <span class="Comment">#     model.should have(1).error_on(:attribute)</span>
+    <span class="Comment">#     model.should have(n).errors_on(:attribute)</span>
+    <span class="Comment">#</span>
+    <span class="Comment">#     model.errors_on(:attribute).should include("can't be blank")</span>
+    <span class="rubyControl">def</span> <span class="Function">errors_on</span>(attribute)
+      <span class="Constant">self</span>.valid?
+      [<span class="Constant">self</span>.errors<span class="Operator">[</span>attribute<span class="Operator">]</span>].flatten.compact
+    <span class="rubyControl">end</span>
+    <span class="Keyword">alias</span> <span class="Constant">:error_on</span> <span class="Constant">:errors_on</span>
+  <span class="rubyControl">end</span></pre>
+  <p>This should be enough to get your spec running! And look how fast it is!
+  Clearly, loading ActiveRecord isn&#39;t what makes Rails startup time slow.</p>
+  
+  <h2 id="toc_5">Transactions</h2>
+  
+  <p>The last part you&#39;ll want is to run your specs in transactions, so that one
+  spec doesn&#39;t influence the others. To do this, we&#39;ll make a simple around
+  filter:</p>
+  <pre><span class="Comment"># Append to spec/support/active_record.rb:</span>
+  
+  <span class="Type">RSpec</span>.configure <span class="rubyControl">do</span> |<span class="Identifier">config</span>|
+    config.around <span class="rubyControl">do</span> |<span class="Identifier">example</span>|
+      <span class="Type">ActiveRecord</span><span class="Operator">::</span><span class="Type">Base</span>.transaction <span class="rubyControl">do</span>
+        example.run
+        <span class="Statement">raise</span> <span class="Type">ActiveRecord</span><span class="Operator">::</span><span class="Type">Rollback</span>
+      <span class="rubyControl">end</span>
+    <span class="rubyControl">end</span>
+  <span class="rubyControl">end</span></pre>
+  <p>The <code>ActiveRecord::Rollback</code> exception will be caught by the transaction block
+  and roll back all the database changes after each spec.</p>
+  
+  <h2 id="toc_6">Profit!!!</h2>
+  
+  <p>Now, you might want to clean it up a little more, but this should be enough to
+  getting you started testing your ActiveRecord classes in (relative) isolation.
+  And the cool thing is, running these specs hardly takes any time!</p>
+  
+  <p>If you have any tips, please share them in the comment-section below.</p>
+  
+  <p>If you want to know more about how ActiveRecord works, I can recommended <a href="http://www.tamingthemindmonkey.com/">this
+  good series of posts</a> by <a href="http://twitter.com/robinroest">Robin
+  Roestenburg</a>. In the course of several blog
+  posts he dives into the inner workings of ActiveRecord, even refactoring parts
+  of it.</p>
+  
+  <p>Next up: Testing controllers in isolation. Stay tuned!</p>
+
+toc: 
+- anchor: "#toc_0"
+  title: Preparation
+- anchor: "#toc_1"
+  title: Loading ActiveRecord
+- anchor: "#toc_2"
+  title: Connecting with the database
+- anchor: "#toc_3"
+  title: Run migrations
+- anchor: "#toc_4"
+  title: Getting some RSpec helpers
+- anchor: "#toc_5"
+  title: Transactions
+- anchor: "#toc_6"
+  title: Profit!!!
+introduction: |-
+  <p>Testing ActiveRecord doesn&#39;t have to be slow. With some clever loading you can
+  require only the parts that you need and it isn&#39;t even that difficult.</p><p>Another reason might be that you&#39;re using ActiveRecord without Rails. This
+  might be in another framework like Sinatra, or in a gem. Without Rails you
+  might be lost a little on how to set up ActiveRecord.</p>
