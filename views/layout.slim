@@ -1,0 +1,57 @@
+doctype html
+html
+
+  head
+    title= @title || "Adventures with Ruby"
+    meta(charset='UTF-8')
+    meta(name='description' content=@description)
+    link(href='/stylesheet.css' rel='stylesheet')
+    link(rel='shortcut icon' href='/favicon.png')
+    link(href='/feed' type='application/rss+xml' rel='alternate' title='RSS Feed')
+    /[if lt IE 9]
+      script(src='http://html5shiv.googlecode.com/svn/trunk/html5.js')
+  body
+
+    #container
+      section#main
+        header#header
+          .blog-title
+            a(href='/' rel="home") Adventures with Ruby
+          == slim @intro if @intro
+
+        section#content
+          == yield
+
+        a#github(href="https://github.com/iain")
+
+
+      section#sidebar
+        h3 About me
+        p I am an open source enthusiast from Rotterdam with a passion for the Ruby language and everything involved with writing good software.
+        p I also organize the <a href="http://rotterdam-rb.org">Rotterdam.rb</a> meetings and I am a regular visitor of <a href="http://amsterdam-rb.org">Amsterdam.rb</a>. If you're in the neighbourhood please feel free to drop by!
+        p(style="text-align: right;")
+          strong Iain Hecker
+
+        h3 More about me
+        ul
+          li
+            a(href="http://www.facebook.com/iain.nl" rel="me") Facebook
+          li
+            a(href="https://github.com/iain" rel="me" title="My open source project on Github") Github
+          li
+            a(href="http://www.last.fm/user/iain-nl" rel="me" title="My last.fm account") Last.fm
+          li
+            a(href="http://www.linkedin.com/in/iainhecker" rel="me" title="My LinkedIn profile") LinkedIn
+          li
+            a(href="http://stackoverflow.com/users/525636/iain" rel="me") StackOverflow
+          li
+            a(href="http://twitter.com/iain_nl" rel="me" title="My Twitter account") Twitter
+          li
+            a(href="http://workingwithrails.com/person/12406-iain-hecker" rel="me" title="My profile on Working with Rails") Working with Rails
+
+
+
+      footer#footer
+        p All contents on this site are &copy; Iain Hecker 2007-#{Date.today.year}, unless otherwise stated. All rights reserved.
+
+    == erb :_javascript

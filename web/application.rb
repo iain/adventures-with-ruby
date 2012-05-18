@@ -1,5 +1,5 @@
 require 'sinatra'
-require 'haml'
+require 'slim'
 require 'builder'
 require 'yaml'
 require 'cgi'
@@ -16,8 +16,6 @@ require 'archive'
 require 'helpers'
 
 include Helpers
-
-set :haml, :format => :html5, :ugly => true
 set :root, File.expand_path('../..', __FILE__)
 
 before do
@@ -30,7 +28,7 @@ end
 get '/' do
   static
   @intro = :index_intro
-  haml :index
+  slim :index
 end
 
 get '/feed' do
@@ -42,7 +40,7 @@ get '/articles' do
   static
   @title = "All articles on Adventures with Ruby"
   @intro = :archive_intro
-  haml :archive
+  slim :archive
 end
 
 get '/:article' do
@@ -52,7 +50,7 @@ get '/:article' do
     @title       = "#{@article.title} - Adventures with Ruby"
     @description = @article.summary
     @intro       = :article_intro
-    haml :article
+    slim :article
   else
     pass
   end
@@ -61,5 +59,5 @@ end
 not_found do
   static "NOTFOUND"
   @intro = :not_found_intro
-  haml :not_found
+  slim :not_found
 end

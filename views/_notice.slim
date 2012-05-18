@@ -1,0 +1,14 @@
+- if @article.deprecated?
+  p#deprecated.alert
+    em This article is deprecated.
+    ' I've marked this article as deprecated.
+    ' It is either because the gem or plugin discussed in this article is no longer maintained, or I've changed my opinion on it.
+    ' This article is here only as an historic reference.
+- if @article.old?
+  p#old.notice
+    em This article is quite old.
+    ' Time flies when you're having fun.
+    ' I've been writing for my blog for a long time.
+    ' Stuff changes fast, especially in the Ruby world.
+    ' That's why I've put this warning on old posts.
+    ' The article might still be valid, though.

@@ -1,7 +1,7 @@
 module Helpers
 
   def partial(name, locals = {}, options = {})
-    haml :"_#{name}", options, locals
+    slim :"_#{name}", options, locals
   end
 
   def articles(name, articles)

@@ -2,7 +2,7 @@
 source :rubygems
 
 gem 'sinatra'
-gem 'haml'
+gem 'slim'
 gem 'builder'
 
 group :development do
