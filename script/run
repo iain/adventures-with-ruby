@@ -1,0 +1,4 @@
+#!/bin/bash
+set -e
+./script/bundler
+bundle exec guard

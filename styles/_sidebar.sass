@@ -1,0 +1,42 @@
+#sidebar
+  +embossed
+  +big-screen
+    float: left
+    width: $sidebar-width - ($big-gap)
+    padding: 0 0 0 ($big-gap - $default-box-shadow-blur)
+    margin: 135px 0 0 $default-box-shadow-blur
+    border-top: $sidebar-border
+  +small-screen
+    width: auto
+    padding: $big-gap
+    margin: 0
+
+  h3
+    border-top: $sidebar-border
+    padding-top: $small-gap
+    margin-top: $big-gap
+    &:first-child
+      margin-top: 0
+      padding-top: $big-gap
+      border-top: 0 none
+
+  p
+    color: $warm-gray
+    font-size: 14px
+    line-height: 20px
+    a
+      color: $black
+
+  ul, ol
+    list-style: none
+    margin: 0
+    padding: 0
+    li a
+      +link-colors($warm-gray, $red)
+  ul li
+    font-size: 12px
+    line-height: 20px
+
+  ol li
+    font-size: 10px
+    line-height: 15px

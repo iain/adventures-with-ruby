@@ -1,3 +1,0 @@
-#!/bin/bash
-set -e
-compass watch views/stylesheet.sass -c .compass.rb -s compressed

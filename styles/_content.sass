@@ -1,0 +1,74 @@
+#content
+  padding: $big-gap
+  padding-top: 0
+
+  p
+    color: $black
+    text-align: justify
+
+    &.read_more
+      text-align: right
+      a
+        +inline-block
+        padding: $small-gap 0 $small-gap $small-gap
+        margin-bottom: $big-gap
+        +link-colors($warm-gray, $red)
+        text-decoration: none
+
+  h1, h2, h3, h4, h5, h6
+    margin: $big-gap 0 $small-gap 0
+    padding: 0 0 $small-gap 0
+    border-bottom: $sidebar-border
+
+  ul
+    list-style: disc outside
+    margin: $small-gap
+    margin-left: $big-gap
+  ol
+    list-style: decimal outside
+    margin: $big-gap
+  li
+    color: $cool-gray
+    line-height: 18px
+    pre
+      display: block
+      width: auto !important
+      min-width: auto
+
+  tt, code
+    +code-font
+    color: #336633
+    font-size: 12px
+
+  blockquote
+    margin: $big-gap
+    line-height: 18px
+    color: $warm-gray
+    p
+      color: $warm-gray
+
+  article
+    min-height: 100px
+    h1
+      a
+        color: $black
+
+    h2
+      margin: $big-gap 0 $small-gap ($big-gap * -1) + 1
+      padding: 0 0 $small-gap $big-gap
+      border-bottom: $sidebar-border
+    p.summary a
+      color: $black
+      text-decoration: none
+      display: block
+
+  aside
+    +big-screen
+      +embossed
+      float: left
+      border-top: $sidebar-border
+      padding: $small-gap 13px
+      color: $warm-gray
+      font-size: 14px
+    +small-screen
+      display: none

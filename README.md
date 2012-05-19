@@ -15,3 +15,9 @@ Test:
 ``` bash
 ./script/test
 ```
+
+Run:
+
+``` bash
+./script/run
+```

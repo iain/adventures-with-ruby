@@ -1,6 +1,6 @@
 require 'code'
 
-describe Code do
+describe Code, :slow => true do
 
   let(:out) { double("out").as_null_object }
 

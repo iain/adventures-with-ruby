@@ -1,0 +1,48 @@
+body
+  +small-screen
+    background-color: $background-color
+  +big-screen
+    background-image: url("/gradient_squares.png")
+  font-family: "Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, sans-serif
+
+h1
+  font-size: 25px
+
+h2
+  font-size: 18px
+  line-height: 20px
+  margin: 0 0 $small-gap 0
+  a
+    +link-colors($black, $red)
+
+h3
+  font-size: 16px
+  line-height: 20px
+  margin: 0 0 $small-gap 0
+  a
+    +link-colors($black, $red)
+
+h1, h2, h3, h4, h5, h6
+  color: $black
+  font-weight: normal
+
+p
+  color: $black
+  font-size: 15px
+  line-height: 22px
+  margin: 0 0 $small-gap 0
+
+a
+  +link-colors($blue, $red)
+  +hover-link
+
+strong
+  font-weight: bold
+  color: $black
+
+em
+  font-style: italic
+
+hr
+  border: 0 none
+  border-bottom: $sidebar-border

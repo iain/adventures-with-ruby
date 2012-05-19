@@ -1,0 +1,17 @@
+#container
+  +big-screen
+    width: $container-width
+    overflow: auto
+    margin: auto
+    padding: ($big-gap * 2) 0
+
+#main
+  +box-shadow
+  +border-radius(5px)
+  min-height: 650px
+  background-color: white
+  +big-screen
+    width: $content-width
+    float: left
+    margin: 0 0 0 $sidebar-width
+    position: relative

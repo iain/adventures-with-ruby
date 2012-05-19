@@ -1,0 +1,19 @@
+.flash
+  color: $black
+  margin-top: $big-gap
+  padding: $big-gap / 2
+  font-size: 11px
+  +border-top-right-radius(15px)
+  +border-bottom-left-radius(15px)
+  em
+    text-decoration: underline
+
+.notice
+  @extend .flash
+  background: mix(#ffcc00, #fff, 10%)
+  border: 1px solid mix(#ffcc00, #fff, 40%)
+
+.alert
+  @extend .flash
+  background: mix(#cc0000, #fff, 10%)
+  border: 1px solid mix(#cc0000, #fff, 40%)

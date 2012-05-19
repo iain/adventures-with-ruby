@@ -1,0 +1,16 @@
+=small-screen
+  @media only screen and (max-width: 1099px)
+    @content
+
+=big-screen
+  @media only screen and (min-width: 1100px)
+    @content
+
+=code-font
+  font-family: "DejaVu Sans Mono", "Droid Sans Mono", "Menlo", "Monaco", "Courier New", monospace
+
+=embossed
+  +single-text-shadow(#ffffff, 0px, 1px, 0px)
+
+=aside-left($width)
+  margin-left: (($width + (2 * $big-gap)) * -1) - $default-box-shadow-blur - 1

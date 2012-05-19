@@ -1,0 +1,24 @@
+aside.toc
+  width: 150px
+  +aside-left(150px)
+  margin-top: 80px
+  +big-screen
+    position: fixed
+  text-align: right
+  border-bottom: $sidebar-border
+  ul
+    margin: 0
+    list-style-type: none !important
+  a
+    color: $warm-gray
+    display: block
+    padding: 3px 0
+    &.active
+      color: $blue
+      &:before
+        content: "→ "
+        color: $red
+  h3
+    border-bottom: 0 none
+    font-size: 14px
+    margin: $small-gap 0

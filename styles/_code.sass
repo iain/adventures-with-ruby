@@ -1,0 +1,68 @@
+code, pre, .ir_black
+  +code-font
+
+.ir_black, pre
+
+  border: 3px solid #fff
+
+  +box-shadow
+
+  padding:          10px
+  background-color: black
+  margin: $big-gap 0
+
+  +small-screen
+    width: auto
+    display: block
+  +big-screen
+    display: inline-block
+    width: 532px
+    min-width: 532px
+
+  +code-font
+  font-size: 14px
+  line-height: 20px
+  color: #f6f3e8
+
+  overflow: hidden
+
+  code
+    color: #f6f3e8
+
+  &:hover
+    display: inline-block
+    position: relative
+    width: auto
+    overflow: auto
+    z-index:  10000
+
+.Comment
+  color: #7c7c7c
+.Conditional
+  color: #6699cc
+.Constant
+  color: #99cc99
+.Delimiter
+  color: #00a0a0
+.Function
+  color: #ffd2a7
+.Number
+  color: #ff73fd
+.PreProc
+  color: #96cbfe
+.Special
+  color: #e18964
+.String
+  color: #a8ff60
+.Type
+  color: #ffffb6
+.rubyControl
+  color: #6699cc
+.rubyStringDelimiter
+  color: #336633
+.Identifier
+  color: #c6c5fe
+.Statement
+  color: #6699cc
+.Keyword
+  color: #96cbfe
