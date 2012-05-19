@@ -38,7 +38,7 @@ GEM
       diff-lcs (~> 1.1.3)
     rspec-mocks (2.10.1)
     rubyzip (0.9.8)
-    sass (3.1.18)
+    sass (3.2.0.alpha.237)
     shotgun (0.9)
       rack (>= 1.0)
     simplecov (0.5.4)
@@ -69,6 +69,7 @@ DEPENDENCIES
   rack-test
   redcarpet
   rspec
+  sass (>= 3.2.0.alpha.237)
   shotgun
   sinatra
   slim

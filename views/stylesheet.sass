@@ -1,4 +1,3 @@
-@import compass/reset
 @import compass
 
 $black:       #503e2b
@@ -25,6 +24,14 @@ $default-box-shadow-spread:   0
 
 $background-color: #eeeeef
 
+=small-screen
+  @media only screen and (max-width: 1099px)
+    @content
+
+=big-screen
+  @media only screen and (min-width: 1100px)
+    @content
+
 =code-font
   font-family: "DejaVu Sans Mono", "Droid Sans Mono", "Menlo", "Monaco", "Courier New", monospace
 
@@ -36,8 +43,10 @@ $background-color: #eeeeef
 
 
 body
-  background-color: $background-color
-  background-image: url("/gradient_squares.png")
+  +small-screen
+    background-color: $background-color
+  +big-screen
+    background-image: url("/gradient_squares.png")
   font-family: "Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, sans-serif
   font-size: 13px
 
@@ -60,6 +69,7 @@ h3
 
 h1, h2, h3, h4, h5, h6
   color: $black
+  font-weight: normal
 
 p
   color: $black
@@ -83,29 +93,32 @@ hr
 
 
 #container
-  width: $container-width
-  overflow: auto
-  margin: auto
-  padding: ($big-gap * 2) 0
+  +big-screen
+    width: $container-width
+    overflow: auto
+    margin: auto
+    padding: ($big-gap * 2) 0
 
 #main
-  width: $content-width
-  float: left
   +box-shadow
   +border-radius(5px)
-  margin: 0 0 0 $sidebar-width
-  background-color: white
-  position: relative
   min-height: 650px
+  background-color: white
+  +big-screen
+    width: $content-width
+    float: left
+    margin: 0 0 0 $sidebar-width
+    position: relative
 
 #github
-  display: block
-  position: absolute
-  top: -11px
-  right: -12px
-  background: url('/forkme.png') no-repeat top left
-  width: 130px
-  height: 130px
+  +big-screen
+    display: block
+    position: absolute
+    top: -11px
+    right: -12px
+    background: url('/forkme.png') no-repeat top left
+    width: 130px
+    height: 130px
 
 #header
   border-bottom: $content-border
@@ -136,12 +149,17 @@ hr
       font-weight: bold
 
 #sidebar
-  float: left
-  width: $sidebar-width - ($big-gap)
-  padding: 0 0 0 ($big-gap - $default-box-shadow-blur)
-  margin: 135px 0 0 $default-box-shadow-blur
-  border-top: $sidebar-border
   +embossed
+  +big-screen
+    float: left
+    width: $sidebar-width - ($big-gap)
+    padding: 0 0 0 ($big-gap - $default-box-shadow-blur)
+    margin: 135px 0 0 $default-box-shadow-blur
+    border-top: $sidebar-border
+  +small-screen
+    width: auto
+    padding: $big-gap
+    margin: 0
 
   h3
     border-top: $sidebar-border
@@ -159,6 +177,9 @@ hr
       color: $black
 
   ul, ol
+    list-style: none
+    margin: 0
+    padding: 0
     li a
       +link-colors($warm-gray, $red)
   ul li
@@ -243,12 +264,15 @@ hr
       display: block
 
   aside
-    +embossed
-    float: left
-    border-top: $sidebar-border
-    padding: $small-gap 13px
-    color: $warm-gray
-    font-size: 12px
+    +big-screen
+      +embossed
+      float: left
+      border-top: $sidebar-border
+      padding: $small-gap 13px
+      color: $warm-gray
+      font-size: 12px
+    +small-screen
+      display: none
 
   aside.post_date
     width: 30px
@@ -272,7 +296,8 @@ hr
     width: 150px
     +aside-left(150px)
     margin-top: 80px
-    position: fixed
+    +big-screen
+      position: fixed
     text-align: right
     border-bottom: $sidebar-border
     ul
@@ -301,14 +326,20 @@ hr
     padding:          10px
     background-color: black
     margin: $big-gap 0
-    display: inline-block
-    width: 532px
-    min-width: 532px
+
+    +small-screen
+      width: auto
+      display: block
+    +big-screen
+      display: inline-block
+      width: 532px
+      min-width: 532px
 
     +code-font
     font-size: 12px
     line-height: 15px
     color: #f6f3e8
+
     overflow: hidden
 
     code
@@ -354,12 +385,15 @@ hr
 
 
 #twitter
-  margin-top: -1px
-  margin-right: -110px
-  float: right
-  width: 60px
-  border-top: $sidebar-border
-  padding: 2 * $small-gap 13px
+  +big-screen
+    margin-top: -1px
+    margin-right: -110px
+    float: right
+    width: 60px
+    border-top: $sidebar-border
+    padding: 2 * $small-gap 13px
+  +small-screen
+    display: none
 
 #comments
   margin: $big-gap ($big-gap * -1) 0 ($big-gap * -1) + 1

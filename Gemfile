@@ -12,6 +12,7 @@ group :development do
   gem 'rack-test'
   gem 'nokogiri'
   gem 'heroku'
+  gem 'sass', '>= 3.2.0.alpha.237'
 end
 
 group :test do
