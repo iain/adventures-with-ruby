@@ -4,14 +4,12 @@ source :rubygems
 gem 'sinatra'
 gem 'slim'
 gem 'builder'
+gem 'sass', '>= 3.2.0.alpha.237'
+gem 'compass'
 
 group :development do
   gem 'shotgun'
   gem 'heroku'
-
-  # styles
-  gem 'sass', '>= 3.2.0.alpha.237'
-  gem 'compass'
 
   # compiling articles
   gem 'redcarpet'
