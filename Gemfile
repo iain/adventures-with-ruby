@@ -25,7 +25,6 @@ end
 group :guard do
   gem 'guard-rspec'
   gem 'guard-compass'
-  gem 'guard-rack'
 end
 
 group :test do
