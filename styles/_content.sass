@@ -1,6 +1,4 @@
-#content
-  padding: $big-gap
-  padding-top: 0
+.content
 
   p
     color: $black
@@ -16,8 +14,6 @@
         text-decoration: none
 
   h1, h2, h3, h4, h5, h6
-    margin: $big-gap 0 $small-gap 0
-    padding: 0 0 $small-gap 0
     border-bottom: $sidebar-border
 
   ul
@@ -29,7 +25,6 @@
     margin: $big-gap
   li
     color: $cool-gray
-    line-height: 18px
     pre
       display: block
       width: auto !important
@@ -38,11 +33,9 @@
   tt, code
     +code-font
     color: #336633
-    font-size: 12px
 
   blockquote
     margin: $big-gap
-    line-height: 18px
     color: $warm-gray
     p
       color: $warm-gray
@@ -54,21 +47,8 @@
         color: $black
 
     h2
-      margin: $big-gap 0 $small-gap ($big-gap * -1) + 1
-      padding: 0 0 $small-gap $big-gap
       border-bottom: $sidebar-border
     p.summary a
       color: $black
       text-decoration: none
       display: block
-
-  aside
-    +big-screen
-      +embossed
-      float: left
-      border-top: $sidebar-border
-      padding: $small-gap 13px
-      color: $warm-gray
-      font-size: 14px
-    +small-screen
-      display: none

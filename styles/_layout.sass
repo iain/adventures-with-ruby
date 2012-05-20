@@ -1,17 +1,37 @@
-#container
-  +big-screen
-    width: $container-width
-    overflow: auto
-    margin: auto
-    padding: ($big-gap * 2) 0
+body
+  margin: 0
+  padding: 0
 
-#main
-  +box-shadow
-  +border-radius(5px)
-  min-height: 650px
-  background-color: white
-  +big-screen
-    width: $content-width
+.content, .sidebar
+  padding: $big-gap
+
+.copyright
+  padding: $small-gap
+
++big-screen
+
+  .container
+    width: $site-width
+    margin: $big-gap auto
+    overflow: none
+
+  .block, .sidebar, .copyright
+    +box-sizing(border-box)
+
+  .block
+    width: $main-width
     float: left
-    margin: 0 0 0 $sidebar-width
-    position: relative
+
+  .sidebar
+    width: $side-width
+    float: left
+    margin-top: 200px
+
+  .copyright
+    width: $main-width
+    clear: both
+
++small-screen
+
+  .container
+    margin: $big-gap

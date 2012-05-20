@@ -5,10 +5,6 @@ article
   h1
     a(href=@article.url id=@article.id rel='bookmark')= @article.title
 
-  == partial :time, article: @article
-
-  == partial :toc, article: @article
-
   == @article.contents.html
 
 == partial :comments, article: @article

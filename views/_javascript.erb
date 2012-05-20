@@ -1,4 +1,4 @@
-<script>
+<script type="text/javascript">
   var _gaq = _gaq || [];
   _gaq.push(['_setAccount', 'UA-3029372-5']);
   _gaq.push(['_trackPageview']);
@@ -7,49 +7,5 @@
     var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
     ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
     var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-  })();
-
-  (function() {
-    var s = document.createElement('script');
-    s.type = 'text/javascript';
-    s.async = true;
-    s.src = 'http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js';
-    var x = document.getElementsByTagName('footer')[0];
-    x.parentNode.insertBefore(s, x);
-  })();
-
-  (function() {
-    var scrolling = function() {
-      var scrollPositions = [];
-      jQuery(".toc a").each(function(index, item) {
-        var el = $(item);
-        var id = document.getElementById(el.attr("href").slice(1))
-        var header = $(id);
-        scrollPositions.push({offset: header.offset()['top'], tocItem: el, header: header, id: id});
-      });
-
-      if (scrollPositions.length > 0) {
-        $(window).scroll(function() {
-          offset = $(window).scrollTop()
-          len = scrollPositions.length
-          var active = null;
-          for (var i = 0; i < len; i++) {
-            var head = scrollPositions[i];
-            if (head.offset < offset + 50) {
-              active = i
-            }
-          }
-          for (var i = 0; i < len; i++) {
-            if (i === active) {
-              scrollPositions[i].tocItem.addClass('active');
-            } else {
-              scrollPositions[i].tocItem.removeClass('active');
-            }
-          }
-        });
-      }
-    }
-
-    window.onload = function() { jQuery(scrolling) };
   })();
 </script>
