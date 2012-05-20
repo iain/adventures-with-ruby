@@ -1,28 +1,23 @@
 #!/usr/bin/env ruby
 source :rubygems
 
-group :production do
-  gem 'sinatra'
-  gem 'slim'
-  gem 'builder'
-end
+gem 'sinatra'
+gem 'slim'
+gem 'builder'
 
 group :development do
   gem 'shotgun'
   gem 'heroku'
-end
 
-group :styles do
+  # styles
   gem 'sass', '>= 3.2.0.alpha.237'
   gem 'compass'
-end
 
-group :articles do
+  # compiling articles
   gem 'redcarpet'
   gem 'nokogiri'
-end
 
-group :guard do
+  # guard
   gem 'guard-rspec'
   gem 'guard-compass'
 end
