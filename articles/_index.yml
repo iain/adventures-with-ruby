@@ -1,3 +1,7 @@
+sass-3-2-blocks:
+  title: Sass 3.2 blocks
+  publish: 2012-05-21
+  summary: "An introduction to a shiny new feature in Sass 3.2: blocks!"
 testing-activerecord-in-isolation:
   title: Testing ActiveRecord in isolation
   publish: 2012-03-22
