@@ -31,7 +31,7 @@ module Helpers
   def static(etag = nil)
     unless local?
       response['Cache-Control'] = 'public, max-age=3600'
-      self.etag(etag || request.path.bytes.to_a.join)
+      self.etag "v2-#{etag || request.path.bytes.to_a.join}"
     end
   end
 
