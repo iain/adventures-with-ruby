@@ -1,5 +1,6 @@
 require 'sinatra'
 require 'slim'
+require 'compass'
 require 'builder'
 require 'yaml'
 require 'cgi'
@@ -16,7 +17,15 @@ require 'archive'
 require 'helpers'
 
 include Helpers
-set :root, File.expand_path('../..', __FILE__)
+ROOT = File.expand_path('../..', __FILE__)
+set :root, ROOT
+
+Compass.configuration do |config|
+  config.project_path = settings.root
+  config.sass_dir = 'styles'
+  config.output_style = :compressed
+  set :sass, Compass.sass_engine_options
+end
 
 before do
   no_www!
@@ -54,6 +63,12 @@ get '/:article' do
   else
     pass
   end
+end
+
+get "/stylesheet.css" do
+  static
+  content_type 'text/css', :charset => 'utf-8'
+  sass :"stylesheets/application"
 end
 
 not_found do

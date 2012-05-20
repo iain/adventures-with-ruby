@@ -19,7 +19,6 @@ group :development do
 
   # guard
   gem 'guard-rspec'
-  gem 'guard-compass'
 end
 
 group :test do

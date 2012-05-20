@@ -24,8 +24,4 @@ guard 'rspec', :version => 2, :cli => "--tag ~slow" do
   watch(%r{^web/(.+)\.rb$}) { |m| "spec/web/#{m[1]}_spec.rb" }
 end
 
-guard 'compass', :configuration_file => ".compass.rb" do
-  watch(%r{^styles/(.*)\.s[ac]ss$})
-end
-
 guard 'shotgun', :port => 3000

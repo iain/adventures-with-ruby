@@ -14,9 +14,6 @@ GEM
     guard (1.0.3)
       ffi (>= 0.5.0)
       thor (>= 0.14.6)
-    guard-compass (0.0.6)
-      compass (>= 0.10.5)
-      guard (>= 0.2.1)
     guard-rspec (0.7.2)
       guard (>= 0.10.0)
     heroku (2.25.0)
@@ -74,7 +71,6 @@ PLATFORMS
 DEPENDENCIES
   builder
   compass
-  guard-compass
   guard-rspec
   heroku
   nokogiri
